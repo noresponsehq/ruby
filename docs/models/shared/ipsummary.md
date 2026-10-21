@@ -1,0 +1,12 @@
+# IpSummary
+
+Facts about the submitted IP from the offline database and this tenant's own recent assessments. Every member is optional; absent makes no claim.
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `country`                                                                                          | *T.nilable(::String)*                                                                              | :heavy_minus_sign:                                                                                 | ISO 3166-1 alpha-2 country of the address.                                                         |
+| `type`                                                                                             | [T.nilable(Models::Shared::IpSummaryType)](../../models/shared/ipsummarytype.md)                   | :heavy_minus_sign:                                                                                 | The address's network type.                                                                        |
+| `seen_in_tenant`                                                                                   | *T.nilable(::Integer)*                                                                             | :heavy_minus_sign:                                                                                 | Assessments in this tenant with the same IP in the last 24 hours, this one included. A count only. |

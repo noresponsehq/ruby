@@ -1,0 +1,10 @@
+*.gem
+.rbenv-gemsets
+.DS_Store
+**/.noresponse/temp/
+**/.noresponse/logs/
+.noresponse/reports
+bin/
+sorbet/rbi
+.env
+.env.local

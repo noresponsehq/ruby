@@ -1,0 +1,5 @@
+# Hand-written files beside the generated client.
+/lib/no_response/webhooks.rb
+/lib/no_response/wait.rb
+/lib/no_response/sdk_hooks/registration.rb
+/tests/*_test.rb

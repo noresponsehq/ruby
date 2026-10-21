@@ -1,0 +1,11 @@
+# RiskSummaryPhone
+
+
+## Fields
+
+| Field                                                                                        | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `line_type`                                                                                  | [T.nilable(Models::Shared::LineType)](../../models/shared/linetype.md)                       | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `country`                                                                                    | *T.nilable(::String)*                                                                        | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `report_count`                                                                               | *T.nilable(::Integer)*                                                                       | :heavy_minus_sign:                                                                           | Highest report count any source gave for the number.                                         |
+| `carrier`                                                                                    | *T.nilable(::String)*                                                                        | :heavy_minus_sign:                                                                           | Carrier-network metadata from privately weighted sources; not upstream provider attribution. |
