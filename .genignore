@@ -5,3 +5,4 @@
 /tests/*_test.rb
 /lib/no_response/sdk_hooks/idempotency_key_hook.rb
 /README.md
+/lib/no_response/auth.rb

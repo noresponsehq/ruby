@@ -14,6 +14,7 @@ require_relative "../webhooks"
 require_relative "../wait"
 require_relative "idempotency_key_hook"
 require_relative "../models/errors/apistatuserror"
+require_relative "../auth"
 
 module NoResponse
   module SDKHooks
