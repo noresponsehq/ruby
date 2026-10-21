@@ -1,316 +1,190 @@
-# noresponse
+# NoResponse for Ruby
 
-Developer-friendly & type-safe Ruby SDK specifically catered to leverage *noresponse* API.
+The NoResponse client for Ruby 3.2 and later. It assesses a signup or gateway event, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification and the wait helper are hand-written.
 
+Keep the API key on your server.
 
-<br /><br />
-> [!IMPORTANT]
-> This SDK is not yet ready for production use. Delete this section before > publishing to a package manager.
+## Install
 
-<!-- Start Summary [summary] -->
-## Summary
+The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
-NoResponse API: Server-side signup and gateway risk assessment: a recommendation, polling and signed webhooks.
-
-Assess a signup or gateway event, poll a pending assessment, page through an account's history, record what you later learned, and rotate your API key. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
-<!-- End Summary [summary] -->
-
-<!-- Start Table of Contents [toc] -->
-## Table of Contents
-<!-- $toc-max-depth=2 -->
-* [noresponse](#noresponse)
-  * [SDK Installation](#sdk-installation)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Server Selection](#server-selection)
-* [Development](#development)
-  * [Maturity](#maturity)
-  * [Contributions](#contributions)
-
-<!-- End Table of Contents [toc] -->
-
-<!-- Start SDK Installation [installation] -->
-## SDK Installation
-
-The SDK can be installed using [RubyGems](https://rubygems.org/):
-
-```bash
-gem install specific_install
-gem specific_install  
+```ruby
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.0.2"
 ```
-<!-- End SDK Installation [installation] -->
 
-<!-- Start SDK Example Usage [usage] -->
-## SDK Example Usage
+Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 2.0"`.
 
-### Example
+## Quick start
 
 ```ruby
 require "noresponse"
 
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
-  api_key: "<YOUR_BEARER_TOKEN_HERE>"
-)
-res = s.assessments.create(
-  idempotency_key: "<value>",
+Models = NoResponse::Models
+
+client = NoResponse::NoResponseClient.new(api_key: ENV.fetch("NORESPONSE_API_KEY"))
+
+response = client.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
-    account_id: "acct_7f3a9c",
-    identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
-      email: "new.user@example.com"
-    )
+    account_id: "usr_8f2k1",
+    identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: "jordan.lee@example.com")
   )
 )
 
-unless res.nil?
-  # handle response
+assessment = response.result
+if assessment.status == Models::Shared::Status::PENDING
+  # No recommendation yet. Apply your fallback now, then wait or take the webhook.
+  assessment = client.assessments.wait(assessment.assessment_id)
 end
 
+puts assessment.recommendation # allow, step_up or review
 ```
-<!-- End SDK Example Usage [usage] -->
 
-<!-- Start Authentication [security] -->
-## Authentication
+Every method returns an envelope: `result` holds the object and `headers` the response headers (`X-Request-ID`, `Retry-After`, `Idempotent-Replayed`).
 
-### Per-Client Security Schemes
+## Configure the client
 
-This SDK supports the following security scheme globally:
-
-| Name      | Type | Scheme      |
-| --------- | ---- | ----------- |
-| `api_key` | http | HTTP Bearer |
-
-To authenticate with the API the `api_key` parameter must be set when initializing the SDK client instance. For example:
 ```ruby
-require "noresponse"
-
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
-  api_key: "<YOUR_BEARER_TOKEN_HERE>"
+client = NoResponse::NoResponseClient.new(
+  api_key: key,                              # or security_source: -> { Models::Shared::Security.new(api_key: key) }
+  server_url: "https://api.noresponse.org",  # the default
+  timeout_ms: 10_000,                        # per request
+  client: Faraday.new { |f| f.proxy = "http://proxy:8080" }, # your own Faraday connection
+  retry_config: NoResponse::Utils::RetryConfig.new(strategy: "none")
 )
-res = s.assessments.create(
-  idempotency_key: "<value>",
+```
+
+Every method also takes `timeout_ms:`, `retries:` and `http_headers:` for one call.
+
+## Assessments
+
+```ruby
+created = client.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
-    account_id: "acct_7f3a9c",
-    identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
-      email: "new.user@example.com"
-    )
-  )
-)
-
-unless res.nil?
-  # handle response
-end
-
-```
-<!-- End Authentication [security] -->
-
-<!-- Start Available Resources and Operations [operations] -->
-## Available Resources and Operations
-
-<details open>
-<summary>Available methods</summary>
-
-### [Assessments](docs/sdks/assessments/README.md)
-
-* [create](docs/sdks/assessments/README.md#create) - Assess identifiers for a signup or gateway decision.
-* [get](docs/sdks/assessments/README.md#get) - Poll the authoritative assessment of one assessment.
-* [record_outcome](docs/sdks/assessments/README.md#record_outcome) - Report what was later learned about an assessed account.
-* [query](docs/sdks/assessments/README.md#query) - Page through one account's unexpired assessments.
-
-### [Keys](docs/sdks/keys/README.md)
-
-* [rotate](docs/sdks/keys/README.md#rotate) - Rotate the API key that signs the request.
-
-</details>
-<!-- End Available Resources and Operations [operations] -->
-
-<!-- Start Retries [retries] -->
-## Retries
-
-Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
-
-To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
-```ruby
-require "noresponse"
-
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
-  api_key: "<YOUR_BEARER_TOKEN_HERE>"
-)
-res = s.assessments.create(
-  idempotency_key: "<value>",
-  body: Models::Shared::AssessmentRequest.new(
-    account_id: "acct_7f3a9c",
-    identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
-      email: "new.user@example.com"
-    )
-  )
-)
-
-unless res.nil?
-  # handle response
-end
-
-```
-
-If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
-```ruby
-require "noresponse"
-
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
-  retry_config: Utils::RetryConfig.new(
-    backoff: Utils::BackoffStrategy.new(
-      exponent: 1.1,
-      initial_interval: 1,
-      max_elapsed_time: 100,
-      max_interval: 50
-    ),
-    retry_connection_errors: false,
-    strategy: "backoff"
+    account_id: "usr_8f2k1",
+    identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: "jordan.lee@example.com"),
+    response_mode: Models::Shared::ResponseMode::DETAILED # detailed needs the detailed scope
   ),
-  api_key: "<YOUR_BEARER_TOKEN_HERE>"
-)
-res = s.assessments.create(
-  idempotency_key: "<value>",
-  body: Models::Shared::AssessmentRequest.new(
-    account_id: "acct_7f3a9c",
-    identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
-      email: "new.user@example.com"
-    )
-  )
+  idempotency_key: "signup-usr_8f2k1-0001"
 )
 
-unless res.nil?
-  # handle response
-end
-
+latest = client.assessments.get(assessment_id: created.result.assessment_id)
+settled = client.assessments.wait(created.result.assessment_id, timeout: 30)
 ```
-<!-- End Retries [retries] -->
 
-<!-- Start Error Handling [errors] -->
-## Error Handling
+`wait` polls `get` until the status is no longer pending, sleeping the server's `Retry-After` (at least one second) between polls. It raises `NoResponse::WaitTimeoutError`, which carries the last pending assessment as `last`, when the timeout (default 30 s) passes.
 
-Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an error.
-
-By default an API error will raise a `Errors::APIStatusError`, which has the following properties:
-
-| Property       | Type                                    | Description           |
-|----------------|-----------------------------------------|-----------------------|
-| `message`     | *string*                                 | The error message     |
-| `status_code`  | *int*                                   | The HTTP status code  |
-| `raw_response` | *Faraday::Response*                     | The raw HTTP response |
-| `body`        | *string*                                 | The response content  |
-
-When custom error responses are specified for an operation, the SDK may also throw their associated exception. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `create` method throws the following exceptions:
-
-| Error Type                            | Status Code | Content Type             |
-| ------------------------------------- | ----------- | ------------------------ |
-| Models::Errors::BadRequestError       | 400         | application/problem+json |
-| Models::Errors::AuthenticationError   | 401         | application/problem+json |
-| Models::Errors::PermissionDeniedError | 403         | application/problem+json |
-| Models::Errors::NotFoundError         | 404         | application/problem+json |
-| Models::Errors::ConflictError         | 409         | application/problem+json |
-| Models::Errors::RateLimitError        | 429         | application/problem+json |
-| Errors::APIStatusError                | 4XX, 5XX    | \*/\*                    |
-
-### Example
+### Query an account's history
 
 ```ruby
-require "noresponse"
+cursor = nil
+loop do
+  page = client.assessments.query(
+    request: Models::Shared::AssessmentQuery.new(account_id: "usr_8f2k1", limit: 20, cursor: cursor)
+  ).result
+  page.items.each { |item| puts item.assessment_id } # newest first
+  cursor = page.next_cursor
+  break if cursor.nil?
+end
+```
 
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
-  api_key: "<YOUR_BEARER_TOKEN_HERE>"
+### Record an outcome
+
+```ruby
+client.assessments.record_outcome(
+  assessment_id: created.result.assessment_id,
+  body: Models::Shared::AssessmentOutcomeRequest.new(
+    outcome: Models::Shared::Outcome::CHARGEBACK,
+    external_ref: "case-42"
+  )
 )
+```
+
+### Idempotency
+
+`create` and `record_outcome` send a fresh UUID as the `Idempotency-Key` when you pass none, and the same key on every retry of that call, so a retried request is recorded once. Pass your own key to make a retry from your side replay the same assessment: the API answers the latest version with `Idempotent-Replayed: true`. The same key with a different body answers 409 (`ConflictError`).
+
+## Keys
+
+```ruby
+rotation = client.keys.rotate(request: Models::Shared::KeyRotationRequest.new(overlap_seconds: 3600))
+# rotation.result.key is the new key, shown once. Rotate with the new key next time.
+```
+
+## Errors
+
+Every API error is a `NoResponse::Models::Errors::NoResponseError`. The problem-document errors carry `status`, `type`, `title`, `detail`, `code`, `request_id` and `invalid_params`.
+
+| Class | When |
+|---|---|
+| `BadRequestError` | 400: the body or a header is malformed; see `invalid_params` |
+| `AuthenticationError` | 401: missing, malformed, revoked or expired key |
+| `PermissionDeniedError` | 403: the key lacks the operation's scope |
+| `NotFoundError` | 404: unknown, expired or foreign assessment |
+| `ConflictError` | 409: idempotency key reused with a different body, or a key already rotating |
+| `RateLimitError` | 429, after the retries (which honour `Retry-After`) ran out |
+| `APIStatusError` | any other 4xx or 5xx, including 503; has `status_code`, `body` and `raw_response` |
+
+```ruby
+Errors = NoResponse::Models::Errors
 
 begin
-  res = s.assessments.create(
-    idempotency_key: "<value>",
-    body: Models::Shared::AssessmentRequest.new(
-      account_id: "acct_7f3a9c",
-      identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
-        email: "new.user@example.com"
-      )
-    )
-  )
-
-  unless res.nil?
-    # handle response
-  end
-
-rescue Models::Errors::BadRequestError => e
-  # handle e.container data
-  raise e
-rescue Models::Errors::AuthenticationError => e
-  # handle e.container data
-  raise e
-rescue Models::Errors::PermissionDeniedError => e
-  # handle e.container data
-  raise e
-rescue Models::Errors::NotFoundError => e
-  # handle e.container data
-  raise e
-rescue Models::Errors::ConflictError => e
-  # handle e.container data
-  raise e
-rescue Models::Errors::RateLimitError => e
-  # handle e.container data
-  raise e
-rescue Errors::APIStatusError => e
-  # handle default exception
-  raise e
+  client.assessments.create(body: request)
+rescue Errors::RateLimitError => e
+  apply_fallback(e.request_id) # retries already honoured Retry-After and ran out
+rescue Errors::NoResponseError => e
+  warn "#{e.class}: #{e.message}"
+rescue Faraday::Error
+  # DNS, TLS or connection failure: apply your fallback.
 end
-
 ```
-<!-- End Error Handling [errors] -->
 
-<!-- Start Server Selection [server] -->
-## Server Selection
+## Retries
 
-### Override Server URL Per-Client
+Connection errors, 408, 429 and every 5xx are retried with exponential backoff (500 ms to 8 s, 30 s in all). 409 and other 4xx are not retried. Override for the client with `retry_config:` or for one call with `retries:`:
 
-The default server can be overridden globally by passing a URL to the `server_url (String)` optional parameter when initializing the SDK client instance. For example:
 ```ruby
-require "noresponse"
+client.assessments.create(body: request, retries: NoResponse::Utils::RetryConfig.new(strategy: "none"))
+```
 
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
-  server_url: "https://api.noresponse.org",
-  api_key: "<YOUR_BEARER_TOKEN_HERE>"
-)
-res = s.assessments.create(
-  idempotency_key: "<value>",
-  body: Models::Shared::AssessmentRequest.new(
-    account_id: "acct_7f3a9c",
-    identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
-      email: "new.user@example.com"
-    )
-  )
-)
+## Webhooks
 
-unless res.nil?
-  # handle response
+Verify the exact bytes you received, then act on the typed event. `secrets` maps each `whk_` key id we give you to its secret; hold both during a rotation.
+
+```ruby
+# Rack or Sinatra: post "/webhooks/noresponse"
+payload = request.body.read
+begin
+  event = NoResponse::Webhooks.construct_event(payload, request.env, { key_id => secret })
+rescue NoResponse::Webhooks::VerificationError => e
+  halt 400, e.code.to_s
 end
 
+case event.type
+when "endpoint.verification"
+  content_type :json
+  NoResponse::Webhooks.verification_response(event).to_json
+else
+  if event.expired?
+    # forget the assessment: GET now answers 404
+  else
+    # event.data is the full assessment; keep the highest assessment_version
+  end
+  status 204
+end
 ```
-<!-- End Server Selection [server] -->
 
-<!-- Placeholder for Future NoResponse SDK Sections -->
+`construct_event(payload, headers, secrets, tolerance_seconds: 300)` takes the raw body and a hash of headers in any letter case. It refuses a missing or repeated header, a stale delivery, an unknown key id or a bad signature, and `VerificationError#code` says which. Deliveries are at least once: deduplicate on `event.id`.
 
-# Development
+## Changes since 2.0.0
 
-## Maturity
+Names that changed:
 
-This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
-to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
-looking for the latest version.
+| 2.0.0 | Now |
+|---|---|
+| `NoResponse::NoResponse` | `NoResponse::NoResponseClient` |
+| no shared parent for errors | `NoResponse::Models::Errors::NoResponseError`, the parent of every error class and of `APIStatusError` |
+| `NoResponse::Wait.wait(client, id)` | `client.assessments.wait(id)`; `NoResponse::Wait.wait(client, id)` still works |
+| `create(body:, idempotency_key:)` with the key required | `idempotency_key:` is optional |
+| `record_outcome(body:, assessment_id:, idempotency_key:)` with the key required | `idempotency_key:` is optional |
 
-## Contributions
-
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+Issues: https://github.com/noresponsehq/ruby/issues. Quote `request_id` when you write to us.

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 module NoResponse
-  autoload :NoResponse, "no_response/noresponse"
+  autoload :NoResponseClient, "no_response/noresponseclient"
   autoload :Assessments, "no_response/assessments"
   autoload :Keys, "no_response/keys"
 

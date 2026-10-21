@@ -41,19 +41,19 @@ module NoResponse
     sig {
       params(
         body: Models::Shared::AssessmentRequest,
-        idempotency_key: ::String,
+        idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::CreateAssessmentResponse)
     }
-    def create(body:, idempotency_key:, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(body:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
       # create - Assess identifiers for a signup or gateway decision.
-      # Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. Requires the assess scope. Idempotency-Key is required and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
+      # Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. Requires the assess scope. Idempotency-Key is optional in the SDK and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
       request = Models::Operations::CreateAssessmentRequest.new(
-        idempotency_key: idempotency_key,
-        body: body
+        body: body,
+        idempotency_key: idempotency_key
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -632,20 +632,20 @@ module NoResponse
       params(
         body: Models::Shared::AssessmentOutcomeRequest,
         assessment_id: ::String,
-        idempotency_key: ::String,
+        idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::RecordAssessmentOutcomeResponse)
     }
-    def record_outcome(body:, assessment_id:, idempotency_key:, retries: nil, timeout_ms: nil, http_headers: nil)
+    def record_outcome(body:, assessment_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
       # record_outcome - Report what was later learned about an assessed account.
-      # Records what you later learned about an assessed account: confirmed_abuse, account_takeover and chargeback report abuse; false_positive and legitimate withdraw your earlier report; unknown is recorded only. Outcomes are append-only and the latest one wins. Requires the assess scope. Idempotency-Key is required and handled as on POST /v1/assessments: a retry with the same key and body answers the same record with Idempotent-Replayed: true; a different body answers 409. An unknown, expired or foreign assessment answers 404 not_found.
+      # Records what you later learned about an assessed account: confirmed_abuse, account_takeover and chargeback report abuse; false_positive and legitimate withdraw your earlier report; unknown is recorded only. Outcomes are append-only and the latest one wins. Requires the assess scope. Idempotency-Key is optional in the SDK and handled as on POST /v1/assessments: a retry with the same key and body answers the same record with Idempotent-Replayed: true; a different body answers 409. An unknown, expired or foreign assessment answers 404 not_found.
       request = Models::Operations::RecordAssessmentOutcomeRequest.new(
         assessment_id: assessment_id,
-        idempotency_key: idempotency_key,
-        body: body
+        body: body,
+        idempotency_key: idempotency_key
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

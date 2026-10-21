@@ -1,11 +1,13 @@
 # typed: true
 # frozen_string_literal: true
 
+require_relative "apistatuserror"
+
 module NoResponse
   module Models
     module Errors
       # HTTP 409 problem document.
-      class ConflictError < StandardError
+      class ConflictError < NoResponse::Models::Errors::NoResponseError
         extend T::Sig
         include Crystalline::MetadataFields
 

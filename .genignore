@@ -3,3 +3,5 @@
 /lib/no_response/wait.rb
 /lib/no_response/sdk_hooks/registration.rb
 /tests/*_test.rb
+/lib/no_response/sdk_hooks/idempotency_key_hook.rb
+/README.md

@@ -12,7 +12,7 @@ require_relative "utils/retries"
 module NoResponse
   extend T::Sig
 
-  class NoResponse
+  class NoResponseClient
     extend T::Sig
 
     attr_accessor :assessments, :keys

@@ -22,7 +22,7 @@ class WaitTest < Minitest::Test
       end
     end
     faraday = Faraday.new { |f| f.adapter(:test, stubs) }
-    sdk = NoResponse::NoResponse.new(client: faraday, api_key: "nrk_test_#{'k' * 20}", server_url: 'https://api.example.test')
+    sdk = NoResponse::NoResponseClient.new(client: faraday, api_key: "nrk_test_#{'k' * 20}", server_url: 'https://api.example.test')
     [sdk, seen]
   end
 

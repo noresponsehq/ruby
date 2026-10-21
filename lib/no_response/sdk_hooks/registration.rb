@@ -12,6 +12,8 @@ require_relative "./types"
 # Hand-written helpers beside the generated client, loaded with the gem.
 require_relative "../webhooks"
 require_relative "../wait"
+require_relative "idempotency_key_hook"
+require_relative "../models/errors/apistatuserror"
 
 module NoResponse
   module SDKHooks
@@ -25,6 +27,7 @@ module NoResponse
           .void
       end
       def self.init_hooks(hooks)
+        hooks.register_before_request_hook(IdempotencyKeyHook.new)
         # example_hook = ExampleHook.new
 
         # hooks.register_sdk_init_hook example_hook

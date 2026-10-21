@@ -1,11 +1,13 @@
 # typed: true
 # frozen_string_literal: true
 
+require_relative "apistatuserror"
+
 module NoResponse
   module Models
     module Errors
       # HTTP 429 problem document.
-      class RateLimitError < StandardError
+      class RateLimitError < NoResponse::Models::Errors::NoResponseError
         extend T::Sig
         include Crystalline::MetadataFields
 

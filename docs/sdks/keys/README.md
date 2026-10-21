@@ -19,7 +19,7 @@ Mints a new key with the same scopes as the key that signs the request and retur
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 
@@ -38,7 +38,7 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 
@@ -59,7 +59,7 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 

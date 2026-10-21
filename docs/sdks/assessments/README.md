@@ -13,7 +13,7 @@ Signup and gateway assessments.
 
 ## create
 
-Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. Requires the assess scope. Idempotency-Key is required and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
+Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. Requires the assess scope. Idempotency-Key is optional in the SDK and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
 
 ### Example Usage: complete
 
@@ -22,13 +22,13 @@ Returns within the deadline (500 ms at most) with a complete, partial or pending
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::AssessmentRequest.new(
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: '<id>',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -42,13 +42,13 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::AssessmentRequest.new(
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: '<id>',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -62,10 +62,10 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::AssessmentRequest.new(
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
@@ -78,7 +78,7 @@ res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::Ass
   ),
   request_id: 'req-2026-10-14-0001',
   deadline_ms: 300
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -92,15 +92,15 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::AssessmentRequest.new(
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com'
   )
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -114,10 +114,10 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::AssessmentRequest.new(
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_8412',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'jane.doe@example.com',
@@ -133,7 +133,7 @@ res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::Ass
   request_id: 'req_01',
   deadline_ms: 500,
   response_mode: Models::Shared::ResponseMode::STANDARD
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -147,13 +147,13 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::AssessmentRequest.new(
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: '<id>',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -167,13 +167,13 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.create(idempotency_key: '<value>', body: Models::Shared::AssessmentRequest.new(
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: '<id>',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -183,10 +183,10 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                      | Type                                                                                                                                                           | Required                                                                                                                                                       | Description                                                                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `idempotency_key`                                                                                                                                              | *::String*                                                                                                                                                     | :heavy_check_mark:                                                                                                                                             | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours. |
-| `body`                                                                                                                                                         | [Models::Shared::AssessmentRequest](../../models/shared/assessmentrequest.md)                                                                                  | :heavy_check_mark:                                                                                                                                             | N/A                                                                                                                                                            |
+| Parameter                                                                                                                                                                                                                                                             | Type                                                                                                                                                                                                                                                                  | Required                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                                                           |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `body`                                                                                                                                                                                                                                                                | [Models::Shared::AssessmentRequest](../../models/shared/assessmentrequest.md)                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                                                                    | N/A                                                                                                                                                                                                                                                                   |
+| `idempotency_key`                                                                                                                                                                                                                                                     | *T.nilable(::String)*                                                                                                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                                                                                                    | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours. Optional: the SDK generates a UUID when you omit it and sends the same key on every retry of the call. |
 
 ### Response
 
@@ -215,7 +215,7 @@ Returns the highest assessment_version. Requires the assess or history scope. Wh
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 res = s.assessments.get(assessment_id: '<id>')
@@ -232,7 +232,7 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 res = s.assessments.get(assessment_id: '<id>')
@@ -249,7 +249,7 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 res = s.assessments.get(assessment_id: '<id>')
@@ -266,7 +266,7 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 res = s.assessments.get(assessment_id: '<id>')
@@ -283,7 +283,7 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 res = s.assessments.get(assessment_id: '<id>')
@@ -319,7 +319,7 @@ end
 
 ## record_outcome
 
-Records what you later learned about an assessed account: confirmed_abuse, account_takeover and chargeback report abuse; false_positive and legitimate withdraw your earlier report; unknown is recorded only. Outcomes are append-only and the latest one wins. Requires the assess scope. Idempotency-Key is required and handled as on POST /v1/assessments: a retry with the same key and body answers the same record with Idempotent-Replayed: true; a different body answers 409. An unknown, expired or foreign assessment answers 404 not_found.
+Records what you later learned about an assessed account: confirmed_abuse, account_takeover and chargeback report abuse; false_positive and legitimate withdraw your earlier report; unknown is recorded only. Outcomes are append-only and the latest one wins. Requires the assess scope. Idempotency-Key is optional in the SDK and handled as on POST /v1/assessments: a retry with the same key and body answers the same record with Idempotent-Replayed: true; a different body answers 409. An unknown, expired or foreign assessment answers 404 not_found.
 
 ### Example Usage: abuse
 
@@ -328,15 +328,15 @@ Records what you later learned about an assessed account: confirmed_abuse, accou
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.record_outcome(assessment_id: '<id>', idempotency_key: '<value>', body: Models::Shared::AssessmentOutcomeRequest.new(
+res = s.assessments.record_outcome(assessment_id: '<id>', body: Models::Shared::AssessmentOutcomeRequest.new(
   outcome: Models::Shared::Outcome::CONFIRMED_ABUSE,
   observed_at: '2026-10-20T05:00:00Z',
   external_ref: 'case-123',
   notes: 'Card testing from this account; closed by trust and safety.'
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -350,12 +350,12 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.record_outcome(assessment_id: '<id>', idempotency_key: '<value>', body: Models::Shared::AssessmentOutcomeRequest.new(
+res = s.assessments.record_outcome(assessment_id: '<id>', body: Models::Shared::AssessmentOutcomeRequest.new(
   outcome: Models::Shared::Outcome::LEGITIMATE
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -369,12 +369,12 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
-res = s.assessments.record_outcome(assessment_id: '<id>', idempotency_key: '<value>', body: Models::Shared::AssessmentOutcomeRequest.new(
+res = s.assessments.record_outcome(assessment_id: '<id>', body: Models::Shared::AssessmentOutcomeRequest.new(
   outcome: Models::Shared::Outcome::FALSE_POSITIVE
-))
+), idempotency_key: '<value>')
 
 unless res.nil?
   # handle response
@@ -384,11 +384,11 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                      | Type                                                                                                                                                           | Required                                                                                                                                                       | Description                                                                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `assessment_id`                                                                                                                                                | *::String*                                                                                                                                                     | :heavy_check_mark:                                                                                                                                             | Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.                                              |
-| `idempotency_key`                                                                                                                                              | *::String*                                                                                                                                                     | :heavy_check_mark:                                                                                                                                             | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours. |
-| `body`                                                                                                                                                         | [Models::Shared::AssessmentOutcomeRequest](../../models/shared/assessmentoutcomerequest.md)                                                                    | :heavy_check_mark:                                                                                                                                             | N/A                                                                                                                                                            |
+| Parameter                                                                                                                                                                                                                                                             | Type                                                                                                                                                                                                                                                                  | Required                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                                                           |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `assessment_id`                                                                                                                                                                                                                                                       | *::String*                                                                                                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                                                                                                                    | Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.                                                                                                                                                     |
+| `body`                                                                                                                                                                                                                                                                | [Models::Shared::AssessmentOutcomeRequest](../../models/shared/assessmentoutcomerequest.md)                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                                                                    | N/A                                                                                                                                                                                                                                                                   |
+| `idempotency_key`                                                                                                                                                                                                                                                     | *T.nilable(::String)*                                                                                                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                                                                                                    | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours. Optional: the SDK generates a UUID when you omit it and sends the same key on every retry of the call. |
 
 ### Response
 
@@ -417,7 +417,7 @@ History is a POST with account_id in the body so an account identifier stays out
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 
@@ -438,7 +438,7 @@ end
 require 'noresponse'
 
 Models = ::NoResponse::Models
-s = ::NoResponse::NoResponse.new(
+s = ::NoResponse::NoResponseClient.new(
   api_key: '<YOUR_BEARER_TOKEN_HERE>'
 )
 

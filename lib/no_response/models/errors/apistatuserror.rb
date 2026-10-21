@@ -5,7 +5,11 @@ module NoResponse
   module Models
     module Errors
 
-      class APIStatusError < StandardError
+      # Every error the SDK raises for an API response is a NoResponseError.
+      class NoResponseError < StandardError
+      end
+
+      class APIStatusError < NoResponseError
         include Crystalline::MetadataFields
         extend T::Sig
 

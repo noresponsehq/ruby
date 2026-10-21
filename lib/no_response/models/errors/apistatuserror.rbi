@@ -1,7 +1,10 @@
 # typed: true
 # frozen_string_literal: true
 
-class NoResponse::Models::Errors::APIStatusError
+class NoResponse::Models::Errors::NoResponseError < StandardError
+end
+
+class NoResponse::Models::Errors::APIStatusError < NoResponse::Models::Errors::NoResponseError
   extend ::Crystalline::MetadataFields::ClassMethods
 end
 
