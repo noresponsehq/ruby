@@ -28,7 +28,7 @@ module NoResponse
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("response_mode"),
-              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::ResponseMode, true)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::ResponseMode, true)
             }
           }
         )

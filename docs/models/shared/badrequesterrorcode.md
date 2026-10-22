@@ -21,3 +21,4 @@ custom = BadRequestErrorCode.deserialize("custom_value")
 | `INVALID_REQUEST`         | invalid_request           |
 | `INVALID_IDEMPOTENCY_KEY` | invalid_idempotency_key   |
 | `INVALID_CURSOR`          | invalid_cursor            |
+| `WEBHOOK_URL_REFUSED`     | webhook_url_refused       |

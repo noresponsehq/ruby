@@ -11,6 +11,7 @@ module NoResponse
           INVALID_REQUEST = new("invalid_request")
           INVALID_IDEMPOTENCY_KEY = new("invalid_idempotency_key")
           INVALID_CURSOR = new("invalid_cursor")
+          WEBHOOK_URL_REFUSED = new("webhook_url_refused")
         end
 
         open!

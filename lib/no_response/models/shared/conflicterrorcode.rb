@@ -10,6 +10,8 @@ module NoResponse
         enums do
           IDEMPOTENCY_KEY_REUSED = new("idempotency_key_reused")
           KEY_ROTATION_IN_PROGRESS = new("key_rotation_in_progress")
+          WEBHOOK_ENDPOINT_LIMIT_REACHED = new("webhook_endpoint_limit_reached")
+          WEBHOOK_ENDPOINT_UNVERIFIED = new("webhook_endpoint_unverified")
           TOO_MANY_INTEGRATIONS = new("too_many_integrations")
         end
 

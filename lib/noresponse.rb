@@ -6,6 +6,7 @@ module NoResponse
   autoload :Assessments, "no_response/assessments"
   autoload :Keys, "no_response/keys"
   autoload :Integrations, "no_response/integrations"
+  autoload :WebhookEndpoints, "no_response/webhookendpoints"
 
   module Models
     autoload :Shared, "no_response/models/shared"

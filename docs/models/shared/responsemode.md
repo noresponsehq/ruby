@@ -8,6 +8,9 @@ standard returns the consolidated risk response; detailed adds merged provider-n
 require "noresponse"
 
 value = ResponseMode::STANDARD
+
+# Open enum: use .deserialize() to create instances from custom string values
+custom = ResponseMode.deserialize("custom_value")
 ```
 
 
