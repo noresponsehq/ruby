@@ -175,6 +175,18 @@ end
 
 `construct_event(payload, headers, secrets, tolerance_seconds: 300)` takes the raw body and a hash of headers in any letter case. It refuses a missing or repeated header, a stale delivery, an unknown key id or a bad signature, and `VerificationError#code` says which. Deliveries are at least once: deduplicate on `event.id`.
 
+### Late results
+
+An assessment can be revised after you allowed the signup. `NoResponse::LateResults.handle` verifies the `assessment.updated` delivery with `construct_event`, applies your policy and revokes the user's sessions or bans the user through your auth provider (`LateResults.clerk`, `.workos` or `.auth0`). The default policy revokes sessions on `review` only; WorkOS has no block, so its ban deletes the user permanently.
+
+```ruby
+provider = NoResponse::LateResults.clerk(secret_key: ENV.fetch('CLERK_SECRET_KEY'))
+result = NoResponse::LateResults.handle(payload, request.env, { key_id => secret }, provider,
+                                        policy: { review: 'ban' })
+```
+
+A refused provider call raises `LateResults::ProviderActionError`; answer 5xx so we retry.
+
 ## Changes since 2.0.0
 
 Names that changed:
