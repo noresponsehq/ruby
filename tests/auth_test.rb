@@ -18,6 +18,11 @@ class AuthTest < Minitest::Test
     when 'auth0' then NoResponse::Auth.from_auth0(claims, overrides)
     when 'supabase' then NoResponse::Auth.from_supabase(claims, overrides)
     when 'firebase' then NoResponse::Auth.from_firebase(claims, overrides)
+    when 'cognito' then NoResponse::Auth.from_cognito(claims, overrides)
+    when 'entra' then NoResponse::Auth.from_entra(claims, overrides)
+    when 'keycloak' then NoResponse::Auth.from_keycloak(claims, overrides)
+    when 'ory' then NoResponse::Auth.from_ory(claims, overrides)
+    when 'ory_oauth2' then NoResponse::Auth.from_ory_oauth2(claims, overrides)
     else NoResponse::Auth.from_oidc(vector['provider'], claims, overrides)
     end
   end

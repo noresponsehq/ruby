@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.14
+
+No changes detected.
+
 ## 2.0.13
 
 No changes detected.
