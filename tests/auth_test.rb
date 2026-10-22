@@ -16,6 +16,8 @@ class AuthTest < Minitest::Test
     when 'workos' then NoResponse::Auth.from_workos(claims, overrides)
     when 'clerk' then NoResponse::Auth.from_clerk(claims, overrides)
     when 'auth0' then NoResponse::Auth.from_auth0(claims, overrides)
+    when 'supabase' then NoResponse::Auth.from_supabase(claims, overrides)
+    when 'firebase' then NoResponse::Auth.from_firebase(claims, overrides)
     else NoResponse::Auth.from_oidc(vector['provider'], claims, overrides)
     end
   end
