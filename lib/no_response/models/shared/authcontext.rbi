@@ -126,6 +126,12 @@ class NoResponse::Models::Shared::AuthContext
   def transport=(str_)
   end
 
+  def hook_point
+  end
+
+  def hook_point=(str_)
+  end
+
   def mfa
   end
 

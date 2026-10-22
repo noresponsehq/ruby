@@ -21,7 +21,7 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("issuer"), required: true}}
         )
-        # The verified stable subject identifier (`sub`), opaque to NoResponse.
+        # The verified stable subject identifier (`sub`), opaque to NoResponse. Required, except from a provider hook at pre_registration, where no user exists yet.
         field(
           :subject,
           ::String,
@@ -128,7 +128,7 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Boolean.new),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("impersonated")}}
         )
-        # Where the customer derived this context. Backend is the trusted integration path; browser values are treated as weak hints.
+        # Where this context was derived. Backend is the trusted integration path; browser values are treated as weak hints. provider_hook is a hosted provider hook (an Auth0 or WorkOS Action) calling at hook_point; it needs hook_point and verified false, and its authentication facts are not scored.
         field(
           :transport,
           Crystalline::Nilable.new(Models::Shared::Transport),
@@ -136,6 +136,17 @@ module NoResponse
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("transport"),
               'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::Transport, true)
+            }
+          }
+        )
+        # The provider event a provider_hook context was sent for. pre_registration runs before the user exists, so subject and the request's account_id may be absent there. Sent only with transport provider_hook.
+        field(
+          :hook_point,
+          Crystalline::Nilable.new(Models::Shared::HookPoint),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("hook_point"),
+              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::HookPoint, true)
             }
           }
         )
@@ -180,6 +191,7 @@ module NoResponse
             assurance_level: T.nilable(Models::Shared::AssuranceLevel),
             impersonated: T.nilable(T::Boolean),
             transport: T.nilable(Models::Shared::Transport),
+            hook_point: T.nilable(Models::Shared::HookPoint),
             mfa: T.nilable(Models::Shared::AuthContextMfa),
             roles: T.nilable(T::Array[::String]),
             scopes: T.nilable(T::Array[::String])
@@ -207,6 +219,7 @@ module NoResponse
           assurance_level: nil,
           impersonated: nil,
           transport: nil,
+          hook_point: nil,
           mfa: nil,
           roles: nil,
           scopes: nil
@@ -231,6 +244,7 @@ module NoResponse
           @assurance_level = assurance_level
           @impersonated = impersonated
           @transport = transport
+          @hook_point = hook_point
           @mfa = mfa
           @roles = roles
           @scopes = scopes
@@ -259,6 +273,7 @@ module NoResponse
           return false unless @assurance_level == other.assurance_level
           return false unless @impersonated == other.impersonated
           return false unless @transport == other.transport
+          return false unless @hook_point == other.hook_point
           return false unless @mfa == other.mfa
           return false unless @roles == other.roles
           return false unless @scopes == other.scopes

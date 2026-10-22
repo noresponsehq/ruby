@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.15
+
+* `sdk.assessments.create()`: 
+  *  `request.body.auth_context` **Changed**
+
 ## 2.0.14
 
 No changes detected.

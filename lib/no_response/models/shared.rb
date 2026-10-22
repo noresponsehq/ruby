@@ -33,6 +33,7 @@ module NoResponse
       autoload :FailureReason, "no_response/models/shared/failurereason.rb"
       autoload :Flow, "no_response/models/shared/flow.rb"
       autoload :Freshness, "no_response/models/shared/freshness.rb"
+      autoload :HookPoint, "no_response/models/shared/hookpoint.rb"
       autoload :IdentifierKind, "no_response/models/shared/identifierkind.rb"
       autoload :IncompleteReason, "no_response/models/shared/incompletereason.rb"
       autoload :IncompleteSource, "no_response/models/shared/incompletesource.rb"
