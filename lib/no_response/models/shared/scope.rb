@@ -12,6 +12,7 @@ module NoResponse
           HISTORY = new("history")
           WEBHOOKS = new("webhooks")
           DETAILED = new("detailed")
+          INTEGRATIONS = new("integrations")
         end
 
         open!

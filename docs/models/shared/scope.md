@@ -14,9 +14,10 @@ custom = Scope.deserialize("custom_value")
 
 ## Values
 
-| Name       | Value      |
-| ---------- | ---------- |
-| `ASSESS`   | assess     |
-| `HISTORY`  | history    |
-| `WEBHOOKS` | webhooks   |
-| `DETAILED` | detailed   |
+| Name           | Value          |
+| -------------- | -------------- |
+| `ASSESS`       | assess         |
+| `HISTORY`      | history        |
+| `WEBHOOKS`     | webhooks       |
+| `DETAILED`     | detailed       |
+| `INTEGRATIONS` | integrations   |

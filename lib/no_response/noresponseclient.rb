@@ -15,7 +15,7 @@ module NoResponse
   class NoResponseClient
     extend T::Sig
 
-    attr_accessor :assessments, :keys
+    attr_accessor :assessments, :keys, :integrations
 
     # Instantiates the SDK, configuring it with the provided parameters.
     #
@@ -89,6 +89,7 @@ module NoResponse
     def init_sdks
       @assessments = Assessments.new(@sdk_configuration)
       @keys = Keys.new(@sdk_configuration)
+      @integrations = Integrations.new(@sdk_configuration)
     end
 
     sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }
