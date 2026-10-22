@@ -48,6 +48,18 @@ class NoResponse::Models::Shared::Risk
   def coverage=(str_)
   end
 
+  def block
+  end
+
+  def block=(str_)
+  end
+
+  def block_threshold
+  end
+
+  def block_threshold=(str_)
+  end
+
   def policy_basis
   end
 

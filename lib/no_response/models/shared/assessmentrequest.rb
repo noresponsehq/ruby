@@ -62,6 +62,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::AuthContext),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("auth_context")}}
         )
+        # Optional. When the signup gate issues an API key to the new account, send SHA-256 of that key, so later usage of the key, or a leaked copy, ties back to this assessment. Each SDK has a helper that computes it. Send only the hash: customer keys are high-entropy, so the hash reveals nothing about them. The assessment stores it, and no response, webhook or log carries it.
+        field(
+          :issued_credential,
+          Crystalline::Nilable.new(Models::Shared::AssessmentRequestIssuedCredential),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("issued_credential")}}
+        )
 
         sig {
           params(
@@ -72,7 +78,8 @@ module NoResponse
             deadline_ms: T.nilable(::Integer),
             response_mode: T.nilable(Models::Shared::ResponseMode),
             client_context: T.nilable(Models::Shared::AssessmentRequestClientContext),
-            auth_context: T.nilable(Models::Shared::AuthContext)
+            auth_context: T.nilable(Models::Shared::AuthContext),
+            issued_credential: T.nilable(Models::Shared::AssessmentRequestIssuedCredential)
           )
             .void
         }
@@ -84,7 +91,8 @@ module NoResponse
           deadline_ms: nil,
           response_mode: nil,
           client_context: nil,
-          auth_context: nil
+          auth_context: nil,
+          issued_credential: nil
         )
           @account_id = account_id
           @identifiers = identifiers
@@ -94,6 +102,7 @@ module NoResponse
           @response_mode = response_mode
           @client_context = client_context
           @auth_context = auth_context
+          @issued_credential = issued_credential
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -107,6 +116,7 @@ module NoResponse
           return false unless @response_mode == other.response_mode
           return false unless @client_context == other.client_context
           return false unless @auth_context == other.auth_context
+          return false unless @issued_credential == other.issued_credential
           true
         end
       end

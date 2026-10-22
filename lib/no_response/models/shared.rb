@@ -12,6 +12,7 @@ module NoResponse
       autoload :AssessmentRequest, "no_response/models/shared/assessmentrequest.rb"
       autoload :AssessmentRequestClientContext, "no_response/models/shared/assessmentrequestclientcontext.rb"
       autoload :AssessmentRequestIdentifiers, "no_response/models/shared/assessmentrequestidentifiers.rb"
+      autoload :AssessmentRequestIssuedCredential, "no_response/models/shared/assessmentrequestissuedcredential.rb"
       autoload :AssessmentRequestPolicyContext, "no_response/models/shared/assessmentrequestpolicycontext.rb"
       autoload :AssessmentTiming, "no_response/models/shared/assessmenttiming.rb"
       autoload :AssuranceLevel, "no_response/models/shared/assurancelevel.rb"

@@ -16,6 +16,7 @@ require_relative "../late_results"
 require_relative "idempotency_key_hook"
 require_relative "../models/errors/apistatuserror"
 require_relative "../auth"
+require_relative "../issued_credential"
 
 module NoResponse
   module SDKHooks

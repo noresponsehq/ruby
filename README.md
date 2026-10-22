@@ -9,7 +9,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.0.15"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.0.17"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 2.0"`.
@@ -144,6 +144,14 @@ Connection errors, 408, 429 and every 5xx are retried with exponential backoff (
 
 ```ruby
 client.assessments.create(body: request, retries: NoResponse::Utils::RetryConfig.new(strategy: "none"))
+```
+
+## Issued keys
+
+When your signup gate issues an API key to the new account, send only its hash, as `issued_credential.sha256`; the key itself never leaves your backend.
+
+```ruby
+sha256 = NoResponse::IssuedCredential.sha256(issued_key)
 ```
 
 ## Webhooks

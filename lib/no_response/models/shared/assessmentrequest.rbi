@@ -53,4 +53,10 @@ class NoResponse::Models::Shared::AssessmentRequest
 
   def auth_context=(str_)
   end
+
+  def issued_credential
+  end
+
+  def issued_credential=(str_)
+  end
 end

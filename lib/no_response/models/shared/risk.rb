@@ -68,6 +68,18 @@ module NoResponse
           Models::Shared::RiskCoverage,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("coverage"), required: true}}
         )
+        # true when the tenant's block threshold is set and score reached it. A provider hook can deny the signup on it; the provider decides and enforces. It does not change recommendation. It is false while blocking is off, the default, and a body from before the flag existed omits it: read absent as false.
+        field(
+          :block,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("block")}}
+        )
+        # The block threshold this answer used: block is true exactly when score is at least this value. Absent while blocking is off. NoResponse sets it per tenant on request, at or above the review threshold.
+        field(
+          :block_threshold,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("block_threshold")}}
+        )
         # Labels the v0 policy as hand-authored and not statistically validated.
         field(
           :policy_basis,
@@ -96,6 +108,8 @@ module NoResponse
             policy_version: ::String,
             reasons: T::Array[Models::Shared::RiskReason],
             coverage: Models::Shared::RiskCoverage,
+            block: T.nilable(T::Boolean),
+            block_threshold: T.nilable(::Integer),
             policy_basis: ::String,
             summary: T.nilable(Models::Shared::RiskSummary),
             details: T.nilable(Models::Shared::RiskDetails)
@@ -110,6 +124,8 @@ module NoResponse
           policy_version:,
           reasons:,
           coverage:,
+          block: nil,
+          block_threshold: nil,
           policy_basis: "heuristic_unvalidated",
           summary: nil,
           details: nil
@@ -121,6 +137,8 @@ module NoResponse
           @policy_version = policy_version
           @reasons = reasons
           @coverage = coverage
+          @block = block
+          @block_threshold = block_threshold
           unless policy_basis == "heuristic_unvalidated"
             raise ArgumentError, "Invalid value for policy_basis"
           end
@@ -140,6 +158,8 @@ module NoResponse
           return false unless @policy_version == other.policy_version
           return false unless @reasons == other.reasons
           return false unless @coverage == other.coverage
+          return false unless @block == other.block
+          return false unless @block_threshold == other.block_threshold
           return false unless @policy_basis == other.policy_basis
           return false unless @summary == other.summary
           return false unless @details == other.details
