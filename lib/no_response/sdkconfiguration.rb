@@ -95,9 +95,9 @@ module NoResponse
 
       @language = "ruby"
       @openapi_doc_version = "1"
-      @sdk_version = "2.1.12"
+      @sdk_version = "2.1.13"
       @gen_version = "internal"
-      @user_agent = "noresponse-sdk/ruby 2.1.12 internal 1 noresponse"
+      @user_agent = "noresponse-sdk/ruby 2.1.13 internal 1 noresponse"
     end
 
     sig { returns([String, T::Hash[Symbol, String]]) }
