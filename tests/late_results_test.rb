@@ -166,6 +166,25 @@ class LateResultsTest < Minitest::Test
     end
   end
 
+  def test_the_log_only_provider_logs_what_it_would_revoke_or_ban_and_calls_nothing
+    lines = []
+    log_only = LateResults.log_only(log: ->(line) { lines << line })
+    assert_equal 'log_only', log_only.name
+    raw, headers = delivery(review, 'usr_8f2k1')
+    revoked = LateResults.handle(raw, headers, SECRETS, log_only, now: NOW)
+    assert_equal %w[revoke_sessions usr_8f2k1], [revoked.action, revoked.user_id]
+    banned = LateResults.handle(raw, headers, SECRETS, log_only, now: NOW, policy: { review: 'ban' })
+    assert_equal 'ban', banned.action
+    assert_equal ['NoResponse late result (log only): would revoke every session of user usr_8f2k1',
+                  'NoResponse late result (log only): would ban user usr_8f2k1 and end their sessions'], lines
+    test_raw, test_headers = delivery(review, 'usr_8f2k1', test: true)
+    assert_equal 'none', LateResults.handle(test_raw, test_headers, SECRETS, log_only, now: NOW).action
+    assert_equal 2, lines.length
+    assert_raises(ArgumentError) { log_only.ban('') }
+    _, err = capture_io { LateResults.log_only.revoke_sessions('usr_8f2k1') }
+    assert_equal "NoResponse late result (log only): would revoke every session of user usr_8f2k1\n", err
+  end
+
   def test_workos_revoke_pages_through_sessions_and_ban_revokes_then_deletes
     route = lambda do |c|
       if c.verb == 'GET' && c.path == '/user_management/users/user_01WORKOS/sessions'

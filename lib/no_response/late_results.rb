@@ -156,6 +156,17 @@ module NoResponse
 
         Auth0.new(Caller.new('auth0', base, "Bearer #{token}", http_client))
       end
+
+      # A provider for an app with its own login, or for trying the handler
+      # before you wire up a real one. revoke_sessions and ban each log one
+      # line saying what they would do and call nothing: no request leaves
+      # your process. log is any callable that takes the line; the default
+      # writes it to standard error with Kernel#warn. Replace it with your own
+      # provider (name, revoke_sessions and ban) once you know what revoking
+      # and banning mean in your app.
+      def log_only(log: nil)
+        LogOnly.new(log || ->(line) { Kernel.warn(line) })
+      end
     end
 
     # One provider HTTP client: base URL, Authorization header, error mapping.
@@ -301,6 +312,26 @@ module NoResponse
       def ban(user_id)
         @call.call('PATCH', "/users/#{Segment.encode(user_id)}", body: { 'blocked' => true }, allow_404: true)
         revoke_sessions(user_id)
+      end
+    end
+
+    class LogOnly
+      def initialize(log)
+        @log = log
+      end
+
+      def name = 'log_only'
+
+      def revoke_sessions(user_id)
+        Segment.encode(user_id)
+        @log.call("NoResponse late result (log only): would revoke every session of user #{user_id}")
+        nil
+      end
+
+      def ban(user_id)
+        Segment.encode(user_id)
+        @log.call("NoResponse late result (log only): would ban user #{user_id} and end their sessions")
+        nil
       end
     end
   end
