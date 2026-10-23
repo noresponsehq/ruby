@@ -4,12 +4,12 @@
 module NoResponse
   module Models
     module Shared
-      # The 201 answer of POST /v1/keys/rotate: the new key, shown once, and when the key that was presented stops working. The new key has the scopes of the presented key.
+      # The 201 answer of POST /v1/keys/rotate: the new key, shown once, and when the key that was presented stops working. The new key has the scopes and the environment of the presented key.
       class KeyRotation
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # The new credential, nrk_<key id>_<secret>. It is shown only in this answer; store it now.
+        # The new credential, nrk_<mode>_<key id>_<secret>, in the environment of the presented key: nrk_live_ or nrk_test_. It is shown only in this answer; store it now.
         field :key, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("key"), required: true}}
         # The public id of the new key.
         field(

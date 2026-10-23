@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 352b6dd36649c6875138dfc0ab601ba9
+  docChecksum: 567d0297b19b3962fb345b9acae6ac77
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.1.2
-  configChecksum: 60ad8a7fb9e823dd64c6fd1fc282e36a
+  releaseVersion: 2.1.3
+  configChecksum: 23b5e88c56798bebab270fb6f949ae48
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -32,7 +32,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:ab7f76380b3cb2acdb187d6c44d170f67d625e97
+    last_write_checksum: sha1:6cd80924a6d2be477ba339bee50c2a8beb4e00b0
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -206,7 +206,7 @@ trackedFiles:
   docs/models/shared/ipsummarytype.md:
     last_write_checksum: sha1:f46393c94742ec0b5ba9d22cb69edf33caf2890a
   docs/models/shared/keyrotation.md:
-    last_write_checksum: sha1:ed997e0a55a1b5b1dbd6f8581d1088783aa8c082
+    last_write_checksum: sha1:0e2d1b873b56febd9ea6fbc4b15865a6a53fc912
   docs/models/shared/keyrotationrequest.md:
     last_write_checksum: sha1:ca0ff751639f88e4cb123ebed2c1ffbda159a51a
   docs/models/shared/lane.md:
@@ -694,7 +694,7 @@ trackedFiles:
   lib/no_response/models/shared/ipsummarytype.rbi:
     last_write_checksum: sha1:6155231669097b0457071a5da01acaff2879ef5d
   lib/no_response/models/shared/keyrotation.rb:
-    last_write_checksum: sha1:29fd5d4b8d83baf06fc1bf11599852317aed2481
+    last_write_checksum: sha1:462b8516142ba9d6723f9a22ab21a9e4ddfb9f3f
   lib/no_response/models/shared/keyrotation.rbi:
     last_write_checksum: sha1:296c2f752c3f16035769bbdf415ccdb1679ae35e
   lib/no_response/models/shared/keyrotationrequest.rb:
@@ -920,7 +920,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:f75c34fb6ce8639c394244c1ce326309624ca6ec
+    last_write_checksum: sha1:b0b50a306b8c1ea26e2b5f72170567debcd23c9a
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/utils/forms.rb:
@@ -944,7 +944,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:c2f705f48b7c78611ada7ed5be47f357cdd6b710
   noresponse.gemspec:
-    last_write_checksum: sha1:6676065c4d91e572c99f3795a685894403ef2455
+    last_write_checksum: sha1:d66b11ec846b45685d34d134794df7ac2c5f0a7e
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -1206,7 +1206,7 @@ examples:
         application/json: {"overlap_seconds": 3600}
       responses:
         "201":
-          application/json: {"key": "nrk_01JA2Z8K6Q4V7W9XBCDEFGHJKM_k3Yx8pQ2mN7vR4tW6zB9cD1eF5gH0jL4sP9uV2wX7yA", "key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKM", "scopes": [], "created_at": "2026-10-14T09:10:00.000Z", "previous_key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKN", "previous_key_expires_at": "2026-10-15T09:10:00.000Z"}
+          application/json: {"key": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM_k3Yx8pQ2mN7vR4tW6zB9cD1eF5gH0jL4sP9uV2wX7yA", "key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKM", "scopes": [], "created_at": "2026-10-14T09:10:00.000Z", "previous_key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKN", "previous_key_expires_at": "2026-10-15T09:10:00.000Z"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "webhook_url_refused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -1224,7 +1224,7 @@ examples:
         application/json: {}
       responses:
         "201":
-          application/json: {"key": "nrk_01JA2Z8K6Q4V7W9XBCDEFGHJKM_k3Yx8pQ2mN7vR4tW6zB9cD1eF5gH0jL4sP9uV2wX7yA", "key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKM", "scopes": [], "created_at": "2026-10-14T09:10:00.000Z", "previous_key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKN", "previous_key_expires_at": "2026-10-15T09:10:00.000Z"}
+          application/json: {"key": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM_k3Yx8pQ2mN7vR4tW6zB9cD1eF5gH0jL4sP9uV2wX7yA", "key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKM", "scopes": [], "created_at": "2026-10-14T09:10:00.000Z", "previous_key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKN", "previous_key_expires_at": "2026-10-15T09:10:00.000Z"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "webhook_url_refused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -1242,7 +1242,7 @@ examples:
         application/json: {}
       responses:
         "201":
-          application/json: {"key": "nrk_01JA2ZC0Q1R2S3T4V5W6X7Y8Z9_0123456789abcdefghijklmnopqrstuvwxyzABCDEFA", "key_id": "01JA2ZC0Q1R2S3T4V5W6X7Y8Z9", "scopes": ["assess", "history"], "created_at": "2026-10-21T09:00:00.000Z", "previous_key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKM", "previous_key_expires_at": "2026-10-22T09:00:00.000Z"}
+          application/json: {"key": "nrk_live_01JA2ZC0Q1R2S3T4V5W6X7Y8Z9_0123456789abcdefghijklmnopqrstuvwxyzABCDEFA", "key_id": "01JA2ZC0Q1R2S3T4V5W6X7Y8Z9", "scopes": ["assess", "history"], "created_at": "2026-10-21T09:00:00.000Z", "previous_key_id": "01JA2Z8K6Q4V7W9XBCDEFGHJKM", "previous_key_expires_at": "2026-10-22T09:00:00.000Z"}
   createIntegration:
     auth0:
       requestBody:
