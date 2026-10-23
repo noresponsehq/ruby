@@ -43,6 +43,7 @@ module NoResponse
           CONTEXT_LOCALE_MISMATCH = new("context_locale_mismatch")
           CONTEXT_LINE_COUNTRY_MISMATCH = new("context_line_country_mismatch")
           PRIOR_ABUSE_LINK = new("prior_abuse_link")
+          TEST_SCENARIO = new("test_scenario")
         end
 
         open!
