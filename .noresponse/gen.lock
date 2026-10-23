@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 567d0297b19b3962fb345b9acae6ac77
+  docChecksum: 3637203d4745357cf4caf8a9938e96bd
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.1.3
-  configChecksum: 23b5e88c56798bebab270fb6f949ae48
+  releaseVersion: 2.1.4
+  configChecksum: f09b9f9c5cde703e6bf7d7075f440cb8
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -32,11 +32,11 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:6cd80924a6d2be477ba339bee50c2a8beb4e00b0
+    last_write_checksum: sha1:6335b127129375b3deb820550b68b21fa34e4a68
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
-    last_write_checksum: sha1:4bb0d6fbcd859406e61679d88f61e32bf2829a42
+    last_write_checksum: sha1:f68af04a759698f8ed53ce3491a8b9d97e620ebb
   docs/models/errors/authenticationerror.md:
     last_write_checksum: sha1:3d33744d11673486503b9a0358f140908fce6538
   docs/models/errors/badrequesterror.md:
@@ -50,7 +50,7 @@ trackedFiles:
   docs/models/errors/ratelimiterror.md:
     last_write_checksum: sha1:7aa5bbbf3dcaa0fbcfe087b91e196c36fd094190
   docs/models/operations/createassessmentrequest.md:
-    last_write_checksum: sha1:cce4fdef7429f4250a37c37150098cd1b15d5a4e
+    last_write_checksum: sha1:c2c12d3bf555c096608d829e7f7a4b0d90a19c3b
   docs/models/operations/createassessmentresponse.md:
     last_write_checksum: sha1:0680b462e4d145a3c273a8e81a75eb8208312f8f
   docs/models/operations/createintegrationresponse.md:
@@ -84,7 +84,7 @@ trackedFiles:
   docs/models/operations/queryaccountassessmentsresponse.md:
     last_write_checksum: sha1:c47a4d44fedc9c7ff5b8276ddb287357fda54fbc
   docs/models/operations/recordassessmentoutcomerequest.md:
-    last_write_checksum: sha1:95a230543fd725e43d6c929c32e9312081bc8d04
+    last_write_checksum: sha1:0a529e8f196936b509ac8611b107ef5d92b2b68a
   docs/models/operations/recordassessmentoutcomeresponse.md:
     last_write_checksum: sha1:01f6b58af9d52bbcd2aeb36bf97d0150e3940b57
   docs/models/operations/rotateapikeyresponse.md:
@@ -318,7 +318,7 @@ trackedFiles:
   docs/sdks/accounts/README.md:
     last_write_checksum: sha1:06faf1ef6f6e8d94bc154b660b0c1e1ce2f0e415
   docs/sdks/assessments/README.md:
-    last_write_checksum: sha1:b0717d7b4cd0e75d5fb28340ec921a30bc2bdc22
+    last_write_checksum: sha1:6c89cadbe9f4843362a6908d3a302e68827a104c
   docs/sdks/integrations/README.md:
     last_write_checksum: sha1:979f5991b0d9b5800efad4d6ff3396bee3f6f3d7
   docs/sdks/keys/README.md:
@@ -920,7 +920,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:b0b50a306b8c1ea26e2b5f72170567debcd23c9a
+    last_write_checksum: sha1:595da22286288a547a9a2b1c0e89a52c64f80e72
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/utils/forms.rb:
@@ -944,7 +944,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:c2f705f48b7c78611ada7ed5be47f357cdd6b710
   noresponse.gemspec:
-    last_write_checksum: sha1:d66b11ec846b45685d34d134794df7ac2c5f0a7e
+    last_write_checksum: sha1:4e3698668746743635b031c70f1128d52b164507
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -960,7 +960,7 @@ examples:
     minimal:
       parameters:
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"account_id": "acct_7f3a9c", "identifiers": {"email": "new.user@example.com"}}
       responses:
@@ -981,7 +981,7 @@ examples:
     full:
       parameters:
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"account_id": "acct_7f3a9c", "identifiers": {"email": "new.user@example.com", "username": "new_user_42", "phone": "+447700900123"}, "policy_context": {"flow": "signup", "region": "GB"}, "request_id": "req-2026-10-14-0001", "deadline_ms": 300}
       responses:
@@ -1002,7 +1002,7 @@ examples:
     name_and_ip:
       parameters:
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"account_id": "acct_8412", "identifiers": {"email": "jane.doe@example.com", "username": "janedoe", "phone": "+14155550123", "name": "Jane A. Doe", "ip": "73.162.18.45"}, "policy_context": {"flow": "signup", "region": "US"}, "request_id": "req_01", "deadline_ms": 500, "response_mode": "standard"}
       responses:
@@ -1023,7 +1023,7 @@ examples:
     complete:
       parameters:
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"account_id": "acct_7f3a9c", "identifiers": {"email": "new.user@example.com", "username": "new.user", "phone": "+61412345678", "name": "Alex Example", "ip": "203.0.113.45"}, "policy_context": {"region": "AU"}, "request_id": "req-2026-10-14-0001", "client_context": {"timezone": "Australia/Sydney", "locale": "en-AU", "app_version": "4.12.0", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", "device_id": "dev_5c1e8a", "session_id": "sess_9b2d41", "client_observed_at": "2026-10-14T08:59:58.000Z"}, "auth_context": {"provider": "clerk", "issuer": "https://example-app.clerk.accounts.dev", "audience": "https://app.example.com", "audiences": ["https://app.example.com"], "subject": "user_2EXAMPLE", "session_id": "sess_2EXAMPLE", "organization_id": "org_2EXAMPLE", "tenant_id": "tenant_2EXAMPLE", "token_id": "2EXAMPLEJTI", "issued_at": "2026-10-14T08:59:40.000Z", "expires_at": "2026-10-14T09:00:40.000Z", "session_created_at": "2026-10-14T08:57:00.000Z", "auth_time": "2026-10-14T08:55:00.000Z", "account_created_at": "2026-10-14T08:56:00.000Z", "verified": false, "mfa": {"methods": ["totp"]}, "roles": ["admin"], "scopes": ["org:sys_profile:manage"]}, "issued_credential": {"sha256": "2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b"}}
       responses:
@@ -1032,7 +1032,7 @@ examples:
     partial:
       parameters:
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"account_id": "acct_7f3a9c", "identifiers": {"email": "new.user@example.com", "username": "new.user", "phone": "+61412345678", "name": "Alex Example", "ip": "203.0.113.45"}, "policy_context": {"region": "AU"}, "request_id": "req-2026-10-14-0001", "client_context": {"timezone": "Australia/Sydney", "locale": "en-AU", "app_version": "4.12.0", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", "device_id": "dev_5c1e8a", "session_id": "sess_9b2d41", "client_observed_at": "2026-10-14T08:59:58.000Z"}, "auth_context": {"provider": "clerk", "issuer": "https://example-app.clerk.accounts.dev", "audience": "https://app.example.com", "audiences": ["https://app.example.com"], "subject": "user_2EXAMPLE", "session_id": "sess_2EXAMPLE", "organization_id": "org_2EXAMPLE", "tenant_id": "tenant_2EXAMPLE", "token_id": "2EXAMPLEJTI", "issued_at": "2026-10-14T08:59:40.000Z", "expires_at": "2026-10-14T09:00:40.000Z", "session_created_at": "2026-10-14T08:57:00.000Z", "auth_time": "2026-10-14T08:55:00.000Z", "account_created_at": "2026-10-14T08:56:00.000Z", "verified": false, "mfa": {"methods": ["totp"]}, "roles": ["admin"], "scopes": ["org:sys_profile:manage"]}, "issued_credential": {"sha256": "2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b"}}
       responses:
@@ -1041,7 +1041,7 @@ examples:
     standard:
       parameters:
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"account_id": "acct_7f3a9c", "identifiers": {"email": "new.user@example.com", "username": "new.user", "phone": "+61412345678", "name": "Alex Example", "ip": "203.0.113.45"}, "policy_context": {"region": "AU"}, "request_id": "req-2026-10-14-0001", "client_context": {"timezone": "Australia/Sydney", "locale": "en-AU", "app_version": "4.12.0", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", "device_id": "dev_5c1e8a", "session_id": "sess_9b2d41", "client_observed_at": "2026-10-14T08:59:58.000Z"}, "auth_context": {"provider": "clerk", "issuer": "https://example-app.clerk.accounts.dev", "audience": "https://app.example.com", "audiences": ["https://app.example.com"], "subject": "user_2EXAMPLE", "session_id": "sess_2EXAMPLE", "organization_id": "org_2EXAMPLE", "tenant_id": "tenant_2EXAMPLE", "token_id": "2EXAMPLEJTI", "issued_at": "2026-10-14T08:59:40.000Z", "expires_at": "2026-10-14T09:00:40.000Z", "session_created_at": "2026-10-14T08:57:00.000Z", "auth_time": "2026-10-14T08:55:00.000Z", "account_created_at": "2026-10-14T08:56:00.000Z", "verified": false, "mfa": {"methods": ["totp"]}, "roles": ["admin"], "scopes": ["org:sys_profile:manage"]}, "issued_credential": {"sha256": "2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b"}}
       responses:
@@ -1050,7 +1050,7 @@ examples:
     detailed:
       parameters:
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"account_id": "acct_7f3a9c", "identifiers": {"email": "new.user@example.com", "username": "new.user", "phone": "+61412345678", "name": "Alex Example", "ip": "203.0.113.45"}, "policy_context": {"region": "AU"}, "request_id": "req-2026-10-14-0001", "client_context": {"timezone": "Australia/Sydney", "locale": "en-AU", "app_version": "4.12.0", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", "device_id": "dev_5c1e8a", "session_id": "sess_9b2d41", "client_observed_at": "2026-10-14T08:59:58.000Z"}, "auth_context": {"provider": "clerk", "issuer": "https://example-app.clerk.accounts.dev", "audience": "https://app.example.com", "audiences": ["https://app.example.com"], "subject": "user_2EXAMPLE", "session_id": "sess_2EXAMPLE", "organization_id": "org_2EXAMPLE", "tenant_id": "tenant_2EXAMPLE", "token_id": "2EXAMPLEJTI", "issued_at": "2026-10-14T08:59:40.000Z", "expires_at": "2026-10-14T09:00:40.000Z", "session_created_at": "2026-10-14T08:57:00.000Z", "auth_time": "2026-10-14T08:55:00.000Z", "account_created_at": "2026-10-14T08:56:00.000Z", "verified": false, "mfa": {"methods": ["totp"]}, "roles": ["admin"], "scopes": ["org:sys_profile:manage"]}, "issued_credential": {"sha256": "2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b"}}
       responses:
@@ -1098,7 +1098,7 @@ examples:
         path:
           assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"outcome": "confirmed_abuse", "observed_at": "2026-10-20T05:00:00Z", "external_ref": "case-123", "notes": "Card testing from this account; closed by trust and safety."}
       responses:
@@ -1121,7 +1121,7 @@ examples:
         path:
           assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"outcome": "false_positive"}
       responses:
@@ -1144,7 +1144,7 @@ examples:
         path:
           assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
         header:
-          Idempotency-Key: "signup-7f3a9c-0001"
+          Idempotency-Key: "signup-acct_7f3a9c"
       requestBody:
         application/json: {"outcome": "legitimate", "observed_at": "2026-10-14T09:04:30.000Z", "external_ref": "case-48213", "notes": "Chargeback filed two days after signup."}
       responses:

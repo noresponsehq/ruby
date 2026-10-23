@@ -13,7 +13,7 @@ res = s.assessments.create(
       email: "new.user@example.com"
     )
   ),
-  idempotency_key: "signup-7f3a9c-0001"
+  idempotency_key: "signup-acct_7f3a9c"
 )
 
 unless res.nil?
