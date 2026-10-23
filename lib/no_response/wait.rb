@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-# Wait for a pending assessment. Hand-written beside the generated client.
+# Wait for an assessment to complete. Hand-written beside the generated client.
 
 module NoResponse
   # The assessment was still pending when the wait ran out. last is the
@@ -22,9 +22,12 @@ module NoResponse
 
     class << self
 
-      # Poll client.assessments.get until the assessment is no longer pending,
+      # Poll client.assessments.get until the assessment's status is complete,
       # sleeping for the Retry-After the API sends (at least 1 s) between
-      # polls. Raises WaitTimeoutError once timeout seconds have passed.
+      # polls. Once timeout seconds have passed it returns a partial answer as
+      # it stands, its status still PARTIAL, and raises WaitTimeoutError if the
+      # assessment is still pending. A poll cut off by the deadline also
+      # returns the last partial answer instead of losing it.
       def wait(client, assessment_id, **options)
         poll(client.assessments, assessment_id, **options)
       end
@@ -34,13 +37,29 @@ module NoResponse
         raise ArgumentError, 'timeout must be positive' unless timeout.positive?
 
         deadline = clock.call + timeout
+        last = T.let(nil, T.untyped)
         loop do
           remaining_ms = [((deadline - clock.call) * 1000).ceil, 1].max
-          response = assessments.get(assessment_id: assessment_id, timeout_ms: remaining_ms)
-          return response.result unless response.result.status == Models::Shared::Status::PENDING
+          begin
+            response = assessments.get(assessment_id: assessment_id, timeout_ms: remaining_ms)
+          rescue Faraday::TimeoutError
+            # Each poll is bounded by the time left, so a request timeout here
+            # is the wait running out: a partial answer from an earlier poll
+            # stands. Anything else, or a timeout before the deadline, raises.
+            raise unless clock.call >= deadline && last&.status == Models::Shared::Status::PARTIAL
+
+            return last
+          end
+          last = response.result
+          status = response.result.status
+          return response.result if status == Models::Shared::Status::COMPLETE
 
           delay = retry_after(response.headers)
-          raise WaitTimeoutError.new(assessment_id, response.result) if clock.call + delay > deadline
+          if clock.call + delay > deadline
+            return response.result if status == Models::Shared::Status::PARTIAL
+
+            raise WaitTimeoutError.new(assessment_id, response.result)
+          end
 
           sleeper.call(delay)
         end

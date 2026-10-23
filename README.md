@@ -73,7 +73,7 @@ latest = client.assessments.get(assessment_id: created.result.assessment_id)
 settled = client.assessments.wait(created.result.assessment_id, timeout: 30)
 ```
 
-`wait` polls `get` until the status is no longer pending, sleeping the server's `Retry-After` (at least one second) between polls. It raises `NoResponse::WaitTimeoutError`, which carries the last pending assessment as `last`, when the timeout (default 30 s) passes.
+`wait` polls `get` until the status is `COMPLETE`, sleeping the server's `Retry-After` (at least one second) between polls. When the timeout (default 30 s) passes it returns the latest answer if that is `PARTIAL`, with its status still `PARTIAL`, and raises `NoResponse::WaitTimeoutError`, which carries the last pending assessment as `last`, if the assessment is still `PENDING`.
 
 ### Query an account's history
 
