@@ -267,6 +267,134 @@ class LateResultsTest < Minitest::Test
     end
   end
 
+  FEATURE_NOT_ENABLED = [403, { 'statusCode' => 403, 'error' => 'Forbidden',
+                                'message' => 'This feature is not enabled for this tenant.',
+                                'errorCode' => 'feature_not_enabled' }].freeze
+
+  # An Auth0 tenant on a plan without the sessions API, as a Free tenant
+  # answers: both bulk endpoints refuse with 403 feature_not_enabled, while
+  # /device-credentials and PATCH /users/{id} work. It keeps the refresh tokens
+  # and the blocked flag, so a repeated delivery sees what the first left.
+  class Auth0WithoutSessionsApi
+    attr_accessor :blocked, :credentials
+
+    def initialize(escaped, refresh_tokens_api: false)
+      @escaped = escaped
+      @refresh_tokens_api = refresh_tokens_api
+      @lock = Mutex.new
+      @blocked = false
+      @credentials = [%w[dcr_a refresh_token], %w[dcr_b refresh_token], %w[dcr_r rotating_refresh_token]]
+    end
+
+    def route
+      ->(c) { @lock.synchronize { answer(c) } }
+    end
+
+    private
+
+    def answer(c)
+      user = "/api/v2/users/#{@escaped}"
+      if c.verb == 'DELETE' && c.path == "#{user}/sessions" then FEATURE_NOT_ENABLED
+      elsif c.verb == 'DELETE' && c.path == "#{user}/refresh-tokens"
+        return FEATURE_NOT_ENABLED unless @refresh_tokens_api
+
+        @credentials = []
+        [202, nil]
+      elsif c.verb == 'PATCH' && c.path == user
+        @blocked = c.body['blocked'] == true
+        [200, { 'blocked' => @blocked }]
+      elsif c.verb == 'GET' && c.path == '/api/v2/device-credentials'
+        [200, @credentials.select { |_, t| t == c.query['type'] }.map { |i, t| { 'id' => i, 'type' => t } }]
+      elsif c.verb == 'DELETE' && c.path.start_with?('/api/v2/device-credentials/')
+        id = c.path.delete_prefix('/api/v2/device-credentials/')
+        return [404, { 'errorCode' => 'inexistent_device_credential' }] unless @credentials.any? { |i, _| i == id }
+
+        @credentials = @credentials.reject { |i, _| i == id }
+        [204, nil]
+      end
+    end
+  end
+
+  def test_auth0_without_the_sessions_api_blocks_deletes_device_credentials_and_reports_ban
+    id = 'auth0|64abc0de1234567890abcdef'
+    escaped = 'auth0%7C64abc0de1234567890abcdef'
+    tenant = Auth0WithoutSessionsApi.new(escaped)
+    with_mock(tenant.route) do |mock|
+      auth0 = LateResults.auth0(base_url: "#{mock.url}/api/v2", token: 'mgmt_token')
+      raw, headers = delivery(review, id)
+
+      result = LateResults.handle(raw, headers, SECRETS, auth0, now: NOW)
+      assert_equal 'ban', result.action
+      assert_equal id, result.user_id
+      assert tenant.blocked
+      assert_empty tenant.credentials
+      assert_equal ["DELETE /api/v2/users/#{escaped}/sessions",
+                    "PATCH /api/v2/users/#{escaped}",
+                    "DELETE /api/v2/users/#{escaped}/refresh-tokens",
+                    'GET /api/v2/device-credentials',
+                    'GET /api/v2/device-credentials',
+                    'DELETE /api/v2/device-credentials/dcr_a',
+                    'DELETE /api/v2/device-credentials/dcr_b',
+                    'DELETE /api/v2/device-credentials/dcr_r'], lines(mock)
+      assert_equal(%w[refresh_token rotating_refresh_token], mock.calls[3..4].map { |c| c.query['type'] })
+      assert_equal id, mock.calls[3].query['user_id']
+      assert(mock.calls.all? { |c| c.auth == 'Bearer mgmt_token' })
+
+      # The same delivery again: still blocked, nothing left to delete, same report.
+      mock.calls.clear
+      assert_equal 'ban', LateResults.handle(raw, headers, SECRETS, auth0, now: NOW).action
+      assert tenant.blocked
+      refute(mock.calls.any? { |c| c.verb == 'DELETE' && c.path.start_with?('/api/v2/device-credentials/') })
+
+      # ban blocks first, and the plan refusing the sessions endpoint is no failure.
+      tenant.blocked = false
+      tenant.credentials = [%w[dcr_c refresh_token]]
+      mock.calls.clear
+      assert_equal 'ban', LateResults.handle(raw, headers, SECRETS, auth0, now: NOW, policy: { review: 'ban' }).action
+      assert_equal 'PATCH', mock.calls.first.verb
+      assert tenant.blocked
+      assert_empty tenant.credentials
+
+      # Called directly, revoke_sessions takes the same fallback.
+      tenant.blocked = false
+      auth0.revoke_sessions(id)
+      assert tenant.blocked
+    end
+  end
+
+  def test_auth0_with_refresh_tokens_but_no_sessions_api_still_blocks_and_a_scope_refusal_never_falls_back
+    raw, headers = delivery(review, 'auth0|abc')
+    tenant = Auth0WithoutSessionsApi.new('auth0%7Cabc', refresh_tokens_api: true)
+    with_mock(tenant.route) do |mock|
+      auth0 = LateResults.auth0(base_url: "#{mock.url}/api/v2", token: 't')
+      assert_equal 'ban', LateResults.handle(raw, headers, SECRETS, auth0, now: NOW).action
+      assert tenant.blocked
+      refute_includes lines(mock), 'GET /api/v2/device-credentials'
+    end
+
+    scope = [403, { 'statusCode' => 403, 'error' => 'Forbidden', 'message' => 'Insufficient scope',
+                    'errorCode' => 'insufficient_scope' }]
+    with_mock(->(c) { c.verb == 'DELETE' ? scope : [200, {}] }) do |mock|
+      auth0 = LateResults.auth0(base_url: "#{mock.url}/api/v2", token: 't')
+      refused = assert_raises(LateResults::ProviderActionError) { LateResults.handle(raw, headers, SECRETS, auth0, now: NOW) }
+      assert_equal 403, refused.status
+      assert_equal 'insufficient_scope', refused.code
+      assert_equal ['DELETE /api/v2/users/auth0%7Cabc/sessions'], lines(mock)
+    end
+  end
+
+  def test_a_provider_without_act_reports_the_action_asked_for
+    done = []
+    plain = Object.new
+    plain.define_singleton_method(:name) { 'plain' }
+    plain.define_singleton_method(:revoke_sessions) { |user_id| done << "revoke #{user_id}" }
+    plain.define_singleton_method(:ban) { |user_id| done << "ban #{user_id}" }
+    raw, headers = delivery(review, 'u_1')
+    assert_equal 'revoke_sessions', LateResults.handle(raw, headers, SECRETS, plain, now: NOW).action
+    assert_equal 'ban', LateResults.handle(raw, headers, SECRETS, plain, now: NOW, policy: { review: 'ban' }).action
+    assert_equal ['revoke u_1', 'ban u_1'], done
+  end
+
   def test_auth0_domain_builds_the_management_base_url
     seen = []
     client = lambda do |method, uri, headers, body|

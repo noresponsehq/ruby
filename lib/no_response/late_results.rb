@@ -39,17 +39,23 @@ module NoResponse
     # with a 5xx so NoResponse retries it. The message holds no response body
     # and no credentials.
     class ProviderActionError < StandardError
-      attr_reader :provider, :status
+      # code is the provider's error code from the response body, such as
+      # Auth0's errorCode "insufficient_scope", when it sent one.
+      attr_reader :provider, :status, :code
 
-      def initialize(provider, status, message)
+      def initialize(provider, status, message, code = nil)
         super(message)
         @provider = provider
         @status = status
+        @code = code
       end
     end
 
-    # event is the verified Webhooks::Event. action is the action taken: NONE
-    # when the policy, the event or the user id called for nothing. user_id is
+    # event is the verified Webhooks::Event. action is the action that ran:
+    # NONE when the policy, the event or the user id called for nothing. It can
+    # be stronger than the policy's action when the provider had to fall back:
+    # the auth0 provider reports BAN when it blocked the user because the
+    # tenant's plan cannot end sessions. user_id is
     # the provider user id acted on, set only when an action was taken. Answer
     # an endpoint.verification with Webhooks.verification_response(event).
     Result = Struct.new(:event, :action, :user_id, keyword_init: true)
@@ -102,12 +108,17 @@ module NoResponse
         return Result.new(event: event, action: NONE) if resolved.nil? || resolved.to_s.empty?
 
         resolved = resolved.to_s
-        if action == BAN
+        # A provider may define act(action, user_id), returning the action that
+        # ran; the auth0 provider does, to report a block it had to fall back to.
+        ran = action
+        if provider.respond_to?(:act)
+          ran = provider.act(action, resolved)
+        elsif action == BAN
           provider.ban(resolved)
         else
           provider.revoke_sessions(resolved)
         end
-        Result.new(event: event, action: action, user_id: resolved)
+        Result.new(event: event, action: ACTIONS.include?(ran) ? ran : action, user_id: resolved)
       end
 
       # Clerk Backend API. revoke_sessions lists the user's active sessions
@@ -146,8 +157,18 @@ module NoResponse
       # (PATCH /users/{id}), then does the same. Pass domain (such as
       # example.eu.auth0.com; the API is https://{domain}/api/v2) or base_url.
       # token is a Management API access token with update:users,
-      # delete:sessions and delete:refresh_tokens. A 404 on any call (user
-      # already gone) counts as done, so a repeated delivery is safe.
+      # delete:sessions, delete:refresh_tokens, read:device_credentials and
+      # delete:device_credentials. A 404 on any call (user already gone)
+      # counts as done, so a repeated delivery is safe.
+      #
+      # Auth0 offers the sessions and refresh-token endpoints on Enterprise
+      # plans only; on other plans they answer 403 feature_not_enabled. Then
+      # refresh tokens are deleted one by one through /device-credentials
+      # (types refresh_token and rotating_refresh_token), which every plan
+      # has. A login session cannot be ended, so revoke_sessions blocks the
+      # user before deleting the refresh tokens, and act reports BAN. Unblock
+      # the user in the dashboard to undo it. Any other refusal, such as 403
+      # insufficient_scope, raises.
       def auth0(token:, domain: nil, base_url: nil, http_client: nil)
         raise ArgumentError, 'auth0 needs token' if token.to_s.empty?
 
@@ -191,7 +212,9 @@ module NoResponse
         end
         status, text = perform(method, uri, headers, payload)
         return nil if allow_404 && status == 404
-        raise ProviderActionError.new(@name, status, "#{@name} #{method} #{path} answered #{status}") unless status.between?(200, 299)
+        unless status.between?(200, 299)
+          raise ProviderActionError.new(@name, status, "#{@name} #{method} #{path} answered #{status}", error_code(text))
+        end
         return nil if text.nil? || text.empty?
 
         begin
@@ -202,6 +225,17 @@ module NoResponse
       end
 
       private
+
+      # The error code in a provider's error body: Auth0's errorCode, or a top-level code.
+      def error_code(text)
+        body = JSON.parse(text.to_s)
+        return nil unless body.is_a?(Hash)
+
+        code = body['errorCode'] || body['code']
+        code.is_a?(String) && !code.empty? ? code : nil
+      rescue JSON::ParserError
+        nil
+      end
 
       def perform(method, uri, headers, payload)
         return @http_client.call(method, uri, headers, payload) if @http_client
@@ -296,6 +330,8 @@ module NoResponse
     end
 
     class Auth0
+      PAGE = 100
+
       def initialize(caller_)
         @call = caller_
       end
@@ -303,15 +339,79 @@ module NoResponse
       def name = 'auth0'
 
       def revoke_sessions(user_id)
-        user = Segment.encode(user_id)
-        @call.call('DELETE', "/users/#{user}/sessions", allow_404: true)
-        @call.call('DELETE', "/users/#{user}/refresh-tokens", allow_404: true)
+        revoke(user_id)
         nil
       end
 
       def ban(user_id)
-        @call.call('PATCH', "/users/#{Segment.encode(user_id)}", body: { 'blocked' => true }, allow_404: true)
-        revoke_sessions(user_id)
+        user = Segment.encode(user_id)
+        block(user)
+        # The block already ends a session the plan cannot delete.
+        delete_sessions(user)
+        delete_refresh_tokens(user_id, user)
+        nil
+      end
+
+      # Bans or revokes and returns the action that ran: BAN when revoking had
+      # to block the user.
+      def act(action, user_id)
+        if action == BAN
+          ban(user_id)
+          return BAN
+        end
+        revoke(user_id)
+      end
+
+      private
+
+      def revoke(user_id)
+        user = Segment.encode(user_id)
+        ended = delete_sessions(user)
+        # Without the sessions API a login session survives; blocking is the only way to end it.
+        block(user) unless ended
+        delete_refresh_tokens(user_id, user)
+        ended ? REVOKE_SESSIONS : BAN
+      end
+
+      # Auth0 answers 403 feature_not_enabled when the tenant's plan does not include an endpoint.
+      def not_on_plan?(error)
+        error.status == 403 && error.code == 'feature_not_enabled'
+      end
+
+      def block(user)
+        @call.call('PATCH', "/users/#{user}", body: { 'blocked' => true }, allow_404: true)
+      end
+
+      # Ends every session; false when the plan has no sessions API.
+      def delete_sessions(user)
+        @call.call('DELETE', "/users/#{user}/sessions", allow_404: true)
+        true
+      rescue ProviderActionError => e
+        raise unless not_on_plan?(e)
+
+        false
+      end
+
+      def delete_refresh_tokens(user_id, user)
+        begin
+          @call.call('DELETE', "/users/#{user}/refresh-tokens", allow_404: true)
+          return
+        rescue ProviderActionError => e
+          raise unless not_on_plan?(e)
+        end
+        # Collect every id before deleting any, so the pages do not shift underneath.
+        ids = []
+        %w[refresh_token rotating_refresh_token].each do |type|
+          10.times do |page|
+            body = @call.call('GET', '/device-credentials',
+                              query: [['user_id', user_id], ['type', type], ['page', page.to_s], ['per_page', PAGE.to_s]],
+                              allow_404: true)
+            listed = body.is_a?(Array) ? body.grep(Hash) : []
+            ids.concat(listed.map { |c| c['id'] }.select { |id| id.is_a?(String) && !id.empty? })
+            break if listed.length < PAGE
+          end
+        end
+        ids.each { |id| @call.call('DELETE', "/device-credentials/#{ERB::Util.url_encode(id)}", allow_404: true) }
       end
     end
 
