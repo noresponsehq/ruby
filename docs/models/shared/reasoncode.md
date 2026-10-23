@@ -54,3 +54,4 @@ custom = ReasonCode.deserialize("custom_value")
 | `CONTEXT_LINE_COUNTRY_MISMATCH` | context_line_country_mismatch   |
 | `PRIOR_ABUSE_LINK`              | prior_abuse_link                |
 | `TEST_SCENARIO`                 | test_scenario                   |
+| `SHARED_API_KEY`                | shared_api_key                  |

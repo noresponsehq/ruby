@@ -44,6 +44,7 @@ module NoResponse
           CONTEXT_LINE_COUNTRY_MISMATCH = new("context_line_country_mismatch")
           PRIOR_ABUSE_LINK = new("prior_abuse_link")
           TEST_SCENARIO = new("test_scenario")
+          SHARED_API_KEY = new("shared_api_key")
         end
 
         open!

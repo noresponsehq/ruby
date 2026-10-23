@@ -29,6 +29,8 @@ module NoResponse
       autoload :QueryAccountAssessmentsResponse, "no_response/models/operations/queryaccountassessments_response.rb"
       autoload :RecordAssessmentOutcomeRequest, "no_response/models/operations/recordassessmentoutcome_request.rb"
       autoload :RecordAssessmentOutcomeResponse, "no_response/models/operations/recordassessmentoutcome_response.rb"
+      autoload :RecordKeyUsageRequest, "no_response/models/operations/recordkeyusage_request.rb"
+      autoload :RecordKeyUsageResponse, "no_response/models/operations/recordkeyusage_response.rb"
       autoload :ReplayWebhookDeliveryRequest, "no_response/models/operations/replaywebhookdelivery_request.rb"
       autoload :ReplayWebhookDeliveryResponse, "no_response/models/operations/replaywebhookdelivery_response.rb"
       autoload :RotateApiKeyResponse, "no_response/models/operations/rotateapikey_response.rb"

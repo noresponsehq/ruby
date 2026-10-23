@@ -5,6 +5,7 @@ module NoResponse
   autoload :NoResponseClient, "no_response/noresponseclient"
   autoload :Assessments, "no_response/assessments"
   autoload :Accounts, "no_response/accounts"
+  autoload :KeyUsage, "no_response/keyusage"
   autoload :Keys, "no_response/keys"
   autoload :Integrations, "no_response/integrations"
   autoload :WebhookEndpoints, "no_response/webhookendpoints"
