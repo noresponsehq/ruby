@@ -9,10 +9,10 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.1.15"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v3.0.0"
 ```
 
-Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 2.0"`.
+Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
 
 ## Quick start
 
@@ -25,6 +25,7 @@ client = NoResponse::NoResponseClient.new(api_key: ENV.fetch("NORESPONSE_API_KEY
 
 response = client.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
+    flow: Models::Shared::Flow::SIGNUP,
     account_id: "usr_8f2k1",
     identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: "jordan.lee@example.com")
   )
@@ -32,11 +33,12 @@ response = client.assessments.create(
 
 assessment = response.result
 if assessment.status == Models::Shared::Status::PENDING
-  # No recommendation yet. Apply your fallback now, then wait or take the webhook.
-  assessment = client.assessments.wait(assessment.assessment_id)
+  # No decision yet. Apply your fallback now, then wait or take the webhook.
+  assessment = client.assessments.wait(assessment.id)
 end
 
-puts assessment.recommendation # allow, step_up or review
+puts assessment.account.risk.decision # allow, step_up, review or block
+puts assessment.detail.risk.score     # this assessment's own score
 ```
 
 `NoResponse::NoResponseClient.new` with no `api_key` or `security_source` reads the key from `NORESPONSE_API_KEY`.
@@ -62,6 +64,7 @@ Every method also takes `timeout_ms:`, `retries:` and `http_headers:` for one ca
 ```ruby
 created = client.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
+    flow: Models::Shared::Flow::SIGNUP,
     account_id: "usr_8f2k1",
     identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: "jordan.lee@example.com"),
     response_mode: Models::Shared::ResponseMode::DETAILED # detailed needs the detailed scope
@@ -69,8 +72,8 @@ created = client.assessments.create(
   idempotency_key: "signup-usr_8f2k1-0001"
 )
 
-latest = client.assessments.get(assessment_id: created.result.assessment_id)
-settled = client.assessments.wait(created.result.assessment_id, timeout: 30)
+latest = client.assessments.get(assessment_id: created.result.id)
+settled = client.assessments.wait(created.result.id, timeout: 30)
 ```
 
 `wait` polls `get` until the status is `COMPLETE`, sleeping the server's `Retry-After` (at least one second) between polls. When the timeout (default 30 s) passes it returns the latest answer if that is `PARTIAL`, with its status still `PARTIAL`, and raises `NoResponse::WaitTimeoutError`, which carries the last pending assessment as `last`, if the assessment is still `PENDING`.
@@ -93,7 +96,7 @@ end
 
 ```ruby
 client.assessments.record_outcome(
-  assessment_id: created.result.assessment_id,
+  assessment_id: created.result.id,
   body: Models::Shared::AssessmentOutcomeRequest.new(
     outcome: Models::Shared::Outcome::CHARGEBACK,
     external_ref: "case-42"
@@ -204,7 +207,8 @@ else
   elsif event.expired?
     # forget the assessment: GET now answers 404
   else
-    # event.data is the full assessment; keep the highest assessment_version
+    # event.data is the full assessment: keep the highest detail.assessment_version
+    # and act on event.data.account&.risk&.decision
   end
   status 204
 end
@@ -214,7 +218,7 @@ end
 
 ### Late results
 
-An assessment can be revised after you allowed the signup. `NoResponse::LateResults.handle` verifies the `assessment.updated` delivery with `construct_event`, applies your policy and revokes the user's sessions or bans the user through your auth provider (`LateResults.clerk`, `.workos` or `.auth0`). The default policy revokes sessions on `review` only; WorkOS has no block, so its ban deletes the user permanently.
+An assessment can be revised after you allowed the signup. `NoResponse::LateResults.handle` verifies the `assessment.updated` delivery with `construct_event`, applies your policy and revokes the user's sessions or bans the user through your auth provider (`LateResults.clerk`, `.workos` or `.auth0`). It acts on the account's decision (`event.data.account.risk.decision`); the default policy revokes sessions on `review` and `block`. WorkOS has no user block, so its ban deletes the user permanently.
 
 ```ruby
 provider = NoResponse::LateResults.clerk(secret_key: ENV.fetch('CLERK_SECRET_KEY'))

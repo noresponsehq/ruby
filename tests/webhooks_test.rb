@@ -35,9 +35,9 @@ class WebhooksTest < Minitest::Test
     assert_equal HEADERS['NR-Webhook-Id'], event.id
     assert_equal '2026-10-14T09:00:02.000Z', event.created_at
     assert_instance_of NoResponse::Models::Shared::Assessment, event.data
-    assert_equal 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', event.data.assessment_id
-    assert_equal 2, event.data.assessment_version
-    assert_equal NoResponse::Models::Shared::Recommendation::STEP_UP, event.data.risk.recommendation
+    assert_equal 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', event.data.id
+    assert_equal 2, event.data.detail.assessment_version
+    assert_equal NoResponse::Models::Shared::AccountDecision::STEP_UP, event.data.account.risk.decision
     refute event.expired?
     # Rack env names verify the same delivery.
     rack = HEADERS.transform_keys { |name| "HTTP_#{name.upcase.tr('-', '_')}" }
@@ -61,15 +61,15 @@ class WebhooksTest < Minitest::Test
   end
 
   def test_rotation_and_event_id
-    complete = fixture('valid/assessment-complete.json')
+    complete = fixture('valid/assessment-view-complete.json')
     event = { 'id' => 'evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ2', 'type' => 'assessment.updated',
               'created_at' => '2026-10-18T11:00:04Z', 'data' => complete }
     both = { 'whk_sdktest01' => 'old-secret', 'whk_sdktest02' => 'new-secret' }
     raw, headers = signed(event, 'new-secret', event['id'], 'whk_sdktest02')
-    assert_equal complete['assessment_id'], Webhooks.construct_event(raw, headers, both, now: NOW).data.assessment_id
+    assert_equal complete['id'], Webhooks.construct_event(raw, headers, both, now: NOW).data.id
     raw, headers = signed(event, 'new-secret', 'evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ9', 'whk_sdktest02')
     refused(:invalid_payload, raw, headers, both, now: NOW)
-    pointer = event.merge('data' => { 'assessment_id' => complete['assessment_id'], 'assessment_url' => '/v1/assessments/x' })
+    pointer = event.merge('data' => { 'assessment_id' => complete['id'], 'assessment_url' => '/v1/assessments/x' })
     raw, headers = signed(pointer, 'new-secret', event['id'], 'whk_sdktest02')
     refused(:invalid_payload, raw, headers, both, now: NOW)
   end

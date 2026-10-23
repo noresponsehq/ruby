@@ -55,7 +55,7 @@ module NoResponse
     # "assessment.updated", an EndpointVerification for
     # "endpoint.verification" and an AccountDeleted for "account.deleted".
     # Deliveries are at least once and unordered:
-    # deduplicate on id and keep the highest assessment_version.
+    # deduplicate on id and keep the highest detail.assessment_version.
     Event = Struct.new(:id, :type, :created_at, :data, :test, keyword_init: true) do
       # True for the terminal expiry event: delete what you hold and fetch nothing.
       def expired? = data.is_a?(AssessmentExpired)

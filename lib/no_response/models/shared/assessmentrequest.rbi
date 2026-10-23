@@ -12,16 +12,16 @@ class NoResponse::Models::Shared::AssessmentRequest
   def account_id=(str_)
   end
 
-  def identifiers
-  end
-
-  def identifiers=(str_)
-  end
-
   def flow
   end
 
   def flow=(str_)
+  end
+
+  def identifiers
+  end
+
+  def identifiers=(str_)
   end
 
   def depth

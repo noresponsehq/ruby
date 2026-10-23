@@ -23,16 +23,17 @@ class MockServerTest < Minitest::Test
     res = client.assessments.create(
       idempotency_key: 'mock-server-smoke-0001',
       body: Models::Shared::AssessmentRequest.new(
+        flow: Models::Shared::Flow::SIGNUP,
         account_id: 'acct_7f3a9c',
         identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: 'new.user@example.com')
       )
     )
-    assert_match(/\Aasm_/, res.result.assessment_id)
-    assert_equal 'acct_7f3a9c', res.result.account_id
+    assert_match(/\Aasm_/, res.result.id)
+    assert_equal 'acct_7f3a9c', res.result.detail.account_id
   end
 
   def test_get_returns_the_documented_assessment
     res = client.assessments.get(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
-    assert_match(/\Aasm_/, res.result.assessment_id)
+    assert_match(/\Aasm_/, res.result.id)
   end
 end

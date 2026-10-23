@@ -6,12 +6,6 @@ class NoResponse::Models::Shared::AssessmentRequestPolicyContext
 end
 
 class NoResponse::Models::Shared::AssessmentRequestPolicyContext
-  def flow
-  end
-
-  def flow=(str_)
-  end
-
   def region
   end
 

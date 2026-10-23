@@ -8,10 +8,10 @@ require 'noresponse'
 
 class WaitTest < Minitest::Test
   FIXTURES = File.join(__dir__, 'fixtures')
-  PENDING = File.read(File.join(FIXTURES, 'valid/assessment-pending.json'))
-  COMPLETE = File.read(File.join(FIXTURES, 'valid/assessment-complete.json'))
-  PARTIAL = File.read(File.join(FIXTURES, 'valid/assessment-partial.json'))
-  ID = JSON.parse(COMPLETE)['assessment_id']
+  PENDING = File.read(File.join(FIXTURES, 'valid/assessment-view-pending.json'))
+  COMPLETE = File.read(File.join(FIXTURES, 'valid/assessment-view-complete.json'))
+  PARTIAL = File.read(File.join(FIXTURES, 'valid/assessment-view-partial.json'))
+  ID = JSON.parse(COMPLETE)['id']
 
   def client(responses)
     seen = []
@@ -42,7 +42,7 @@ class WaitTest < Minitest::Test
     slept, sleeper, clock = fake_time
     result = NoResponse::Wait.wait(sdk, ID, sleeper: sleeper, clock: clock)
     assert_equal NoResponse::Models::Shared::Status::COMPLETE, result.status
-    assert_equal ID, result.assessment_id
+    assert_equal ID, result.id
     assert_equal [3.0, 1.0], slept
     assert_equal 3, seen.length
     assert_equal "Bearer nrk_test_#{'k' * 20}", seen.first.request_headers['Authorization']

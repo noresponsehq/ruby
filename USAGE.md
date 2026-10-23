@@ -9,7 +9,7 @@ s = ::NoResponse::NoResponseClient.new(
 res = s.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
     account_id: "acct_7f3a9c",
-    flow: Models::Shared::AssessmentFlow::SIGNUP,
+    flow: Models::Shared::Flow::SIGNUP,
     identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
       email: "new.user@example.com"
     )

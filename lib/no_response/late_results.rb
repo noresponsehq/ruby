@@ -4,7 +4,7 @@
 # Late-result handlers. Hand-written beside the generated client.
 #
 # An assessment can be revised after the signup was allowed: a slow source
-# settles and the recommendation rises. NoResponse sends the new version as a
+# settles and the account's decision rises. NoResponse sends the new version as a
 # signed assessment.updated webhook. LateResults.handle verifies that delivery
 # with Webhooks.construct_event, picks an action from your policy, and acts
 # through the auth provider's admin API: revoke the user's sessions or ban the
@@ -30,10 +30,12 @@ module NoResponse
     BAN = 'ban'
     ACTIONS = [NONE, REVOKE_SESSIONS, BAN].freeze
 
-    # Revoke sessions on review; do nothing on allow or step_up. Banning is opt-in.
-    DEFAULT_POLICY = { 'allow' => NONE, 'step_up' => NONE, 'review' => REVOKE_SESSIONS }.freeze
+    # Revoke sessions on review and block; do nothing on allow or step_up.
+    # Banning is opt-in.
+    DEFAULT_POLICY = { 'allow' => NONE, 'step_up' => NONE, 'review' => REVOKE_SESSIONS,
+                       'block' => REVOKE_SESSIONS }.freeze
 
-    RECOMMENDATIONS = %w[allow step_up review].freeze
+    DECISIONS = %w[allow step_up review block].freeze
 
     # Raised when the provider's admin API refuses a call. Answer the webhook
     # with a 5xx so NoResponse retries it. The message holds no response body
@@ -61,23 +63,25 @@ module NoResponse
     Result = Struct.new(:event, :action, :user_id, keyword_init: true)
 
     class << self
-      # The action your policy names for a verified event. Only a served
-      # assessment with a recommendation can act; a test event never does.
-      # policy maps allow, step_up and review (as strings or symbols) to NONE,
-      # REVOKE_SESSIONS or BAN; a recommendation you leave out does nothing. An
-      # unknown action raises ArgumentError.
+      # The action your policy names for a verified event, from the account's
+      # decision (data.account.risk.decision). Only a served assessment whose
+      # account has a decision can act; a pending assessment, an expiry and a
+      # test event never do. policy maps allow, step_up, review and block (as
+      # strings or symbols) to NONE, REVOKE_SESSIONS or BAN; a decision you
+      # leave out does nothing. An unknown action raises ArgumentError.
       def action_for(event, policy = DEFAULT_POLICY)
         return NONE if event.type != 'assessment.updated' || event.test? || event.expired?
 
         data = event.data
-        recommendation = data.recommendation || data.risk&.recommendation
-        recommendation = recommendation.to_s
-        return NONE unless RECOMMENDATIONS.include?(recommendation)
+        return NONE if data.status == Models::Shared::Status::PENDING || data.account.nil?
+
+        decision = data.account.risk.decision.to_s
+        return NONE unless DECISIONS.include?(decision)
 
         table = policy.to_h.transform_keys(&:to_s)
-        return NONE unless table.key?(recommendation)
+        return NONE unless table.key?(decision)
 
-        action = table[recommendation]
+        action = table[decision]
         return NONE if action.nil?
 
         action = action.to_s
@@ -103,7 +107,7 @@ module NoResponse
         action = action_for(event, policy)
         return Result.new(event: event, action: NONE) if action == NONE || event.type != 'assessment.updated'
 
-        account_id = event.data.account_id
+        account_id = event.data.detail.account_id
         resolved = user_id ? user_id.call(account_id, event) : account_id
         return Result.new(event: event, action: NONE) if resolved.nil? || resolved.to_s.empty?
 

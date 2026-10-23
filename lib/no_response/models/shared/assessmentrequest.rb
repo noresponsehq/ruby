@@ -15,22 +15,23 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("account_id"), required: true}}
         )
+        # The customer event an assessment is made for: signup (a new account), login (a returning sign-in) or purchase (a payment or credit grant). The account's risk is reported with the decision for this flow.
+        field(
+          :flow,
+          Models::Shared::Flow,
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("flow"),
+              required: true,
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Flow, false)
+            }
+          }
+        )
         # At least one of email, username or phone. name and ip refine the match and travel beside a lookup identifier; a body with only name or ip is refused with 400.
         field(
           :identifiers,
           Models::Shared::AssessmentRequestIdentifiers,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("identifiers"), required: true}}
-        )
-        # The customer event an assessment is made for: signup (a new account), login (a returning sign-in) or purchase (a payment or credit grant). The account's risk is reported with the decision for this flow.
-        field(
-          :flow,
-          Crystalline::Nilable.new(Models::Shared::AssessmentFlow),
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("flow"),
-              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::AssessmentFlow, true)
-            }
-          }
         )
         # How long the synchronous answer waits for sources. quick waits only for the fast sources, those that answer within 500 ms of ingress (or deadline_ms when lower); full waits for the whole budget, up to 3000 ms. Sources still running at the cut continue asynchronously and update the assessment either way.
         field(
@@ -39,11 +40,11 @@ module NoResponse
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("depth"),
-              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::Depth, true)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Depth, true)
             }
           }
         )
-
+        # Optional policy inputs: region.
         field(
           :policy_context,
           Crystalline::Nilable.new(Models::Shared::AssessmentRequestPolicyContext),
@@ -94,8 +95,8 @@ module NoResponse
         sig {
           params(
             account_id: ::String,
+            flow: Models::Shared::Flow,
             identifiers: Models::Shared::AssessmentRequestIdentifiers,
-            flow: T.nilable(Models::Shared::AssessmentFlow),
             depth: T.nilable(Models::Shared::Depth),
             policy_context: T.nilable(Models::Shared::AssessmentRequestPolicyContext),
             request_id: T.nilable(::String),
@@ -109,8 +110,8 @@ module NoResponse
         }
         def initialize(
           account_id:,
+          flow:,
           identifiers:,
-          flow: nil,
           depth: nil,
           policy_context: nil,
           request_id: nil,
@@ -121,8 +122,8 @@ module NoResponse
           issued_credential: nil
         )
           @account_id = account_id
-          @identifiers = identifiers
           @flow = flow
+          @identifiers = identifiers
           @depth = depth
           @policy_context = policy_context
           @request_id = request_id
@@ -137,8 +138,8 @@ module NoResponse
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @account_id == other.account_id
-          return false unless @identifiers == other.identifiers
           return false unless @flow == other.flow
+          return false unless @identifiers == other.identifiers
           return false unless @depth == other.depth
           return false unless @policy_context == other.policy_context
           return false unless @request_id == other.request_id

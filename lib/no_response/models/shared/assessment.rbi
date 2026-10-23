@@ -6,16 +6,10 @@ class NoResponse::Models::Shared::Assessment
 end
 
 class NoResponse::Models::Shared::Assessment
-  def assessment_id
+  def id
   end
 
-  def assessment_id=(str_)
-  end
-
-  def account_id
-  end
-
-  def account_id=(str_)
+  def id=(str_)
   end
 
   def status
@@ -24,52 +18,22 @@ class NoResponse::Models::Shared::Assessment
   def status=(str_)
   end
 
-  def confidence
+  def flow
   end
 
-  def confidence=(str_)
+  def flow=(str_)
   end
 
-  def incomplete_sources
+  def depth
   end
 
-  def incomplete_sources=(str_)
+  def depth=(str_)
   end
 
-  def policy_version
+  def detail
   end
 
-  def policy_version=(str_)
-  end
-
-  def assessment_version
-  end
-
-  def assessment_version=(str_)
-  end
-
-  def created_at
-  end
-
-  def created_at=(str_)
-  end
-
-  def updated_at
-  end
-
-  def updated_at=(str_)
-  end
-
-  def expires_at
-  end
-
-  def expires_at=(str_)
-  end
-
-  def timing
-  end
-
-  def timing=(str_)
+  def detail=(str_)
   end
 
   def schema_version
@@ -78,45 +42,9 @@ class NoResponse::Models::Shared::Assessment
   def schema_version=(str_)
   end
 
-  def request_id
+  def account
   end
 
-  def request_id=(str_)
-  end
-
-  def recommendation
-  end
-
-  def recommendation=(str_)
-  end
-
-  def risk
-  end
-
-  def risk=(str_)
-  end
-
-  def signals
-  end
-
-  def signals=(str_)
-  end
-
-  def policy_basis
-  end
-
-  def policy_basis=(str_)
-  end
-
-  def assessment_url
-  end
-
-  def assessment_url=(str_)
-  end
-
-  def auth_context
-  end
-
-  def auth_context=(str_)
+  def account=(str_)
   end
 end

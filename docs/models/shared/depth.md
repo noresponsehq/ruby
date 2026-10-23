@@ -8,6 +8,9 @@ How long the synchronous answer waits for sources. quick waits only for the fast
 require "noresponse"
 
 value = Depth::QUICK
+
+# Open enum: use .deserialize() to create instances from custom string values
+custom = Depth.deserialize("custom_value")
 ```
 
 

@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three equal risk.decision.
+      # The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three are equal.
       class AccountDecisionsByFlow
         extend T::Sig
         include Crystalline::MetadataFields

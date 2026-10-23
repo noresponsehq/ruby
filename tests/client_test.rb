@@ -8,9 +8,9 @@ require 'noresponse'
 
 class ClientTest < Minitest::Test
   FIXTURES = File.join(__dir__, 'fixtures')
-  COMPLETE = File.read(File.join(FIXTURES, 'valid/assessment-complete.json'))
-  PENDING = File.read(File.join(FIXTURES, 'valid/assessment-pending.json'))
-  ID = JSON.parse(COMPLETE)['assessment_id']
+  COMPLETE = File.read(File.join(FIXTURES, 'valid/assessment-view-complete.json'))
+  PENDING = File.read(File.join(FIXTURES, 'valid/assessment-view-pending.json'))
+  ID = JSON.parse(COMPLETE)['id']
   UUID = /\A\h{8}-\h{4}-4\h{3}-[89ab]\h{3}-\h{12}\z/
   JSON_TYPE = { 'Content-Type' => 'application/json' }.freeze
   PROBLEM_TYPE = { 'Content-Type' => 'application/problem+json' }.freeze
@@ -22,6 +22,7 @@ class ClientTest < Minitest::Test
 
   def request
     NoResponse::Models::Shared::AssessmentRequest.new(
+      flow: NoResponse::Models::Shared::Flow::SIGNUP,
       account_id: 'acct_7f3a9c',
       identifiers: NoResponse::Models::Shared::AssessmentRequestIdentifiers.new(email: 'new.user@example.com')
     )
@@ -84,7 +85,7 @@ class ClientTest < Minitest::Test
     end
     slept = []
     result = sdk(stubs).assessments.wait(ID, sleeper: ->(seconds) { slept << seconds }, clock: -> { 0.0 })
-    assert_equal ID, result.assessment_id
+    assert_equal ID, result.id
     assert_equal [2.0], slept
   end
 

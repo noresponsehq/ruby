@@ -5,7 +5,7 @@ module NoResponse
   module Models
     module Shared
 
-      class AssessmentTiming
+      class AssessmentDetailTiming
         extend T::Sig
         include Crystalline::MetadataFields
 

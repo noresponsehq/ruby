@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Body of the 200 answer to POST /v1/assessments/query: one page of the calling tenant's unexpired assessments for one account, newest first, each at its latest assessment_version. Every item's account_id equals the page's. An assessment past its expires_at is not listed. next_cursor is present only when another page exists.
+      # Body of the 200 answer to POST /v1/assessments/query: one page of the calling tenant's unexpired assessments for one account, newest first, each at its latest assessment_version, as its detail; the account's current risk is GET /v1/accounts/{account_id}. Every item's account_id equals the page's. An assessment past its expires_at is not listed. next_cursor is present only when another page exists.
       class AssessmentList
         extend T::Sig
         include Crystalline::MetadataFields
@@ -18,7 +18,7 @@ module NoResponse
 
         field(
           :items,
-          Crystalline::Array.new(Models::Shared::Assessment),
+          Crystalline::Array.new(Models::Shared::AssessmentDetail),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("items"), required: true}}
         )
         # Version of the body shape.
@@ -43,7 +43,7 @@ module NoResponse
         sig {
           params(
             account_id: ::String,
-            items: T::Array[Models::Shared::Assessment],
+            items: T::Array[Models::Shared::AssessmentDetail],
             schema_version: ::String,
             next_cursor: T.nilable(::String),
             retention_days: T.nilable(::Integer)

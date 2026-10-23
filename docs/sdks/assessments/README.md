@@ -14,7 +14,7 @@ Signup and gateway assessments.
 
 ## create
 
-Returns within the deadline (3000 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. risk.block says when your block threshold was reached. Requires the assess scope. Idempotency-Key is optional in the SDK and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
+Assesses one signup, login or purchase (flow) and answers with the account's one current risk: account.risk.decision is the decision for this flow (allow, step_up, review or block, where block means your block threshold was reached), and detail holds this assessment's own facts. depth sets how long the answer waits for sources: quick waits only for the fast ones (500 ms), full for the whole budget (3000 ms at most); it defaults to full for signup and purchase and quick for login. 200 carries complete or partial, 202 carries pending with Location and Retry-After. While the account's first assessment is pending, account is absent: apply your own fallback for that, 429, 503 or a timeout. NoResponse blocks nothing itself; you decide. Requires the assess scope. Idempotency-Key is optional in the SDK and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
 
 ### Example Usage: complete
 
@@ -28,6 +28,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
+  flow: Models::Shared::Flow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -65,7 +66,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
+    verified: true,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -100,6 +101,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
+  flow: Models::Shared::Flow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -137,7 +139,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
+    verified: true,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -172,7 +174,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::AssessmentFlow::SIGNUP,
+  flow: Models::Shared::Flow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new_user_42',
@@ -183,6 +185,79 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   ),
   request_id: 'req-2026-10-14-0001',
   deadline_ms: 300
+), idempotency_key: 'signup-acct_7f3a9c')
+
+unless res.nil?
+  # handle response
+end
+
+```
+### Example Usage: login
+
+<!-- UsageSnippet language="ruby" operationID="createAssessment" method="post" path="/v1/assessments" example="login" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
+  account_id: 'acct_7f3a9c',
+  flow: Models::Shared::Flow::SIGNUP,
+  identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
+    email: 'new.user@example.com',
+    username: 'new.user',
+    phone: '+61412345678',
+    name: 'Alex Example',
+    ip: '203.0.113.45'
+  ),
+  policy_context: Models::Shared::AssessmentRequestPolicyContext.new(
+    region: 'AU'
+  ),
+  request_id: 'req-2026-10-14-0001',
+  client_context: Models::Shared::AssessmentRequestClientContext.new(
+    timezone: 'Australia/Sydney',
+    locale: 'en-AU',
+    app_version: '4.12.0',
+    user_agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36',
+    device_id: 'dev_5c1e8a',
+    session_id: 'sess_9b2d41',
+    client_observed_at: '2026-10-14T08:59:58.000Z'
+  ),
+  auth_context: Models::Shared::AuthContext.new(
+    provider: 'clerk',
+    issuer: 'https://example-app.clerk.accounts.dev',
+    audience: 'https://app.example.com',
+    audiences: [
+      'https://app.example.com',
+    ],
+    subject: 'user_2EXAMPLE',
+    session_id: 'sess_2EXAMPLE',
+    organization_id: 'org_2EXAMPLE',
+    tenant_id: 'tenant_2EXAMPLE',
+    token_id: '2EXAMPLEJTI',
+    issued_at: '2026-10-14T08:59:40.000Z',
+    expires_at: '2026-10-14T09:00:40.000Z',
+    session_created_at: '2026-10-14T08:57:00.000Z',
+    auth_time: '2026-10-14T08:55:00.000Z',
+    account_created_at: '2026-10-14T08:56:00.000Z',
+    verified: true,
+    mfa: Models::Shared::AuthContextMfa.new(
+      methods: [
+        'totp',
+      ]
+    ),
+    roles: [
+      'admin',
+    ],
+    scopes: [
+      'org:sys_profile:manage',
+    ]
+  ),
+  issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
+    sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
+  )
 ), idempotency_key: 'signup-acct_7f3a9c')
 
 unless res.nil?
@@ -202,7 +277,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::AssessmentFlow::SIGNUP,
+  flow: Models::Shared::Flow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com'
   )
@@ -225,7 +300,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_8412',
-  flow: Models::Shared::AssessmentFlow::SIGNUP,
+  flow: Models::Shared::Flow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'jane.doe@example.com',
     username: 'janedoe',
@@ -258,6 +333,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
+  flow: Models::Shared::Flow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -295,79 +371,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
-    mfa: Models::Shared::AuthContextMfa.new(
-      methods: [
-        'totp',
-      ]
-    ),
-    roles: [
-      'admin',
-    ],
-    scopes: [
-      'org:sys_profile:manage',
-    ]
-  ),
-  issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
-    sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
-  )
-), idempotency_key: 'signup-acct_7f3a9c')
-
-unless res.nil?
-  # handle response
-end
-
-```
-### Example Usage: standard
-
-<!-- UsageSnippet language="ruby" operationID="createAssessment" method="post" path="/v1/assessments" example="standard" -->
-```ruby
-require 'noresponse'
-
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponseClient.new(
-  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
-)
-res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
-  account_id: 'acct_7f3a9c',
-  identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
-    email: 'new.user@example.com',
-    username: 'new.user',
-    phone: '+61412345678',
-    name: 'Alex Example',
-    ip: '203.0.113.45'
-  ),
-  policy_context: Models::Shared::AssessmentRequestPolicyContext.new(
-    region: 'AU'
-  ),
-  request_id: 'req-2026-10-14-0001',
-  client_context: Models::Shared::AssessmentRequestClientContext.new(
-    timezone: 'Australia/Sydney',
-    locale: 'en-AU',
-    app_version: '4.12.0',
-    user_agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36',
-    device_id: 'dev_5c1e8a',
-    session_id: 'sess_9b2d41',
-    client_observed_at: '2026-10-14T08:59:58.000Z'
-  ),
-  auth_context: Models::Shared::AuthContext.new(
-    provider: 'clerk',
-    issuer: 'https://example-app.clerk.accounts.dev',
-    audience: 'https://app.example.com',
-    audiences: [
-      'https://app.example.com',
-    ],
-    subject: 'user_2EXAMPLE',
-    session_id: 'sess_2EXAMPLE',
-    organization_id: 'org_2EXAMPLE',
-    tenant_id: 'tenant_2EXAMPLE',
-    token_id: '2EXAMPLEJTI',
-    issued_at: '2026-10-14T08:59:40.000Z',
-    expires_at: '2026-10-14T09:00:40.000Z',
-    session_created_at: '2026-10-14T08:57:00.000Z',
-    auth_time: '2026-10-14T08:55:00.000Z',
-    account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
+    verified: true,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -416,7 +420,7 @@ end
 
 ## get
 
-Returns the highest assessment_version. Requires the assess or history scope. While status is pending, or partial with a source still running, the response carries Retry-After; poll no faster than it says. Another tenant's assessment, an unknown or expired assessment and a malformed assessment_id all answer 404 not_found. response_mode=detailed needs the detailed scope.
+Returns the highest assessment_version, with the account's current risk. Requires the assess or history scope. While status is pending, or partial with a source still running, the response carries Retry-After; poll no faster than it says. Another tenant's assessment, an unknown or expired assessment and a malformed assessment_id all answer 404 not_found. response_mode=detailed needs the detailed scope.
 
 ### Example Usage: complete
 
@@ -438,6 +442,23 @@ end
 ### Example Usage: detailed
 
 <!-- UsageSnippet language="ruby" operationID="getAssessment" method="get" path="/v1/assessments/{assessment_id}" example="detailed" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.assessments.get(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
+
+unless res.nil?
+  # handle response
+end
+
+```
+### Example Usage: login
+
+<!-- UsageSnippet language="ruby" operationID="getAssessment" method="get" path="/v1/assessments/{assessment_id}" example="login" -->
 ```ruby
 require 'noresponse'
 
@@ -486,9 +507,9 @@ unless res.nil?
 end
 
 ```
-### Example Usage: standard
+### Example Usage: pending_known_account
 
-<!-- UsageSnippet language="ruby" operationID="getAssessment" method="get" path="/v1/assessments/{assessment_id}" example="standard" -->
+<!-- UsageSnippet language="ruby" operationID="getAssessment" method="get" path="/v1/assessments/{assessment_id}" example="pending_known_account" -->
 ```ruby
 require 'noresponse'
 

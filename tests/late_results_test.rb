@@ -73,14 +73,25 @@ class LateResultsTest < Minitest::Test
 
   def fixture(name) = JSON.parse(File.read(File.join(FIXTURES, name)))
 
-  def review = fixture('valid/assessment-phone-uncovered-complete.json')
-  def step_up = fixture('valid/assessment-complete.json')
-  def pending = fixture('valid/assessment-pending.json')
+  def step_up = fixture('valid/webhook-assessment-updated.json')['data']
+
+  def decided(body, decision)
+    body['account']['risk']['decision'] = decision
+    body
+  end
+
+  def review = decided(step_up, 'review')
+  def pending = fixture('valid/assessment-view-pending.json')
+  def pending_known = fixture('valid/assessment-view-pending-known-account.json')
   def expired = fixture('valid/webhook-assessment-expired.json')['data']
 
   def delivery(data, account_id = nil, test: false)
     id = 'evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ2'
-    data = data.merge('account_id' => account_id) if account_id
+    if account_id
+      data = JSON.parse(JSON.generate(data))
+      data['detail']['account_id'] = account_id
+      data['account']['id'] = account_id if data['account']
+    end
     envelope = { 'id' => id, 'type' => 'assessment.updated', 'created_at' => '2026-10-18T11:00:04Z' }
     envelope['test'] = true if test
     raw = JSON.generate(envelope.merge('data' => data))
@@ -103,19 +114,22 @@ class LateResultsTest < Minitest::Test
     Webhooks::Event.new(id: 'evt_x', type: 'assessment.updated', created_at: '2026-10-18T11:00:04Z', data: data)
   end
 
-  def assessment(status, recommendation = nil)
+  def assessment(status, decision = nil)
     body = status == 'expired' ? expired : step_up.merge('status' => status)
-    if recommendation
-      body['recommendation'] = recommendation
-      body['risk'] = (body['risk'] || {}).merge('recommendation' => recommendation) if body['risk']
-    end
+    body['detail']['status'] = status unless status == 'expired'
+    decided(body, decision) if decision
     event(Webhooks.send(:event_data, 'assessment.updated', body))
   end
 
-  def test_default_policy_revokes_on_review_and_does_nothing_otherwise
+  def test_default_policy_revokes_on_review_and_block_and_does_nothing_otherwise
     assert_equal 'revoke_sessions', LateResults.action_for(assessment('complete', 'review'))
     assert_equal 'none', LateResults.action_for(assessment('complete', 'step_up'))
     assert_equal 'none', LateResults.action_for(assessment('partial', 'allow'))
+    assert_equal 'revoke_sessions', LateResults.action_for(assessment('complete', 'block'))
+    assert_equal 'ban', LateResults.action_for(assessment('partial', 'block'), { block: 'ban' })
+    # No account yet, or a pending assessment carrying an earlier decision: nothing to act on.
+    assert_equal 'none', LateResults.action_for(event(Webhooks.send(:event_data, 'assessment.updated', pending)), { allow: 'ban' })
+    assert_equal 'none', LateResults.action_for(event(Webhooks.send(:event_data, 'assessment.updated', pending_known)), { allow: 'ban' })
     assert_equal 'none', LateResults.action_for(event(Webhooks::AssessmentExpired.new(assessment_id: 'asm_x', account_id: 'a', assessment_version: 1)))
     verification = Webhooks::Event.new(id: 'evt_x', type: 'endpoint.verification', created_at: 'x', data: nil)
     assert_equal 'none', LateResults.action_for(verification)
@@ -125,14 +139,15 @@ class LateResultsTest < Minitest::Test
     assert_equal 'ban', LateResults.action_for(assessment('complete', 'step_up'), { step_up: 'ban' })
     assert_equal 'none', LateResults.action_for(assessment('complete', 'review'), { 'step_up' => 'ban' })
     assert_raises(ArgumentError) { LateResults.action_for(assessment('complete', 'review'), { review: 'delete' }) }
-    assert_equal({ 'allow' => 'none', 'step_up' => 'none', 'review' => 'revoke_sessions' }, LateResults::DEFAULT_POLICY)
+    assert_equal({ 'allow' => 'none', 'step_up' => 'none', 'review' => 'revoke_sessions', 'block' => 'revoke_sessions' },
+                 LateResults::DEFAULT_POLICY)
   end
 
   def test_pending_and_expired_deliveries_do_nothing
     mock_free = Object.new
     def mock_free.revoke_sessions(_id) = raise('called')
     def mock_free.ban(_id) = raise('called')
-    [pending, expired].each do |data|
+    [pending, pending_known, expired].each do |data|
       raw, headers = delivery(data)
       result = LateResults.handle(raw, headers, SECRETS, mock_free, now: NOW)
       assert_equal 'none', result.action
@@ -156,7 +171,7 @@ class LateResultsTest < Minitest::Test
       result = LateResults.handle(raw, headers, SECRETS, clerk, now: NOW)
       assert_equal 'revoke_sessions', result.action
       assert_equal 'user_2EXAMPLE', result.user_id
-      assert_equal review['assessment_id'], result.event.data.assessment_id
+      assert_equal review['id'], result.event.data.id
       assert_equal ['GET /v1/sessions', 'POST /v1/sessions/sess_1/revoke', 'POST /v1/sessions/sess_2/revoke'], lines(mock)
       assert_equal({ 'user_id' => 'user_2EXAMPLE', 'status' => 'active', 'limit' => '100', 'offset' => '0' },
                    mock.calls[0].query)
@@ -437,7 +452,7 @@ class LateResultsTest < Minitest::Test
 
   def test_a_test_event_is_flagged_and_makes_no_provider_call_even_under_a_ban_policy_with_a_resolver
     sample = fixture('valid/webhook-assessment-updated-test.json')['data']
-    ban_all = { allow: 'ban', step_up: 'ban', review: 'ban' }
+    ban_all = { allow: 'ban', step_up: 'ban', review: 'ban', block: 'ban' }
     resolver = ->(_account_id, _event) { 'user_2EXAMPLE' }
     with_mock(->(_c) { [200, []] }) do |mock|
       clerk = LateResults.clerk(secret_key: 'sk_test_mock', base_url: "#{mock.url}/v1")

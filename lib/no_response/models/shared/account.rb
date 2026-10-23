@@ -17,7 +17,7 @@ module NoResponse
           Models::Shared::AccountRisk,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("risk"), required: true}}
         )
-        # The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three equal risk.decision.
+        # The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three are equal.
         field(
           :decisions_by_flow,
           Models::Shared::AccountDecisionsByFlow,
