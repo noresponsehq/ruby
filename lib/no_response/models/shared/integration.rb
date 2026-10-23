@@ -9,7 +9,7 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # Opaque, server-assigned integration id: int_ and a 26-character Crockford base32 ULID. Another tenant's integration id answers 404.
+        # Opaque, server-assigned integration id: int_ and a 26-character Crockford base32 ULID. Another workspace's integration id answers 404.
         field(
           :integration_id,
           ::String,

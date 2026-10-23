@@ -8,7 +8,7 @@ module NoResponse
       class PermissionDeniedErrorCode
         include ::Crystalline::Enum
         enums do
-          TENANT_FORBIDDEN = new("tenant_forbidden")
+          WORKSPACE_FORBIDDEN = new("workspace_forbidden")
         end
 
         open!

@@ -9,7 +9,7 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # ISO 3166-1 alpha-2 region of the signup, as the provider determines it.
+        # ISO 3166-1 alpha-2 region of the user, as the provider determines it.
         field(
           :region,
           Crystalline::Nilable.new(::String),

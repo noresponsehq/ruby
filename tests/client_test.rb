@@ -22,7 +22,7 @@ class ClientTest < Minitest::Test
 
   def request
     NoResponse::Models::Shared::AssessmentRequest.new(
-      flow: NoResponse::Models::Shared::Flow::SIGNUP,
+      flow: NoResponse::Models::Shared::Flow::ACCOUNT_CREATION,
       account_id: 'acct_7f3a9c',
       identifiers: NoResponse::Models::Shared::AssessmentRequestIdentifiers.new(email: 'new.user@example.com')
     )
@@ -52,8 +52,8 @@ class ClientTest < Minitest::Test
         [200, JSON_TYPE, COMPLETE]
       end
     end
-    sdk(stubs).assessments.create(body: request, idempotency_key: 'signup-usr_8f2k1-0001')
-    assert_equal 'signup-usr_8f2k1-0001', seen
+    sdk(stubs).assessments.create(body: request, idempotency_key: 'account-usr_8f2k1-0001')
+    assert_equal 'account-usr_8f2k1-0001', seen
   end
 
   def test_a_retry_sends_the_same_idempotency_key

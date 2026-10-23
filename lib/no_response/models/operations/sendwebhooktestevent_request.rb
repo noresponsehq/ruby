@@ -9,7 +9,7 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        # The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         field :endpoint_id, ::String, {'path_param': {'field_name': "endpoint_id", 'style': "simple", 'explode': false}}
 
         field :body, Models::Shared::WebhookTestRequest, {'request': {'media_type': "application/json"}}

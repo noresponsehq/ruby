@@ -23,7 +23,7 @@ class MockServerTest < Minitest::Test
     res = client.assessments.create(
       idempotency_key: 'mock-server-smoke-0001',
       body: Models::Shared::AssessmentRequest.new(
-        flow: Models::Shared::Flow::SIGNUP,
+        flow: Models::Shared::Flow::ACCOUNT_CREATION,
         account_id: 'acct_7f3a9c',
         identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: 'new.user@example.com')
       )

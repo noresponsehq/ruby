@@ -110,8 +110,8 @@ class WebhooksTest < Minitest::Test
     end
   end
 
-  TENANT_DELETED = {
-    'id' => 'evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2', 'type' => 'tenant.deleted', 'created_at' => '2026-10-23T10:00:00.000Z',
+  WORKSPACE_DELETED = {
+    'id' => 'evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2', 'type' => 'workspace.deleted', 'created_at' => '2026-10-23T10:00:00.000Z',
     'data' => { 'workspace_id' => 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', 'environment' => 'live',
                 'deleted_at' => '2026-10-23T10:00:00.000Z' }
   }.freeze
@@ -132,18 +132,18 @@ class WebhooksTest < Minitest::Test
     end
   end
 
-  def test_tenant_deleted_event
-    raw, headers = signed(TENANT_DELETED, 'secret', TENANT_DELETED['id'])
+  def test_workspace_deleted_event
+    raw, headers = signed(WORKSPACE_DELETED, 'secret', WORKSPACE_DELETED['id'])
     event = Webhooks.construct_event(raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW)
-    assert_equal 'tenant.deleted', event.type
-    assert_equal TENANT_DELETED['id'], event.id
+    assert_equal 'workspace.deleted', event.type
+    assert_equal WORKSPACE_DELETED['id'], event.id
     assert_equal '2026-10-23T10:00:00.000Z', event.created_at
     refute_predicate event, :expired?
     refute_predicate event, :test?
-    assert_equal Webhooks::TenantDeleted.new(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: 'live',
-                                             deleted_at: '2026-10-23T10:00:00.000Z'), event.data
+    assert_equal Webhooks::WorkspaceDeleted.new(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: 'live',
+                                                deleted_at: '2026-10-23T10:00:00.000Z'), event.data
     assert_raises(Webhooks::VerificationError) { Webhooks.verification_response(event) }
-    refuses_changed_data(TENANT_DELETED,
+    refuses_changed_data(WORKSPACE_DELETED,
                          [{ 'workspace_id' => '-tnt' }, { 'workspace_id' => 'tnt/01' }, { 'environment' => 'staging' },
                           { 'deleted_at' => 'tomorrow' }],
                          %w[workspace_id environment deleted_at])
@@ -189,9 +189,9 @@ class WebhooksTest < Minitest::Test
     review = NoResponse::Models::Shared::AccountDecision::REVIEW
     allow = NoResponse::Models::Shared::AccountDecision::ALLOW
     flows = account.decisions_by_flow
-    assert_equal [review, review, review], [flows.signup, flows.login, flows.purchase]
+    assert_equal [review, review, review], [flows.account_creation, flows.login, flows.purchase]
     previous = event.data.previous_decisions_by_flow
-    assert_equal [allow, allow, allow], [previous.signup, previous.login, previous.purchase]
+    assert_equal [allow, allow, allow], [previous.account_creation, previous.login, previous.purchase]
     assert_raises(Webhooks::VerificationError) { Webhooks.verification_response(event) }
     [
       ->(d) { d.delete('previous_decisions_by_flow') },

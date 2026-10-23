@@ -26,7 +26,7 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::RiskSummaryUsername),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("username")}}
         )
-        # Facts about the submitted IP from the offline database and this tenant's own recent assessments. Every member is optional; absent makes no claim.
+        # Facts about the submitted IP from the offline database and this workspace's own recent assessments. Every member is optional; absent makes no claim.
         field(
           :ip,
           Crystalline::Nilable.new(Models::Shared::IpSummary),

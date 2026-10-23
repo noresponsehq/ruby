@@ -18,9 +18,9 @@ class NoResponse::Models::Shared::IpSummary
   def type=(str_)
   end
 
-  def seen_in_tenant
+  def seen_in_workspace
   end
 
-  def seen_in_tenant=(str_)
+  def seen_in_workspace=(str_)
   end
 end

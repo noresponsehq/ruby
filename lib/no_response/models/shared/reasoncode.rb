@@ -19,7 +19,7 @@ module NoResponse
           PROXY_IP = new("proxy_ip")
           SEEN_BEFORE = new("seen_before")
           SHARED_IP = new("shared_ip")
-          MANY_RECENT_SIGNUPS = new("many_recent_signups")
+          MANY_RECENT_ACCOUNTS = new("many_recent_accounts")
           ESTABLISHED_ACCOUNTS = new("established_accounts")
           AGED_IDENTITY = new("aged_identity")
           BREACH_NAME_MATCH = new("breach_name_match")

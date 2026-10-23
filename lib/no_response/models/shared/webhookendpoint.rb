@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # One of the tenant's registered webhook endpoints. Signing secrets are not part of it: a secret is shown once, when it is issued (POST /v1/webhooks and POST /v1/webhooks/{endpoint_id}/rotate).
+      # One of the workspace's registered webhook endpoints. Signing secrets are not part of it: a secret is shown once, when it is issued (POST /v1/webhooks and POST /v1/webhooks/{endpoint_id}/rotate).
       class WebhookEndpoint
         extend T::Sig
         include Crystalline::MetadataFields

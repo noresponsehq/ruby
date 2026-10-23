@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Optional context observed by your signup client. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence.
+      # Optional context observed by the client of the user. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence.
       class AssessmentRequestClientContext
         extend T::Sig
         include Crystalline::MetadataFields
@@ -38,19 +38,19 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("app_version")}}
         )
-        # The raw User-Agent header of the signup request, at most 512 characters. It is parsed into coarse features and left out of every answer.
+        # The raw User-Agent header of the request that the user sent, at most 512 characters. It is parsed into coarse features and left out of every answer.
         field(
           :user_agent,
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("user_agent")}}
         )
-        # Tenant-scoped opaque identifier your application mints and rotates when the account or device changes. Send an id of your own, not a hardware fingerprint.
+        # Workspace-scoped opaque identifier your application mints and rotates when the account or device changes. Send an id of your own, not a hardware fingerprint.
         field(
           :device_id,
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("device_id")}}
         )
-        # Opaque signup session identifier. It is used for tenant-scoped velocity and replay checks only.
+        # Opaque signup session identifier. It is used for workspace-scoped velocity and replay checks only.
         field(
           :session_id,
           Crystalline::Nilable.new(::String),

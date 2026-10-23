@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Facts about the submitted IP from the offline database and this tenant's own recent assessments. Every member is optional; absent makes no claim.
+      # Facts about the submitted IP from the offline database and this workspace's own recent assessments. Every member is optional; absent makes no claim.
       class IpSummary
         extend T::Sig
         include Crystalline::MetadataFields
@@ -26,25 +26,25 @@ module NoResponse
             }
           }
         )
-        # Assessments in this tenant with the same IP in the last 24 hours, this one included. A count only.
+        # Assessments in this workspace with the same IP in the last 24 hours, this one included. A count only.
         field(
-          :seen_in_tenant,
+          :seen_in_workspace,
           Crystalline::Nilable.new(::Integer),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("seen_in_tenant")}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("seen_in_workspace")}}
         )
 
         sig {
           params(
             country: T.nilable(::String),
             type: T.nilable(Models::Shared::IpSummaryType),
-            seen_in_tenant: T.nilable(::Integer)
+            seen_in_workspace: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(country: nil, type: nil, seen_in_tenant: nil)
+        def initialize(country: nil, type: nil, seen_in_workspace: nil)
           @country = country
           @type = type
-          @seen_in_tenant = seen_in_tenant
+          @seen_in_workspace = seen_in_workspace
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -52,7 +52,7 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @country == other.country
           return false unless @type == other.type
-          return false unless @seen_in_tenant == other.seen_in_tenant
+          return false unless @seen_in_workspace == other.seen_in_workspace
           true
         end
       end

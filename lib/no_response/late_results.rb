@@ -3,7 +3,7 @@
 
 # Late-result handlers. Hand-written beside the generated client.
 #
-# An assessment can be revised after the signup was allowed: a slow source
+# An assessment can be revised after the account creation was allowed: a slow source
 # settles and the account's decision rises. NoResponse sends the new version as a
 # signed assessment.updated webhook. LateResults.handle verifies that delivery
 # with Webhooks.construct_event, picks an action from your policy, and acts

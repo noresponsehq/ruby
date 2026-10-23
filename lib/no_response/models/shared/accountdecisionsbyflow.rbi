@@ -6,10 +6,10 @@ class NoResponse::Models::Shared::AccountDecisionsByFlow
 end
 
 class NoResponse::Models::Shared::AccountDecisionsByFlow
-  def signup
+  def account_creation
   end
 
-  def signup=(str_)
+  def account_creation=(str_)
   end
 
   def login

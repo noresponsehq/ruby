@@ -324,7 +324,7 @@ module NoResponse
         .returns(Models::Operations::ListIntegrationsResponse)
     }
     def list(retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List the tenant's integrations.
+      # list - List the workspace's integrations.
       # Every integration, oldest first. Listings carry no secrets. Requires the integrations scope.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

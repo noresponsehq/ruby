@@ -29,7 +29,7 @@ custom = ReasonCode.deserialize("custom_value")
 | `PROXY_IP`                      | proxy_ip                        |
 | `SEEN_BEFORE`                   | seen_before                     |
 | `SHARED_IP`                     | shared_ip                       |
-| `MANY_RECENT_SIGNUPS`           | many_recent_signups             |
+| `MANY_RECENT_ACCOUNTS`          | many_recent_accounts            |
 | `ESTABLISHED_ACCOUNTS`          | established_accounts            |
 | `AGED_IDENTITY`                 | aged_identity                   |
 | `BREACH_NAME_MATCH`             | breach_name_match               |

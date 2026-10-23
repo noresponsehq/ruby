@@ -2,7 +2,7 @@
 
 # NoResponse for Ruby
 
-The NoResponse client for Ruby 3.2 and later. It assesses a signup or gateway event, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification and the wait helper are hand-written.
+The NoResponse client for Ruby 3.2 and later. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification and the wait helper are hand-written.
 
 Keep the API key on your server.
 
@@ -11,7 +11,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v4.0.1"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v5.0.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -27,7 +27,7 @@ client = NoResponse::NoResponseClient.new(api_key: ENV.fetch("NORESPONSE_API_KEY
 
 response = client.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
-    flow: Models::Shared::Flow::SIGNUP,
+    flow: Models::Shared::Flow::ACCOUNT_CREATION,
     account_id: "usr_8f2k1",
     identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: "jordan.lee@example.com")
   )
@@ -66,12 +66,12 @@ Every method also takes `timeout_ms:`, `retries:` and `http_headers:` for one ca
 ```ruby
 created = client.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
-    flow: Models::Shared::Flow::SIGNUP,
+    flow: Models::Shared::Flow::ACCOUNT_CREATION,
     account_id: "usr_8f2k1",
     identifiers: Models::Shared::AssessmentRequestIdentifiers.new(email: "jordan.lee@example.com"),
     response_mode: Models::Shared::ResponseMode::DETAILED # detailed needs the detailed scope
   ),
-  idempotency_key: "signup-usr_8f2k1-0001"
+  idempotency_key: "account-usr_8f2k1-0001"
 )
 
 latest = client.assessments.get(assessment_id: created.result.id)
@@ -157,7 +157,7 @@ client.assessments.create(body: request, retries: NoResponse::Utils::RetryConfig
 
 ## Issued keys
 
-When your signup gate issues an API key to the new account, send only its hash, as `issued_credential.sha256`; the key itself never leaves your backend.
+When your platform issues an API key to the new account, send only its hash, as `issued_credential.sha256`; the key itself never leaves your backend.
 
 ```ruby
 sha256 = NoResponse::IssuedCredential.sha256(issued_key)
@@ -206,7 +206,7 @@ else
     # send_test_event's fixed example assessment: apply nothing
   elsif event.type == "account.deleted"
     # you erased event.data.account_id with accounts.delete
-  elsif event.type == "tenant.deleted"
+  elsif event.type == "workspace.deleted"
     # the workspace is deleted: the last event this endpoint receives, once per event.data.environment
   elsif event.type == "webhook_endpoint.disabled"
     # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
@@ -227,7 +227,7 @@ end
 
 ### Late results
 
-An assessment can be revised after you allowed the signup. `NoResponse::LateResults.handle` verifies the `assessment.updated` delivery with `construct_event`, applies your policy and revokes the user's sessions or bans the user through your auth provider (`LateResults.clerk`, `.workos` or `.auth0`). It acts on the account's decision (`event.data.account.risk.decision`); the default policy revokes sessions on `review` and `block`. WorkOS has no user block, so its ban deletes the user permanently.
+An assessment can be revised after you allowed the account creation. `NoResponse::LateResults.handle` verifies the `assessment.updated` delivery with `construct_event`, applies your policy and revokes the user's sessions or bans the user through your auth provider (`LateResults.clerk`, `.workos` or `.auth0`). It acts on the account's decision (`event.data.account.risk.decision`); the default policy revokes sessions on `review` and `block`. WorkOS has no user block, so its ban deletes the user permanently.
 
 ```ruby
 provider = NoResponse::LateResults.clerk(secret_key: ENV.fetch('CLERK_SECRET_KEY'))

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Signup and gateway assessments.
+Assessments of account creation, login and purchase.
 
 ### Available Operations
 
@@ -14,7 +14,7 @@ Signup and gateway assessments.
 
 ## create
 
-Assesses one signup, login or purchase (flow) and answers with the account's one current risk: account.risk.decision is the decision for this flow (allow, step_up, review or block, where block means your block threshold was reached), and detail holds this assessment's own facts. depth sets how long the answer waits for sources: quick waits only for the fast ones (500 ms), full for the whole budget (3000 ms at most); it defaults to full for signup and purchase and quick for login. 200 carries complete or partial, 202 carries pending with Location and Retry-After. While the account's first assessment is pending, account is absent: apply your own fallback for that, 429, 503 or a timeout. NoResponse blocks nothing itself; you decide. Requires the assess scope. Idempotency-Key is optional in the SDK and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
+Assesses one account creation, login or purchase (flow) and answers with the account's one current risk: account.risk.decision is the decision for this flow (allow, step_up, review or block, where block means your block threshold was reached), and detail holds this assessment's own facts. depth sets how long the answer waits for sources: quick waits only for the fast ones (500 ms), full for the whole budget (3000 ms at most); it defaults to full for account_creation and purchase and quick for login. 200 carries complete or partial, 202 carries pending with Location and Retry-After. While the account's first assessment is pending, account is absent: apply your own fallback for that, 429, 503 or a timeout. NoResponse blocks nothing itself; you decide. Requires the assess scope. Idempotency-Key is optional in the SDK and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
 
 ### Example Usage: complete
 
@@ -28,7 +28,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::SIGNUP,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -82,7 +82,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -101,7 +101,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::SIGNUP,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -155,7 +155,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -174,7 +174,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::SIGNUP,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new_user_42',
@@ -185,7 +185,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   ),
   request_id: 'req-2026-10-14-0001',
   deadline_ms: 300
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -204,7 +204,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::SIGNUP,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -258,7 +258,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -277,11 +277,11 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::SIGNUP,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com'
   )
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -300,7 +300,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_8412',
-  flow: Models::Shared::Flow::SIGNUP,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'jane.doe@example.com',
     username: 'janedoe',
@@ -314,7 +314,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   request_id: 'req_01',
   deadline_ms: 500,
   response_mode: Models::Shared::ResponseMode::STANDARD
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -333,7 +333,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::SIGNUP,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -387,7 +387,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -397,10 +397,10 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                             | Type                                                                                                                                                                                                                                                                  | Required                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                                                           | Example                                                                                                                                                                                                                                                               |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `body`                                                                                                                                                                                                                                                                | [Models::Shared::AssessmentRequest](../../models/shared/assessmentrequest.md)                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                                                                    | N/A                                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                       |
-| `idempotency_key`                                                                                                                                                                                                                                                     | *T.nilable(::String)*                                                                                                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                                                                                                    | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours. Optional: the SDK generates a UUID when you omit it and sends the same key on every retry of the call. | signup-acct_7f3a9c                                                                                                                                                                                                                                                    |
+| Parameter                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `body`                                                                                                                                                                                                                                                                   | [Models::Shared::AssessmentRequest](../../models/shared/assessmentrequest.md)                                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                                                                                                                       | N/A                                                                                                                                                                                                                                                                      |                                                                                                                                                                                                                                                                          |
+| `idempotency_key`                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                       | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours. Optional: the SDK generates a UUID when you omit it and sends the same key on every retry of the call. | account-acct_7f3a9c                                                                                                                                                                                                                                                      |
 
 ### Response
 
@@ -420,7 +420,7 @@ end
 
 ## get
 
-Returns the highest assessment_version, with the account's current risk. Requires the assess or history scope. While status is pending, or partial with a source still running, the response carries Retry-After; poll no faster than it says. Another tenant's assessment, an unknown or expired assessment and a malformed assessment_id all answer 404 not_found. response_mode=detailed needs the detailed scope.
+Returns the highest assessment_version, with the account's current risk. Requires the assess or history scope. While status is pending, or partial with a source still running, the response carries Retry-After; poll no faster than it says. Another workspace's assessment, an unknown or expired assessment and a malformed assessment_id all answer 404 not_found. response_mode=detailed needs the detailed scope.
 
 ### Example Usage: complete
 
@@ -628,7 +628,7 @@ res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJK
   observed_at: '2026-10-20T05:00:00Z',
   external_ref: 'case-123',
   notes: 'Card testing from this account; closed by trust and safety.'
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -649,8 +649,8 @@ res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJK
   outcome: Models::Shared::Outcome::LEGITIMATE,
   observed_at: '2026-10-14T09:04:30.000Z',
   external_ref: 'case-48213',
-  notes: 'Chargeback filed two days after signup.'
-), idempotency_key: 'signup-acct_7f3a9c')
+  notes: 'Chargeback filed two days after account creation.'
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -669,7 +669,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::AssessmentOutcomeRequest.new(
   outcome: Models::Shared::Outcome::FALSE_POSITIVE
-), idempotency_key: 'signup-acct_7f3a9c')
+), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?
   # handle response
@@ -679,11 +679,11 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                             | Type                                                                                                                                                                                                                                                                  | Required                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                                                           | Example                                                                                                                                                                                                                                                               |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `assessment_id`                                                                                                                                                                                                                                                       | *::String*                                                                                                                                                                                                                                                            | :heavy_check_mark:                                                                                                                                                                                                                                                    | Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.                                                                                                                                                     | asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                                                                                                                        |
-| `body`                                                                                                                                                                                                                                                                | [Models::Shared::AssessmentOutcomeRequest](../../models/shared/assessmentoutcomerequest.md)                                                                                                                                                                           | :heavy_check_mark:                                                                                                                                                                                                                                                    | N/A                                                                                                                                                                                                                                                                   |                                                                                                                                                                                                                                                                       |
-| `idempotency_key`                                                                                                                                                                                                                                                     | *T.nilable(::String)*                                                                                                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                                                                                                                    | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours. Optional: the SDK generates a UUID when you omit it and sends the same key on every retry of the call. | signup-acct_7f3a9c                                                                                                                                                                                                                                                    |
+| Parameter                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `assessment_id`                                                                                                                                                                                                                                                          | *::String*                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                       | Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.                                                                                                                                                        | asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                                                                                                                           |
+| `body`                                                                                                                                                                                                                                                                   | [Models::Shared::AssessmentOutcomeRequest](../../models/shared/assessmentoutcomerequest.md)                                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                                                                                                       | N/A                                                                                                                                                                                                                                                                      |                                                                                                                                                                                                                                                                          |
+| `idempotency_key`                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                       | Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours. Optional: the SDK generates a UUID when you omit it and sends the same key on every retry of the call. | account-acct_7f3a9c                                                                                                                                                                                                                                                      |
 
 ### Response
 
@@ -703,7 +703,7 @@ end
 
 ## query
 
-History is a POST with account_id in the body so an account identifier stays out of URLs and access logs. Requires the history scope. Read-only and safe to retry. Newest first, each at its latest assessment_version. An account with no assessments answers 200 with empty items. The cursor is opaque and bound to your tenant and the account; a tampered or expired cursor answers 400 invalid_cursor. response_mode=detailed needs the detailed scope.
+History is a POST with account_id in the body so an account identifier stays out of URLs and access logs. Requires the history scope. Read-only and safe to retry. Newest first, each at its latest assessment_version. An account with no assessments answers 200 with empty items. The cursor is opaque and bound to your workspace and the account; a tampered or expired cursor answers 400 invalid_cursor. response_mode=detailed needs the detailed scope.
 
 ### Example Usage: firstPage
 

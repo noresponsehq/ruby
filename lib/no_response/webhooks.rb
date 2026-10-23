@@ -53,7 +53,7 @@ module NoResponse
 
     # The workspace was deleted. Sent once per environment ("live" or "test")
     # before its endpoints are torn down: the last event this endpoint receives.
-    TenantDeleted = Struct.new(:workspace_id, :environment, :deleted_at, keyword_init: true)
+    WorkspaceDeleted = Struct.new(:workspace_id, :environment, :deleted_at, keyword_init: true)
 
     # Another endpoint of this environment was disabled after failing
     # continuously for 72 hours, since failing_since. It receives nothing more
@@ -72,7 +72,7 @@ module NoResponse
     # assessments.get returns it) or an AssessmentExpired for type
     # "assessment.updated", an EndpointVerification for
     # "endpoint.verification", an AccountDeleted for "account.deleted", a
-    # TenantDeleted for "tenant.deleted", an EndpointDisabled for
+    # WorkspaceDeleted for "workspace.deleted", an EndpointDisabled for
     # "webhook_endpoint.disabled" and an AccountRiskChanged for
     # "account.risk_changed". Deliveries are at least once and unordered:
     # deduplicate on id and keep the highest detail.assessment_version.
@@ -183,8 +183,8 @@ module NoResponse
           end
         when 'account.deleted'
           account_deleted(data)
-        when 'tenant.deleted'
-          tenant_deleted(data)
+        when 'workspace.deleted'
+          workspace_deleted(data)
         when 'webhook_endpoint.disabled'
           endpoint_disabled(data)
         when 'account.risk_changed'
@@ -216,15 +216,15 @@ module NoResponse
                            deleted_at: data['deleted_at'])
       end
 
-      def tenant_deleted(data)
+      def workspace_deleted(data)
         unless data['workspace_id'].is_a?(String) && WORKSPACE_ID.match?(data['workspace_id']) &&
                %w[live test].include?(data['environment']) &&
                data['deleted_at'].is_a?(String) && valid_datetime?(data['deleted_at'])
-          raise VerificationError.new(:invalid_payload, 'Tenant deleted event is malformed')
+          raise VerificationError.new(:invalid_payload, 'Workspace deleted event is malformed')
         end
 
-        TenantDeleted.new(workspace_id: data['workspace_id'], environment: data['environment'],
-                          deleted_at: data['deleted_at'])
+        WorkspaceDeleted.new(workspace_id: data['workspace_id'], environment: data['environment'],
+                             deleted_at: data['deleted_at'])
       end
 
       def endpoint_disabled(data)

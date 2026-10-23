@@ -136,14 +136,14 @@ class LateResultsTest < Minitest::Test
     erased = Webhooks::Event.new(id: 'evt_x', type: 'account.deleted', created_at: 'x',
                                  data: Webhooks::AccountDeleted.new(account_id: 'acct_1', assessments_deleted: 1, deleted_at: 'x'))
     assert_equal 'none', LateResults.action_for(erased)
-    gone = Webhooks::Event.new(id: 'evt_x', type: 'tenant.deleted', created_at: 'x',
-                               data: Webhooks::TenantDeleted.new(workspace_id: 'tnt_1', environment: 'live', deleted_at: 'x'))
+    gone = Webhooks::Event.new(id: 'evt_x', type: 'workspace.deleted', created_at: 'x',
+                               data: Webhooks::WorkspaceDeleted.new(workspace_id: 'tnt_1', environment: 'live', deleted_at: 'x'))
     assert_equal 'none', LateResults.action_for(gone)
     disabled = Webhooks::Event.new(id: 'evt_x', type: 'webhook_endpoint.disabled', created_at: 'x',
                                    data: Webhooks::EndpointDisabled.new(endpoint_id: 'whe_1', failing_since: 'x', disabled_at: 'x'))
     assert_equal 'none', LateResults.action_for(disabled)
     blocked = NoResponse::Models::Shared::AccountDecision::BLOCK
-    flows = NoResponse::Models::Shared::AccountDecisionsByFlow.new(signup: blocked, login: blocked, purchase: blocked)
+    flows = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: blocked, login: blocked, purchase: blocked)
     account = NoResponse::Models::Shared::Account.new(
       id: 'acct_1', risk: NoResponse::Models::Shared::AccountRisk.new(score: 90, decision: blocked, reasons: []),
       decisions_by_flow: flows, assessment_id: 'asm_x', updated_at: 'x'

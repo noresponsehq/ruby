@@ -9,12 +9,12 @@ s = ::NoResponse::NoResponseClient.new(
 res = s.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
     account_id: "acct_7f3a9c",
-    flow: Models::Shared::Flow::SIGNUP,
+    flow: Models::Shared::Flow::ACCOUNT_CREATION,
     identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
       email: "new.user@example.com"
     )
   ),
-  idempotency_key: "signup-acct_7f3a9c"
+  idempotency_key: "account-acct_7f3a9c"
 )
 
 unless res.nil?

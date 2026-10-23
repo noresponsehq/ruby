@@ -57,7 +57,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("organization_id")}}
         )
-        # The provider tenant identifier, when distinct from organization_id.
+        # The provider workspace identifier, when distinct from organization_id.
         field(
           :tenant_id,
           Crystalline::Nilable.new(::String),

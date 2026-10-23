@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-# Hash an API key your signup gate issued. Hand-written beside the generated client.
+# Hash an API key your platform issued. Hand-written beside the generated client.
 
 require 'digest'
 

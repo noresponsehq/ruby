@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # GET /v1/integrations: every integration of the tenant, oldest first, at most 10. No secret is ever listed.
+      # GET /v1/integrations: every integration of the workspace, oldest first, at most 10. No secret is ever listed.
       class IntegrationList
         extend T::Sig
         include Crystalline::MetadataFields
