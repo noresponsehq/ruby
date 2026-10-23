@@ -110,6 +110,61 @@ class WebhooksTest < Minitest::Test
     end
   end
 
+  TENANT_DELETED = {
+    'id' => 'evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2', 'type' => 'tenant.deleted', 'created_at' => '2026-10-23T10:00:00.000Z',
+    'data' => { 'workspace_id' => 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', 'environment' => 'live',
+                'deleted_at' => '2026-10-23T10:00:00.000Z' }
+  }.freeze
+
+  ENDPOINT_DISABLED = {
+    'id' => 'evt_01JA2ZD3K4M5N6P7Q8R9S0T1V3', 'type' => 'webhook_endpoint.disabled',
+    'created_at' => '2026-10-23T10:00:00.000Z',
+    'data' => { 'endpoint_id' => 'whe_01JA2ZD0E1F2G3H4J5K6M7N8P9', 'failing_since' => '2026-10-20T10:00:00.000Z',
+                'disabled_at' => '2026-10-23T10:00:00.000Z' }
+  }.freeze
+
+  def refuses_changed_data(original, changes, removals)
+    bodies = changes.map { |change| original.merge('data' => original['data'].merge(change)) }
+    bodies += removals.map { |key| original.merge('data' => original['data'].except(key)) }
+    bodies.each do |bad|
+      raw, headers = signed(bad, 'secret', bad['id'])
+      refused(:invalid_payload, raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW)
+    end
+  end
+
+  def test_tenant_deleted_event
+    raw, headers = signed(TENANT_DELETED, 'secret', TENANT_DELETED['id'])
+    event = Webhooks.construct_event(raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW)
+    assert_equal 'tenant.deleted', event.type
+    assert_equal TENANT_DELETED['id'], event.id
+    assert_equal '2026-10-23T10:00:00.000Z', event.created_at
+    refute_predicate event, :expired?
+    refute_predicate event, :test?
+    assert_equal Webhooks::TenantDeleted.new(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: 'live',
+                                             deleted_at: '2026-10-23T10:00:00.000Z'), event.data
+    assert_raises(Webhooks::VerificationError) { Webhooks.verification_response(event) }
+    refuses_changed_data(TENANT_DELETED,
+                         [{ 'workspace_id' => '-tnt' }, { 'workspace_id' => 'tnt/01' }, { 'environment' => 'staging' },
+                          { 'deleted_at' => 'tomorrow' }],
+                         %w[workspace_id environment deleted_at])
+  end
+
+  def test_endpoint_disabled_event
+    raw, headers = signed(ENDPOINT_DISABLED, 'secret', ENDPOINT_DISABLED['id'])
+    event = Webhooks.construct_event(raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW)
+    assert_equal 'webhook_endpoint.disabled', event.type
+    refute_predicate event, :expired?
+    refute_predicate event, :test?
+    assert_equal Webhooks::EndpointDisabled.new(endpoint_id: 'whe_01JA2ZD0E1F2G3H4J5K6M7N8P9',
+                                                failing_since: '2026-10-20T10:00:00.000Z',
+                                                disabled_at: '2026-10-23T10:00:00.000Z'), event.data
+    assert_raises(Webhooks::VerificationError) { Webhooks.verification_response(event) }
+    refuses_changed_data(ENDPOINT_DISABLED,
+                         [{ 'endpoint_id' => 'whk_01JA2ZD0E1F2G3H4J5K6M7N8P9' }, { 'failing_since' => 'three days ago' },
+                          { 'disabled_at' => 'now' }],
+                         %w[endpoint_id failing_since disabled_at])
+  end
+
   # The API adds fields without a new version, so keys this SDK does not know
   # must not stop a signed event from verifying.
   def test_unknown_fields_are_accepted

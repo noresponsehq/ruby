@@ -9,7 +9,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v3.0.3"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v3.0.4"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -204,6 +204,10 @@ else
     # send_test_event's fixed example assessment: apply nothing
   elsif event.type == "account.deleted"
     # you erased event.data.account_id with accounts.delete
+  elsif event.type == "tenant.deleted"
+    # the workspace is deleted: the last event this endpoint receives, once per event.data.environment
+  elsif event.type == "webhook_endpoint.disabled"
+    # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
   elsif event.expired?
     # forget the assessment: GET now answers 404
   else

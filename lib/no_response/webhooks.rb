@@ -23,6 +23,7 @@ module NoResponse
     ASSESSMENT_ID = /\Aasm_[0-9A-HJKMNP-TV-Z]{26}\z/
     ACCOUNT_ID = /\A[A-Za-z0-9][A-Za-z0-9._:|-]{0,127}\z/
     ENDPOINT_ID = /\Awhe_[0-9A-HJKMNP-TV-Z]{26}\z/
+    WORKSPACE_ID = /\A[A-Za-z0-9][A-Za-z0-9_.-]{0,122}\z/
 
     # Raised by construct_event. Answer 400 and do not process the delivery.
     # code is one of :missing_header, :duplicate_header, :invalid_timestamp,
@@ -50,11 +51,21 @@ module NoResponse
     # the delete answer.
     AccountDeleted = Struct.new(:account_id, :assessments_deleted, :deleted_at, keyword_init: true)
 
+    # The workspace was deleted. Sent once per environment ("live" or "test")
+    # before its endpoints are torn down: the last event this endpoint receives.
+    TenantDeleted = Struct.new(:workspace_id, :environment, :deleted_at, keyword_init: true)
+
+    # Another endpoint of this environment was disabled after failing
+    # continuously for 72 hours, since failing_since. It receives nothing more
+    # until it is verified again.
+    EndpointDisabled = Struct.new(:endpoint_id, :failing_since, :disabled_at, keyword_init: true)
+
     # A verified delivery. data is a Models::Shared::Assessment (exactly as
     # assessments.get returns it) or an AssessmentExpired for type
     # "assessment.updated", an EndpointVerification for
-    # "endpoint.verification" and an AccountDeleted for "account.deleted".
-    # Deliveries are at least once and unordered:
+    # "endpoint.verification", an AccountDeleted for "account.deleted", a
+    # TenantDeleted for "tenant.deleted" and an EndpointDisabled for
+    # "webhook_endpoint.disabled". Deliveries are at least once and unordered:
     # deduplicate on id and keep the highest detail.assessment_version.
     Event = Struct.new(:id, :type, :created_at, :data, :test, keyword_init: true) do
       # True for the terminal expiry event: delete what you hold and fetch nothing.
@@ -163,6 +174,10 @@ module NoResponse
           end
         when 'account.deleted'
           account_deleted(data)
+        when 'tenant.deleted'
+          tenant_deleted(data)
+        when 'webhook_endpoint.disabled'
+          endpoint_disabled(data)
         else
           raise VerificationError.new(:invalid_payload, 'Unknown webhook event type')
         end
@@ -188,6 +203,28 @@ module NoResponse
 
         AccountDeleted.new(account_id: data['account_id'], assessments_deleted: data['assessments_deleted'],
                            deleted_at: data['deleted_at'])
+      end
+
+      def tenant_deleted(data)
+        unless data['workspace_id'].is_a?(String) && WORKSPACE_ID.match?(data['workspace_id']) &&
+               %w[live test].include?(data['environment']) &&
+               data['deleted_at'].is_a?(String) && valid_datetime?(data['deleted_at'])
+          raise VerificationError.new(:invalid_payload, 'Tenant deleted event is malformed')
+        end
+
+        TenantDeleted.new(workspace_id: data['workspace_id'], environment: data['environment'],
+                          deleted_at: data['deleted_at'])
+      end
+
+      def endpoint_disabled(data)
+        unless data['endpoint_id'].is_a?(String) && ENDPOINT_ID.match?(data['endpoint_id']) &&
+               data['failing_since'].is_a?(String) && valid_datetime?(data['failing_since']) &&
+               data['disabled_at'].is_a?(String) && valid_datetime?(data['disabled_at'])
+          raise VerificationError.new(:invalid_payload, 'Endpoint disabled event is malformed')
+        end
+
+        EndpointDisabled.new(endpoint_id: data['endpoint_id'], failing_since: data['failing_since'],
+                             disabled_at: data['disabled_at'])
       end
 
       def valid_datetime?(value)
