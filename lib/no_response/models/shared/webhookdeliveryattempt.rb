@@ -15,17 +15,11 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("event_id"), required: true}}
         )
-
+        # The event's type, as its body's type: assessment.updated, account.deleted or account.risk_changed.
         field(
           :event_type,
-          Models::Shared::EventType,
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("event_type"),
-              required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::EventType, false)
-            }
-          }
+          ::String,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("event_type"), required: true}}
         )
         # Which attempt of this delivery this was: 1 for the first send, up to 9 with retries. A replay counts its own attempts from 1.
         field(
@@ -84,7 +78,7 @@ module NoResponse
         sig {
           params(
             event_id: ::String,
-            event_type: Models::Shared::EventType,
+            event_type: ::String,
             attempt: ::Integer,
             replay: T::Boolean,
             status: Models::Shared::WebhookDeliveryAttemptStatus,

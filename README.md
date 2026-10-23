@@ -11,7 +11,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v3.0.8"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v4.0.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -210,6 +210,9 @@ else
     # the workspace is deleted: the last event this endpoint receives, once per event.data.environment
   elsif event.type == "webhook_endpoint.disabled"
     # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
+  elsif event.type == "account.risk_changed"
+    # event.data.account is the Account accounts.get returns, with its new decisions_by_flow;
+    # event.data.previous_decisions_by_flow holds the decisions it replaced
   elsif event.expired?
     # forget the assessment: GET now answers 404
   else
@@ -232,7 +235,7 @@ result = NoResponse::LateResults.handle(payload, request.env, { key_id => secret
                                         policy: { review: 'ban' })
 ```
 
-A refused provider call raises `LateResults::ProviderActionError`; answer 5xx so we retry.
+An `account.risk_changed` event acts on nothing: the handler acts on the `assessment.updated` that changed the decision. A refused provider call raises `LateResults::ProviderActionError`; answer 5xx so we retry.
 
 If your app has its own login, `NoResponse::LateResults.log_only` logs what it would revoke or ban (to standard error, or pass `log:` a callable) and calls nothing. Use it to try the handler, then pass your own provider: any object with `name`, `revoke_sessions(user_id)` and `ban(user_id)`.
 

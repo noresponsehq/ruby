@@ -60,12 +60,21 @@ module NoResponse
     # until it is verified again.
     EndpointDisabled = Struct.new(:endpoint_id, :failing_since, :disabled_at, keyword_init: true)
 
+    # The account's decision for at least one flow changed. account is a
+    # Models::Shared::Account exactly as accounts.get returns it, with its new
+    # risk and decisions; previous_decisions_by_flow is a
+    # Models::Shared::AccountDecisionsByFlow holding the decisions it replaced.
+    # It is not sent when the score moves within the same decision, nor for an
+    # account's first risk.
+    AccountRiskChanged = Struct.new(:account, :previous_decisions_by_flow, keyword_init: true)
+
     # A verified delivery. data is a Models::Shared::Assessment (exactly as
     # assessments.get returns it) or an AssessmentExpired for type
     # "assessment.updated", an EndpointVerification for
     # "endpoint.verification", an AccountDeleted for "account.deleted", a
-    # TenantDeleted for "tenant.deleted" and an EndpointDisabled for
-    # "webhook_endpoint.disabled". Deliveries are at least once and unordered:
+    # TenantDeleted for "tenant.deleted", an EndpointDisabled for
+    # "webhook_endpoint.disabled" and an AccountRiskChanged for
+    # "account.risk_changed". Deliveries are at least once and unordered:
     # deduplicate on id and keep the highest detail.assessment_version.
     Event = Struct.new(:id, :type, :created_at, :data, :test, keyword_init: true) do
       # True for the terminal expiry event: delete what you hold and fetch nothing.
@@ -178,6 +187,8 @@ module NoResponse
           tenant_deleted(data)
         when 'webhook_endpoint.disabled'
           endpoint_disabled(data)
+        when 'account.risk_changed'
+          account_risk_changed(data)
         else
           raise VerificationError.new(:invalid_payload, 'Unknown webhook event type')
         end
@@ -225,6 +236,21 @@ module NoResponse
 
         EndpointDisabled.new(endpoint_id: data['endpoint_id'], failing_since: data['failing_since'],
                              disabled_at: data['disabled_at'])
+      end
+
+      def account_risk_changed(data)
+        account = data['account']
+        previous = data['previous_decisions_by_flow']
+        unless account.is_a?(Hash) && previous.is_a?(Hash) && account['id'].is_a?(String) && ACCOUNT_ID.match?(account['id'])
+          raise VerificationError.new(:invalid_payload, 'Account risk changed event is malformed')
+        end
+
+        begin
+          AccountRiskChanged.new(account: Crystalline.unmarshal_json(account, Models::Shared::Account),
+                                 previous_decisions_by_flow: Crystalline.unmarshal_json(previous, Models::Shared::AccountDecisionsByFlow))
+        rescue KeyError, TypeError, ArgumentError, NoMethodError
+          raise VerificationError.new(:invalid_payload, 'Account risk changed event is malformed')
+        end
       end
 
       def valid_datetime?(value)

@@ -21,20 +21,14 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("event_id"), required: true}}
         )
-
+        # The event's type, as its body's type: assessment.updated, account.deleted or account.risk_changed.
         field(
           :event_type,
-          Models::Shared::EventType,
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("event_type"),
-              required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::EventType, false)
-            }
-          }
+          ::String,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("event_type"), required: true}}
         )
 
-        sig { params(endpoint_id: ::String, event_id: ::String, event_type: Models::Shared::EventType).void }
+        sig { params(endpoint_id: ::String, event_id: ::String, event_type: ::String).void }
         def initialize(endpoint_id:, event_id:, event_type:)
           @endpoint_id = endpoint_id
           @event_id = event_id

@@ -85,14 +85,14 @@ class LateResultsTest < Minitest::Test
   def pending_known = fixture('valid/assessment-view-pending-known-account.json')
   def expired = fixture('valid/webhook-assessment-expired.json')['data']
 
-  def delivery(data, account_id = nil, test: false)
+  def delivery(data, account_id = nil, test: false, type: 'assessment.updated')
     id = 'evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ2'
     if account_id
       data = JSON.parse(JSON.generate(data))
       data['detail']['account_id'] = account_id
       data['account']['id'] = account_id if data['account']
     end
-    envelope = { 'id' => id, 'type' => 'assessment.updated', 'created_at' => '2026-10-18T11:00:04Z' }
+    envelope = { 'id' => id, 'type' => type, 'created_at' => '2026-10-18T11:00:04Z' }
     envelope['test'] = true if test
     raw = JSON.generate(envelope.merge('data' => data))
     stamp = NOW.to_s
@@ -142,6 +142,15 @@ class LateResultsTest < Minitest::Test
     disabled = Webhooks::Event.new(id: 'evt_x', type: 'webhook_endpoint.disabled', created_at: 'x',
                                    data: Webhooks::EndpointDisabled.new(endpoint_id: 'whe_1', failing_since: 'x', disabled_at: 'x'))
     assert_equal 'none', LateResults.action_for(disabled)
+    blocked = NoResponse::Models::Shared::AccountDecision::BLOCK
+    flows = NoResponse::Models::Shared::AccountDecisionsByFlow.new(signup: blocked, login: blocked, purchase: blocked)
+    account = NoResponse::Models::Shared::Account.new(
+      id: 'acct_1', risk: NoResponse::Models::Shared::AccountRisk.new(score: 90, decision: blocked, reasons: []),
+      decisions_by_flow: flows, assessment_id: 'asm_x', updated_at: 'x'
+    )
+    changed = Webhooks::Event.new(id: 'evt_x', type: 'account.risk_changed', created_at: 'x',
+                                  data: Webhooks::AccountRiskChanged.new(account: account, previous_decisions_by_flow: flows))
+    assert_equal 'none', LateResults.action_for(changed, { block: 'ban' })
     assert_equal 'ban', LateResults.action_for(assessment('complete', 'step_up'), { step_up: 'ban' })
     assert_equal 'none', LateResults.action_for(assessment('complete', 'review'), { 'step_up' => 'ban' })
     assert_raises(ArgumentError) { LateResults.action_for(assessment('complete', 'review'), { review: 'delete' }) }
@@ -500,6 +509,13 @@ class LateResultsTest < Minitest::Test
         body, hdrs = delivery(data)
         assert_equal 'none', LateResults.handle(body, hdrs, SECRETS, auth0, now: NOW).action
       end
+      # account.risk_changed is verified and typed, and acts on nothing: the
+      # assessment.updated that moved the decision does.
+      body, hdrs = delivery(fixture('valid/webhook-account-risk-changed.json')['data'], type: 'account.risk_changed')
+      ignored = LateResults.handle(body, hdrs, SECRETS, auth0, now: NOW)
+      assert_equal 'none', ignored.action
+      assert_equal 'account.risk_changed', ignored.event.type
+      assert_equal NoResponse::Models::Shared::AccountDecision::REVIEW, ignored.event.data.account.decisions_by_flow.login
       assert_equal 'none', LateResults.handle(raw, headers, SECRETS, auth0, now: NOW, user_id: ->(*) {}).action
       assert_empty mock.calls
       error = assert_raises(LateResults::ProviderActionError) { LateResults.handle(raw, headers, SECRETS, auth0, now: NOW) }

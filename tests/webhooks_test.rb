@@ -165,6 +165,49 @@ class WebhooksTest < Minitest::Test
                          %w[endpoint_id failing_since disabled_at])
   end
 
+  def test_account_risk_changed_event
+    secrets = { 'whk_sdktest01' => 'secret' }
+    changed = fixture('valid/webhook-account-risk-changed.json')
+    raw, headers = signed(changed, 'secret', changed['id'])
+    event = Webhooks.construct_event(raw, headers, secrets, now: NOW)
+    assert_equal 'account.risk_changed', event.type
+    assert_equal changed['id'], event.id
+    refute_predicate event, :expired?
+    refute_predicate event, :test?
+    assert_instance_of Webhooks::AccountRiskChanged, event.data
+    # data.account is the same type accounts.get returns.
+    account = event.data.account
+    assert_instance_of NoResponse::Models::Shared::Account, account
+    assert_equal 'acct_7f3a9c', account.id
+    assert_equal '1', account.schema_version
+    assert_equal 70, account.risk.score
+    assert_equal NoResponse::Models::Shared::AccountDecision::REVIEW, account.risk.decision
+    assert_equal 2, account.risk.reasons.length
+    assert_equal 55, account.risk.reasons[0].weight
+    assert_equal 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', account.assessment_id
+    assert_equal '2026-10-23T09:00:04.812Z', account.updated_at
+    review = NoResponse::Models::Shared::AccountDecision::REVIEW
+    allow = NoResponse::Models::Shared::AccountDecision::ALLOW
+    flows = account.decisions_by_flow
+    assert_equal [review, review, review], [flows.signup, flows.login, flows.purchase]
+    previous = event.data.previous_decisions_by_flow
+    assert_equal [allow, allow, allow], [previous.signup, previous.login, previous.purchase]
+    assert_raises(Webhooks::VerificationError) { Webhooks.verification_response(event) }
+    [
+      ->(d) { d.delete('previous_decisions_by_flow') },
+      ->(d) { d['previous_decisions_by_flow'].delete('login') },
+      ->(d) { d['account'].delete('decisions_by_flow') },
+      ->(d) { d['account']['risk'].delete('score') },
+      ->(d) { d['account'] = 'acct_7f3a9c' },
+      ->(d) { d['account']['id'] = 'jane@example.com' }
+    ].each do |mutate|
+      bad = fixture('valid/webhook-account-risk-changed.json')
+      mutate.call(bad['data'])
+      raw, headers = signed(bad, 'secret', bad['id'])
+      refused(:invalid_payload, raw, headers, secrets, now: NOW)
+    end
+  end
+
   # The API adds fields without a new version, so keys this SDK does not know
   # must not stop a signed event from verifying.
   def test_unknown_fields_are_accepted

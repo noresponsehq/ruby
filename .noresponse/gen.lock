@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: ebd907e0ac68512a3b0a8880980bd529
+  docChecksum: 46f576963576aa73d0e99582a902b020
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 3.0.8
-  configChecksum: cc7c62f6382aa22b3423a95a00ab728b
+  releaseVersion: 4.0.0
+  configChecksum: ac99c61d597637a4d3314acde1151d77
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -32,7 +32,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:5fb4cdfe6b8902699036634f41e58c5fb4de4157
+    last_write_checksum: sha1:10fc4dc5cc44dbf8807bbfa4a5574ca1ca37527a
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -205,8 +205,6 @@ trackedFiles:
     last_write_checksum: sha1:fa23b6c9fc6e2d5db9bf8991a2209112b7ceb840
   docs/models/shared/emailunion.md:
     last_write_checksum: sha1:93c501c9b0a81968671863557f1eb45f70bbe15c
-  docs/models/shared/eventtype.md:
-    last_write_checksum: sha1:ff3a1fa4a7d78eed89e735b3a7f364c326f5e4f3
   docs/models/shared/failure.md:
     last_write_checksum: sha1:b6240c389e7d42e6695aa0c37fdf60695689464e
   docs/models/shared/failurereason.md:
@@ -332,7 +330,7 @@ trackedFiles:
   docs/models/shared/transport.md:
     last_write_checksum: sha1:0cf86f35ed74daa19314fe175c8576aae3b7f210
   docs/models/shared/webhookdeliveryattempt.md:
-    last_write_checksum: sha1:ef1053e1edb009218703d82abed49efce3eb14ea
+    last_write_checksum: sha1:a5e6af06cec4b38d86957f65388153c4969ca134
   docs/models/shared/webhookdeliveryattemptstatus.md:
     last_write_checksum: sha1:87d3be03628b26eedb542b46d3ac5499a0fcc052
   docs/models/shared/webhookdeliverylist.md:
@@ -352,7 +350,7 @@ trackedFiles:
   docs/models/shared/webhookkeyrotationrequest.md:
     last_write_checksum: sha1:9daf33b4d44abed8a71b970893c464fd6238b56f
   docs/models/shared/webhookreplay.md:
-    last_write_checksum: sha1:f092922cfa7e828ec3f975fc8259504770f46064
+    last_write_checksum: sha1:c9085956e36743abb79cf8def8c40a983966da26
   docs/models/shared/webhookreplayrequest.md:
     last_write_checksum: sha1:97bbe30c0e5e3a903301bba0428af795c5a81d6d
   docs/models/shared/webhooktest.md:
@@ -578,7 +576,7 @@ trackedFiles:
   lib/no_response/models/operations/sendwebhooktestevent_response.rbi:
     last_write_checksum: sha1:659d69e4bdbbe8c44d6c3006bb277a78f8d5e3d7
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:74cd069d9ec6962cec3431fea0da0f18abdd33b1
+    last_write_checksum: sha1:f6002e083a1960d44bedc43b224345aa263de160
   lib/no_response/models/shared/account.rb:
     last_write_checksum: sha1:679a398fe9f11c565204c45c2899ca3d6303f585
   lib/no_response/models/shared/account.rbi:
@@ -747,10 +745,6 @@ trackedFiles:
     last_write_checksum: sha1:4e31284131c90d077b321368462a93333a5dca2e
   lib/no_response/models/shared/email_union.rbi:
     last_write_checksum: sha1:0cc5916134d0437921b514f2f18a55f3ebe13c28
-  lib/no_response/models/shared/eventtype.rb:
-    last_write_checksum: sha1:33c218830a8cc6d6e95b72113e15db79c78acf38
-  lib/no_response/models/shared/eventtype.rbi:
-    last_write_checksum: sha1:7508eba53be4fe345d5b8835810bf0db474436df
   lib/no_response/models/shared/failure.rb:
     last_write_checksum: sha1:0ba14bab2c85d191748125aeb73d9442f0c0cea0
   lib/no_response/models/shared/failure.rbi:
@@ -1000,7 +994,7 @@ trackedFiles:
   lib/no_response/models/shared/transport.rbi:
     last_write_checksum: sha1:39589203e90043d27efbcee60e7f66cc8ceb11e0
   lib/no_response/models/shared/webhookdeliveryattempt.rb:
-    last_write_checksum: sha1:5f808ef8bdf2393464952e2524e0b6c9f14c32f9
+    last_write_checksum: sha1:053cd803037d83aa771f6520205847ba658a8a2f
   lib/no_response/models/shared/webhookdeliveryattempt.rbi:
     last_write_checksum: sha1:d75f5cc79c0e045bf445380171c371d1ea6c23a0
   lib/no_response/models/shared/webhookdeliveryattemptstatus.rb:
@@ -1040,7 +1034,7 @@ trackedFiles:
   lib/no_response/models/shared/webhookkeyrotationrequest.rbi:
     last_write_checksum: sha1:1ad5869c5b46c970ebaa1821bdee13ab0e59d394
   lib/no_response/models/shared/webhookreplay.rb:
-    last_write_checksum: sha1:1bda318fe572b99ea0305194723fc4d9d37690b1
+    last_write_checksum: sha1:d8f977cd747b3e2871307accd0ff6288daf4825c
   lib/no_response/models/shared/webhookreplay.rbi:
     last_write_checksum: sha1:5a8e5e7e9bfab3327a5219c60578e65efdf4ca9b
   lib/no_response/models/shared/webhookreplayrequest.rb:
@@ -1074,7 +1068,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:9279aa997c1a8b5f174579c5cca7432b0bde9e74
+    last_write_checksum: sha1:c371ade225eaa58a80547375f6cfbb1170537952
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/utils/forms.rb:
@@ -1098,7 +1092,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:0dfdf5813a35044ab77acb01ab0f6cf2b6115b1c
   noresponse.gemspec:
-    last_write_checksum: sha1:4eed2ad2700a35076ca1760376b531cb86236cd0
+    last_write_checksum: sha1:9e70f34d9f352a41bb002e9cd0106aac6d83a531
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:

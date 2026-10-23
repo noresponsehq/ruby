@@ -42,7 +42,6 @@ module NoResponse
       autoload :ConsistencyValue, "no_response/models/shared/consistencyvalue.rb"
       autoload :Country, "no_response/models/shared/country.rb"
       autoload :Depth, "no_response/models/shared/depth.rb"
-      autoload :EventType, "no_response/models/shared/eventtype.rb"
       autoload :Failure, "no_response/models/shared/failure.rb"
       autoload :FailureReason, "no_response/models/shared/failurereason.rb"
       autoload :Flow, "no_response/models/shared/flow.rb"
