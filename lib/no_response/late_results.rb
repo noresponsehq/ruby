@@ -173,13 +173,19 @@ module NoResponse
       # user before deleting the refresh tokens, and act reports BAN. Unblock
       # the user in the dashboard to undo it. Any other refusal, such as 403
       # insufficient_scope, raises.
+      #
+      # A 429 from the Management API is waited out and retried: Retry-After,
+      # else X-RateLimit-Reset, else 0.25 s doubling, at most 4 retries a call
+      # and 3 s of waiting a revoke or ban. Past that the 429 raises as
+      # ProviderActionError. An http_client may return [status, body, headers]
+      # so the headers are honoured; without them the backoff applies.
       def auth0(token:, domain: nil, base_url: nil, http_client: nil)
         raise ArgumentError, 'auth0 needs token' if token.to_s.empty?
 
         base = base_url || (domain.to_s.empty? ? nil : "https://#{domain}/api/v2")
         raise ArgumentError, 'auth0 needs domain or base_url' if base.nil?
 
-        Auth0.new(Caller.new('auth0', base, "Bearer #{token}", http_client))
+        Auth0.new(Caller.new('auth0', base, "Bearer #{token}", http_client, retry_rate_limits: true))
       end
 
       # A provider for an app with its own login, or for trying the handler
@@ -195,15 +201,61 @@ module NoResponse
     end
 
     # One provider HTTP client: base URL, Authorization header, error mapping.
+    #
+    # Rate limits. Auth0 answers 429 when the Management API rate limit is
+    # hit, and a 429 means it did not act, so the call is safe to send again,
+    # a DELETE included. One revoke or ban waits at most RATE_LIMIT_BUDGET
+    # seconds in all, and each call retries at most RATE_LIMIT_RETRIES times:
+    # it waits Retry-After seconds, else until X-RateLimit-Reset (Unix
+    # seconds), else 0.25, 0.5, 1 and 2 s. A wait that would pass the budget is
+    # not started: the 429 raises at once as ProviderActionError, the webhook
+    # answers 5xx and NoResponse delivers it again later. The budget keeps the
+    # handler inside the 5 s a delivery has to be answered.
     class Caller
-      def initialize(name, base_url, authorization, http_client)
+      RATE_LIMIT_RETRIES = 4
+      RATE_LIMIT_BUDGET = 3.0
+      RATE_LIMIT_BACKOFF = 0.25
+
+      def initialize(name, base_url, authorization, http_client, retry_rate_limits: false)
         @name = name
         @base = base_url.to_s.sub(%r{/+\z}, '')
         @authorization = authorization
         @http_client = http_client
+        @retry_rate_limits = retry_rate_limits
+        @waited = 0.0
       end
 
       attr_reader :name
+
+      # A caller with the same settings and its own rate-limit budget, for one action.
+      def fresh
+        Caller.new(@name, @base, @authorization, @http_client, retry_rate_limits: @retry_rate_limits)
+      end
+
+      # How long a 429 asks to wait, in seconds.
+      def self.rate_limit_wait(headers, retry_index)
+        after = number(header(headers, 'retry-after'))
+        return after if after && after >= 0
+
+        reset = number(header(headers, 'x-ratelimit-reset'))
+        return [0.0, reset - Time.now.to_f].max if reset
+
+        RATE_LIMIT_BACKOFF * (2**retry_index)
+      end
+
+      def self.header(headers, name)
+        (headers || {}).each { |key, value| return Array(value).first.to_s.strip if key.to_s.downcase == name }
+        nil
+      end
+
+      def self.number(text)
+        return nil if text.nil? || text.empty?
+
+        value = Float(text)
+        value.finite? ? value : nil
+      rescue ArgumentError
+        nil
+      end
 
       def call(method, path, query: nil, body: nil, allow_404: false)
         uri = URI.parse(@base + path)
@@ -214,7 +266,7 @@ module NoResponse
           headers['Content-Type'] = 'application/json'
           payload = JSON.generate(body)
         end
-        status, text = perform(method, uri, headers, payload)
+        status, text = send_waiting_out_rate_limits(method, uri, headers, payload)
         return nil if allow_404 && status == 404
         unless status.between?(200, 299)
           raise ProviderActionError.new(@name, status, "#{@name} #{method} #{path} answered #{status}", error_code(text))
@@ -229,6 +281,21 @@ module NoResponse
       end
 
       private
+
+      def send_waiting_out_rate_limits(method, uri, headers, payload)
+        retry_index = 0
+        loop do
+          status, text, response_headers = perform(method, uri, headers, payload)
+          return [status, text] unless status == 429 && @retry_rate_limits && retry_index < RATE_LIMIT_RETRIES
+
+          wait = Caller.rate_limit_wait(response_headers, retry_index)
+          return [status, text] if @waited + wait > RATE_LIMIT_BUDGET
+
+          @waited += wait
+          sleep(wait)
+          retry_index += 1
+        end
+      end
 
       # The error code in a provider's error body: Auth0's errorCode, or a top-level code.
       def error_code(text)
@@ -251,7 +318,7 @@ module NoResponse
         request = Net::HTTPGenericRequest.new(method, !payload.nil?, true, uri.request_uri, headers)
         request.body = payload unless payload.nil?
         response = http.start { |connection| connection.request(request) }
-        [response.code.to_i, response.body.to_s]
+        [response.code.to_i, response.body.to_s, response.to_hash]
       end
     end
 
@@ -349,10 +416,11 @@ module NoResponse
 
       def ban(user_id)
         user = Segment.encode(user_id)
-        block(user)
+        call = @call.fresh
+        block(call, user)
         # The block already ends a session the plan cannot delete.
-        delete_sessions(user)
-        delete_refresh_tokens(user_id, user)
+        delete_sessions(call, user)
+        delete_refresh_tokens(call, user_id, user)
         nil
       end
 
@@ -370,10 +438,11 @@ module NoResponse
 
       def revoke(user_id)
         user = Segment.encode(user_id)
-        ended = delete_sessions(user)
+        call = @call.fresh
+        ended = delete_sessions(call, user)
         # Without the sessions API a login session survives; blocking is the only way to end it.
-        block(user) unless ended
-        delete_refresh_tokens(user_id, user)
+        block(call, user) unless ended
+        delete_refresh_tokens(call, user_id, user)
         ended ? REVOKE_SESSIONS : BAN
       end
 
@@ -382,13 +451,13 @@ module NoResponse
         error.status == 403 && error.code == 'feature_not_enabled'
       end
 
-      def block(user)
-        @call.call('PATCH', "/users/#{user}", body: { 'blocked' => true }, allow_404: true)
+      def block(call, user)
+        call.call('PATCH', "/users/#{user}", body: { 'blocked' => true }, allow_404: true)
       end
 
       # Ends every session; false when the plan has no sessions API.
-      def delete_sessions(user)
-        @call.call('DELETE', "/users/#{user}/sessions", allow_404: true)
+      def delete_sessions(call, user)
+        call.call('DELETE', "/users/#{user}/sessions", allow_404: true)
         true
       rescue ProviderActionError => e
         raise unless not_on_plan?(e)
@@ -396,9 +465,9 @@ module NoResponse
         false
       end
 
-      def delete_refresh_tokens(user_id, user)
+      def delete_refresh_tokens(call, user_id, user)
         begin
-          @call.call('DELETE', "/users/#{user}/refresh-tokens", allow_404: true)
+          call.call('DELETE', "/users/#{user}/refresh-tokens", allow_404: true)
           return
         rescue ProviderActionError => e
           raise unless not_on_plan?(e)
@@ -407,15 +476,15 @@ module NoResponse
         ids = []
         %w[refresh_token rotating_refresh_token].each do |type|
           10.times do |page|
-            body = @call.call('GET', '/device-credentials',
-                              query: [['user_id', user_id], ['type', type], ['page', page.to_s], ['per_page', PAGE.to_s]],
-                              allow_404: true)
+            body = call.call('GET', '/device-credentials',
+                             query: [['user_id', user_id], ['type', type], ['page', page.to_s], ['per_page', PAGE.to_s]],
+                             allow_404: true)
             listed = body.is_a?(Array) ? body.grep(Hash) : []
             ids.concat(listed.map { |c| c['id'] }.select { |id| id.is_a?(String) && !id.empty? })
             break if listed.length < PAGE
           end
         end
-        ids.each { |id| @call.call('DELETE', "/device-credentials/#{ERB::Util.url_encode(id)}", allow_404: true) }
+        ids.each { |id| call.call('DELETE', "/device-credentials/#{ERB::Util.url_encode(id)}", allow_404: true) }
       end
     end
 

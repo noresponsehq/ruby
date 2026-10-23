@@ -398,6 +398,61 @@ class LateResultsTest < Minitest::Test
     end
   end
 
+  TOO_MANY = JSON.generate({ 'statusCode' => 429, 'error' => 'Too Many Requests',
+                             'message' => 'Global limit has been reached', 'errorCode' => 'too_many_requests' })
+
+  # An http_client standing in for the Management API: answers from the tenant
+  # and records each call, with one 429 for each key in limited.
+  def rate_limited_client(tenant, limited, sent)
+    lambda do |method, uri, _headers, body|
+      query = URI.decode_www_form(uri.query.to_s).to_h
+      key = method == 'GET' ? "GET #{query['type']}" : "#{method} #{uri.path}"
+      sent << key
+      next [429, TOO_MANY, limited.delete(key)] if limited.key?(key)
+
+      call = MockProvider::Call.new(verb: method, path: uri.path, query: query, body: body && JSON.parse(body))
+      status, answer = tenant.route.call(call) || [404, { 'error' => 'not found' }]
+      [status, answer.nil? ? '' : JSON.generate(answer)]
+    end
+  end
+
+  def test_auth0_waits_out_a_429_from_the_management_api_and_retries_the_call
+    tenant = Auth0WithoutSessionsApi.new('auth0%7Cabc')
+    # One 429 each: Retry-After, an X-RateLimit-Reset already past, and no header (the backoff).
+    limited = {
+      'GET refresh_token' => { 'Retry-After' => '0' },
+      'DELETE /api/v2/device-credentials/dcr_a' => { 'x-ratelimit-reset' => [(Time.now.to_i - 5).to_s] },
+      'DELETE /api/v2/device-credentials/dcr_b' => {}
+    }
+    sent = []
+    auth0 = LateResults.auth0(base_url: 'https://tenant.example/api/v2', token: 't',
+                              http_client: rate_limited_client(tenant, limited, sent))
+    assert_equal LateResults::BAN, auth0.act(LateResults::REVOKE_SESSIONS, 'auth0|abc')
+    assert tenant.blocked
+    assert_empty tenant.credentials
+    assert_empty limited
+    assert_equal 2, sent.count('GET refresh_token')
+    assert_equal 2, sent.count('DELETE /api/v2/device-credentials/dcr_a')
+    assert_equal 2, sent.count('DELETE /api/v2/device-credentials/dcr_b')
+  end
+
+  def test_auth0_raises_a_429_at_once_when_the_wait_it_asks_for_passes_the_budget
+    sent = []
+    client = lambda do |method, uri, _headers, _body|
+      sent << "#{method} #{uri.path}"
+      [429, TOO_MANY, { 'Retry-After' => '60' }]
+    end
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    error = assert_raises(LateResults::ProviderActionError) do
+      LateResults.auth0(base_url: 'https://tenant.example/api/v2', token: 't', http_client: client)
+                 .act(LateResults::REVOKE_SESSIONS, 'auth0|abc')
+    end
+    assert_equal 429, error.status
+    assert_equal 'too_many_requests', error.code
+    assert_operator Process.clock_gettime(Process::CLOCK_MONOTONIC) - started, :<, 1
+    assert_equal ['DELETE /api/v2/users/auth0%7Cabc/sessions'], sent
+  end
+
   def test_a_provider_without_act_reports_the_action_asked_for
     done = []
     plain = Object.new
