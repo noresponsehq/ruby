@@ -18,6 +18,18 @@ class NoResponse::Models::Shared::AssessmentRequest
   def identifiers=(str_)
   end
 
+  def flow
+  end
+
+  def flow=(str_)
+  end
+
+  def depth
+  end
+
+  def depth=(str_)
+  end
+
   def policy_context
   end
 

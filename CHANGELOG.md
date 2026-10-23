@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.10
+
+* `sdk.assessments.create()`:  `request.body` **Changed**
+
 ## 2.1.9
 
 No changes detected.

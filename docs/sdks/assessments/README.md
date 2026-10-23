@@ -171,13 +171,13 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
+  flow: Models::Shared::AssessmentFlow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new_user_42',
     phone: '+447700900123'
   ),
   policy_context: Models::Shared::AssessmentRequestPolicyContext.new(
-    flow: Models::Shared::Flow::SIGNUP,
     region: 'GB'
   ),
   request_id: 'req-2026-10-14-0001',
@@ -201,6 +201,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
+  flow: Models::Shared::AssessmentFlow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com'
   )
@@ -223,6 +224,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_8412',
+  flow: Models::Shared::AssessmentFlow::SIGNUP,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'jane.doe@example.com',
     username: 'janedoe',
@@ -231,7 +233,6 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     ip: '73.162.18.45'
   ),
   policy_context: Models::Shared::AssessmentRequestPolicyContext.new(
-    flow: Models::Shared::Flow::SIGNUP,
     region: 'US'
   ),
   request_id: 'req_01',

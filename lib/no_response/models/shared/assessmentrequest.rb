@@ -21,6 +21,28 @@ module NoResponse
           Models::Shared::AssessmentRequestIdentifiers,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("identifiers"), required: true}}
         )
+        # The customer event an assessment is made for: signup (a new account), login (a returning sign-in) or purchase (a payment or credit grant). The account's risk is reported with the decision for this flow.
+        field(
+          :flow,
+          Crystalline::Nilable.new(Models::Shared::AssessmentFlow),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("flow"),
+              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::AssessmentFlow, true)
+            }
+          }
+        )
+        # How long the synchronous answer waits for sources. quick waits only for the fast sources, those that answer within 500 ms of ingress (or deadline_ms when lower); full waits for the whole budget, up to 3000 ms. Sources still running at the cut continue asynchronously and update the assessment either way.
+        field(
+          :depth,
+          Crystalline::Nilable.new(Models::Shared::Depth),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("depth"),
+              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::Depth, true)
+            }
+          }
+        )
 
         field(
           :policy_context,
@@ -73,6 +95,8 @@ module NoResponse
           params(
             account_id: ::String,
             identifiers: Models::Shared::AssessmentRequestIdentifiers,
+            flow: T.nilable(Models::Shared::AssessmentFlow),
+            depth: T.nilable(Models::Shared::Depth),
             policy_context: T.nilable(Models::Shared::AssessmentRequestPolicyContext),
             request_id: T.nilable(::String),
             deadline_ms: T.nilable(::Integer),
@@ -86,6 +110,8 @@ module NoResponse
         def initialize(
           account_id:,
           identifiers:,
+          flow: nil,
+          depth: nil,
           policy_context: nil,
           request_id: nil,
           deadline_ms: nil,
@@ -96,6 +122,8 @@ module NoResponse
         )
           @account_id = account_id
           @identifiers = identifiers
+          @flow = flow
+          @depth = depth
           @policy_context = policy_context
           @request_id = request_id
           @deadline_ms = deadline_ms
@@ -110,6 +138,8 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @account_id == other.account_id
           return false unless @identifiers == other.identifiers
+          return false unless @flow == other.flow
+          return false unless @depth == other.depth
           return false unless @policy_context == other.policy_context
           return false unless @request_id == other.request_id
           return false unless @deadline_ms == other.deadline_ms
