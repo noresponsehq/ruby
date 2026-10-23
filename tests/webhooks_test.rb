@@ -91,6 +91,25 @@ class WebhooksTest < Minitest::Test
     assert_equal({ 'challenge' => ping['data']['challenge'] }, Webhooks.verification_response(event))
   end
 
+  def test_account_deleted_event
+    secrets = { 'whk_sdktest01' => 'secret' }
+    erased = fixture('valid/webhook-account-deleted.json')
+    raw, headers = signed(erased, 'secret', erased['id'])
+    event = Webhooks.construct_event(raw, headers, secrets, now: NOW)
+    assert_equal 'account.deleted', event.type
+    refute_predicate event, :expired?
+    refute_predicate event, :test?
+    assert_equal Webhooks::AccountDeleted.new(account_id: 'acct_7f3a9c', assessments_deleted: 3,
+                                              deleted_at: '2026-10-23T09:00:00.000Z'), event.data
+    assert_raises(Webhooks::VerificationError) { Webhooks.verification_response(event) }
+    [{ 'assessments_deleted' => 0 }, { 'assessments_deleted' => 1.5 }, { 'account_id' => 'jane@example.com' },
+     { 'deleted_at' => 'tomorrow' }].each do |change|
+      bad = erased.merge('data' => erased['data'].merge(change))
+      raw, headers = signed(bad, 'secret', bad['id'])
+      refused(:invalid_payload, raw, headers, secrets, now: NOW)
+    end
+  end
+
   # The API adds fields without a new version, so keys this SDK does not know
   # must not stop a signed event from verifying.
   def test_unknown_fields_are_accepted
@@ -98,6 +117,7 @@ class WebhooksTest < Minitest::Test
       invalid/webhook-tenant-id.json
       invalid/webhook-identifier-leak.json
       invalid/webhook-expired-with-assessment-url.json
+      invalid/webhook-account-deleted-assessment-id.json
     ].each do |name|
       body = fixture(name)
       raw, headers = signed(body, 'secret', body['id'])
@@ -112,6 +132,7 @@ class WebhooksTest < Minitest::Test
       invalid/webhook-update-pointer-only.json
       invalid/webhook-update-with-expired-status.json
       invalid/webhook-verification-without-challenge.json
+      invalid/webhook-account-deleted-none.json
     ]
     invalid.each do |name|
       body = fixture(name)

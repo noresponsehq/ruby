@@ -7,6 +7,7 @@ module NoResponse
       autoload :Account, "no_response/models/shared/account.rb"
       autoload :AccountDecision, "no_response/models/shared/accountdecision.rb"
       autoload :AccountDecisionsByFlow, "no_response/models/shared/accountdecisionsbyflow.rb"
+      autoload :AccountDeletion, "no_response/models/shared/accountdeletion.rb"
       autoload :AccountRisk, "no_response/models/shared/accountrisk.rb"
       autoload :AccountRiskReason, "no_response/models/shared/accountriskreason.rb"
       autoload :Assessment, "no_response/models/shared/assessment.rb"

@@ -45,10 +45,16 @@ module NoResponse
 
     EndpointVerification = Struct.new(:endpoint_id, :challenge, keyword_init: true)
 
+    # An account you erased with accounts.delete: delete what you hold for it.
+    # assessments_deleted is at least 1, and deleted_at equals deleted_at in
+    # the delete answer.
+    AccountDeleted = Struct.new(:account_id, :assessments_deleted, :deleted_at, keyword_init: true)
+
     # A verified delivery. data is a Models::Shared::Assessment (exactly as
     # assessments.get returns it) or an AssessmentExpired for type
-    # "assessment.updated", and an EndpointVerification for
-    # "endpoint.verification". Deliveries are at least once and unordered:
+    # "assessment.updated", an EndpointVerification for
+    # "endpoint.verification" and an AccountDeleted for "account.deleted".
+    # Deliveries are at least once and unordered:
     # deduplicate on id and keep the highest assessment_version.
     Event = Struct.new(:id, :type, :created_at, :data, :test, keyword_init: true) do
       # True for the terminal expiry event: delete what you hold and fetch nothing.
@@ -155,6 +161,8 @@ module NoResponse
           rescue KeyError, TypeError, ArgumentError, NoMethodError
             raise VerificationError.new(:invalid_payload, 'Webhook data is not an assessment')
           end
+        when 'account.deleted'
+          account_deleted(data)
         else
           raise VerificationError.new(:invalid_payload, 'Unknown webhook event type')
         end
@@ -169,6 +177,17 @@ module NoResponse
 
         AssessmentExpired.new(assessment_id: data['assessment_id'], account_id: data['account_id'],
                               assessment_version: data['assessment_version'])
+      end
+
+      def account_deleted(data)
+        unless data['account_id'].is_a?(String) && ACCOUNT_ID.match?(data['account_id']) &&
+               data['assessments_deleted'].is_a?(Integer) && data['assessments_deleted'] >= 1 &&
+               data['deleted_at'].is_a?(String) && valid_datetime?(data['deleted_at'])
+          raise VerificationError.new(:invalid_payload, 'Account deleted event is malformed')
+        end
+
+        AccountDeleted.new(account_id: data['account_id'], assessments_deleted: data['assessments_deleted'],
+                           deleted_at: data['deleted_at'])
       end
 
       def valid_datetime?(value)

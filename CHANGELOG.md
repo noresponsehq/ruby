@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.11
+
+* `sdk.accounts.delete()`: **Added**
+
 ## 2.1.10
 
 * `sdk.assessments.create()`:  `request.body` **Changed**

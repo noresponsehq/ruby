@@ -119,6 +119,9 @@ class LateResultsTest < Minitest::Test
     assert_equal 'none', LateResults.action_for(event(Webhooks::AssessmentExpired.new(assessment_id: 'asm_x', account_id: 'a', assessment_version: 1)))
     verification = Webhooks::Event.new(id: 'evt_x', type: 'endpoint.verification', created_at: 'x', data: nil)
     assert_equal 'none', LateResults.action_for(verification)
+    erased = Webhooks::Event.new(id: 'evt_x', type: 'account.deleted', created_at: 'x',
+                                 data: Webhooks::AccountDeleted.new(account_id: 'acct_1', assessments_deleted: 1, deleted_at: 'x'))
+    assert_equal 'none', LateResults.action_for(erased)
     assert_equal 'ban', LateResults.action_for(assessment('complete', 'step_up'), { step_up: 'ban' })
     assert_equal 'none', LateResults.action_for(assessment('complete', 'review'), { 'step_up' => 'ban' })
     assert_raises(ArgumentError) { LateResults.action_for(assessment('complete', 'review'), { review: 'delete' }) }
