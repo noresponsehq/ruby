@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 9aa853e9efd8b4e21d11ac5bb3e06b7f
+  docChecksum: 08a7fda0af0827ded4f968451777345b
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.1.14
-  configChecksum: 4d3d4d76486f37549bc245c77e8ed102
+  releaseVersion: 2.1.15
+  configChecksum: a8e4dd3e1768ee16930d5df7579cc101
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -32,7 +32,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:5cd450f8e5edafb028bbb4b746d870126b8932a6
+    last_write_checksum: sha1:e4814cf5a77f37005d2eb55d15a2fbf2e7e7b680
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -61,6 +61,10 @@ trackedFiles:
     last_write_checksum: sha1:9cab6fff74a18f7b7983b7e03afd9ebd2f9a26ef
   docs/models/operations/deleteaccountresponse.md:
     last_write_checksum: sha1:19efee67175e6747507a09fee67146ca26f255fd
+  docs/models/operations/deleteassessmentrequest.md:
+    last_write_checksum: sha1:74fceaf25b8a38588905039db853ee302af16e92
+  docs/models/operations/deleteassessmentresponse.md:
+    last_write_checksum: sha1:4c8a1a5abc4f2a09fd18d3575cbe6f667ef02c8f
   docs/models/operations/deleteintegrationrequest.md:
     last_write_checksum: sha1:a27e9dce4f5f547257c4b259d180278e54b575da
   docs/models/operations/deleteintegrationresponse.md:
@@ -133,6 +137,10 @@ trackedFiles:
     last_write_checksum: sha1:705d617c09c38b1a7ce23190f3c09fa0cffbadfd
   docs/models/shared/assessmentauthcontext.md:
     last_write_checksum: sha1:cb8316165c45d9b8d54d396631aea2a36aec8caf
+  docs/models/shared/assessmentdeletion.md:
+    last_write_checksum: sha1:1e864e11b4d8aa9d188a1dfcffe0b837934cfd63
+  docs/models/shared/assessmentdeletionaccount.md:
+    last_write_checksum: sha1:b8b7e33073981c5d69047edf212aab6ded7e4c9f
   docs/models/shared/assessmentflow.md:
     last_write_checksum: sha1:2c5098367d1dbd90e7387358034734a02ef21d8b
   docs/models/shared/assessmentlist.md:
@@ -350,7 +358,7 @@ trackedFiles:
   docs/sdks/accounts/README.md:
     last_write_checksum: sha1:8300b27ad3a93ae4d12077b27a3870edfaae2942
   docs/sdks/assessments/README.md:
-    last_write_checksum: sha1:c3235d6fb6d4a7e87bfd6fe731a87a510cba6d9e
+    last_write_checksum: sha1:7e5030a3c97f5a61c079f597a02e07a532cad25e
   docs/sdks/integrations/README.md:
     last_write_checksum: sha1:979f5991b0d9b5800efad4d6ff3396bee3f6f3d7
   docs/sdks/keys/README.md:
@@ -372,7 +380,7 @@ trackedFiles:
   lib/no_response/accounts.rb:
     last_write_checksum: sha1:4b925e402777652f20b53179ac01668c4e6f186e
   lib/no_response/assessments.rb:
-    last_write_checksum: sha1:51959a562bea4c2e4dee2425346c63b6eedfbd6e
+    last_write_checksum: sha1:db97359e966d0ed61623a781d255263b5765bec2
   lib/no_response/integrations.rb:
     last_write_checksum: sha1:2c562dbb6d57060a4a4611328d54c38658b78770
   lib/no_response/keys.rb:
@@ -410,7 +418,7 @@ trackedFiles:
   lib/no_response/models/errors/ratelimiterror.rbi:
     last_write_checksum: sha1:66833328db41bcf5d46ba47d72d63c9b13ecd173
   lib/no_response/models/operations.rb:
-    last_write_checksum: sha1:4f32aec3c340cbfab34328b3bd0e47c294977e6d
+    last_write_checksum: sha1:2ae047d46f8607783f9741df2f8b4f91258fb8cc
   lib/no_response/models/operations/createassessment_request.rb:
     last_write_checksum: sha1:dece190dd0702ce2dfe37a8ffe5cfad2b4dddfe6
   lib/no_response/models/operations/createassessment_request.rbi:
@@ -435,6 +443,14 @@ trackedFiles:
     last_write_checksum: sha1:239216fcd7079bd583a84c9bbb8ae1531bbf64c3
   lib/no_response/models/operations/deleteaccount_response.rbi:
     last_write_checksum: sha1:e19ac3f7f714c98968701d96f39c07b02a968980
+  lib/no_response/models/operations/deleteassessment_request.rb:
+    last_write_checksum: sha1:108dace06186c788bfefbccd6c81d94dc443817e
+  lib/no_response/models/operations/deleteassessment_request.rbi:
+    last_write_checksum: sha1:090ed4a6cd2fc1cc65a33de8ae235a079edf1141
+  lib/no_response/models/operations/deleteassessment_response.rb:
+    last_write_checksum: sha1:f48ecb48e1ca378ad863c2af42e75c8f69a2ca59
+  lib/no_response/models/operations/deleteassessment_response.rbi:
+    last_write_checksum: sha1:2c70bda1e580f351fae4bc9ed98c88d32a41618e
   lib/no_response/models/operations/deleteintegration_request.rb:
     last_write_checksum: sha1:6dd4305877a29848551d58a01e6d37decf555aa6
   lib/no_response/models/operations/deleteintegration_request.rbi:
@@ -540,7 +556,7 @@ trackedFiles:
   lib/no_response/models/operations/sendwebhooktestevent_response.rbi:
     last_write_checksum: sha1:659d69e4bdbbe8c44d6c3006bb277a78f8d5e3d7
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:9c426053c1afc67ab0c77c73381c5cd46f6cd9b7
+    last_write_checksum: sha1:ace97a42e4e06813201c15a0462dfab041404371
   lib/no_response/models/shared/account.rb:
     last_write_checksum: sha1:7aecf7327ac6ae8951a2a980357eb0f1abf6a277
   lib/no_response/models/shared/account.rbi:
@@ -581,6 +597,14 @@ trackedFiles:
     last_write_checksum: sha1:b1c56b918ab2e1cc33e44fb5d1f319c1304dffaa
   lib/no_response/models/shared/assessmentauthcontext.rbi:
     last_write_checksum: sha1:7d7bef211b4ee33234ee6c48e248c8a4d325bc42
+  lib/no_response/models/shared/assessmentdeletion.rb:
+    last_write_checksum: sha1:d1dd68e57bc38525bfa852d7c66ee4c36ee12b33
+  lib/no_response/models/shared/assessmentdeletion.rbi:
+    last_write_checksum: sha1:283b835639c82a0399369a63fd78f4d0d776b267
+  lib/no_response/models/shared/assessmentdeletionaccount.rb:
+    last_write_checksum: sha1:a1890e209935a758d211ba0cf2a36b8098a5d6ee
+  lib/no_response/models/shared/assessmentdeletionaccount.rbi:
+    last_write_checksum: sha1:4b416b068dc51eef094a27cb812a67a402ba9db7
   lib/no_response/models/shared/assessmentflow.rb:
     last_write_checksum: sha1:39a7669b5768b872bf57787bb1d54269e0b7df34
   lib/no_response/models/shared/assessmentflow.rbi:
@@ -1016,7 +1040,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:e8e928f0852ad235fe17353b851d25d96527e272
+    last_write_checksum: sha1:8d68cf608b3933a9d5868d85a2437b0f90c50ac5
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/utils/forms.rb:
@@ -1040,7 +1064,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:c2f705f48b7c78611ada7ed5be47f357cdd6b710
   noresponse.gemspec:
-    last_write_checksum: sha1:16e8bb387f7e21674400c7515a8fe8ae005f61ed
+    last_write_checksum: sha1:d31479975bc2a83151fd6941fd14d289a766e366
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -1188,6 +1212,21 @@ examples:
       responses:
         "200":
           application/json: {"schema_version": "1", "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "account_id": "acct_8412", "request_id": "req_01", "status": "complete", "recommendation": "allow", "confidence": "high", "risk": {"score": 10, "band": "low", "recommendation": "allow", "block": false, "confidence": "high", "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "reasons": [{"code": "voip_number", "weight": 25, "identifier": "phone"}, {"code": "breach_name_match", "weight": -15, "identifier": "name"}], "summary": {"phone": {"line_type": "voip", "country": "US"}, "email": {"disposable": false, "accounts_found": 1, "breach": {"found": true, "breach_count": 2, "first_year": 2016, "last_year": 2019, "exposed": ["email", "password", "password_hash"], "in_credential_lists": true, "truncated": false}}, "consistency": {"name": "match"}}, "coverage": {"answered": 4, "failed": 0, "pending": 0}, "details": {"phone_names": [{"value": "Jane Doe", "seen_by": 3}], "breaches": [{"name": "Collection #1", "category": "combolist", "kind": "credential_list", "year": 2019, "matched_on": "email", "exposed": ["email", "password"]}, {"name": "LinkedIn", "domain": "linkedin.com", "category": "social", "kind": "site_breach", "year": 2016, "month": 5, "matched_on": "email", "exposed": ["email", "password_hash"]}], "breach_names": [{"value": "Jane Doe", "seen_in": 2}]}}, "signals": [{"type": "account_presence", "identifier": "email", "outcome": "found", "source_id": "src_3f9a1c", "evidence_ref": "evr_01JB3C4D5E6F7G8H9JKMNPQRSV", "observed_at": "2026-10-18T11:00:00.180Z", "last_checked_at": "2026-10-18T11:00:00.180Z", "freshness": "fresh"}, {"type": "breach_exposure", "identifier": "email", "outcome": "found", "source_id": "src_8d27e4", "evidence_ref": "evr_01JB3C4D5E6F7G8H9JKMNPQRSW", "observed_at": "2026-10-18T11:00:01.900Z", "last_checked_at": "2026-10-18T11:00:01.900Z", "freshness": "fresh"}, {"type": "account_presence", "identifier": "phone", "outcome": "found", "source_id": "src_51b0d7", "evidence_ref": "evr_01JB3C4D5E6F7G8H9JKMNPQRSX", "observed_at": "2026-10-18T11:00:03.700Z", "last_checked_at": "2026-10-18T11:00:03.700Z", "freshness": "fresh"}], "incomplete_sources": [], "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "assessment_version": 2, "created_at": "2026-10-18T11:00:00.000Z", "updated_at": "2026-10-18T11:00:04.000Z", "expires_at": "2027-10-18T11:00:00.000Z", "timing": {"deadline_ms": 500, "elapsed_ms": 4000}}
+  deleteAssessment:
+    next:
+      parameters:
+        path:
+          assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "deleted": true, "account": {"id": "acct_7f3a9c", "current_assessment_id": "asm_01JA2Z7Y3N5P8Q2R4S6T8V0W1X"}, "deleted_at": "2026-10-23T09:00:00.000Z"}
+    last:
+      parameters:
+        path:
+          assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "deleted": true, "account": {"id": "acct_7f3a9c"}, "deleted_at": "2026-10-23T09:00:00.000Z"}
   recordAssessmentOutcome:
     abuse:
       parameters:

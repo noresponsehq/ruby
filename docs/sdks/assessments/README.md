@@ -8,6 +8,7 @@ Signup and gateway assessments.
 
 * [create](#create) - Assess identifiers for a signup or gateway decision.
 * [get](#get) - Poll the authoritative assessment of one assessment.
+* [delete](#delete) - Delete one assessment.
 * [record_outcome](#record_outcome) - Report what was later learned about an assessed account.
 * [query](#query) - Page through one account's unexpired assessments.
 
@@ -513,6 +514,67 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::GetAssessmentResponse)](../../models/operations/getassessmentresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## delete
+
+Deletes one assessment in the environment of your key, with its versions, evidence and outcomes and the identity-graph marks its outcomes set, and scores its account again from what remains. Afterwards the assessment answers 404 and leaves the account's history. The answer names the account and the assessment its current risk now comes from; current_assessment_id is absent when the account has no assessment with a decision left. Requires the history scope. An unknown, expired or already deleted assessment answers 404, so a repeat answers 404; to erase a whole account idempotently, use accounts.delete.
+
+### Example Usage: last
+
+<!-- UsageSnippet language="ruby" operationID="deleteAssessment" method="delete" path="/v1/assessments/{assessment_id}" example="last" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.assessments.delete(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
+
+unless res.nil?
+  # handle response
+end
+
+```
+### Example Usage: next
+
+<!-- UsageSnippet language="ruby" operationID="deleteAssessment" method="delete" path="/v1/assessments/{assessment_id}" example="next" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.assessments.delete(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                         | Type                                                                                                              | Required                                                                                                          | Description                                                                                                       | Example                                                                                                           |
+| ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `assessment_id`                                                                                                   | *::String*                                                                                                        | :heavy_check_mark:                                                                                                | Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400. | asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                    |
+
+### Response
+
+**[T.nilable(Models::Operations::DeleteAssessmentResponse)](../../models/operations/deleteassessmentresponse.md)**
 
 ### Errors
 

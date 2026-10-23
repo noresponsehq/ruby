@@ -10,6 +10,8 @@ module NoResponse
       autoload :CreateWebhookEndpointResponse, "no_response/models/operations/createwebhookendpoint_response.rb"
       autoload :DeleteAccountRequest, "no_response/models/operations/deleteaccount_request.rb"
       autoload :DeleteAccountResponse, "no_response/models/operations/deleteaccount_response.rb"
+      autoload :DeleteAssessmentRequest, "no_response/models/operations/deleteassessment_request.rb"
+      autoload :DeleteAssessmentResponse, "no_response/models/operations/deleteassessment_response.rb"
       autoload :DeleteIntegrationRequest, "no_response/models/operations/deleteintegration_request.rb"
       autoload :DeleteIntegrationResponse, "no_response/models/operations/deleteintegration_response.rb"
       autoload :DeleteWebhookEndpointRequest, "no_response/models/operations/deletewebhookendpoint_request.rb"

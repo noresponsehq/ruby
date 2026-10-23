@@ -9,7 +9,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.1.13"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.1.15"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 2.0"`.
@@ -104,6 +104,8 @@ client.assessments.record_outcome(
 ### Idempotency
 
 `create` and `record_outcome` send a fresh UUID as the `Idempotency-Key` when you pass none, and the same key on every retry of that call, so a retried request is recorded once. Pass your own key to make a retry from your side replay the same assessment: the API answers the latest version with `Idempotent-Replayed: true`. The same key with a different body answers 409 (`ConflictError`).
+
+`client.assessments.delete(assessment_id:)` deletes one assessment (`history` scope); the answer's `account.current_assessment_id` names the assessment the account's risk now comes from, nil when none is left, and a repeat answers 404.
 
 ## Keys
 

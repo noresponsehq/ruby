@@ -12,6 +12,8 @@ module NoResponse
       autoload :AccountRiskReason, "no_response/models/shared/accountriskreason.rb"
       autoload :Assessment, "no_response/models/shared/assessment.rb"
       autoload :AssessmentAuthContext, "no_response/models/shared/assessmentauthcontext.rb"
+      autoload :AssessmentDeletion, "no_response/models/shared/assessmentdeletion.rb"
+      autoload :AssessmentDeletionAccount, "no_response/models/shared/assessmentdeletionaccount.rb"
       autoload :AssessmentFlow, "no_response/models/shared/assessmentflow.rb"
       autoload :AssessmentList, "no_response/models/shared/assessmentlist.rb"
       autoload :AssessmentOutcome, "no_response/models/shared/assessmentoutcome.rb"
