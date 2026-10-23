@@ -4,6 +4,11 @@
 module NoResponse
   module Models
     module Shared
+      autoload :Account, "no_response/models/shared/account.rb"
+      autoload :AccountDecision, "no_response/models/shared/accountdecision.rb"
+      autoload :AccountDecisionsByFlow, "no_response/models/shared/accountdecisionsbyflow.rb"
+      autoload :AccountRisk, "no_response/models/shared/accountrisk.rb"
+      autoload :AccountRiskReason, "no_response/models/shared/accountriskreason.rb"
       autoload :Assessment, "no_response/models/shared/assessment.rb"
       autoload :AssessmentAuthContext, "no_response/models/shared/assessmentauthcontext.rb"
       autoload :AssessmentList, "no_response/models/shared/assessmentlist.rb"
