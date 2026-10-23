@@ -78,11 +78,12 @@ class LateResultsTest < Minitest::Test
   def pending = fixture('valid/assessment-pending.json')
   def expired = fixture('valid/webhook-assessment-expired.json')['data']
 
-  def delivery(data, account_id = nil)
+  def delivery(data, account_id = nil, test: false)
     id = 'evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ2'
     data = data.merge('account_id' => account_id) if account_id
-    raw = JSON.generate('id' => id, 'type' => 'assessment.updated', 'created_at' => '2026-10-18T11:00:04Z',
-                        'data' => data)
+    envelope = { 'id' => id, 'type' => 'assessment.updated', 'created_at' => '2026-10-18T11:00:04Z' }
+    envelope['test'] = true if test
+    raw = JSON.generate(envelope.merge('data' => data))
     stamp = NOW.to_s
     digest = OpenSSL::HMAC.hexdigest('SHA256', SECRET, "#{stamp}.#{raw}")
     [raw, { 'NR-Webhook-Id' => id, 'NR-Webhook-Timestamp' => stamp, 'NR-Webhook-Key-Id' => KEY,
@@ -281,6 +282,64 @@ class LateResultsTest < Minitest::Test
       refute_includes error.message, 'mgmt_token'
       refute_includes error.message, 'insufficient_scope'
       assert_equal 1, mock.calls.length
+    end
+  end
+
+  def test_a_test_event_is_flagged_and_makes_no_provider_call_even_under_a_ban_policy_with_a_resolver
+    sample = fixture('valid/webhook-assessment-updated-test.json')['data']
+    ban_all = { allow: 'ban', step_up: 'ban', review: 'ban' }
+    resolver = ->(_account_id, _event) { 'user_2EXAMPLE' }
+    with_mock(->(_c) { [200, []] }) do |mock|
+      clerk = LateResults.clerk(secret_key: 'sk_test_mock', base_url: "#{mock.url}/v1")
+      raw, headers = delivery(sample, test: true)
+      result = LateResults.handle(raw, headers, SECRETS, clerk, now: NOW, policy: ban_all, user_id: resolver)
+      assert_equal 'none', result.action
+      assert result.event.test?
+      assert_nil result.user_id
+      assert_empty mock.calls
+
+      # The same body without the flag would ban, and an ordinary delivery is not a test.
+      raw, headers = delivery(sample)
+      real = LateResults.handle(raw, headers, SECRETS, clerk, now: NOW, policy: ban_all, user_id: resolver)
+      refute real.event.test?
+      assert_equal 'ban', real.action
+      assert_equal ['POST /v1/users/user_2EXAMPLE/ban'], lines(mock)
+    end
+  end
+
+  def test_a_repeated_ban_after_the_user_is_gone_completes_and_a_500_still_raises
+    # Every user-scoped endpoint answers 404: the first delivery already removed the user.
+    with_mock(->(_c) { [404, { 'message' => 'not found' }] }) do |mock|
+      providers = [
+        LateResults.workos(api_key: 'sk_test_workos', base_url: mock.url),
+        LateResults.clerk(secret_key: 'sk_test_mock', base_url: "#{mock.url}/v1"),
+        LateResults.auth0(base_url: "#{mock.url}/api/v2", token: 'mgmt_token')
+      ]
+      raw, headers = delivery(review, 'user_GONE')
+      2.times do
+        providers.each do |provider|
+          assert_equal 'ban', LateResults.handle(raw, headers, SECRETS, provider, now: NOW, policy: { review: 'ban' }).action
+          assert_equal 'revoke_sessions', LateResults.handle(raw, headers, SECRETS, provider, now: NOW).action
+        end
+      end
+      seen = lines(mock)
+      ['GET /user_management/users/user_GONE/sessions', 'DELETE /user_management/users/user_GONE',
+       'GET /v1/sessions', 'POST /v1/users/user_GONE/ban', 'PATCH /api/v2/users/user_GONE',
+       'DELETE /api/v2/users/user_GONE/refresh-tokens'].each { |line| assert_includes seen, line }
+    end
+    # A session that ends between the list and its revoke also counts as done.
+    vanish = ->(c) { c.verb == 'GET' ? [200, [{ 'id' => 'sess_1', 'status' => 'active' }]] : [404, nil] }
+    with_mock(vanish) do |mock|
+      LateResults.clerk(secret_key: 'sk_test_mock', base_url: "#{mock.url}/v1").revoke_sessions('user_2EXAMPLE')
+      assert_equal ['GET /v1/sessions', 'POST /v1/sessions/sess_1/revoke'], lines(mock)
+    end
+    with_mock(->(_c) { [500, { 'error' => 'boom' }] }) do |mock|
+      [LateResults.workos(api_key: 'k', base_url: mock.url),
+       LateResults.clerk(secret_key: 'k', base_url: "#{mock.url}/v1"),
+       LateResults.auth0(base_url: "#{mock.url}/api/v2", token: 't')].each do |provider|
+        error = assert_raises(LateResults::ProviderActionError) { provider.ban('user_X') }
+        assert_equal 500, error.status
+      end
     end
   end
 

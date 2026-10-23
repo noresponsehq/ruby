@@ -24,7 +24,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.webhook_endpoints.list
 
@@ -62,7 +62,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::WebhookEndpointRequest.new(
@@ -83,7 +83,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::WebhookEndpointRequest.new(
@@ -105,7 +105,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::WebhookEndpointRequest.new(
@@ -153,11 +153,11 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.webhook_endpoints.delete(endpoint_id: 'whe_01JA2ZD0E1F2G3H4J5K6M7N8P9')
 
-if res.status_code == 200
+unless res.nil?
   # handle response
 end
 
@@ -197,7 +197,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.webhook_endpoints.rotate_signing_key(endpoint_id: 'whe_01JA2ZD0E1F2G3H4J5K6M7N8P9', body: Models::Shared::WebhookKeyRotationRequest.new)
 
@@ -214,7 +214,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.webhook_endpoints.rotate_signing_key(endpoint_id: 'whe_01JA2ZD0E1F2G3H4J5K6M7N8P9', body: Models::Shared::WebhookKeyRotationRequest.new)
 
@@ -259,7 +259,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.webhook_endpoints.send_test_event(endpoint_id: 'whe_01JA2ZD0E1F2G3H4J5K6M7N8P9', body: Models::Shared::WebhookTestRequest.new(
   event: Models::Shared::WebhookTestRequestEvent::ASSESSMENT_UPDATED
@@ -278,7 +278,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.webhook_endpoints.send_test_event(endpoint_id: 'whe_01JA2ZD0E1F2G3H4J5K6M7N8P9', body: Models::Shared::WebhookTestRequest.new(
   event: Models::Shared::WebhookTestRequestEvent::ENDPOINT_VERIFICATION

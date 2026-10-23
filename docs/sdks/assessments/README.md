@@ -23,10 +23,10 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
-  account_id: '<id>',
+  account_id: 'acct_7f3a9c',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -80,7 +80,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -95,10 +95,10 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
-  account_id: '<id>',
+  account_id: 'acct_7f3a9c',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -152,7 +152,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -167,7 +167,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
@@ -182,7 +182,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   ),
   request_id: 'req-2026-10-14-0001',
   deadline_ms: 300
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -197,14 +197,14 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com'
   )
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -219,7 +219,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_8412',
@@ -237,7 +237,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   request_id: 'req_01',
   deadline_ms: 500,
   response_mode: Models::Shared::ResponseMode::STANDARD
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -252,10 +252,10 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
-  account_id: '<id>',
+  account_id: 'acct_7f3a9c',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -309,7 +309,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -324,10 +324,10 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
-  account_id: '<id>',
+  account_id: 'acct_7f3a9c',
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -381,7 +381,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   issued_credential: Models::Shared::AssessmentRequestIssuedCredential.new(
     sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b'
   )
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -424,9 +424,9 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.get(assessment_id: '<id>')
+res = s.assessments.get(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
 
 unless res.nil?
   # handle response
@@ -441,9 +441,9 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.get(assessment_id: '<id>')
+res = s.assessments.get(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
 
 unless res.nil?
   # handle response
@@ -458,9 +458,9 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.get(assessment_id: '<id>')
+res = s.assessments.get(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
 
 unless res.nil?
   # handle response
@@ -475,9 +475,9 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.get(assessment_id: '<id>')
+res = s.assessments.get(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
 
 unless res.nil?
   # handle response
@@ -492,9 +492,9 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.get(assessment_id: '<id>')
+res = s.assessments.get(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
 
 unless res.nil?
   # handle response
@@ -537,14 +537,14 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.record_outcome(assessment_id: '<id>', body: Models::Shared::AssessmentOutcomeRequest.new(
+res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::AssessmentOutcomeRequest.new(
   outcome: Models::Shared::Outcome::CONFIRMED_ABUSE,
   observed_at: '2026-10-20T05:00:00Z',
   external_ref: 'case-123',
   notes: 'Card testing from this account; closed by trust and safety.'
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -559,14 +559,14 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.record_outcome(assessment_id: '<id>', body: Models::Shared::AssessmentOutcomeRequest.new(
+res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::AssessmentOutcomeRequest.new(
   outcome: Models::Shared::Outcome::LEGITIMATE,
   observed_at: '2026-10-14T09:04:30.000Z',
   external_ref: 'case-48213',
   notes: 'Chargeback filed two days after signup.'
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -581,11 +581,11 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.assessments.record_outcome(assessment_id: '<id>', body: Models::Shared::AssessmentOutcomeRequest.new(
+res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::AssessmentOutcomeRequest.new(
   outcome: Models::Shared::Outcome::FALSE_POSITIVE
-), idempotency_key: '<value>')
+), idempotency_key: 'signup-7f3a9c-0001')
 
 unless res.nil?
   # handle response
@@ -629,7 +629,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::AssessmentQuery.new(
@@ -650,11 +650,11 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::AssessmentQuery.new(
-  account_id: '<id>',
+  account_id: 'acct_7f3a9c',
   cursor: 'eyJvIjoyMH0'
 )
 res = s.assessments.query(request: req)

@@ -50,9 +50,13 @@ module NoResponse
     # "assessment.updated", and an EndpointVerification for
     # "endpoint.verification". Deliveries are at least once and unordered:
     # deduplicate on id and keep the highest assessment_version.
-    Event = Struct.new(:id, :type, :created_at, :data, keyword_init: true) do
+    Event = Struct.new(:id, :type, :created_at, :data, :test, keyword_init: true) do
       # True for the terminal expiry event: delete what you hold and fetch nothing.
       def expired? = data.is_a?(AssessmentExpired)
+
+      # True on an event sent by the send-test-event call: data is a fixed
+      # example assessment, not one of yours. Acknowledge it and apply nothing.
+      def test? = test == true
     end
 
     class << self
@@ -132,7 +136,8 @@ module NoResponse
           raise VerificationError.new(:invalid_payload, 'Webhook event envelope is malformed')
         end
 
-        Event.new(id: body['id'], type: body['type'], created_at: body['created_at'], data: event_data(body['type'], data))
+        Event.new(id: body['id'], type: body['type'], created_at: body['created_at'], data: event_data(body['type'], data),
+                  test: body['test'] == true && body['type'] == 'assessment.updated')
       end
 
       def event_data(type, data)

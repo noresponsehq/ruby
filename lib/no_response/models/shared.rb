@@ -5,6 +5,7 @@ module NoResponse
   module Models
     module Shared
       autoload :Assessment, "no_response/models/shared/assessment.rb"
+      autoload :AssessmentAuthContext, "no_response/models/shared/assessmentauthcontext.rb"
       autoload :AssessmentList, "no_response/models/shared/assessmentlist.rb"
       autoload :AssessmentOutcome, "no_response/models/shared/assessmentoutcome.rb"
       autoload :AssessmentOutcomeRequest, "no_response/models/shared/assessmentoutcomerequest.rb"

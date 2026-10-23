@@ -4,13 +4,16 @@
 module NoResponse
   module Models
     module Shared
-      # Transport - Where this context was derived. Backend is the trusted integration path; browser values are treated as weak hints. provider_hook is a hosted provider hook (an Auth0 or WorkOS Action) calling at hook_point; it needs hook_point and verified false, and its authentication facts are not scored.
-      class Transport < T::Enum
+      # Transport - Where the context was derived: backend (also when the request named no transport), browser, or provider_hook for a hosted provider hook.
+      class Transport
+        include ::Crystalline::Enum
         enums do
           BACKEND = new("backend")
           BROWSER = new("browser")
           PROVIDER_HOOK = new("provider_hook")
         end
+
+        open!
       end
     end
   end

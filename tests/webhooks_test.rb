@@ -139,4 +139,20 @@ class WebhooksTest < Minitest::Test
     raw, headers = signed(endpoint, 'secret', endpoint['id'])
     refused(:invalid_payload, raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW)
   end
+
+  def test_a_test_event_says_so_and_a_real_one_does_not
+    sample = fixture('valid/webhook-assessment-updated-test.json')
+    raw, headers = signed(sample, 'secret', sample['id'])
+    event = Webhooks.construct_event(raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW)
+    assert_predicate event, :test?
+    assert_instance_of NoResponse::Models::Shared::Assessment, event.data
+
+    real = fixture('valid/webhook-assessment-updated.json')
+    raw, headers = signed(real, 'secret', real['id'])
+    refute_predicate Webhooks.construct_event(raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW), :test?
+
+    ping = fixture('valid/webhook-endpoint-verification.json').merge('test' => true)
+    raw, headers = signed(ping, 'secret', ping['id'])
+    refute_predicate Webhooks.construct_event(raw, headers, { 'whk_sdktest01' => 'secret' }, now: NOW), :test?
+  end
 end

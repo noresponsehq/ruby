@@ -23,7 +23,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::IntegrationRequest.new(
@@ -44,7 +44,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::IntegrationRequest.new(
@@ -97,7 +97,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.integrations.list
 
@@ -135,11 +135,11 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.integrations.delete(integration_id: 'int_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
 
-if res.status_code == 200
+unless res.nil?
   # handle response
 end
 
@@ -179,7 +179,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.integrations.rotate(integration_id: 'int_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::IntegrationRotationRequest.new)
 
@@ -196,7 +196,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.integrations.rotate(integration_id: 'int_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::IntegrationRotationRequest.new(
   signing_secret: 'wos_action_secret_Z9cD1eF5gH0jL4sP'

@@ -9,7 +9,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.0.19"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v2.1.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 2.0"`.
@@ -39,13 +39,15 @@ end
 puts assessment.recommendation # allow, step_up or review
 ```
 
-Every method returns an envelope: `result` holds the object and `headers` the response headers (`X-Request-ID`, `Retry-After`, `Idempotent-Replayed`).
+`NoResponse::NoResponseClient.new` with no `api_key` or `security_source` reads the key from `NORESPONSE_API_KEY`.
+
+Every method returns an envelope: `result` holds the object and `headers` the response headers (`X-Request-ID`, `Retry-After`, `Idempotent-Replayed`). The `delete` methods answer 204 with no `result`, and their `headers` still hold `X-Request-ID`.
 
 ## Configure the client
 
 ```ruby
 client = NoResponse::NoResponseClient.new(
-  api_key: key,                              # or security_source: -> { Models::Shared::Security.new(api_key: key) }
+  api_key: key,                              # default ENV["NORESPONSE_API_KEY"]; or security_source: -> { Models::Shared::Security.new(api_key: key) }
   server_url: "https://api.noresponse.org",  # the default
   timeout_ms: 10_000,                        # per request
   client: Faraday.new { |f| f.proxy = "http://proxy:8080" }, # your own Faraday connection
@@ -156,6 +158,27 @@ sha256 = NoResponse::IssuedCredential.sha256(issued_key)
 
 ## Webhooks
 
+Register an endpoint (the key needs the `webhooks` scope), store its signing secret, then send it a test event.
+
+```ruby
+created = client.webhook_endpoints.create(
+  request: Models::Shared::WebhookEndpointRequest.new(url: "https://app.example.com/webhooks/noresponse")
+).result
+secret_store.write(created.signing_secret.key_id, created.signing_secret.secret) # shown once
+
+endpoint_id = created.endpoint.endpoint_id
+check = client.webhook_endpoints.send_test_event(
+  endpoint_id: endpoint_id,
+  body: Models::Shared::WebhookTestRequest.new(event: Models::Shared::WebhookTestRequestEvent::ENDPOINT_VERIFICATION)
+).result # check.verified
+client.webhook_endpoints.send_test_event(
+  endpoint_id: endpoint_id,
+  body: Models::Shared::WebhookTestRequest.new(event: Models::Shared::WebhookTestRequestEvent::ASSESSMENT_UPDATED)
+) # your receiver sees event.test? == true
+```
+
+`list`, `rotate_signing_key(endpoint_id:, body:)` (the old key verifies for 7 more days) and `delete(endpoint_id:)` manage it afterwards.
+
 Verify the exact bytes you received, then act on the typed event. `secrets` maps each `whk_` key id we give you to its secret; hold both during a rotation.
 
 ```ruby
@@ -172,7 +195,9 @@ when "endpoint.verification"
   content_type :json
   NoResponse::Webhooks.verification_response(event).to_json
 else
-  if event.expired?
+  if event.test?
+    # send_test_event's fixed example assessment: apply nothing
+  elsif event.expired?
     # forget the assessment: GET now answers 404
   else
     # event.data is the full assessment; keep the highest assessment_version
@@ -181,7 +206,7 @@ else
 end
 ```
 
-`construct_event(payload, headers, secrets, tolerance_seconds: 300)` takes the raw body and a hash of headers in any letter case. It refuses a missing or repeated header, a stale delivery, an unknown key id or a bad signature, and `VerificationError#code` says which. Deliveries are at least once: deduplicate on `event.id`.
+`construct_event(payload, headers, secrets, tolerance_seconds: 300)` takes the raw body and a hash of headers in any letter case. It refuses a missing or repeated header, a stale delivery, an unknown key id or a bad signature, and `VerificationError#code` says which. Deliveries are at least once: deduplicate on `event.id`. `event.test?` is true only on an `assessment.updated` event sent by `send_test_event`; its `data` is a fixed example assessment, so acknowledge it and apply nothing.
 
 ### Late results
 

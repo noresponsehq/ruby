@@ -20,7 +20,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::KeyRotationRequest.new
@@ -39,7 +39,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::KeyRotationRequest.new(
@@ -60,7 +60,7 @@ require 'noresponse'
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: '<YOUR_BEARER_TOKEN_HERE>'
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 
 req = Models::Shared::KeyRotationRequest.new

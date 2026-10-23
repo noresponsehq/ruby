@@ -4,7 +4,7 @@ require "noresponse"
 
 Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
-  api_key: "<YOUR_BEARER_TOKEN_HERE>"
+  api_key: ENV.fetch("NORESPONSE_API_KEY", "")
 )
 res = s.assessments.create(
   body: Models::Shared::AssessmentRequest.new(
@@ -13,7 +13,7 @@ res = s.assessments.create(
       email: "new.user@example.com"
     )
   ),
-  idempotency_key: "<value>"
+  idempotency_key: "signup-7f3a9c-0001"
 )
 
 unless res.nil?

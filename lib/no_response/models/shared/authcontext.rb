@@ -128,25 +128,25 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Boolean.new),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("impersonated")}}
         )
-        # Where this context was derived. Backend is the trusted integration path; browser values are treated as weak hints. provider_hook is a hosted provider hook (an Auth0 or WorkOS Action) calling at hook_point; it needs hook_point and verified false, and its authentication facts are not scored.
+        # Where the context was derived: backend (also when the request named no transport), browser, or provider_hook for a hosted provider hook.
         field(
           :transport,
           Crystalline::Nilable.new(Models::Shared::Transport),
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("transport"),
-              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::Transport, true)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Transport, true)
             }
           }
         )
-        # The provider event a provider_hook context was sent for. pre_registration runs before the user exists, so subject and the request's account_id may be absent there. Sent only with transport provider_hook.
+        # The provider event a provider_hook context was sent for; absent for any other transport.
         field(
           :hook_point,
           Crystalline::Nilable.new(Models::Shared::HookPoint),
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("hook_point"),
-              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::HookPoint, true)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::HookPoint, true)
             }
           }
         )

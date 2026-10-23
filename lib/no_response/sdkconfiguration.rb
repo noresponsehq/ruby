@@ -88,13 +88,16 @@ module NoResponse
         @security_source = security_source
       elsif !api_key.nil?
         @security_source = -> { Models::Shared::Security.new(api_key: api_key) }
+      elsif !ENV.fetch("NORESPONSE_API_KEY", "").empty?
+        env_security = Models::Shared::Security.new(api_key: ENV.fetch("NORESPONSE_API_KEY"))
+        @security_source = -> { env_security }
       end
 
       @language = "ruby"
       @openapi_doc_version = "1"
-      @sdk_version = "2.0.19"
+      @sdk_version = "2.1.0"
       @gen_version = "internal"
-      @user_agent = "noresponse-sdk/ruby 2.0.19 internal 1 noresponse"
+      @user_agent = "noresponse-sdk/ruby 2.1.0 internal 1 noresponse"
     end
 
     sig { returns([String, T::Hash[Symbol, String]]) }

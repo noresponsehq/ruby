@@ -88,6 +88,56 @@ class ClientTest < Minitest::Test
     assert_equal [2.0], slept
   end
 
+  def test_delete_returns_the_response_headers
+    request_id = 'b' * 32
+    stubs = Faraday::Adapter::Test::Stubs.new do |stub|
+      stub.delete('/v1/webhooks/whe_01JA2Z8K6Q4V7W9XBCDEFGHJKM') do
+        [204, { 'X-Request-ID' => request_id, 'Cache-Control' => 'no-store' }, '']
+      end
+      stub.delete('/v1/integrations/int_01JA2Z8K6Q4V7W9XBCDEFGHJKM') do
+        [204, { 'X-Request-ID' => request_id, 'Cache-Control' => 'no-store' }, '']
+      end
+    end
+    client = sdk(stubs)
+    endpoint = client.webhook_endpoints.delete(endpoint_id: 'whe_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
+    assert_equal request_id, endpoint.headers['X-Request-ID']
+    assert_equal 'no-store', endpoint.headers['Cache-Control']
+    integration = client.integrations.delete(integration_id: 'int_01JA2Z8K6Q4V7W9XBCDEFGHJKM')
+    assert_equal request_id, integration.headers['X-Request-ID']
+  end
+
+  def with_env(name, value)
+    previous = ENV.fetch(name, nil)
+    value.nil? ? ENV.delete(name) : ENV.store(name, value)
+    yield
+  ensure
+    previous.nil? ? ENV.delete(name) : ENV.store(name, previous)
+  end
+
+  def authorization_sent(**options)
+    seen = []
+    stubs = Faraday::Adapter::Test::Stubs.new do |stub|
+      stub.get("/v1/assessments/#{ID}") do |env|
+        seen << env.request_headers['Authorization']
+        [200, JSON_TYPE, COMPLETE]
+      end
+    end
+    faraday = Faraday.new { |f| f.adapter(:test, stubs) }
+    NoResponse::NoResponseClient.new(client: faraday, server_url: 'https://api.example.test', **options)
+                                .assessments.get(assessment_id: ID)
+    seen.first
+  end
+
+  def test_api_key_falls_back_to_noresponse_api_key
+    env_key = "nrk_test_#{'e' * 20}"
+    with_env('NORESPONSE_API_KEY', env_key) do
+      assert_equal "Bearer #{env_key}", authorization_sent
+      assert_equal "Bearer nrk_test_#{'k' * 20}", authorization_sent(api_key: "nrk_test_#{'k' * 20}")
+    end
+    with_env('NORESPONSE_API_KEY', nil) { assert_nil authorization_sent }
+    with_env('NORESPONSE_API_KEY', '') { assert_nil authorization_sent }
+  end
+
   def test_every_api_error_is_a_no_response_error
     problem = {
       type: 'https://docs.noresponse.org/errors/not_found', title: 'Not found', status: 404,

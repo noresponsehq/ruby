@@ -706,7 +706,7 @@ module NoResponse
           response: http_response
         )
         return Models::Operations::DeleteIntegrationResponse.new(
-          headers: {}
+          headers: http_response.headers
         )
       elsif Utils.match_status_code(http_response.status, ["400"])
         if Utils.match_content_type(content_type, "application/problem+json")

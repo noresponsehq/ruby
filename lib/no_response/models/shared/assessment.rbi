@@ -113,4 +113,10 @@ class NoResponse::Models::Shared::Assessment
 
   def assessment_url=(str_)
   end
+
+  def auth_context
+  end
+
+  def auth_context=(str_)
+  end
 end

@@ -11,12 +11,12 @@ module NoResponse
 
         field(
           :api_key,
-          ::String,
+          Crystalline::Nilable.new(::String),
           {'security': {'scheme': true, 'type': "http", 'sub_type': "bearer", 'field_name': "Authorization"}}
         )
 
-        sig { params(api_key: ::String).void }
-        def initialize(api_key:)
+        sig { params(api_key: T.nilable(::String)).void }
+        def initialize(api_key: nil)
           @api_key = api_key
         end
 

@@ -134,6 +134,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("assessment_url")}}
         )
+        # The identity fields of the auth context the assessment was made with, echoed for the tenant's own correlation: the request's auth_context, or the one a hosted provider hook (POST /hooks/{integration_id}) built, with transport provider_hook and its hook_point. Present exactly when the request carried an auth_context, and the same on every revision of the assessment. Values are as the request or the hook sent them; tokens, timestamps, roles and scopes are not echoed, and the echo does not change the score.
+        field(
+          :auth_context,
+          Crystalline::Nilable.new(Models::Shared::AssessmentAuthContext),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("auth_context")}}
+        )
 
         sig {
           params(
@@ -154,7 +160,8 @@ module NoResponse
             risk: T.nilable(Models::Shared::Risk),
             signals: T.nilable(T::Array[Models::Shared::Signal]),
             policy_basis: ::String,
-            assessment_url: T.nilable(::String)
+            assessment_url: T.nilable(::String),
+            auth_context: T.nilable(Models::Shared::AssessmentAuthContext)
           )
             .void
         }
@@ -176,7 +183,8 @@ module NoResponse
           risk: nil,
           signals: nil,
           policy_basis: "heuristic_unvalidated",
-          assessment_url: nil
+          assessment_url: nil,
+          auth_context: nil
         )
           @assessment_id = assessment_id
           @account_id = account_id
@@ -204,6 +212,7 @@ module NoResponse
 
           @policy_basis = "heuristic_unvalidated"
           @assessment_url = assessment_url
+          @auth_context = auth_context
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -227,6 +236,7 @@ module NoResponse
           return false unless @signals == other.signals
           return false unless @policy_basis == other.policy_basis
           return false unless @assessment_url == other.assessment_url
+          return false unless @auth_context == other.auth_context
           true
         end
       end

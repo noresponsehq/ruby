@@ -11,7 +11,9 @@
 # user.
 #
 # The handler verifies the delivery itself, so it never acts on an unverified
-# event. The provider calls are thin: you pass the credentials, and each
+# event, and it never acts on a test event from the send-test-event call. Every
+# provider call treats a 404 (user or session already gone) as done, so a
+# repeated delivery is safe. The provider calls are thin: you pass the credentials, and each
 # action is the provider's documented admin endpoint.
 
 require 'erb'
@@ -54,12 +56,12 @@ module NoResponse
 
     class << self
       # The action your policy names for a verified event. Only a served
-      # assessment with a recommendation can act. policy maps allow, step_up
-      # and review (as strings or symbols) to NONE, REVOKE_SESSIONS or BAN; a
-      # recommendation you leave out does nothing. An unknown action raises
-      # ArgumentError.
+      # assessment with a recommendation can act; a test event never does.
+      # policy maps allow, step_up and review (as strings or symbols) to NONE,
+      # REVOKE_SESSIONS or BAN; a recommendation you leave out does nothing. An
+      # unknown action raises ArgumentError.
       def action_for(event, policy = DEFAULT_POLICY)
-        return NONE if event.type != 'assessment.updated' || event.expired?
+        return NONE if event.type != 'assessment.updated' || event.test? || event.expired?
 
         data = event.data
         recommendation = data.recommendation || data.risk&.recommendation
@@ -111,7 +113,8 @@ module NoResponse
       # Clerk Backend API. revoke_sessions lists the user's active sessions
       # (GET /sessions?user_id&status=active) and revokes each
       # (POST /sessions/{id}/revoke). ban is POST /users/{id}/ban, which
-      # revokes every session and blocks sign-in.
+      # revokes every session and blocks sign-in. A 404 on any call (user or
+      # session already gone) counts as done, so a repeated delivery is safe.
       #
       # base_url defaults to https://api.clerk.com/v1. http_client is an
       # optional callable (method, uri, headers, body) returning
@@ -126,7 +129,9 @@ module NoResponse
       # GET /user_management/users/{id}/sessions and revokes each active one
       # with POST /user_management/sessions/revoke. WorkOS has no block or ban,
       # so ban revokes the sessions and then deletes the user
-      # (DELETE /user_management/users/{id}); deletion is permanent.
+      # (DELETE /user_management/users/{id}); deletion is permanent. A 404 on
+      # any call (user or session already gone) counts as done, so a repeated
+      # delivery is safe.
       #
       # base_url defaults to https://api.workos.com.
       def workos(api_key:, base_url: 'https://api.workos.com', http_client: nil)
@@ -141,7 +146,8 @@ module NoResponse
       # (PATCH /users/{id}), then does the same. Pass domain (such as
       # example.eu.auth0.com; the API is https://{domain}/api/v2) or base_url.
       # token is a Management API access token with update:users,
-      # delete:sessions and delete:refresh_tokens.
+      # delete:sessions and delete:refresh_tokens. A 404 on any call (user
+      # already gone) counts as done, so a repeated delivery is safe.
       def auth0(token:, domain: nil, base_url: nil, http_client: nil)
         raise ArgumentError, 'auth0 needs token' if token.to_s.empty?
 
@@ -232,16 +238,16 @@ module NoResponse
         (0...1000).each do |round|
           page = Segment.sessions(@call.call('GET', '/sessions', query: [['user_id', user_id], %w[status active],
                                                                          ['limit', PAGE.to_s],
-                                                                         ['offset', (round * PAGE).to_s]]))
+                                                                         ['offset', (round * PAGE).to_s]], allow_404: true))
           active.concat(Segment.active_ids(page))
           break if page.length < PAGE
         end
-        active.each { |id| @call.call('POST', "/sessions/#{ERB::Util.url_encode(id)}/revoke") }
+        active.each { |id| @call.call('POST', "/sessions/#{ERB::Util.url_encode(id)}/revoke", allow_404: true) }
         nil
       end
 
       def ban(user_id)
-        @call.call('POST', "/users/#{Segment.encode(user_id)}/ban")
+        @call.call('POST', "/users/#{Segment.encode(user_id)}/ban", allow_404: true)
         nil
       end
     end
@@ -260,14 +266,14 @@ module NoResponse
         1000.times do
           query = T.let([%w[limit 100]], T::Array[T::Array[String]])
           query << ['after', after] if after
-          body = @call.call('GET', "/user_management/users/#{user}/sessions", query: query)
+          body = @call.call('GET', "/user_management/users/#{user}/sessions", query: query, allow_404: true)
           active.concat(Segment.active_ids(Segment.sessions(body)))
           nxt = body.is_a?(Hash) && body['list_metadata'].is_a?(Hash) ? body['list_metadata']['after'] : nil
           break unless nxt.is_a?(String) && !nxt.empty?
 
           after = nxt
         end
-        active.each { |id| @call.call('POST', '/user_management/sessions/revoke', body: { 'session_id' => id }) }
+        active.each { |id| @call.call('POST', '/user_management/sessions/revoke', body: { 'session_id' => id }, allow_404: true) }
         nil
       end
 
@@ -287,13 +293,13 @@ module NoResponse
 
       def revoke_sessions(user_id)
         user = Segment.encode(user_id)
-        @call.call('DELETE', "/users/#{user}/sessions")
-        @call.call('DELETE', "/users/#{user}/refresh-tokens")
+        @call.call('DELETE', "/users/#{user}/sessions", allow_404: true)
+        @call.call('DELETE', "/users/#{user}/refresh-tokens", allow_404: true)
         nil
       end
 
       def ban(user_id)
-        @call.call('PATCH', "/users/#{Segment.encode(user_id)}", body: { 'blocked' => true })
+        @call.call('PATCH', "/users/#{Segment.encode(user_id)}", body: { 'blocked' => true }, allow_404: true)
         revoke_sessions(user_id)
       end
     end
