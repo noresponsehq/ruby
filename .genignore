@@ -1,5 +1,4 @@
 # Hand-written files beside the generated client.
-/lib/no_response/webhooks.rb
 /lib/no_response/wait.rb
 /lib/no_response/issued_credential.rb
 /lib/no_response/late_results.rb

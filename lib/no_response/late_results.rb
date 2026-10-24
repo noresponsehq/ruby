@@ -6,7 +6,7 @@
 # An assessment can be revised after the account creation was allowed: a slow source
 # settles and the account's decision rises. NoResponse sends the new version as a
 # signed assessment.updated webhook. LateResults.handle verifies that delivery
-# with Webhooks.construct_event, picks an action from your policy, and acts
+# with WebhookVerification.construct_event, picks an action from your policy, and acts
 # through the auth provider's admin API: revoke the user's sessions or ban the
 # user.
 #
@@ -20,7 +20,6 @@ require 'erb'
 require 'json'
 require 'net/http'
 require 'uri'
-require_relative 'webhooks'
 
 module NoResponse
   module LateResults
@@ -53,13 +52,14 @@ module NoResponse
       end
     end
 
-    # event is the verified Webhooks::Event. action is the action that ran:
+    # event is the verified event from WebhookVerification.construct_event,
+    # such as a Models::Shared::AssessmentUpdatedEvent. action is the action that ran:
     # NONE when the policy, the event or the user id called for nothing. It can
     # be stronger than the policy's action when the provider had to fall back:
     # the auth0 provider reports BAN when it blocked the user because the
     # tenant's plan cannot end sessions. user_id is
     # the provider user id acted on, set only when an action was taken. Answer
-    # an endpoint.verification with Webhooks.verification_response(event).
+    # an endpoint.verification with { 'challenge' => event.data.challenge }.
     Result = Struct.new(:event, :action, :user_id, keyword_init: true)
 
     class << self
@@ -70,7 +70,8 @@ module NoResponse
       # strings or symbols) to NONE, REVOKE_SESSIONS or BAN; a decision you
       # leave out does nothing. An unknown action raises ArgumentError.
       def action_for(event, policy = DEFAULT_POLICY)
-        return NONE if event.test? || event.expired?
+        # Only an assessment.updated event can be a test event.
+        return NONE if event.type == 'assessment.updated' && event.test == true
 
         data = event.data
         if event.type == 'account.risk_changed'
@@ -79,6 +80,7 @@ module NoResponse
           decision = data.account.decisions_by_flow.login.to_s
           return NONE if data.previous_decisions_by_flow&.login.to_s == decision
         elsif event.type == 'assessment.updated'
+          return NONE if data.is_a?(Models::Shared::AssessmentExpired)
           return NONE if data.status == Models::Shared::Status::PENDING || data.account.nil?
           decision = data.account.risk.decision.to_s
         else
@@ -101,8 +103,8 @@ module NoResponse
       # Verify a webhook delivery and apply your policy to it.
       #
       # payload, headers and secrets, plus tolerance_seconds and now, are
-      # exactly what Webhooks.construct_event takes; a delivery that fails
-      # verification raises Webhooks::VerificationError before any provider
+      # exactly what WebhookVerification.construct_event takes; a delivery that fails
+      # verification raises WebhookVerification::VerificationError before any provider
       # call. Deduplicate on result.event.id and ignore versions older than one
       # you have acted on.
       #
@@ -111,7 +113,7 @@ module NoResponse
       # account_id; it defaults to the account_id itself, as when you assess
       # with the provider's user id. Return nil or "" to take no action.
       def handle(payload, headers, secrets, provider, policy: DEFAULT_POLICY, user_id: nil, **verify)
-        event = Webhooks.construct_event(payload, headers, secrets, **verify)
+        event = WebhookVerification.construct_event(payload, headers, secrets, **verify)
         action = action_for(event, policy)
         return Result.new(event: event, action: NONE) if action == NONE
 

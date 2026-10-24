@@ -2,7 +2,7 @@
 
 # NoResponse for Ruby
 
-The NoResponse client for Ruby 3.2 and later. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification and the wait helper are hand-written.
+The NoResponse client for Ruby 3.2 and later. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification is generated too; the wait helper and late results are hand-written.
 
 Keep the API key on your server.
 
@@ -11,7 +11,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v5.1.1"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v6.0.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -181,7 +181,7 @@ check = client.webhook_endpoints.send_test_event(
 client.webhook_endpoints.send_test_event(
   endpoint_id: endpoint_id,
   body: Models::Shared::WebhookTestRequest.new(event: Models::Shared::WebhookTestRequestEvent::ASSESSMENT_UPDATED)
-) # your receiver sees event.test? == true
+) # your receiver sees event.test == true
 ```
 
 `list`, `rotate_signing_key(endpoint_id:, body:)` (the old key verifies for 7 more days) and `delete(endpoint_id:)` manage it afterwards.
@@ -191,39 +191,41 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 ```ruby
 # Rack or Sinatra: post "/webhooks/noresponse"
 payload = request.body.read
+# Rack names a header HTTP_NR_WEBHOOK_ID: give each NR-Webhook-* header its own name back.
+headers = request.env.filter_map { |name, value| [name.delete_prefix("HTTP_").tr("_", "-"), value] if name.start_with?("HTTP_NR_WEBHOOK_") }.to_h
 begin
-  event = NoResponse::Webhooks.construct_event(payload, request.env, { key_id => secret })
-rescue NoResponse::Webhooks::VerificationError => e
-  halt 400, e.code.to_s
+  event = NoResponse::WebhookVerification.construct_event(payload, headers, { key_id => secret })
+rescue NoResponse::WebhookVerification::VerificationError => e
+  halt 400, e.code
 end
 
-case event.type
-when "endpoint.verification"
+case event
+when NoResponse::Models::Shared::EndpointVerificationEvent
   content_type :json
-  NoResponse::Webhooks.verification_response(event).to_json
-else
-  if event.test?
+  halt 200, { "challenge" => event.data.challenge }.to_json
+when NoResponse::Models::Shared::AssessmentUpdatedEvent
+  if event.test
     # send_test_event's fixed example assessment: apply nothing
-  elsif event.type == "account.deleted"
-    # you erased event.data.account_id with accounts.delete
-  elsif event.type == "workspace.deleted"
-    # the workspace is deleted: the last event this endpoint receives, once per event.data.environment
-  elsif event.type == "webhook_endpoint.disabled"
-    # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
-  elsif event.type == "account.risk_changed"
-    # event.data.account is the Account accounts.get returns, with its new decisions_by_flow;
-    # event.data.previous_decisions_by_flow holds the decisions it replaced
-  elsif event.expired?
+  elsif event.data.is_a?(NoResponse::Models::Shared::AssessmentExpired)
     # forget the assessment: GET now answers 404
   else
     # event.data is the full assessment: keep the highest detail.assessment_version
     # and act on event.data.account&.risk&.decision
   end
-  status 204
+when NoResponse::Models::Shared::AccountDeletedEvent
+  # you erased event.data.account_id with accounts.delete
+when NoResponse::Models::Shared::WorkspaceDeletedEvent
+  # the workspace is deleted: the last event this endpoint receives, once per event.data.environment
+when NoResponse::Models::Shared::WebhookEndpointDisabledEvent
+  # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
+when NoResponse::Models::Shared::AccountRiskChangedEvent
+  # event.data.account is the Account accounts.get returns, with its new decisions_by_flow;
+  # event.data.previous_decisions_by_flow holds the decisions it replaced
 end
+status 204
 ```
 
-`construct_event(payload, headers, secrets, tolerance_seconds: 300)` takes the raw body and a hash of headers in any letter case. It refuses a missing or repeated header, a stale delivery, an unknown key id or a bad signature, and `VerificationError#code` says which. Deliveries are at least once: deduplicate on `event.id`. `event.test?` is true only on an `assessment.updated` event sent by `send_test_event`; its `data` is a fixed example assessment, so acknowledge it and apply nothing.
+`NoResponse::WebhookVerification.construct_event(payload, headers, secrets, tolerance_seconds: 300, now: nil)` takes the raw body and a hash of headers in any letter case, and returns one typed event class per `type` from `NoResponse::Models::Shared`. It refuses a missing or repeated header, a stale delivery, an unknown key id, a bad signature or a body that is not a known event, and `VerificationError#code` says which: `"missing_header"`, `"duplicate_header"`, `"invalid_timestamp"`, `"unknown_key"`, `"invalid_signature"` or `"invalid_payload"`. Deliveries are at least once: deduplicate on `event.id`. `event.test` is true only on an `assessment.updated` event sent by `send_test_event`; its `data` is a fixed example assessment, so acknowledge it and apply nothing.
 
 ### Late results
 
@@ -231,7 +233,7 @@ An assessment can be revised after you allowed the account creation. `NoResponse
 
 ```ruby
 provider = NoResponse::LateResults.clerk(secret_key: ENV.fetch('CLERK_SECRET_KEY'))
-result = NoResponse::LateResults.handle(payload, request.env, { key_id => secret }, provider,
+result = NoResponse::LateResults.handle(payload, headers, { key_id => secret }, provider,
                                         policy: { review: 'ban' })
 ```
 

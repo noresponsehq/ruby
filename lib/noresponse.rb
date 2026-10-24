@@ -16,6 +16,8 @@ module NoResponse
     autoload :Errors, "no_response/models/errors"
     autoload :Callbacks, "no_response/models/callbacks"
   end
+
+  autoload :WebhookVerification, "no_response/webhook_verification"
 end
 
 require_relative "no_response/utils/utils"

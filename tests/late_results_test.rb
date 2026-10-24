@@ -64,7 +64,8 @@ end
 
 class LateResultsTest < Minitest::Test
   LateResults = NoResponse::LateResults
-  Webhooks = NoResponse::Webhooks
+  Shared = NoResponse::Models::Shared
+  VerificationError = NoResponse::WebhookVerification::VerificationError
   FIXTURES = File.join(__dir__, 'fixtures')
   SECRET = 'late-result-secret'
   KEY = 'whk_sdktest01'
@@ -111,14 +112,20 @@ class LateResultsTest < Minitest::Test
   def lines(mock) = mock.calls.map { |c| "#{c.verb} #{c.path}" }
 
   def event(data)
-    Webhooks::Event.new(id: 'evt_x', type: 'assessment.updated', created_at: '2026-10-18T11:00:04Z', data: data)
+    Shared::AssessmentUpdatedEvent.new(id: 'evt_x', created_at: '2026-10-18T11:00:04Z', data: data)
+  end
+
+  # An assessment.updated data body parsed as the generated client parses it.
+  def parsed(body)
+    envelope = { 'id' => 'evt_x', 'type' => 'assessment.updated', 'created_at' => '2026-10-18T11:00:04Z', 'data' => body }
+    Crystalline.unmarshal_json(envelope, Shared::AssessmentUpdatedEvent).data
   end
 
   def assessment(status, decision = nil)
     body = status == 'expired' ? expired : step_up.merge('status' => status)
     body['detail']['status'] = status unless status == 'expired'
     decided(body, decision) if decision
-    event(Webhooks.send(:event_data, 'assessment.updated', body))
+    event(parsed(body))
   end
 
   def test_default_policy_revokes_on_review_and_block_and_does_nothing_otherwise
@@ -128,19 +135,21 @@ class LateResultsTest < Minitest::Test
     assert_equal 'revoke_sessions', LateResults.action_for(assessment('complete', 'block'))
     assert_equal 'ban', LateResults.action_for(assessment('partial', 'block'), { block: 'ban' })
     # No account yet, or a pending assessment carrying an earlier decision: nothing to act on.
-    assert_equal 'none', LateResults.action_for(event(Webhooks.send(:event_data, 'assessment.updated', pending)), { allow: 'ban' })
-    assert_equal 'none', LateResults.action_for(event(Webhooks.send(:event_data, 'assessment.updated', pending_known)), { allow: 'ban' })
-    assert_equal 'none', LateResults.action_for(event(Webhooks::AssessmentExpired.new(assessment_id: 'asm_x', account_id: 'a', assessment_version: 1)))
-    verification = Webhooks::Event.new(id: 'evt_x', type: 'endpoint.verification', created_at: 'x', data: nil)
+    assert_equal 'none', LateResults.action_for(event(parsed(pending)), { allow: 'ban' })
+    assert_equal 'none', LateResults.action_for(event(parsed(pending_known)), { allow: 'ban' })
+    assert_equal 'none', LateResults.action_for(event(Shared::AssessmentExpired.new(assessment_id: 'asm_x', account_id: 'a', assessment_version: 1)))
+    verification = Shared::EndpointVerificationEvent.new(id: 'evt_x', created_at: 'x',
+                                                         data: Shared::EndpointVerification.new(endpoint_id: 'whe_1', challenge: 'c'))
     assert_equal 'none', LateResults.action_for(verification)
-    erased = Webhooks::Event.new(id: 'evt_x', type: 'account.deleted', created_at: 'x',
-                                 data: Webhooks::AccountDeleted.new(account_id: 'acct_1', assessments_deleted: 1, deleted_at: 'x'))
+    erased = Shared::AccountDeletedEvent.new(id: 'evt_x', created_at: 'x',
+                                             data: Shared::AccountDeleted.new(account_id: 'acct_1', assessments_deleted: 1, deleted_at: 'x'))
     assert_equal 'none', LateResults.action_for(erased)
-    gone = Webhooks::Event.new(id: 'evt_x', type: 'workspace.deleted', created_at: 'x',
-                               data: Webhooks::WorkspaceDeleted.new(workspace_id: 'tnt_1', environment: 'live', deleted_at: 'x'))
+    gone = Shared::WorkspaceDeletedEvent.new(id: 'evt_x', created_at: 'x',
+                                             data: Shared::WorkspaceDeleted.new(workspace_id: 'tnt_1', environment: Shared::Environment::LIVE,
+                                                                                deleted_at: 'x'))
     assert_equal 'none', LateResults.action_for(gone)
-    disabled = Webhooks::Event.new(id: 'evt_x', type: 'webhook_endpoint.disabled', created_at: 'x',
-                                   data: Webhooks::EndpointDisabled.new(endpoint_id: 'whe_1', failing_since: 'x', disabled_at: 'x'))
+    disabled = Shared::WebhookEndpointDisabledEvent.new(id: 'evt_x', created_at: 'x',
+                                                        data: Shared::WebhookEndpointDisabled.new(endpoint_id: 'whe_1', failing_since: 'x', disabled_at: 'x'))
     assert_equal 'none', LateResults.action_for(disabled)
     blocked = NoResponse::Models::Shared::AccountDecision::BLOCK
     flows = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: blocked, login: blocked, purchase: blocked)
@@ -150,13 +159,13 @@ class LateResultsTest < Minitest::Test
     )
     allowed = NoResponse::Models::Shared::AccountDecision::ALLOW
     before = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: allowed, login: allowed, purchase: allowed)
-    changed = Webhooks::Event.new(id: 'evt_x', type: 'account.risk_changed', created_at: 'x',
-                                  data: Webhooks::AccountRiskChanged.new(account: account, previous_decisions_by_flow: before))
+    changed = Shared::AccountRiskChangedEvent.new(id: 'evt_x', created_at: 'x',
+                                                  data: Shared::AccountRiskChanged.new(account: account, previous_decisions_by_flow: before))
     assert_equal 'ban', LateResults.action_for(changed, { block: 'ban' })
     # A change to another flow with the login decision as it was acts on nothing.
     same_login = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: allowed, login: blocked, purchase: allowed)
-    unchanged = Webhooks::Event.new(id: 'evt_x', type: 'account.risk_changed', created_at: 'x',
-                                    data: Webhooks::AccountRiskChanged.new(account: account, previous_decisions_by_flow: same_login))
+    unchanged = Shared::AccountRiskChangedEvent.new(id: 'evt_x', created_at: 'x',
+                                                    data: Shared::AccountRiskChanged.new(account: account, previous_decisions_by_flow: same_login))
     assert_equal 'none', LateResults.action_for(unchanged, { block: 'ban' })
     assert_equal 'ban', LateResults.action_for(assessment('complete', 'step_up'), { step_up: 'ban' })
     assert_equal 'none', LateResults.action_for(assessment('complete', 'review'), { 'step_up' => 'ban' })
@@ -503,15 +512,15 @@ class LateResultsTest < Minitest::Test
     with_mock(route) do |mock|
       auth0 = LateResults.auth0(base_url: "#{mock.url}/api/v2", token: 'mgmt_token')
       raw, headers = delivery(review, 'auth0|abc')
-      error = assert_raises(Webhooks::VerificationError) do
+      error = assert_raises(VerificationError) do
         LateResults.handle(raw, headers, { KEY => 'wrong' }, auth0, now: NOW)
       end
-      assert_equal :invalid_signature, error.code
-      assert_raises(Webhooks::VerificationError) { LateResults.handle("#{raw} ", headers, SECRETS, auth0, now: NOW) }
-      error = assert_raises(Webhooks::VerificationError) do
+      assert_equal 'invalid_signature', error.code
+      assert_raises(VerificationError) { LateResults.handle("#{raw} ", headers, SECRETS, auth0, now: NOW) }
+      error = assert_raises(VerificationError) do
         LateResults.handle(raw, headers, SECRETS, auth0, now: NOW + 301)
       end
-      assert_equal :invalid_timestamp, error.code
+      assert_equal 'invalid_timestamp', error.code
       [step_up, pending, expired].each do |data|
         body, hdrs = delivery(data)
         assert_equal 'none', LateResults.handle(body, hdrs, SECRETS, auth0, now: NOW).action
@@ -543,14 +552,14 @@ class LateResultsTest < Minitest::Test
       raw, headers = delivery(sample, test: true)
       result = LateResults.handle(raw, headers, SECRETS, clerk, now: NOW, policy: ban_all, user_id: resolver)
       assert_equal 'none', result.action
-      assert result.event.test?
+      assert result.event.test
       assert_nil result.user_id
       assert_empty mock.calls
 
       # The same body without the flag would ban, and an ordinary delivery is not a test.
       raw, headers = delivery(sample)
       real = LateResults.handle(raw, headers, SECRETS, clerk, now: NOW, policy: ban_all, user_id: resolver)
-      refute real.event.test?
+      refute real.event.test
       assert_equal 'ban', real.action
       assert_equal ['POST /v1/users/user_2EXAMPLE/ban'], lines(mock)
     end

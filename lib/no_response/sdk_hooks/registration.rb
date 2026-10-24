@@ -10,7 +10,6 @@
 
 require_relative "./types"
 # Hand-written helpers beside the generated client, loaded with the gem.
-require_relative "../webhooks"
 require_relative "../wait"
 require_relative "../late_results"
 require_relative "idempotency_key_hook"
