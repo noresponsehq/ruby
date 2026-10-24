@@ -2,7 +2,7 @@
 
 # NoResponse for Ruby
 
-The NoResponse client for Ruby 3.2 and later. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification is generated too; the wait helper and late results are hand-written.
+The NoResponse client for Ruby 3.2 and later. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification is generated too; late enforcement is generated from a shared action table; the wait helper is hand-written.
 
 Keep the API key on your server.
 
@@ -11,7 +11,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v6.0.1"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v7.0.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -229,17 +229,24 @@ status 204
 
 ### Late results
 
-An assessment can be revised after you allowed the account creation. `NoResponse::LateResults.handle` verifies the `assessment.updated` delivery with `construct_event`, applies your policy and revokes the user's sessions or bans the user through your auth provider (`LateResults.clerk`, `.workos` or `.auth0`). It acts on the account's decision (`event.data.account.risk.decision`); the default policy revokes sessions on `review` and `block`. WorkOS has no user block, so its ban deletes the user permanently.
+`account.risk_changed` only wakes your handler. `NoResponse::LateResults.handle_risk_change` verifies the delivery with `construct_event`, reads the account's current risk with `accounts.get` (the event's own decision is ignored), asks your `get_account_state` where the account is in your flow, and acts through Clerk, WorkOS or Auth0 from the table every SDK shares: an onboarding account fails onboarding, a provisional one is refused activation, an active one is restricted on `block` or signed out on `review`, and each also has its sessions revoked. Every action, or `none`, is recorded with `accounts.record_enforcement` at the `risk_version` read.
 
 ```ruby
-provider = NoResponse::LateResults.clerk(secret_key: ENV.fetch('CLERK_SECRET_KEY'))
-result = NoResponse::LateResults.handle(payload, headers, { key_id => secret }, provider,
-                                        policy: { review: 'ban' })
+provider = NoResponse::LateResults.identity_provider('clerk', token: ENV.fetch('CLERK_SECRET_KEY'))
+result = NoResponse::LateResults.handle_risk_change(
+  client, payload, headers, { key_id => secret },
+  provider: provider,
+  get_account_state: lambda { |account|
+    user = User.find_by(noresponse_account_id: account.id) or next nil
+    NoResponse::LateResults::AccountStateAnswer.new(state: user.state, user_id: user.clerk_id,
+                                                    enforced_risk_version: user.enforced_risk_version)
+  },
+  flows: { 'login' => NoResponse::LateResults::FlowPolicy.new(reinstate: true) }
+)
+# Store result.risk_version and return it as enforced_risk_version: a replayed or older event then changes nothing.
 ```
 
-An `account.risk_changed` event acts on its new `login` decision when that decision changed; one that moved only another flow's decision acts on nothing. A refused provider call raises `LateResults::ProviderActionError`; answer 5xx so we retry.
-
-If your app has its own login, `NoResponse::LateResults.log_only` logs what it would revoke or ban (to standard error, or pass `log:` a callable) and calls nothing. Use it to try the handler, then pass your own provider: any object with `name`, `revoke_sessions(user_id)` and `ban(user_id)`.
+Nothing deletes a user. Clerk bans (undone by unban); Auth0 sets `blocked`; WorkOS has no block, so it writes `noresponse_state` to the user's metadata and revokes every session: gate sign-in on that key. Lifting a restriction when the risk falls is opt-in per flow (`reinstate`). A refused provider call is recorded as failed and raises `LateResults::ProviderActionError`; answer 5xx so we deliver again. For your own user store, `LateResults.custom_provider('restrict' => ->(user_id) { ... }, ...)` takes one callable per action. To catch up after missed deliveries, page `accounts.list_changed(unenforced: true)` and pass each account to `LateResults.enforce_account`.
 
 ## Changes since 2.0.0
 
