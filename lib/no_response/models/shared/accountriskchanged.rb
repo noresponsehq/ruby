@@ -15,7 +15,7 @@ module NoResponse
           Models::Shared::Account,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("account"), required: true}}
         )
-        # The decision for each flow: the account's score under that flow's thresholds. A flow the workspace has not set uses its account_creation thresholds, so the flows differ only where it set them.
+        # The decision for each flow: the account's score under that flow's thresholds. A flow the workspace has not set uses its account_creation thresholds, so the flows differ only where it set them. The flow of the current assessment is held while that flow's admission is held and the assessment's investigation has not completed.
         field(
           :previous_decisions_by_flow,
           Models::Shared::AccountDecisionsByFlow,
