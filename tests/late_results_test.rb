@@ -148,9 +148,16 @@ class LateResultsTest < Minitest::Test
       id: 'acct_1', risk: NoResponse::Models::Shared::AccountRisk.new(score: 90, decision: blocked, reasons: []),
       decisions_by_flow: flows, assessment_id: 'asm_x', updated_at: 'x'
     )
+    allowed = NoResponse::Models::Shared::AccountDecision::ALLOW
+    before = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: allowed, login: allowed, purchase: allowed)
     changed = Webhooks::Event.new(id: 'evt_x', type: 'account.risk_changed', created_at: 'x',
-                                  data: Webhooks::AccountRiskChanged.new(account: account, previous_decisions_by_flow: flows))
-    assert_equal 'none', LateResults.action_for(changed, { block: 'ban' })
+                                  data: Webhooks::AccountRiskChanged.new(account: account, previous_decisions_by_flow: before))
+    assert_equal 'ban', LateResults.action_for(changed, { block: 'ban' })
+    # A change to another flow with the login decision as it was acts on nothing.
+    same_login = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: allowed, login: blocked, purchase: allowed)
+    unchanged = Webhooks::Event.new(id: 'evt_x', type: 'account.risk_changed', created_at: 'x',
+                                    data: Webhooks::AccountRiskChanged.new(account: account, previous_decisions_by_flow: same_login))
+    assert_equal 'none', LateResults.action_for(unchanged, { block: 'ban' })
     assert_equal 'ban', LateResults.action_for(assessment('complete', 'step_up'), { step_up: 'ban' })
     assert_equal 'none', LateResults.action_for(assessment('complete', 'review'), { 'step_up' => 'ban' })
     assert_raises(ArgumentError) { LateResults.action_for(assessment('complete', 'review'), { review: 'delete' }) }
@@ -509,10 +516,10 @@ class LateResultsTest < Minitest::Test
         body, hdrs = delivery(data)
         assert_equal 'none', LateResults.handle(body, hdrs, SECRETS, auth0, now: NOW).action
       end
-      # account.risk_changed is verified and typed, and acts on nothing: the
-      # assessment.updated that moved the decision does.
+      # account.risk_changed carries a separate account decision.
       body, hdrs = delivery(fixture('valid/webhook-account-risk-changed.json')['data'], type: 'account.risk_changed')
-      ignored = LateResults.handle(body, hdrs, SECRETS, auth0, now: NOW)
+      ignored = LateResults.handle(body, hdrs, SECRETS, auth0, now: NOW, user_id: ->(*) {})
+      assert_equal 'revoke_sessions', LateResults.action_for(ignored.event)
       assert_equal 'none', ignored.action
       assert_equal 'account.risk_changed', ignored.event.type
       assert_equal NoResponse::Models::Shared::AccountDecision::REVIEW, ignored.event.data.account.decisions_by_flow.login

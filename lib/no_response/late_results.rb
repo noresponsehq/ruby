@@ -70,12 +70,20 @@ module NoResponse
       # strings or symbols) to NONE, REVOKE_SESSIONS or BAN; a decision you
       # leave out does nothing. An unknown action raises ArgumentError.
       def action_for(event, policy = DEFAULT_POLICY)
-        return NONE if event.type != 'assessment.updated' || event.test? || event.expired?
+        return NONE if event.test? || event.expired?
 
         data = event.data
-        return NONE if data.status == Models::Shared::Status::PENDING || data.account.nil?
-
-        decision = data.account.risk.decision.to_s
+        if event.type == 'account.risk_changed'
+          # The event is sent when any flow's decision changes; sessions are about the
+          # login decision, so an unchanged login decision acts on nothing.
+          decision = data.account.decisions_by_flow.login.to_s
+          return NONE if data.previous_decisions_by_flow&.login.to_s == decision
+        elsif event.type == 'assessment.updated'
+          return NONE if data.status == Models::Shared::Status::PENDING || data.account.nil?
+          decision = data.account.risk.decision.to_s
+        else
+          return NONE
+        end
         return NONE unless DECISIONS.include?(decision)
 
         table = policy.to_h.transform_keys(&:to_s)
@@ -105,9 +113,9 @@ module NoResponse
       def handle(payload, headers, secrets, provider, policy: DEFAULT_POLICY, user_id: nil, **verify)
         event = Webhooks.construct_event(payload, headers, secrets, **verify)
         action = action_for(event, policy)
-        return Result.new(event: event, action: NONE) if action == NONE || event.type != 'assessment.updated'
+        return Result.new(event: event, action: NONE) if action == NONE
 
-        account_id = event.data.detail.account_id
+        account_id = event.type == 'account.risk_changed' ? event.data.account.id : event.data.detail.account_id
         resolved = user_id ? user_id.call(account_id, event) : account_id
         return Result.new(event: event, action: NONE) if resolved.nil? || resolved.to_s.empty?
 

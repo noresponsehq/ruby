@@ -10,6 +10,7 @@ module NoResponse
         enums do
           ASSESS = new("assess")
           HISTORY = new("history")
+          DELETE = new("delete")
           WEBHOOKS = new("webhooks")
           DETAILED = new("detailed")
           INTEGRATIONS = new("integrations")

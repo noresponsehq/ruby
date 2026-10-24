@@ -11,7 +11,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v5.0.1"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v5.1.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -235,7 +235,7 @@ result = NoResponse::LateResults.handle(payload, request.env, { key_id => secret
                                         policy: { review: 'ban' })
 ```
 
-An `account.risk_changed` event acts on nothing: the handler acts on the `assessment.updated` that changed the decision. A refused provider call raises `LateResults::ProviderActionError`; answer 5xx so we retry.
+An `account.risk_changed` event acts on its new `login` decision when that decision changed; one that moved only another flow's decision acts on nothing. A refused provider call raises `LateResults::ProviderActionError`; answer 5xx so we retry.
 
 If your app has its own login, `NoResponse::LateResults.log_only` logs what it would revoke or ban (to standard error, or pass `log:` a callable) and calls nothing. Use it to try the handler, then pass your own provider: any object with `name`, `revoke_sessions(user_id)` and `ban(user_id)`.
 
