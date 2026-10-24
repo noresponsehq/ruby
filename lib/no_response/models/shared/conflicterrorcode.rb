@@ -13,6 +13,7 @@ module NoResponse
           WEBHOOK_ENDPOINT_LIMIT_REACHED = new("webhook_endpoint_limit_reached")
           WEBHOOK_ENDPOINT_UNVERIFIED = new("webhook_endpoint_unverified")
           TOO_MANY_INTEGRATIONS = new("too_many_integrations")
+          RISK_VERSION_AHEAD = new("risk_version_ahead")
         end
 
         open!

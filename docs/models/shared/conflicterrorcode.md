@@ -23,3 +23,4 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `WEBHOOK_ENDPOINT_LIMIT_REACHED` | webhook_endpoint_limit_reached   |
 | `WEBHOOK_ENDPOINT_UNVERIFIED`    | webhook_endpoint_unverified      |
 | `TOO_MANY_INTEGRATIONS`          | too_many_integrations            |
+| `RISK_VERSION_AHEAD`             | risk_version_ahead               |
