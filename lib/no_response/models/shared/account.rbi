@@ -36,6 +36,12 @@ class NoResponse::Models::Shared::Account
   def updated_at=(str_)
   end
 
+  def risk_version
+  end
+
+  def risk_version=(str_)
+  end
+
   def schema_version
   end
 

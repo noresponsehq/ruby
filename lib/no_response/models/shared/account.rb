@@ -35,6 +35,12 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("updated_at"), required: true}}
         )
+        # The version of the account's current risk. It increases every time the account's current risk or decisions_by_flow changes, and does not decrease. Of two copies of an account, the one with the higher risk_version is newer. account.risk_changed carries the risk_version that its change made.
+        field(
+          :risk_version,
+          ::Integer,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("risk_version"), required: true}}
+        )
         # Version of the body shape.
         field(
           :schema_version,
@@ -49,16 +55,18 @@ module NoResponse
             decisions_by_flow: Models::Shared::AccountDecisionsByFlow,
             assessment_id: ::String,
             updated_at: ::String,
+            risk_version: ::Integer,
             schema_version: ::String
           )
             .void
         }
-        def initialize(id:, risk:, decisions_by_flow:, assessment_id:, updated_at:, schema_version: "1")
+        def initialize(id:, risk:, decisions_by_flow:, assessment_id:, updated_at:, risk_version:, schema_version: "1")
           @id = id
           @risk = risk
           @decisions_by_flow = decisions_by_flow
           @assessment_id = assessment_id
           @updated_at = updated_at
+          @risk_version = risk_version
           unless schema_version == "1"
             raise ArgumentError, "Invalid value for schema_version"
           end
@@ -74,6 +82,7 @@ module NoResponse
           return false unless @decisions_by_flow == other.decisions_by_flow
           return false unless @assessment_id == other.assessment_id
           return false unless @updated_at == other.updated_at
+          return false unless @risk_version == other.risk_version
           return false unless @schema_version == other.schema_version
           true
         end

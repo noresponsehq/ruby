@@ -146,7 +146,7 @@ class LateResultsTest < Minitest::Test
     flows = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: blocked, login: blocked, purchase: blocked)
     account = NoResponse::Models::Shared::Account.new(
       id: 'acct_1', risk: NoResponse::Models::Shared::AccountRisk.new(score: 90, decision: blocked, reasons: []),
-      decisions_by_flow: flows, assessment_id: 'asm_x', updated_at: 'x'
+      decisions_by_flow: flows, assessment_id: 'asm_x', updated_at: 'x', risk_version: 3
     )
     allowed = NoResponse::Models::Shared::AccountDecision::ALLOW
     before = NoResponse::Models::Shared::AccountDecisionsByFlow.new(account_creation: allowed, login: allowed, purchase: allowed)
