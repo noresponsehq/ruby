@@ -11,7 +11,7 @@ Keep the API key on your server.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v7.0.1"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v7.0.2"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -208,10 +208,8 @@ when NoResponse::Models::Shared::AssessmentUpdatedEvent
     # send_test_event's fixed example assessment: apply nothing
   elsif event.data.is_a?(NoResponse::Models::Shared::AssessmentExpired)
     # forget the assessment: GET now answers 404
-  else
-    # event.data is the full assessment: keep the highest detail.assessment_version
-    # and act on event.data.account&.risk&.decision
   end
+  # any other assessment.updated reports progress only: apply nothing
 when NoResponse::Models::Shared::AccountDeletedEvent
   # you erased event.data.account_id with accounts.delete
 when NoResponse::Models::Shared::WorkspaceDeletedEvent
@@ -219,8 +217,8 @@ when NoResponse::Models::Shared::WorkspaceDeletedEvent
 when NoResponse::Models::Shared::WebhookEndpointDisabledEvent
   # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
 when NoResponse::Models::Shared::AccountRiskChangedEvent
-  # event.data.account is the Account accounts.get returns, with its new decisions_by_flow;
-  # event.data.previous_decisions_by_flow holds the decisions it replaced
+  # the one event to act on: a flow's decision changed, at event.data.account.risk_version.
+  # This verifier alone does not enforce it: use handle_risk_change (below) as this endpoint's receiver.
 end
 status 204
 ```
@@ -247,6 +245,8 @@ result = NoResponse::LateResults.handle_risk_change(
 ```
 
 Nothing deletes a user. Clerk bans (undone by unban); Auth0 sets `blocked`; WorkOS has no block, so it writes `noresponse_state` to the user's metadata and revokes every session: gate sign-in on that key. Lifting a restriction when the risk falls is opt-in per flow (`reinstate`). A refused provider call is recorded as failed and raises `LateResults::ProviderActionError`; answer 5xx so we deliver again. For your own user store, `LateResults.custom_provider('restrict' => ->(user_id) { ... }, ...)` takes one callable per action. To catch up after missed deliveries, page `accounts.list_changed(unenforced: true)` and pass each account to `LateResults.enforce_account`.
+
+A held flow (workspace settings `admission: held`) answers `held` until its investigation completes or `hold_seconds` pass, and the handler records `none` for it. When the final decision arrives as `account.risk_changed`, an `onboarding` or `provisional` account fails onboarding or is refused activation on `review` or `block`. On `allow` the handler does nothing, so admit the account yourself from the result's account. See https://docs.noresponse.org/guides/late-results.
 
 ## Changes since 2.0.0
 
