@@ -1,6 +1,6 @@
 # Lane
 
-An evidence lane: accounts (account presence for email and username), phone, breach and ip.
+An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
 
 ## Example Usage
 
@@ -21,4 +21,5 @@ custom = Lane.deserialize("custom_value")
 | `ACCOUNTS` | accounts   |
 | `PHONE`    | phone      |
 | `BREACH`   | breach     |
+| `DOMAIN`   | domain     |
 | `IP`       | ip         |

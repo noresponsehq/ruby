@@ -9,7 +9,7 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # An evidence lane: accounts (account presence for email and username), phone, breach and ip.
+        # An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
         field(
           :lane,
           Models::Shared::Lane,
