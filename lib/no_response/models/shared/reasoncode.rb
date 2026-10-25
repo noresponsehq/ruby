@@ -48,6 +48,8 @@ module NoResponse
           YOUNG_EMAIL_DOMAIN = new("young_email_domain")
           EMAIL_DOMAIN_NO_MX = new("email_domain_no_mx")
           EMAIL_DOMAIN_NONEXISTENT = new("email_domain_nonexistent")
+          FORUM_SANCTIONED = new("forum_sanctioned")
+          PRIOR_PAYMENT_ABUSE = new("prior_payment_abuse")
         end
 
         open!

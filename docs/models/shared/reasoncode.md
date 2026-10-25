@@ -58,3 +58,5 @@ custom = ReasonCode.deserialize("custom_value")
 | `YOUNG_EMAIL_DOMAIN`            | young_email_domain              |
 | `EMAIL_DOMAIN_NO_MX`            | email_domain_no_mx              |
 | `EMAIL_DOMAIN_NONEXISTENT`      | email_domain_nonexistent        |
+| `FORUM_SANCTIONED`              | forum_sanctioned                |
+| `PRIOR_PAYMENT_ABUSE`           | prior_payment_abuse             |
