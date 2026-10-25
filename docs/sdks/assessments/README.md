@@ -28,7 +28,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -101,7 +101,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -204,7 +204,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -333,7 +333,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -646,7 +646,7 @@ s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::AssessmentOutcomeRequest.new(
-  outcome: Models::Shared::Outcome::LEGITIMATE,
+  outcome: Models::Shared::Outcome::ACCOUNT_TAKEOVER,
   observed_at: '2026-10-14T09:04:30.000Z',
   external_ref: 'case-48213',
   notes: 'Chargeback filed two days after account creation.'

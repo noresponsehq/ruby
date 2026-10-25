@@ -56,15 +56,7 @@ s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.key_usage.record(body: Models::Shared::KeyUsageBatchRequest.new(
-  events: [
-    Models::Shared::KeyUsageEvent.new(
-      key_sha256: '2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b',
-      ip: '203.0.113.24',
-      occurred_at: '2026-10-23T09:14:07.000Z',
-      user_agent: 'python-requests/2.32.3',
-      model: 'gpt-4o-mini'
-    ),
-  ]
+  events: []
 ), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?

@@ -9,6 +9,7 @@ module NoResponse
   autoload :Keys, "no_response/keys"
   autoload :Integrations, "no_response/integrations"
   autoload :WebhookEndpoints, "no_response/webhookendpoints"
+  autoload :Settings, "no_response/settings"
 
   module Models
     autoload :Shared, "no_response/models/shared"

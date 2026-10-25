@@ -5,7 +5,7 @@ module NoResponse
   module Models
     module Shared
 
-      class Scope
+      class KeyScope
         include ::Crystalline::Enum
         enums do
           ASSESS = new("assess")
@@ -14,6 +14,7 @@ module NoResponse
           WEBHOOKS = new("webhooks")
           DETAILED = new("detailed")
           INTEGRATIONS = new("integrations")
+          MANAGEMENT = new("management")
         end
 
         open!

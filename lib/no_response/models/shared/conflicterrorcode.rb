@@ -14,6 +14,8 @@ module NoResponse
           WEBHOOK_ENDPOINT_UNVERIFIED = new("webhook_endpoint_unverified")
           TOO_MANY_INTEGRATIONS = new("too_many_integrations")
           RISK_VERSION_AHEAD = new("risk_version_ahead")
+          KEY_LIMIT_REACHED = new("key_limit_reached")
+          SELF_REVOCATION = new("self_revocation")
         end
 
         open!

@@ -20,7 +20,7 @@ module NoResponse
         # The scopes of the new key: those of the presented key.
         field(
           :scopes,
-          Crystalline::Array.new(Models::Shared::Scope),
+          Crystalline::Array.new(Models::Shared::KeyRotationScope),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("scopes"), required: true}}
         )
 
@@ -46,7 +46,7 @@ module NoResponse
           params(
             key: ::String,
             key_id: ::String,
-            scopes: T::Array[Models::Shared::Scope],
+            scopes: T::Array[Models::Shared::KeyRotationScope],
             created_at: ::String,
             previous_key_id: ::String,
             previous_key_expires_at: ::String

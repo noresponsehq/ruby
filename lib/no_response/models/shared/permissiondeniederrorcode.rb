@@ -9,6 +9,7 @@ module NoResponse
         include ::Crystalline::Enum
         enums do
           WORKSPACE_FORBIDDEN = new("workspace_forbidden")
+          ROLE_FORBIDDEN = new("role_forbidden")
         end
 
         open!
