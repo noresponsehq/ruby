@@ -21,7 +21,7 @@ module NoResponse
           Crystalline::Nilable.new(::Integer),
           {'query_param': {'field_name': "limit", 'style': "form", 'explode': true}}
         )
-        # true lists only accounts with a decision other than allow for some flow and no applied enforcement at their current risk_version.
+        # true lists only accounts with no applied enforcement at their current risk_version that have a decision other than allow for some flow or a hold no later applied enforcement resolved.
         field(
           :unenforced,
           Crystalline::Nilable.new(Crystalline::Boolean.new),

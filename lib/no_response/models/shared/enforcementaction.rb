@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # EnforcementAction - What the workspace did in its identity provider: revoke_sessions (signed the account out everywhere), restrict (limited what the account can do), unrestrict (lifted an earlier restriction), fail_onboarding (stopped an account that was still onboarding), reject_activation (refused to activate a provisional account) or none (decided to take no action).
+      # EnforcementAction - What the workspace did in its identity provider: revoke_sessions (signed the account out everywhere), restrict (limited what the account can do), unrestrict (lifted an earlier restriction), fail_onboarding (stopped an account that was still onboarding), reject_activation (refused to activate a provisional account), activate (let a held onboarding or provisional account in) or none (decided to take no action).
       class EnforcementAction
         include ::Crystalline::Enum
         enums do
@@ -13,6 +13,7 @@ module NoResponse
           UNRESTRICT = new("unrestrict")
           FAIL_ONBOARDING = new("fail_onboarding")
           REJECT_ACTIVATION = new("reject_activation")
+          ACTIVATE = new("activate")
           NONE = new("none")
         end
 
