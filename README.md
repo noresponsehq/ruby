@@ -1,17 +1,19 @@
-<img src="https://raw.githubusercontent.com/noresponsehq/.github/main/profile/sdk-header.png" alt="NoResponse" width="100%">
+<a href="https://noresponse.org"><img src="https://raw.githubusercontent.com/noresponsehq/.github/main/profile/sdk-header.png" alt="NoResponse · Identity Intelligence" width="100%"></a>
 
 # NoResponse for Ruby
 
-The NoResponse client for Ruby 3.2 and later. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks. The client is generated from the NoResponse OpenAPI document; webhook verification is generated too; late enforcement is generated from a shared action table; the wait helper is hand-written.
+Assess sign-ups, logins and purchases with the NoResponse Identity Intelligence API.
 
-Keep the API key on your server.
+Ruby 3.2+ · Bundler.
+
+[Documentation](https://docs.noresponse.org/sdks/ruby) · [API reference](https://docs.noresponse.org/api-reference) · [Releases](https://github.com/noresponsehq/ruby/releases)
 
 ## Install
 
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v7.1.1"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v7.1.2"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -46,6 +48,19 @@ puts assessment.detail.risk.score     # this assessment's own score
 `NoResponse::NoResponseClient.new` with no `api_key` or `security_source` reads the key from `NORESPONSE_API_KEY`.
 
 Every method returns an envelope: `result` holds the object and `headers` the response headers (`X-Request-ID`, `Retry-After`, `Idempotent-Replayed`). The `delete` methods answer 204 with no `result`, and their `headers` still hold `X-Request-ID`.
+
+## Go further
+
+| Task | Guide |
+| --- | --- |
+| Configure this client and explore its methods | [Ruby SDK guide](https://docs.noresponse.org/sdks/ruby) |
+| Act when an account's decision changes | [Late results](https://docs.noresponse.org/guides/late-results) |
+| Explore request and response fields | [API reference](https://docs.noresponse.org/api-reference) |
+
+<details>
+<summary><strong>SDK reference</strong> · configuration, methods, errors and webhooks</summary>
+
+[Configure the client](#configure-the-client) · [Assessments](#assessments) · [Keys](#keys) · [Errors](#errors) · [Retries](#retries) · [Issued keys](#issued-keys) · [Webhooks](#webhooks) · [Changes since 2.0.0](#changes-since-200)
 
 ## Configure the client
 
@@ -260,4 +275,11 @@ Names that changed:
 | `create(body:, idempotency_key:)` with the key required | `idempotency_key:` is optional |
 | `record_outcome(body:, assessment_id:, idempotency_key:)` with the key required | `idempotency_key:` is optional |
 
-Issues: https://github.com/noresponsehq/ruby/issues. Quote `request_id` when you write to us.
+</details>
+
+## Support
+
+[Open an issue](https://github.com/noresponsehq/ruby/issues) and include the request ID from the response or error.
+Keep API keys and personal data out of issues.
+
+[Apache-2.0](LICENSE).
