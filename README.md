@@ -13,7 +13,7 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v7.1.2"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v7.1.3"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -259,7 +259,7 @@ result = NoResponse::LateResults.handle_risk_change(
 # Store result.risk_version and return it as enforced_risk_version: a replayed or older event then changes nothing.
 ```
 
-Nothing deletes a user. Clerk bans (undone by unban); Auth0 sets `blocked`; WorkOS has no block, so it writes `noresponse_state` to the user's metadata and revokes every session: gate sign-in on that key. Lifting a restriction when the risk falls is opt-in per flow (`reinstate`). A refused provider call is recorded as failed and raises `LateResults::ProviderActionError`; answer 5xx so we deliver again. For your own user store, `LateResults.custom_provider('restrict' => ->(user_id) { ... }, ...)` takes one callable per action. To catch up after missed deliveries, page `accounts.list_changed(unenforced: true)` and pass each account to `LateResults.enforce_account`.
+Nothing deletes a user. Clerk bans (undone by unban); Auth0 sets `blocked`; WorkOS has no block on a user, so it writes `noresponse_state` to the user's metadata and revokes every session: gate sign-in on that key. Lifting a restriction when the risk falls is opt-in per flow (`reinstate`). A refused provider call is recorded as failed and raises `LateResults::ProviderActionError`; answer 5xx so we deliver again. For your own user store, `LateResults.custom_provider('restrict' => ->(user_id) { ... }, ...)` takes one callable per action. To catch up after missed deliveries, page `accounts.list_changed(unenforced: true)` and pass each account to `LateResults.enforce_account`.
 
 A held flow (workspace settings `admission: held`) answers `held` until its investigation completes or `hold_seconds` pass, and the handler records `none` for it. When the final decision arrives as `account.risk_changed`, an `onboarding` or `provisional` account fails onboarding or is refused activation on `review` or `block`. On `allow` the handler records `activate` (no provider call; a custom provider runs its own `activate`), so admit the account when the result's enforcements hold it. An account at `allow` that needs no change, such as an `active` one after a held login, is recorded as `none`. Either way the account leaves the unenforced list. See https://docs.noresponse.org/guides/late-results.
 
