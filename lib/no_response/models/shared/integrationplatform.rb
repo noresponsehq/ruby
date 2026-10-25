@@ -10,6 +10,7 @@ module NoResponse
         enums do
           WORKOS = new("workos")
           AUTH0 = new("auth0")
+          SUPABASE = new("supabase")
         end
 
         open!

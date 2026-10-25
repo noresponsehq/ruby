@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 43ec8945f561425ba9ec4af1a496d1b6
+  docChecksum: 9c051cf72f998179af1913d942bc9eac
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 7.1.5
-  configChecksum: e2b0ac1a05d6e0dae86cfb0e1fad797b
+  releaseVersion: 7.1.6
+  configChecksum: 7723e2ef09482ca1b31428a45aecd6ff
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:2da5cdac38b44f8983259879e522ab06d6afe193
+    last_write_checksum: sha1:68f2a269197b10322e762713bdf4381ecec4505a
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -302,11 +302,11 @@ trackedFiles:
   docs/models/shared/integrationlist.md:
     last_write_checksum: sha1:ceece6ccf0f3eabc968740ef1f8327afbb457026
   docs/models/shared/integrationplatform.md:
-    last_write_checksum: sha1:fca3b3cf57484165dd38c9bb9ad7311eb287f207
+    last_write_checksum: sha1:ac4ff7d18c0f8067cb99782b86b5271c8bf78ddc
   docs/models/shared/integrationrequest.md:
-    last_write_checksum: sha1:b60d7afbd0ccd4ed0662bc28335bdb175afc208a
+    last_write_checksum: sha1:8dcba58535d18ba5cb5022d2d3d01973bf18518e
   docs/models/shared/integrationrotationrequest.md:
-    last_write_checksum: sha1:47bbbead938658b97ff70eb5064e74906a527576
+    last_write_checksum: sha1:2542f39e8346546871a48bb4377990be1876ebb9
   docs/models/shared/ipsummary.md:
     last_write_checksum: sha1:0096c8929e4c1b9ee2cfc051752e354b8fac90c2
   docs/models/shared/ipsummarytype.md:
@@ -480,7 +480,7 @@ trackedFiles:
   docs/sdks/assessments/README.md:
     last_write_checksum: sha1:ae7f4bc3a04f5777ce94ac4aa9035701de537238
   docs/sdks/integrations/README.md:
-    last_write_checksum: sha1:abd806fafe1d519655412016170acbbc240f9050
+    last_write_checksum: sha1:0b423c7396c1af4e7f4f638e61f38bfc62164be6
   docs/sdks/keys/README.md:
     last_write_checksum: sha1:20b0dafaa4ec332f4eaac979768389f1b5c32f53
   docs/sdks/keyusage/README.md:
@@ -506,7 +506,7 @@ trackedFiles:
   lib/no_response/assessments.rb:
     last_write_checksum: sha1:25dcae16489b97773d506f07200a7661bcb1ea57
   lib/no_response/integrations.rb:
-    last_write_checksum: sha1:1c5c4883dcce241c6da4dc57087be4b27634ccc4
+    last_write_checksum: sha1:bc7c388b5e9141b2ffe7d62018d209728b7dd3f5
   lib/no_response/keys.rb:
     last_write_checksum: sha1:07d7b5fdad5d8d6e22452ff569c185bf28808b17
   lib/no_response/keyusage.rb:
@@ -1044,15 +1044,15 @@ trackedFiles:
   lib/no_response/models/shared/integrationlist.rbi:
     last_write_checksum: sha1:772288db0fc95ad62e17a35d473e69b48e08db7b
   lib/no_response/models/shared/integrationplatform.rb:
-    last_write_checksum: sha1:5598e8714bc52326ed5972c038d7905519747dae
+    last_write_checksum: sha1:edbaa16285b0da72579687e77434b7db0efd5bd7
   lib/no_response/models/shared/integrationplatform.rbi:
     last_write_checksum: sha1:a4354bea00853e5d493b08f5a7021381e27bb931
   lib/no_response/models/shared/integrationrequest.rb:
-    last_write_checksum: sha1:9d54120632103b0549934a6f68d570b7d0f47d89
+    last_write_checksum: sha1:4d0e33758263e98313869b5576bf190800235a19
   lib/no_response/models/shared/integrationrequest.rbi:
     last_write_checksum: sha1:7d4c5e60b4791ad3acc65e81cb49d3772e7077e4
   lib/no_response/models/shared/integrationrotationrequest.rb:
-    last_write_checksum: sha1:5be63f030112f3ba3606851250e11ce792aa720e
+    last_write_checksum: sha1:9b92bcc78eb65be128c0e1a0a0cf725090dd837c
   lib/no_response/models/shared/integrationrotationrequest.rbi:
     last_write_checksum: sha1:b3a5663075204b123870faaf0d58733ccc546848
   lib/no_response/models/shared/ipsummary.rb:
@@ -1398,7 +1398,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:4d22d69312288414c8b20ff16a6ddd20a0ba16ef
+    last_write_checksum: sha1:9b4210da660a42cb2ac500bea24415444aa63b96
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -1426,7 +1426,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:d6cfd44eef70201c4102301499fa682bfcaf515d
   noresponse.gemspec:
-    last_write_checksum: sha1:6c474bc421718135d1d970109b31c7c6bfae3098
+    last_write_checksum: sha1:b5a0c03cfa8d36702492f58789b7029fa483afc8
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -1923,6 +1923,24 @@ examples:
       responses:
         "201":
           application/json: {"integration_id": "int_01JA2Z9M3R5T8W1YBCDEFGHJKN", "platform": "workos", "hook_points": ["pre_registration", "post_login"], "url": "https://api.noresponse.org/hooks/int_01JA2Z9M3R5T8W1YBCDEFGHJKN", "created_at": "2026-10-14T09:05:00.000Z"}
+    supabase:
+      requestBody:
+        application/json: {"platform": "supabase", "signing_secret": "v1,whsec_dGVzdC1zdXBhYmFzZS1ob29rLXNlY3JldC1ub3QtcmVhbA=="}
+      responses:
+        "201":
+          application/json: {"integration_id": "int_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "platform": "supabase", "hook_points": ["post_login"], "url": "https://api.noresponse.org/hooks/int_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "secret": "nri_k3Yx8pQ2mN7vR4tW6zB9cD1eF5gH0jL4sP9uV2wX7yA", "created_at": "2026-10-14T09:00:00.000Z", "rotated_at": "2026-10-15T09:00:00.000Z", "previous_secret_expires_at": "2026-10-16T09:00:00.000Z"}
+        "400":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_request", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "401":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 401, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "unauthorized", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "403":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 403, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "role_forbidden", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "404":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 404, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "not_found", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "409":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 409, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "risk_version_ahead", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "429":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 429, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "rate_limited", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
   listIntegrations:
     list:
       responses:
