@@ -50,6 +50,12 @@ module NoResponse
           EMAIL_DOMAIN_NONEXISTENT = new("email_domain_nonexistent")
           FORUM_SANCTIONED = new("forum_sanctioned")
           PRIOR_PAYMENT_ABUSE = new("prior_payment_abuse")
+          IP_HISTORY_MATCH = new("ip_history_match")
+          IDENTITY_ATTRIBUTE_CONFLICT = new("identity_attribute_conflict")
+          IMPOSSIBLE_IDENTITY_AGE = new("impossible_identity_age")
+          BREACH_SHARED_IP = new("breach_shared_ip")
+          NATIONALITY_MISMATCH = new("nationality_mismatch")
+          MINOR_IDENTITY = new("minor_identity")
         end
 
         open!

@@ -60,3 +60,9 @@ custom = ReasonCode.deserialize("custom_value")
 | `EMAIL_DOMAIN_NONEXISTENT`      | email_domain_nonexistent        |
 | `FORUM_SANCTIONED`              | forum_sanctioned                |
 | `PRIOR_PAYMENT_ABUSE`           | prior_payment_abuse             |
+| `IP_HISTORY_MATCH`              | ip_history_match                |
+| `IDENTITY_ATTRIBUTE_CONFLICT`   | identity_attribute_conflict     |
+| `IMPOSSIBLE_IDENTITY_AGE`       | impossible_identity_age         |
+| `BREACH_SHARED_IP`              | breach_shared_ip                |
+| `NATIONALITY_MISMATCH`          | nationality_mismatch            |
+| `MINOR_IDENTITY`                | minor_identity                  |
