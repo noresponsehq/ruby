@@ -45,6 +45,9 @@ module NoResponse
           PRIOR_ABUSE_LINK = new("prior_abuse_link")
           TEST_SCENARIO = new("test_scenario")
           SHARED_API_KEY = new("shared_api_key")
+          YOUNG_EMAIL_DOMAIN = new("young_email_domain")
+          EMAIL_DOMAIN_NO_MX = new("email_domain_no_mx")
+          EMAIL_DOMAIN_NONEXISTENT = new("email_domain_nonexistent")
         end
 
         open!
