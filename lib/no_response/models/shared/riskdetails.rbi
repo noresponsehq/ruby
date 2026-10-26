@@ -23,4 +23,10 @@ class NoResponse::Models::Shared::RiskDetails
 
   def breach_names=(str_)
   end
+
+  def events
+  end
+
+  def events=(str_)
+  end
 end

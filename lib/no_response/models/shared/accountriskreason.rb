@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-
+      # One reason that fired. direction is whether it raises or lowers the score, or is neutral (informational, it moves nothing). impact is a coarse band of how much it moves the score: none for a neutral reason, otherwise low, medium or high.
       class AccountRiskReason
         extend T::Sig
         include Crystalline::MetadataFields
@@ -23,9 +23,27 @@ module NoResponse
         )
 
         field(
-          :weight,
-          ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("weight"), required: true}}
+          :direction,
+          Models::Shared::Direction,
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("direction"),
+              required: true,
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Direction, false)
+            }
+          }
+        )
+
+        field(
+          :impact,
+          Models::Shared::Impact,
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("impact"),
+              required: true,
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Impact, false)
+            }
+          }
         )
         # The submitted identifier or client context field a reason concerns; absent when it concerns the whole assessment. Client context is a claimed hint, not a device fingerprint.
         field(
@@ -38,27 +56,45 @@ module NoResponse
             }
           }
         )
+        # Deprecated and always 0: the policy's weights are not published. It is sent so that SDK versions that require it keep reading reasons. Read direction and impact.
+        #
+        # @deprecated true: This will be removed in a future release, please migrate away from it as soon as possible.
+        field(
+          :weight,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("weight")}}
+        )
 
         sig {
           params(
             code: Models::Shared::ReasonCode,
-            weight: ::Integer,
-            identifier: T.nilable(Models::Shared::ReasonIdentifier)
+            direction: Models::Shared::Direction,
+            impact: Models::Shared::Impact,
+            identifier: T.nilable(Models::Shared::ReasonIdentifier),
+            weight: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(code:, weight:, identifier: nil)
+        def initialize(code:, direction:, impact:, identifier: nil, weight: 0)
           @code = code
-          @weight = weight
+          @direction = direction
+          @impact = impact
           @identifier = identifier
+          unless weight&.zero?
+            raise ArgumentError, "Invalid value for weight"
+          end
+
+          @weight = 0
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @code == other.code
-          return false unless @weight == other.weight
+          return false unless @direction == other.direction
+          return false unless @impact == other.impact
           return false unless @identifier == other.identifier
+          return false unless @weight == other.weight
           true
         end
       end

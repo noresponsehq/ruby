@@ -26,19 +26,27 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsBreachName)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("breach_names")}}
         )
+        # The identity's dated footprint events, newest first, at most 100: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month.
+        field(
+          :events,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsEvent)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("events")}}
+        )
 
         sig {
           params(
             phone_names: T.nilable(T::Array[Models::Shared::RiskDetailsPhoneName]),
             breaches: T.nilable(T::Array[Models::Shared::Breach]),
-            breach_names: T.nilable(T::Array[Models::Shared::RiskDetailsBreachName])
+            breach_names: T.nilable(T::Array[Models::Shared::RiskDetailsBreachName]),
+            events: T.nilable(T::Array[Models::Shared::RiskDetailsEvent])
           )
             .void
         }
-        def initialize(phone_names: nil, breaches: nil, breach_names: nil)
+        def initialize(phone_names: nil, breaches: nil, breach_names: nil, events: nil)
           @phone_names = phone_names
           @breaches = breaches
           @breach_names = breach_names
+          @events = events
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -47,6 +55,7 @@ module NoResponse
           return false unless @phone_names == other.phone_names
           return false unless @breaches == other.breaches
           return false unless @breach_names == other.breach_names
+          return false unless @events == other.events
           true
         end
       end

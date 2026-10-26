@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::RiskSummary
 
   def consistency=(str_)
   end
+
+  def footprint
+  end
+
+  def footprint=(str_)
+  end
 end

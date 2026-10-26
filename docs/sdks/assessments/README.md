@@ -28,7 +28,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::ACCOUNT_CREATION,
+  flow: Models::Shared::Flow::PURCHASE,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -101,7 +101,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::ACCOUNT_CREATION,
+  flow: Models::Shared::Flow::PURCHASE,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -204,7 +204,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::ACCOUNT_CREATION,
+  flow: Models::Shared::Flow::PURCHASE,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -333,7 +333,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::ACCOUNT_CREATION,
+  flow: Models::Shared::Flow::PURCHASE,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',

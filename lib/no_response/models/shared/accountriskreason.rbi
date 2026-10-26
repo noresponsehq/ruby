@@ -12,15 +12,27 @@ class NoResponse::Models::Shared::AccountRiskReason
   def code=(str_)
   end
 
-  def weight
+  def direction
   end
 
-  def weight=(str_)
+  def direction=(str_)
+  end
+
+  def impact
+  end
+
+  def impact=(str_)
   end
 
   def identifier
   end
 
   def identifier=(str_)
+  end
+
+  def weight
+  end
+
+  def weight=(str_)
   end
 end
