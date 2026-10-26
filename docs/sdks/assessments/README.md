@@ -739,7 +739,7 @@ s = ::NoResponse::NoResponseClient.new(
 
 req = Models::Shared::AssessmentQuery.new(
   account_id: 'acct_7f3a9c',
-  cursor: 'eyJvIjoyMH0'
+  cursor: nil
 )
 res = s.assessments.query(request: req)
 

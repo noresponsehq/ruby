@@ -49,7 +49,7 @@ s = ::NoResponse::NoResponseClient.new(
 
 req = Models::Shared::IntegrationRequest.new(
   platform: Models::Shared::IntegrationPlatform::SUPABASE,
-  signing_secret: 'v1,whsec_dGVzdC1zdXBhYmFzZS1ob29rLXNlY3JldC1ub3QtcmVhbA=='
+  signing_secret: nil
 )
 res = s.integrations.create(request: req)
 
@@ -75,7 +75,7 @@ req = Models::Shared::IntegrationRequest.new(
     Models::Shared::IntegrationHookPoint::PRE_REGISTRATION,
     Models::Shared::IntegrationHookPoint::POST_LOGIN,
   ],
-  signing_secret: 'wos_action_secret_k3Yx8pQ2mN7vR4tW'
+  signing_secret: nil
 )
 res = s.integrations.create(request: req)
 
@@ -221,7 +221,7 @@ s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.integrations.rotate(integration_id: 'int_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::IntegrationRotationRequest.new(
-  signing_secret: 'wos_action_secret_Z9cD1eF5gH0jL4sP'
+  signing_secret: nil
 ))
 
 unless res.nil?
