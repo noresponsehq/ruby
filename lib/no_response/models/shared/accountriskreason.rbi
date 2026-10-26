@@ -29,10 +29,4 @@ class NoResponse::Models::Shared::AccountRiskReason
 
   def identifier=(str_)
   end
-
-  def weight
-  end
-
-  def weight=(str_)
-  end
 end

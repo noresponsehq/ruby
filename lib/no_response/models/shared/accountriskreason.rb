@@ -56,35 +56,21 @@ module NoResponse
             }
           }
         )
-        # Deprecated and always 0: the policy's weights are not published. It is sent so that SDK versions that require it keep reading reasons. Read direction and impact.
-        #
-        # @deprecated true: This will be removed in a future release, please migrate away from it as soon as possible.
-        field(
-          :weight,
-          Crystalline::Nilable.new(::Integer),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("weight")}}
-        )
 
         sig {
           params(
             code: Models::Shared::ReasonCode,
             direction: Models::Shared::Direction,
             impact: Models::Shared::Impact,
-            identifier: T.nilable(Models::Shared::ReasonIdentifier),
-            weight: T.nilable(::Integer)
+            identifier: T.nilable(Models::Shared::ReasonIdentifier)
           )
             .void
         }
-        def initialize(code:, direction:, impact:, identifier: nil, weight: 0)
+        def initialize(code:, direction:, impact:, identifier: nil)
           @code = code
           @direction = direction
           @impact = impact
           @identifier = identifier
-          unless weight&.zero?
-            raise ArgumentError, "Invalid value for weight"
-          end
-
-          @weight = 0
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -94,7 +80,6 @@ module NoResponse
           return false unless @direction == other.direction
           return false unless @impact == other.impact
           return false unless @identifier == other.identifier
-          return false unless @weight == other.weight
           true
         end
       end
