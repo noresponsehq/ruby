@@ -59,6 +59,24 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("verified_at")}}
         )
+        # The first failed delivery attempt of the endpoint's current failure streak. Absent while its latest attempt succeeded, before any attempt failed, and after it is verified again.
+        field(
+          :failing_since,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("failing_since")}}
+        )
+        # The latest failed delivery attempt of the current failure streak; present exactly when failing_since is. A failure more than 2 hours after it starts a new streak.
+        field(
+          :last_failure_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("last_failure_at")}}
+        )
+        # When the endpoint was disabled after failing continuously for 72 hours, as in the webhook_endpoint.disabled event. Present while state is disabled; absent before and after it is verified again.
+        field(
+          :disabled_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("disabled_at")}}
+        )
 
         sig {
           params(
@@ -68,11 +86,25 @@ module NoResponse
             response_mode: Models::Shared::ResponseMode,
             created_at: ::String,
             signing_keys: T::Array[Models::Shared::SigningKey],
-            verified_at: T.nilable(::String)
+            verified_at: T.nilable(::String),
+            failing_since: T.nilable(::String),
+            last_failure_at: T.nilable(::String),
+            disabled_at: T.nilable(::String)
           )
             .void
         }
-        def initialize(endpoint_id:, url:, state:, response_mode:, created_at:, signing_keys:, verified_at: nil)
+        def initialize(
+          endpoint_id:,
+          url:,
+          state:,
+          response_mode:,
+          created_at:,
+          signing_keys:,
+          verified_at: nil,
+          failing_since: nil,
+          last_failure_at: nil,
+          disabled_at: nil
+        )
           @endpoint_id = endpoint_id
           @url = url
           @state = state
@@ -80,6 +112,9 @@ module NoResponse
           @created_at = created_at
           @signing_keys = signing_keys
           @verified_at = verified_at
+          @failing_since = failing_since
+          @last_failure_at = last_failure_at
+          @disabled_at = disabled_at
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -92,6 +127,9 @@ module NoResponse
           return false unless @created_at == other.created_at
           return false unless @signing_keys == other.signing_keys
           return false unless @verified_at == other.verified_at
+          return false unless @failing_since == other.failing_since
+          return false unless @last_failure_at == other.last_failure_at
+          return false unless @disabled_at == other.disabled_at
           true
         end
       end

@@ -47,4 +47,22 @@ class NoResponse::Models::Shared::WebhookEndpoint
 
   def verified_at=(str_)
   end
+
+  def failing_since
+  end
+
+  def failing_since=(str_)
+  end
+
+  def last_failure_at
+  end
+
+  def last_failure_at=(str_)
+  end
+
+  def disabled_at
+  end
+
+  def disabled_at=(str_)
+  end
 end
