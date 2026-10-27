@@ -1,0 +1,9 @@
+# ListListEntriesResponse
+
+
+## Fields
+
+| Field                                                                 | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `headers`                                                             | T::Hash[Symbol, T::Array<*::String*>]                                 | :heavy_check_mark:                                                    | N/A                                                                   |
+| `result`                                                              | [Models::Shared::ListEntryList](../../models/shared/listentrylist.md) | :heavy_check_mark:                                                    | N/A                                                                   |

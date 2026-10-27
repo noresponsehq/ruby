@@ -55,6 +55,7 @@ custom = ReasonCode.deserialize("custom_value")
 | `PRIOR_ABUSE_LINK`              | prior_abuse_link                |
 | `TEST_SCENARIO`                 | test_scenario                   |
 | `SHARED_API_KEY`                | shared_api_key                  |
+| `LIST_MATCH`                    | list_match                      |
 | `YOUNG_EMAIL_DOMAIN`            | young_email_domain              |
 | `EMAIL_DOMAIN_NO_MX`            | email_domain_no_mx              |
 | `EMAIL_DOMAIN_NONEXISTENT`      | email_domain_nonexistent        |

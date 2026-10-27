@@ -16,6 +16,8 @@ module NoResponse
           RISK_VERSION_AHEAD = new("risk_version_ahead")
           KEY_LIMIT_REACHED = new("key_limit_reached")
           SELF_REVOCATION = new("self_revocation")
+          LIST_ENTRY_EXISTS = new("list_entry_exists")
+          LIST_LIMIT_REACHED = new("list_limit_reached")
         end
 
         open!

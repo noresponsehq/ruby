@@ -29,4 +29,10 @@ class NoResponse::Models::Shared::RiskReason
 
   def identifier=(str_)
   end
+
+  def list_entry_id
+  end
+
+  def list_entry_id=(str_)
+  end
 end

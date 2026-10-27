@@ -56,21 +56,29 @@ module NoResponse
             }
           }
         )
+        # The list entry a list_match reason applied. No other reason carries it.
+        field(
+          :list_entry_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("list_entry_id")}}
+        )
 
         sig {
           params(
             code: Models::Shared::ReasonCode,
             direction: Models::Shared::Direction,
             impact: Models::Shared::Impact,
-            identifier: T.nilable(Models::Shared::ReasonIdentifier)
+            identifier: T.nilable(Models::Shared::ReasonIdentifier),
+            list_entry_id: T.nilable(::String)
           )
             .void
         }
-        def initialize(code:, direction:, impact:, identifier: nil)
+        def initialize(code:, direction:, impact:, identifier: nil, list_entry_id: nil)
           @code = code
           @direction = direction
           @impact = impact
           @identifier = identifier
+          @list_entry_id = list_entry_id
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -80,6 +88,7 @@ module NoResponse
           return false unless @direction == other.direction
           return false unless @impact == other.impact
           return false unless @identifier == other.identifier
+          return false unless @list_entry_id == other.list_entry_id
           true
         end
       end

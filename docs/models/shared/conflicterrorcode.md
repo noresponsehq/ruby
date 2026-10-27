@@ -26,3 +26,5 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `RISK_VERSION_AHEAD`             | risk_version_ahead               |
 | `KEY_LIMIT_REACHED`              | key_limit_reached                |
 | `SELF_REVOCATION`                | self_revocation                  |
+| `LIST_ENTRY_EXISTS`              | list_entry_exists                |
+| `LIST_LIMIT_REACHED`             | list_limit_reached               |
