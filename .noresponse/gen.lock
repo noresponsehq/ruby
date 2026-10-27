@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: dc2cb31db8f445996d1fab231a43230e
+  docChecksum: 19d4e387d4782013afccb09535354c31
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 8.0.2
-  configChecksum: f1c7eab17990cc6d61536f4bcd7b67a9
+  releaseVersion: 8.0.3
+  configChecksum: d0ec6a699a702a1156a17e5803cfd9ee
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:29adf21cda48064fcf526196a53f48726d3cc34b
+    last_write_checksum: sha1:6db1035291928d9b3c381c5e061537563efcd10f
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -326,7 +326,7 @@ trackedFiles:
   docs/models/shared/integrationrotationrequest.md:
     last_write_checksum: sha1:2542f39e8346546871a48bb4377990be1876ebb9
   docs/models/shared/ipsummary.md:
-    last_write_checksum: sha1:0096c8929e4c1b9ee2cfc051752e354b8fac90c2
+    last_write_checksum: sha1:3d321a531bb5f925821b7c84acf33c4d6694fbbc
   docs/models/shared/ipsummarytype.md:
     last_write_checksum: sha1:f46393c94742ec0b5ba9d22cb69edf33caf2890a
   docs/models/shared/key.md:
@@ -1114,9 +1114,9 @@ trackedFiles:
   lib/no_response/models/shared/integrationrotationrequest.rbi:
     last_write_checksum: sha1:b3a5663075204b123870faaf0d58733ccc546848
   lib/no_response/models/shared/ipsummary.rb:
-    last_write_checksum: sha1:6d0fb170be247e5f73653bd1ed8381259a2781ff
+    last_write_checksum: sha1:629ce8889c4d282ed14245e19393d659a33ef3f2
   lib/no_response/models/shared/ipsummary.rbi:
-    last_write_checksum: sha1:bf40ff3746a431f5f8d2a6a3c70fa2fd148d6403
+    last_write_checksum: sha1:c8097e1bda6b78cc027ea1467fa81037583aef71
   lib/no_response/models/shared/ipsummarytype.rb:
     last_write_checksum: sha1:616ceb5af2628530d0563316b2c4bc796fbed269
   lib/no_response/models/shared/ipsummarytype.rbi:
@@ -1464,7 +1464,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:c1297f5401ea17bcd52f6287e988e73059bf3244
+    last_write_checksum: sha1:e03c7ca6c5b581f2616c210201f27759c513a840
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -1492,7 +1492,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:d6cfd44eef70201c4102301499fa682bfcaf515d
   noresponse.gemspec:
-    last_write_checksum: sha1:0b147c827ea0a416957c5e65d9df74fba0247d49
+    last_write_checksum: sha1:2bfeb97196e2c9c58e10b4aca0b518ee88d61065
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -1576,7 +1576,7 @@ examples:
         application/json: {"account_id": "acct_7f3a9c", "flow": "purchase", "identifiers": {"email": "new.user@example.com", "username": "new.user", "phone": "+61412345678", "name": "Alex Example", "ip": "203.0.113.45"}, "policy_context": {"region": "AU"}, "request_id": "req-2026-10-14-0001", "client_context": {"timezone": "Australia/Sydney", "locale": "en-AU", "app_version": "4.12.0", "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", "device_id": "dev_5c1e8a", "session_id": "sess_9b2d41", "client_observed_at": "2026-10-14T08:59:58.000Z"}, "auth_context": {"provider": "clerk", "issuer": "https://example-app.clerk.accounts.dev", "audience": "https://app.example.com", "audiences": ["https://app.example.com"], "subject": "user_2EXAMPLE", "session_id": "sess_2EXAMPLE", "organization_id": "org_2EXAMPLE", "tenant_id": "tenant_2EXAMPLE", "token_id": "2EXAMPLEJTI", "issued_at": "2026-10-14T08:59:40.000Z", "expires_at": "2026-10-14T09:00:40.000Z", "session_created_at": "2026-10-14T08:57:00.000Z", "auth_time": "2026-10-14T08:55:00.000Z", "account_created_at": "2026-10-14T08:56:00.000Z", "verified": true, "mfa": {"methods": ["totp"]}, "roles": ["admin"], "scopes": ["org:sys_profile:manage"]}, "issued_credential": {"sha256": "2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b"}}
       responses:
         "200":
-          application/json: {"schema_version": "1", "id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "status": "complete", "flow": "account_creation", "depth": "full", "account": {"schema_version": "1", "id": "acct_8412", "risk": {"score": 0, "decision": "allow", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}]}, "decisions_by_flow": {"account_creation": "allow", "login": "allow", "purchase": "allow"}, "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "updated_at": "2026-10-18T11:00:04.000Z", "risk_version": 3}, "detail": {"schema_version": "1", "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "account_id": "acct_8412", "request_id": "req_01", "status": "complete", "recommendation": "allow", "confidence": "high", "risk": {"score": 0, "band": "low", "recommendation": "allow", "block": false, "confidence": "high", "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}], "summary": {"phone": {"line_type": "voip", "country": "US", "report_count": 0}, "email": {"disposable": false, "accounts_found": 6, "breach": {"found": true, "breach_count": 7, "first_year": 2013, "last_year": 2021, "exposed": ["email", "name", "password", "phone", "ip"], "in_credential_lists": false, "recent_password_exposure": false, "truncated": false}}, "username": {"accounts_found": 3, "breach": {"found": false, "truncated": false}}, "ip": {"country": "US", "type": "residential", "seen_in_workspace": 1}, "consistency": {"name": "match", "phone": "match", "ip": "unknown", "country": "consistent"}}, "coverage": {"answered": 14, "failed": 1, "pending": 0}}, "incomplete_sources": [], "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "assessment_version": 3, "created_at": "2026-10-18T11:00:00.000Z", "updated_at": "2026-10-18T11:00:04.000Z", "expires_at": "2027-10-18T11:00:00.000Z", "timing": {"deadline_ms": 500, "elapsed_ms": 4000}}}
+          application/json: {"schema_version": "1", "id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "status": "complete", "flow": "account_creation", "depth": "full", "account": {"schema_version": "1", "id": "acct_8412", "risk": {"score": 0, "decision": "allow", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}]}, "decisions_by_flow": {"account_creation": "allow", "login": "allow", "purchase": "allow"}, "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "updated_at": "2026-10-18T11:00:04.000Z", "risk_version": 3}, "detail": {"schema_version": "1", "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "account_id": "acct_8412", "request_id": "req_01", "status": "complete", "recommendation": "allow", "confidence": "high", "risk": {"score": 0, "band": "low", "recommendation": "allow", "block": false, "confidence": "high", "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}], "summary": {"phone": {"line_type": "voip", "country": "US", "report_count": 0}, "email": {"disposable": false, "accounts_found": 6, "breach": {"found": true, "breach_count": 7, "first_year": 2013, "last_year": 2021, "exposed": ["email", "name", "password", "phone", "ip"], "in_credential_lists": false, "recent_password_exposure": false, "truncated": false}}, "username": {"accounts_found": 3, "breach": {"found": false, "truncated": false}}, "ip": {"country": "US", "type": "residential", "asn": 7922, "seen_in_workspace": 1}, "consistency": {"name": "match", "phone": "match", "ip": "unknown", "country": "consistent"}}, "coverage": {"answered": 14, "failed": 1, "pending": 0}}, "incomplete_sources": [], "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "assessment_version": 3, "created_at": "2026-10-18T11:00:00.000Z", "updated_at": "2026-10-18T11:00:04.000Z", "expires_at": "2027-10-18T11:00:00.000Z", "timing": {"deadline_ms": 500, "elapsed_ms": 4000}}}
     partial:
       parameters:
         header:
@@ -1611,7 +1611,7 @@ examples:
           assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       responses:
         "200":
-          application/json: {"schema_version": "1", "id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "status": "complete", "flow": "account_creation", "depth": "full", "account": {"schema_version": "1", "id": "acct_8412", "risk": {"score": 0, "decision": "allow", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}]}, "decisions_by_flow": {"account_creation": "allow", "login": "allow", "purchase": "allow"}, "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "updated_at": "2026-10-18T11:00:04.000Z", "risk_version": 3}, "detail": {"schema_version": "1", "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "account_id": "acct_8412", "request_id": "req_01", "status": "complete", "recommendation": "allow", "confidence": "high", "risk": {"score": 0, "band": "low", "recommendation": "allow", "block": false, "confidence": "high", "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}], "summary": {"phone": {"line_type": "voip", "country": "US", "report_count": 0}, "email": {"disposable": false, "accounts_found": 6, "breach": {"found": true, "breach_count": 7, "first_year": 2013, "last_year": 2021, "exposed": ["email", "name", "password", "phone", "ip"], "in_credential_lists": false, "recent_password_exposure": false, "truncated": false}}, "username": {"accounts_found": 3, "breach": {"found": false, "truncated": false}}, "ip": {"country": "US", "type": "residential", "seen_in_workspace": 1}, "consistency": {"name": "match", "phone": "match", "ip": "unknown", "country": "consistent"}}, "coverage": {"answered": 14, "failed": 1, "pending": 0}}, "incomplete_sources": [], "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "assessment_version": 3, "created_at": "2026-10-18T11:00:00.000Z", "updated_at": "2026-10-18T11:00:04.000Z", "expires_at": "2027-10-18T11:00:00.000Z", "timing": {"deadline_ms": 500, "elapsed_ms": 4000}}}
+          application/json: {"schema_version": "1", "id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "status": "complete", "flow": "account_creation", "depth": "full", "account": {"schema_version": "1", "id": "acct_8412", "risk": {"score": 0, "decision": "allow", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}]}, "decisions_by_flow": {"account_creation": "allow", "login": "allow", "purchase": "allow"}, "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "updated_at": "2026-10-18T11:00:04.000Z", "risk_version": 3}, "detail": {"schema_version": "1", "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "account_id": "acct_8412", "request_id": "req_01", "status": "complete", "recommendation": "allow", "confidence": "high", "risk": {"score": 0, "band": "low", "recommendation": "allow", "block": false, "confidence": "high", "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "reasons": [{"code": "voip_number", "direction": "raises", "impact": "medium", "identifier": "phone"}, {"code": "aged_identity", "direction": "lowers", "impact": "medium", "identifier": "email"}, {"code": "breach_cooccurrence", "direction": "lowers", "impact": "low", "identifier": "phone"}, {"code": "breach_name_match", "direction": "lowers", "impact": "low", "identifier": "name"}, {"code": "established_accounts", "direction": "lowers", "impact": "low", "identifier": "email"}], "summary": {"phone": {"line_type": "voip", "country": "US", "report_count": 0}, "email": {"disposable": false, "accounts_found": 6, "breach": {"found": true, "breach_count": 7, "first_year": 2013, "last_year": 2021, "exposed": ["email", "name", "password", "phone", "ip"], "in_credential_lists": false, "recent_password_exposure": false, "truncated": false}}, "username": {"accounts_found": 3, "breach": {"found": false, "truncated": false}}, "ip": {"country": "US", "type": "residential", "asn": 7922, "seen_in_workspace": 1}, "consistency": {"name": "match", "phone": "match", "ip": "unknown", "country": "consistent"}}, "coverage": {"answered": 14, "failed": 1, "pending": 0}}, "incomplete_sources": [], "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "assessment_version": 3, "created_at": "2026-10-18T11:00:00.000Z", "updated_at": "2026-10-18T11:00:04.000Z", "expires_at": "2027-10-18T11:00:00.000Z", "timing": {"deadline_ms": 500, "elapsed_ms": 4000}}}
     partial:
       parameters:
         path:

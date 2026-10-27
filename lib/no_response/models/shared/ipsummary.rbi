@@ -18,6 +18,12 @@ class NoResponse::Models::Shared::IpSummary
   def type=(str_)
   end
 
+  def asn
+  end
+
+  def asn=(str_)
+  end
+
   def seen_in_workspace
   end
 
