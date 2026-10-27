@@ -17,4 +17,10 @@ class NoResponse::Models::Shared::AccountRiskChanged
 
   def previous_decisions_by_flow=(str_)
   end
+
+  def previous_risk_version
+  end
+
+  def previous_risk_version=(str_)
+  end
 end

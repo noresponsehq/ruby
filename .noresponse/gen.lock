@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 19d4e387d4782013afccb09535354c31
+  docChecksum: 1fcd1c2b78dd9f25b478332fb877c7dc
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 8.0.3
-  configChecksum: d0ec6a699a702a1156a17e5803cfd9ee
+  releaseVersion: 8.1.0
+  configChecksum: 97e6bfff2bec10429c8b957596bbb635
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:6db1035291928d9b3c381c5e061537563efcd10f
+    last_write_checksum: sha1:6263143361f01e444e78169deb21d9087b9da90a
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -170,9 +170,9 @@ trackedFiles:
   docs/models/shared/accountrisk.md:
     last_write_checksum: sha1:fa43d7e88e1860a50e8923fb9bc03d02ad5650ec
   docs/models/shared/accountriskchanged.md:
-    last_write_checksum: sha1:7247284bfa494e96804f9c08b37542cde847dcac
+    last_write_checksum: sha1:c59bc0a03d3635fdcec6bfbd2753b4a063b977f2
   docs/models/shared/accountriskchangedevent.md:
-    last_write_checksum: sha1:ba34b2773b176f5daa20da426cd4d6c3474019b1
+    last_write_checksum: sha1:389f665abc33b9e2c77e4f130e7be4476818b1a8
   docs/models/shared/accountriskreason.md:
     last_write_checksum: sha1:4afb86aa5b0f1f6179cd5604fc14de823ebb2c40
   docs/models/shared/admission.md:
@@ -802,11 +802,11 @@ trackedFiles:
   lib/no_response/models/shared/accountrisk.rbi:
     last_write_checksum: sha1:48355d041c88a824e4e803c313b7938b5606d159
   lib/no_response/models/shared/accountriskchanged.rb:
-    last_write_checksum: sha1:dbc41c8c5c5355f9494d75f91702451adca58a4e
+    last_write_checksum: sha1:eb9fda8d72989517035a921804be1a1b3afc2d13
   lib/no_response/models/shared/accountriskchanged.rbi:
-    last_write_checksum: sha1:10d3e5f3ae02bf7a5ab84329e748b0315d69b916
+    last_write_checksum: sha1:064a9ab24a63cd64123ac5e61d797f5706381c8b
   lib/no_response/models/shared/accountriskchangedevent.rb:
-    last_write_checksum: sha1:cf0d482d8ce0ca49d7aeb256e2d800a9abefd99c
+    last_write_checksum: sha1:012cf1979d19f8244cd1a36f7328a85a0c865f5f
   lib/no_response/models/shared/accountriskchangedevent.rbi:
     last_write_checksum: sha1:f79213f865ae197e8cf0ceb5aab777ed450bf2a7
   lib/no_response/models/shared/accountriskreason.rb:
@@ -1464,7 +1464,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:e03c7ca6c5b581f2616c210201f27759c513a840
+    last_write_checksum: sha1:021c4148670ecd037aa20abb72095822dc32b5a6
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -1492,7 +1492,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:d6cfd44eef70201c4102301499fa682bfcaf515d
   noresponse.gemspec:
-    last_write_checksum: sha1:2bfeb97196e2c9c58e10b4aca0b518ee88d61065
+    last_write_checksum: sha1:15f9634bd8fc3018589935863bfb73cef15af226
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
