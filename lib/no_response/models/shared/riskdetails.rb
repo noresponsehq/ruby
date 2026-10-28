@@ -14,7 +14,7 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsPhoneName)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("phone_names")}}
         )
-        # The matching breach tables, newest first, at most 50.
+        # The matching breach tables, newest first, at most 100.
         field(
           :breaches,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Breach)),
@@ -26,7 +26,7 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsBreachName)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("breach_names")}}
         )
-        # The identity's dated footprint events, newest first, at most 100: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month.
+        # The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month.
         field(
           :events,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsEvent)),
