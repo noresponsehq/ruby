@@ -31,7 +31,7 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::AggregateDimension)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("group_by")}}
         )
-        # count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay.
+        # count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. score_outcomes: the histogram's first answers that have a reported outcome, by flow, 5-point score bucket and the latest outcome reported for the assessment (POST /v1/assessments/{assessment_id}/outcomes); the rest of a bin has none reported. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay.
         field(
           :metrics,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::AssessmentAggregateRequestMetric)),

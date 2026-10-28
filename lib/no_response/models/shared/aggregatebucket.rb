@@ -32,6 +32,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::AggregateScoreCount)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("score_histogram")}}
         )
+        # With metric score_outcomes: the score_histogram's first answers whose assessment has a reported outcome, by its latest. A bin's count less its score_outcomes is the first answers with none reported.
+        field(
+          :score_outcomes,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::AggregateScoreOutcome)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("score_outcomes")}}
+        )
 
         field(
           :late_flips,
@@ -45,15 +51,17 @@ module NoResponse
             count: T.nilable(::Integer),
             groups: T.nilable(T::Array[Models::Shared::AggregateGroup]),
             score_histogram: T.nilable(T::Array[Models::Shared::AggregateScoreCount]),
+            score_outcomes: T.nilable(T::Array[Models::Shared::AggregateScoreOutcome]),
             late_flips: T.nilable(T::Array[Models::Shared::AggregateLateFlip])
           )
             .void
         }
-        def initialize(start:, count: nil, groups: nil, score_histogram: nil, late_flips: nil)
+        def initialize(start:, count: nil, groups: nil, score_histogram: nil, score_outcomes: nil, late_flips: nil)
           @start = start
           @count = count
           @groups = groups
           @score_histogram = score_histogram
+          @score_outcomes = score_outcomes
           @late_flips = late_flips
         end
 
@@ -64,6 +72,7 @@ module NoResponse
           return false unless @count == other.count
           return false unless @groups == other.groups
           return false unless @score_histogram == other.score_histogram
+          return false unless @score_outcomes == other.score_outcomes
           return false unless @late_flips == other.late_flips
           true
         end

@@ -30,6 +30,12 @@ class NoResponse::Models::Shared::AggregateBucket
   def score_histogram=(str_)
   end
 
+  def score_outcomes
+  end
+
+  def score_outcomes=(str_)
+  end
+
   def late_flips
   end
 

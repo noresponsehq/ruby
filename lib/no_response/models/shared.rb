@@ -30,6 +30,7 @@ module NoResponse
       autoload :AggregateGroup, "no_response/models/shared/aggregategroup.rb"
       autoload :AggregateLateFlip, "no_response/models/shared/aggregatelateflip.rb"
       autoload :AggregateScoreCount, "no_response/models/shared/aggregatescorecount.rb"
+      autoload :AggregateScoreOutcome, "no_response/models/shared/aggregatescoreoutcome.rb"
       autoload :Agreement, "no_response/models/shared/agreement.rb"
       autoload :AnswerRevision, "no_response/models/shared/answerrevision.rb"
       autoload :Assessment, "no_response/models/shared/assessment.rb"

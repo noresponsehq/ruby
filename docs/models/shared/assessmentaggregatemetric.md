@@ -18,4 +18,5 @@ custom = AssessmentAggregateMetric.deserialize("custom_value")
 | ----------------- | ----------------- |
 | `COUNT`           | count             |
 | `SCORE_HISTOGRAM` | score_histogram   |
+| `SCORE_OUTCOMES`  | score_outcomes    |
 | `LATE_FLIPS`      | late_flips        |
