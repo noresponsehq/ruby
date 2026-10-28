@@ -60,6 +60,12 @@ class NoResponse::Models::Shared::AssessmentSearchRequest
   def decision=(str_)
   end
 
+  def revision
+  end
+
+  def revision=(str_)
+  end
+
   def limit
   end
 

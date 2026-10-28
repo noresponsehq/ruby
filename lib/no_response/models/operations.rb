@@ -4,6 +4,7 @@
 module NoResponse
   module Models
     module Operations
+      autoload :AggregateAssessmentsResponse, "no_response/models/operations/aggregateassessments_response.rb"
       autoload :AssociateCredentialRequest, "no_response/models/operations/associatecredential_request.rb"
       autoload :AssociateCredentialResponse, "no_response/models/operations/associatecredential_response.rb"
       autoload :BindProvisionalAccountRequest, "no_response/models/operations/bindprovisionalaccount_request.rb"

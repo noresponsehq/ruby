@@ -4,14 +4,17 @@
 module NoResponse
   module Models
     module Shared
-      # Decision - The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND.
-      class Decision < T::Enum
+      # Decision - An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
+      class Decision
+        include ::Crystalline::Enum
         enums do
           ALLOW = new("allow")
           STEP_UP = new("step_up")
           REVIEW = new("review")
           BLOCK = new("block")
         end
+
+        open!
       end
     end
   end

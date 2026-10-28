@@ -68,14 +68,25 @@ module NoResponse
             }
           }
         )
-        # The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND.
+        # An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
         field(
           :decision,
           Crystalline::Nilable.new(Models::Shared::Decision),
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("decision"),
-              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::Decision, true)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Decision, true)
+            }
+          }
+        )
+        # Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to.
+        field(
+          :revision,
+          Crystalline::Nilable.new(Models::Shared::AnswerRevision),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("revision"),
+              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::AnswerRevision, true)
             }
           }
         )
@@ -97,6 +108,7 @@ module NoResponse
             cursor: T.nilable(::String),
             response_mode: T.nilable(Models::Shared::ResponseMode),
             decision: T.nilable(Models::Shared::Decision),
+            revision: T.nilable(Models::Shared::AnswerRevision),
             limit: T.nilable(::Integer)
           )
             .void
@@ -111,6 +123,7 @@ module NoResponse
           cursor: nil,
           response_mode: nil,
           decision: nil,
+          revision: nil,
           limit: 20
         )
           @from = from
@@ -122,6 +135,7 @@ module NoResponse
           @cursor = cursor
           @response_mode = response_mode
           @decision = decision
+          @revision = revision
           @limit = limit
         end
 
@@ -137,6 +151,7 @@ module NoResponse
           return false unless @cursor == other.cursor
           return false unless @response_mode == other.response_mode
           return false unless @decision == other.decision
+          return false unless @revision == other.revision
           return false unless @limit == other.limit
           true
         end

@@ -1,0 +1,17 @@
+# typed: true
+# frozen_string_literal: true
+
+module NoResponse
+  module Models
+    module Shared
+
+      class AssessmentAggregateRequestMetric < T::Enum
+        enums do
+          COUNT = new("count")
+          SCORE_HISTOGRAM = new("score_histogram")
+          LATE_FLIPS = new("late_flips")
+        end
+      end
+    end
+  end
+end

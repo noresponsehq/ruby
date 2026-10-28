@@ -11,6 +11,7 @@ Assessments of account creation, login and purchase.
 * [delete](#delete) - Delete one assessment.
 * [record_outcome](#record_outcome) - Report what was later learned about an assessed account.
 * [query](#query) - Page through one account's unexpired assessments.
+* [aggregate](#aggregate) - Count assessments by time, decision and reason
 * [search](#search) - Search assessments across this environment
 * [retrieve_version](#retrieve_version) - Retrieve an exact assessment revision
 * [bind_account](#bind_account) - Bind a provisional signup account
@@ -761,6 +762,56 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::QueryAccountAssessmentsResponse)](../../models/operations/queryaccountassessmentsresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## aggregate
+
+Count this environment's assessments created in [from,to) by hour, day or week, grouped by up to two of decision, flow, recommendation, band, reason, lane, country, asn and list_match. Each assessment counts once, by its first answer; late results do not count it again and appear in late_flips. Optional metrics add a score histogram per flow and late account decision changes. from and to start a bucket and cover at most 366 days (31 for hour buckets) inside the retention period. The filters are search's and describe the first answer: send them to search with revision first to list a cell's assessments. Counts hold no identifier, stay when an assessment or account is deleted, and report reasons by code and impact band. No Idempotency-Key.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="aggregateAssessments" method="post" path="/v1/assessments/aggregate" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+
+req = Models::Shared::AssessmentAggregateRequest.new(
+  from: '2026-10-19T00:00:00Z',
+  to: '2026-10-26T00:00:00Z',
+  bucket: Models::Shared::Bucket::WEEK
+)
+res = s.assessments.aggregate(request: req)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                       | Type                                                                                            | Required                                                                                        | Description                                                                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `request`                                                                                       | [Models::Shared::AssessmentAggregateRequest](../../models/shared/assessmentaggregaterequest.md) | :heavy_check_mark:                                                                              | The request object to use for the request.                                                      |
+
+### Response
+
+**[T.nilable(Models::Operations::AggregateAssessmentsResponse)](../../models/operations/aggregateassessmentsresponse.md)**
 
 ### Errors
 
