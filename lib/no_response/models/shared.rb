@@ -157,6 +157,7 @@ module NoResponse
       autoload :RiskSummaryPhone, "no_response/models/shared/risksummaryphone.rb"
       autoload :RiskSummaryUsername, "no_response/models/shared/risksummaryusername.rb"
       autoload :Security, "no_response/models/shared/security.rb"
+      autoload :SentIdentifiers, "no_response/models/shared/sentidentifiers.rb"
       autoload :Settings, "no_response/models/shared/settings.rb"
       autoload :SettingsFlows, "no_response/models/shared/settingsflows.rb"
       autoload :SettingsRequest, "no_response/models/shared/settingsrequest.rb"

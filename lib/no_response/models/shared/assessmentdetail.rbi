@@ -78,6 +78,12 @@ class NoResponse::Models::Shared::AssessmentDetail
   def schema_version=(str_)
   end
 
+  def identifiers
+  end
+
+  def identifiers=(str_)
+  end
+
   def request_id
   end
 

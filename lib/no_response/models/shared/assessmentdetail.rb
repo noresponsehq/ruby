@@ -93,6 +93,12 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("schema_version"), required: true}}
         )
+        # The identifiers an assessment was sent: each member of the request's identifiers object exactly as received, before the server normalised it (the email domain keeps its case, the name its Unicode form). A member the request did not send is absent. NoResponse keeps them encrypted under the workspace's own key, does not index or log them, and deletes them with the assessment: on DELETE of the assessment or its account, at its expires_at, and with the workspace.
+        field(
+          :identifiers,
+          Crystalline::Nilable.new(Models::Shared::SentIdentifiers),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("identifiers")}}
+        )
         # An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted.
         field(
           :request_id,
@@ -155,6 +161,7 @@ module NoResponse
             expires_at: ::String,
             timing: Models::Shared::AssessmentDetailTiming,
             schema_version: ::String,
+            identifiers: T.nilable(Models::Shared::SentIdentifiers),
             request_id: T.nilable(::String),
             recommendation: T.nilable(Models::Shared::Recommendation),
             risk: T.nilable(Models::Shared::Risk),
@@ -178,6 +185,7 @@ module NoResponse
           expires_at:,
           timing:,
           schema_version: "1",
+          identifiers: nil,
           request_id: nil,
           recommendation: nil,
           risk: nil,
@@ -202,6 +210,7 @@ module NoResponse
           end
 
           @schema_version = "1"
+          @identifiers = identifiers
           @request_id = request_id
           @recommendation = recommendation
           @risk = risk
@@ -230,6 +239,7 @@ module NoResponse
           return false unless @expires_at == other.expires_at
           return false unless @timing == other.timing
           return false unless @schema_version == other.schema_version
+          return false unless @identifiers == other.identifiers
           return false unless @request_id == other.request_id
           return false unless @recommendation == other.recommendation
           return false unless @risk == other.risk
