@@ -10,6 +10,7 @@ module NoResponse
   autoload :Integrations, "no_response/integrations"
   autoload :WebhookEndpoints, "no_response/webhookendpoints"
   autoload :Settings, "no_response/settings"
+  autoload :Requests, "no_response/requests"
   autoload :Lists, "no_response/lists"
 
   module Models

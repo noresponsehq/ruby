@@ -67,3 +67,4 @@ custom = ReasonCode.deserialize("custom_value")
 | `BREACH_SHARED_IP`              | breach_shared_ip                |
 | `NATIONALITY_MISMATCH`          | nationality_mismatch            |
 | `MINOR_IDENTITY`                | minor_identity                  |
+| `REPORTED_ACCOUNT_ABUSE`        | reported_account_abuse          |

@@ -1,0 +1,14 @@
+# ListRequestDiagnosticsRequest
+
+
+## Fields
+
+| Field                                             | Type                                              | Required                                          | Description                                       | Example                                           |
+| ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- |
+| `from`                                            | *::String*                                        | :heavy_check_mark:                                | Inclusive start of a range of at most seven days. | 2026-10-21T00:00:00Z                              |
+| `to`                                              | *::String*                                        | :heavy_check_mark:                                | Exclusive end of the range.                       | 2026-10-22T00:00:00Z                              |
+| `request_id`                                      | *T.nilable(::String)*                             | :heavy_minus_sign:                                | Optional filter or paging parameter.              |                                                   |
+| `route`                                           | *T.nilable(::String)*                             | :heavy_minus_sign:                                | Optional filter or paging parameter.              |                                                   |
+| `status`                                          | *T.nilable(::Integer)*                            | :heavy_minus_sign:                                | Optional filter or paging parameter.              |                                                   |
+| `limit`                                           | *T.nilable(::Integer)*                            | :heavy_minus_sign:                                | Optional filter or paging parameter.              |                                                   |
+| `cursor`                                          | *T.nilable(::String)*                             | :heavy_minus_sign:                                | Optional filter or paging parameter.              |                                                   |

@@ -57,6 +57,7 @@ module NoResponse
           BREACH_SHARED_IP = new("breach_shared_ip")
           NATIONALITY_MISMATCH = new("nationality_mismatch")
           MINOR_IDENTITY = new("minor_identity")
+          REPORTED_ACCOUNT_ABUSE = new("reported_account_abuse")
         end
 
         open!
