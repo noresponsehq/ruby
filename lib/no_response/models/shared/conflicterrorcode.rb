@@ -18,6 +18,7 @@ module NoResponse
           SELF_REVOCATION = new("self_revocation")
           LIST_ENTRY_EXISTS = new("list_entry_exists")
           LIST_LIMIT_REACHED = new("list_limit_reached")
+          LIST_ENTRY_TOO_BROAD = new("list_entry_too_broad")
         end
 
         open!

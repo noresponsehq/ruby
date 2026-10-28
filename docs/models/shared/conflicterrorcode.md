@@ -28,3 +28,4 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `SELF_REVOCATION`                | self_revocation                  |
 | `LIST_ENTRY_EXISTS`              | list_entry_exists                |
 | `LIST_LIMIT_REACHED`             | list_limit_reached               |
+| `LIST_ENTRY_TOO_BROAD`           | list_entry_too_broad             |
