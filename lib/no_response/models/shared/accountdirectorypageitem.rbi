@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::AccountDirectoryPageItem
 
   def current=(str_)
   end
+
+  def matched_identifier
+  end
+
+  def matched_identifier=(str_)
+  end
 end

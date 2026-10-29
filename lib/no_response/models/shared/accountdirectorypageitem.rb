@@ -39,6 +39,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::Account),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("current")}}
         )
+        # Why this result matched a typed identifier search. value is the original value submitted in assessment_id. Provenance records a customer submission, not a source discovery or verified ownership. Equality is deterministic and has no inferred confidence score. An account result names its newest retained matching assessment, which can differ from latest.
+        field(
+          :matched_identifier,
+          Crystalline::Nilable.new(Models::Shared::IdentifierMatch),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_identifier")}}
+        )
 
         sig {
           params(
@@ -46,16 +52,18 @@ module NoResponse
             latest: Models::Shared::AssessmentRevision,
             assessments: ::Integer,
             waiting_for: T.nilable(T::Array[Models::Shared::WaitingFor]),
-            current: T.nilable(Models::Shared::Account)
+            current: T.nilable(Models::Shared::Account),
+            matched_identifier: T.nilable(Models::Shared::IdentifierMatch)
           )
             .void
         }
-        def initialize(account_id:, latest:, assessments:, waiting_for: nil, current: nil)
+        def initialize(account_id:, latest:, assessments:, waiting_for: nil, current: nil, matched_identifier: nil)
           @account_id = account_id
           @latest = latest
           @assessments = assessments
           @waiting_for = waiting_for
           @current = current
+          @matched_identifier = matched_identifier
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -66,6 +74,7 @@ module NoResponse
           return false unless @assessments == other.assessments
           return false unless @waiting_for == other.waiting_for
           return false unless @current == other.current
+          return false unless @matched_identifier == other.matched_identifier
           true
         end
       end

@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. This read does not require an idempotency key.
+      # Search retained assessments created in [from,to), at most 366 days. identifier matches the submitted value of each returned assessment directly. The legacy email filter keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Results use newest-created order with an assessment-ID tie break and are live, not a snapshot across pages. Requires history or investigate authority; identifier/email filtering also requires identifier-read permission. Detailed response mode additionally requires detailed permission. No Idempotency-Key.
       class AssessmentSearchRequest
         extend T::Sig
         include Crystalline::MetadataFields
@@ -181,6 +181,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Boolean.new),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("changed")}}
         )
+        # One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
+        field(
+          :identifier,
+          Crystalline::Nilable.new(Models::Shared::IdentifierSearch),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("identifier")}}
+        )
 
         field(
           :limit,
@@ -211,6 +217,7 @@ module NoResponse
             score_max: T.nilable(::Integer),
             list_match: T.nilable(Models::Shared::ListMatch),
             changed: T.nilable(T::Boolean),
+            identifier: T.nilable(Models::Shared::IdentifierSearch),
             limit: T.nilable(::Integer)
           )
             .void
@@ -237,6 +244,7 @@ module NoResponse
           score_max: nil,
           list_match: nil,
           changed: nil,
+          identifier: nil,
           limit: 20
         )
           @from = from
@@ -260,6 +268,7 @@ module NoResponse
           @score_max = score_max
           @list_match = list_match
           @changed = changed
+          @identifier = identifier
           @limit = limit
         end
 
@@ -287,6 +296,7 @@ module NoResponse
           return false unless @score_max == other.score_max
           return false unless @list_match == other.list_match
           return false unless @changed == other.changed
+          return false unless @identifier == other.identifier
           return false unless @limit == other.limit
           true
         end

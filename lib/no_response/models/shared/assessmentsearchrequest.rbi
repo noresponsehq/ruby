@@ -132,6 +132,12 @@ class NoResponse::Models::Shared::AssessmentSearchRequest
   def changed=(str_)
   end
 
+  def identifier
+  end
+
+  def identifier=(str_)
+  end
+
   def limit
   end
 

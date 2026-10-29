@@ -47,4 +47,10 @@ class NoResponse::Models::Shared::AssessmentSearchItem
 
   def first_decision=(str_)
   end
+
+  def matched_identifier
+  end
+
+  def matched_identifier=(str_)
+  end
 end

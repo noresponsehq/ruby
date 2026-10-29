@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Bounded distinct-account search for a single authenticated workspace/environment. Email matches any retained admitted assessment of an account, using assessment search's canonical mailbox rules. No assessment history download is required.
+      # Bounded distinct-account search for one authenticated workspace/environment. identifier matches any retained admitted assessment of an account, including historical submitted values. email preserves the legacy canonical-mailbox filter. identifier and email cannot be combined. All other filters combine using AND. Typed identifier search uses stable opaque account order; ordinary and legacy email searches retain newest-seen ordering. Pages are live, not a cross-page snapshot. Requires history or investigate authority and identifier-read permission for identifier or email filtering.
       class AccountDirectorySearchRequest
         extend T::Sig
         include Crystalline::MetadataFields
@@ -27,6 +27,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("cursor")}}
         )
+        # One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
+        field(
+          :identifier,
+          Crystalline::Nilable.new(Models::Shared::IdentifierSearch),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("identifier")}}
+        )
         # Select accounts with a retained open or in-progress review, or a current review/block account decision with no retained effective account outcome. The server applies this filter before counting and pagination. Requires reviews.read as well as history.read for console members; API keys additionally require management.
         field(
           :needs_action,
@@ -45,15 +51,17 @@ module NoResponse
             account_id: T.nilable(::String),
             email: T.nilable(::String),
             cursor: T.nilable(::String),
+            identifier: T.nilable(Models::Shared::IdentifierSearch),
             needs_action: T.nilable(T::Boolean),
             limit: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(account_id: nil, email: nil, cursor: nil, needs_action: false, limit: 25)
+        def initialize(account_id: nil, email: nil, cursor: nil, identifier: nil, needs_action: false, limit: 25)
           @account_id = account_id
           @email = email
           @cursor = cursor
+          @identifier = identifier
           @needs_action = needs_action
           @limit = limit
         end
@@ -64,6 +72,7 @@ module NoResponse
           return false unless @account_id == other.account_id
           return false unless @email == other.email
           return false unless @cursor == other.cursor
+          return false unless @identifier == other.identifier
           return false unless @needs_action == other.needs_action
           return false unless @limit == other.limit
           true

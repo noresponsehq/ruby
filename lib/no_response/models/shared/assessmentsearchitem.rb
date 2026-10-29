@@ -70,6 +70,12 @@ module NoResponse
             }
           }
         )
+        # Why this result matched a typed identifier search. value is the original value submitted in assessment_id. Provenance records a customer submission, not a source discovery or verified ownership. Equality is deterministic and has no inferred confidence score. An account result names its newest retained matching assessment, which can differ from latest.
+        field(
+          :matched_identifier,
+          Crystalline::Nilable.new(Models::Shared::IdentifierMatch),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_identifier")}}
+        )
 
         sig {
           params(
@@ -79,11 +85,21 @@ module NoResponse
             depth: Models::Shared::Depth,
             detail: Models::Shared::AssessmentDetail,
             schema_version: ::String,
-            first_decision: T.nilable(Models::Shared::Decision)
+            first_decision: T.nilable(Models::Shared::Decision),
+            matched_identifier: T.nilable(Models::Shared::IdentifierMatch)
           )
             .void
         }
-        def initialize(id:, status:, flow:, depth:, detail:, schema_version: "1", first_decision: nil)
+        def initialize(
+          id:,
+          status:,
+          flow:,
+          depth:,
+          detail:,
+          schema_version: "1",
+          first_decision: nil,
+          matched_identifier: nil
+        )
           @id = id
           @status = status
           @flow = flow
@@ -95,6 +111,7 @@ module NoResponse
 
           @schema_version = "1"
           @first_decision = first_decision
+          @matched_identifier = matched_identifier
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -107,6 +124,7 @@ module NoResponse
           return false unless @detail == other.detail
           return false unless @schema_version == other.schema_version
           return false unless @first_decision == other.first_decision
+          return false unless @matched_identifier == other.matched_identifier
           true
         end
       end
