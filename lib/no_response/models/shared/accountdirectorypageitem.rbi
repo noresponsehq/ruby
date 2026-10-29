@@ -24,6 +24,12 @@ class NoResponse::Models::Shared::AccountDirectoryPageItem
   def assessments=(str_)
   end
 
+  def waiting_for
+  end
+
+  def waiting_for=(str_)
+  end
+
   def current
   end
 

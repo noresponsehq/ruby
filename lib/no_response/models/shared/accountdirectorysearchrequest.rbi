@@ -24,6 +24,12 @@ class NoResponse::Models::Shared::AccountDirectorySearchRequest
   def cursor=(str_)
   end
 
+  def needs_action
+  end
+
+  def needs_action=(str_)
+  end
+
   def limit
   end
 

@@ -6,6 +6,12 @@ class NoResponse::Models::Shared::Filter
 end
 
 class NoResponse::Models::Shared::Filter
+  def account_id
+  end
+
+  def account_id=(str_)
+  end
+
   def status
   end
 

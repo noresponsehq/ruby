@@ -49,7 +49,7 @@ module NoResponse
     }
     def list(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # list - List retained account reviews.
-      # List retained investigation reviews using filters and an authenticated cursor.
+      # List retained investigation reviews using filters and an authenticated cursor. Optional account_id selects one exact account in this environment before pagination. All filters are bound into the cursor.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -179,7 +179,8 @@ module NoResponse
                 priority: request.priority,
                 assignee: request.assignee,
                 unassigned: request.unassigned,
-                assignee_principal_id: request.assignee_principal_id
+                assignee_principal_id: request.assignee_principal_id,
+                account_id: request.account_id
               ),
               http_headers: http_headers
             )

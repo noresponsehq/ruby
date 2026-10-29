@@ -25,7 +25,7 @@ Collaborative review cases, comments and linked subjects.
 
 ## list
 
-List retained investigation reviews using filters and an authenticated cursor.
+List retained investigation reviews using filters and an authenticated cursor. Optional account_id selects one exact account in this environment before pagination. All filters are bound into the cursor.
 
 ### Example Usage
 
@@ -478,6 +478,7 @@ res = s.reviews.create_view(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', envi
   name: 'High priority reviews',
   shared: true,
   filter: Models::Shared::Filter.new(
+    account_id: 'acct_7f3a9c',
     assignee: 'usr_customer_admin',
     assignee_principal_id: 'mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM'
   )
@@ -531,6 +532,7 @@ res = s.reviews.update_view(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', envi
   name: 'High priority reviews',
   shared: false,
   filter: Models::Shared::Filter.new(
+    account_id: 'acct_7f3a9c',
     assignee: 'usr_customer_admin',
     assignee_principal_id: 'mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM'
   )

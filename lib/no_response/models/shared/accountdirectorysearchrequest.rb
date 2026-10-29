@@ -27,6 +27,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("cursor")}}
         )
+        # Select accounts with a retained open or in-progress review, or a current review/block account decision with no retained effective account outcome. The server applies this filter before counting and pagination. Requires reviews.read as well as history.read for console members; API keys additionally require management.
+        field(
+          :needs_action,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("needs_action")}}
+        )
 
         field(
           :limit,
@@ -39,14 +45,16 @@ module NoResponse
             account_id: T.nilable(::String),
             email: T.nilable(::String),
             cursor: T.nilable(::String),
+            needs_action: T.nilable(T::Boolean),
             limit: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(account_id: nil, email: nil, cursor: nil, limit: 25)
+        def initialize(account_id: nil, email: nil, cursor: nil, needs_action: false, limit: 25)
           @account_id = account_id
           @email = email
           @cursor = cursor
+          @needs_action = needs_action
           @limit = limit
         end
 
@@ -56,6 +64,7 @@ module NoResponse
           return false unless @account_id == other.account_id
           return false unless @email == other.email
           return false unless @cursor == other.cursor
+          return false unless @needs_action == other.needs_action
           return false unless @limit == other.limit
           true
         end

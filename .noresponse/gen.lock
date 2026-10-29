@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: cb2c053696d1b8e0f5758663d0b2e670
+  docChecksum: a98ce86cd47751bebee67d7f6ab407c9
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 9.4.2
-  configChecksum: f06bac761f5a19a740eab67084e3cbb6
+  releaseVersion: 9.4.3
+  configChecksum: 358f04b41400fbc94eeae1f997b29b83
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:a74de974edfebecc1950143462a04de4492cec2a
+    last_write_checksum: sha1:4dcf914c012864bcb5e665aa0994beecfec70eab
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -296,7 +296,7 @@ trackedFiles:
   docs/models/operations/listreviewresolutionsresponse.md:
     last_write_checksum: sha1:f15d23ae7c4df54913ff9b7d7e3c6e2aa651f7be
   docs/models/operations/listreviewsrequest.md:
-    last_write_checksum: sha1:d517aa6d6f20e16a1e23e53e3a8891535f0a5c5b
+    last_write_checksum: sha1:ec6eba3de0af703163d910e0b3fff84a7e3d2426
   docs/models/operations/listreviewsresponse.md:
     last_write_checksum: sha1:78ee35ec0b83dd46be0b6340949cb10a83670c92
   docs/models/operations/listreviewsubjectsrequest.md:
@@ -454,9 +454,9 @@ trackedFiles:
   docs/models/shared/accountdirectorypage.md:
     last_write_checksum: sha1:6b67b0f502269f42de785cd8ddd177a26b52200f
   docs/models/shared/accountdirectorypageitem.md:
-    last_write_checksum: sha1:a102f5cf0db99bebfa6aaf6f62ec6aaeefc84988
+    last_write_checksum: sha1:fdb4a42caf21ec78ccc478123a41086f68d343e0
   docs/models/shared/accountdirectorysearchrequest.md:
-    last_write_checksum: sha1:6035517d0757ba95bf110f30d499b390be37b2d1
+    last_write_checksum: sha1:bd6e58918ca2842cc4c04428d3c366842047b21f
   docs/models/shared/accountenforcementlist.md:
     last_write_checksum: sha1:17abc3c55ecabde1051d20a1ad9dc237b85a65ef
   docs/models/shared/accountexport.md:
@@ -714,7 +714,7 @@ trackedFiles:
   docs/models/shared/failurereason.md:
     last_write_checksum: sha1:b4d7f9c69c4437442350af3b71bd35b5e2ac10fd
   docs/models/shared/filter.md:
-    last_write_checksum: sha1:9a79f7362252832f8550470d32fdabeb1adde65e
+    last_write_checksum: sha1:b3590ad24dd5d6b883795fd3a1994f53b14e00e9
   docs/models/shared/flow.md:
     last_write_checksum: sha1:dc1d210ff7103d0f4599f8c4e3d031a8de75f198
   docs/models/shared/flowchange.md:
@@ -1087,6 +1087,8 @@ trackedFiles:
     last_write_checksum: sha1:3eac4bc3b19e7b9f81236b197c6a221e8a83738a
   docs/models/shared/useractor.md:
     last_write_checksum: sha1:c5f970f9f4c9b401937a72ebdb0c04bd6fddbe65
+  docs/models/shared/waitingfor.md:
+    last_write_checksum: sha1:816f70ae47d0ad63282314505a039cc4ef847f7f
   docs/models/shared/webhookaggregaterequest.md:
     last_write_checksum: sha1:55d4dfe729d71933ce4b2d4c832091727dd4a3f3
   docs/models/shared/webhookdeliveryattempt.md:
@@ -1140,7 +1142,7 @@ trackedFiles:
   docs/models/shared/workspaceoperationssummaryrequest.md:
     last_write_checksum: sha1:b4f7bd2334f01586f7953f0833c19ee78937ab6b
   docs/sdks/accounts/README.md:
-    last_write_checksum: sha1:4017e8167ed6b9f813aa8270c298160ab3835f06
+    last_write_checksum: sha1:9902d5a4b5f315872929aba2fef74a1029244f23
   docs/sdks/assessments/README.md:
     last_write_checksum: sha1:3201a2b0764239c51d5d32e77f103a595b3830a8
   docs/sdks/audit/README.md:
@@ -1168,7 +1170,7 @@ trackedFiles:
   docs/sdks/requests/README.md:
     last_write_checksum: sha1:0fc32fe039cefe61fa221fa60389ce40e7c062b3
   docs/sdks/reviews/README.md:
-    last_write_checksum: sha1:69ea76dec789fcfa06f88ae93b68aabb43bd0828
+    last_write_checksum: sha1:ab10771c77f1141986aea7fb99386e3ffe1a495f
   docs/sdks/settings/README.md:
     last_write_checksum: sha1:80a43d48843ce3bb1dce273acc9cdcee9f1327e4
   docs/sdks/usage/README.md:
@@ -1188,7 +1190,7 @@ trackedFiles:
   lib/crystalline/utils.rb:
     last_write_checksum: sha1:d8c2909401a6d18eda382ed06a65fc1854f4e1db
   lib/no_response/accounts.rb:
-    last_write_checksum: sha1:13c55edd4ac03161ae2ed4c7e49a0905f6fc9eb5
+    last_write_checksum: sha1:df82daeec5bf44445d3eafdb076a7238d9392f08
   lib/no_response/assessments.rb:
     last_write_checksum: sha1:9b27d372b9de10f0a24b022080ac26c4db0994d1
   lib/no_response/audit.rb:
@@ -1730,9 +1732,9 @@ trackedFiles:
   lib/no_response/models/operations/listreviewresolutions_response.rbi:
     last_write_checksum: sha1:ceb90e8ed75795914d18958b1369a5adbc45b6b9
   lib/no_response/models/operations/listreviews_request.rb:
-    last_write_checksum: sha1:473a798e87b1e0892bc67fe55808bacbb8bd62f3
+    last_write_checksum: sha1:5afb670623cd812cbe8173c53deeeca09b5b36b2
   lib/no_response/models/operations/listreviews_request.rbi:
-    last_write_checksum: sha1:3eedc09817db7cf7a9fc95ddd052b7cf6ac876c3
+    last_write_checksum: sha1:66d36ae71939cb638f6abde9ec6b70ad310189de
   lib/no_response/models/operations/listreviews_response.rb:
     last_write_checksum: sha1:c70e082716f6bf78c704c171c660cc215e4f0f95
   lib/no_response/models/operations/listreviews_response.rbi:
@@ -1998,7 +2000,7 @@ trackedFiles:
   lib/no_response/models/operations/updatesettings_response.rbi:
     last_write_checksum: sha1:0834c9903587b61cbe3cd8bee544792b89c08362
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:feecdd34775450c46f1e96282ad3efb77cf36687
+    last_write_checksum: sha1:364e5709dc6725dbb8a8bfe27eb809fe3fee6b88
   lib/no_response/models/shared/account.rb:
     last_write_checksum: sha1:b9a77c4d6d6b9a55abd897645bdd74d79213a938
   lib/no_response/models/shared/account.rbi:
@@ -2048,13 +2050,13 @@ trackedFiles:
   lib/no_response/models/shared/accountdirectorypage.rbi:
     last_write_checksum: sha1:400b2b6bd4e7cb3ad033aca0c0cfd232374e14cd
   lib/no_response/models/shared/accountdirectorypageitem.rb:
-    last_write_checksum: sha1:6dd8dce2239b739a6fcf1b23b389b0939bf6123e
+    last_write_checksum: sha1:4004bd2fcc321862dae2d4e4729a9c1993defe31
   lib/no_response/models/shared/accountdirectorypageitem.rbi:
-    last_write_checksum: sha1:57574903767dad19ac70ceae6e6c37b2f01fb16f
+    last_write_checksum: sha1:7c5a21f227314d314bec2570ea81739219b5316d
   lib/no_response/models/shared/accountdirectorysearchrequest.rb:
-    last_write_checksum: sha1:e84e80564524fe8aeba08b792711acf1570b7aaf
+    last_write_checksum: sha1:d8893c3a12636c3ea3fe887774ce2eee79b064ef
   lib/no_response/models/shared/accountdirectorysearchrequest.rbi:
-    last_write_checksum: sha1:c21e8c4a46001d9c8b6d6d111a99ff1f4e29e236
+    last_write_checksum: sha1:ec42393fc4530a2af43490484db9df69bd25f13b
   lib/no_response/models/shared/accountenforcementlist.rb:
     last_write_checksum: sha1:8396ced8ee6ce612acae0d6cbadb06a52e8b0b90
   lib/no_response/models/shared/accountenforcementlist.rbi:
@@ -2568,9 +2570,9 @@ trackedFiles:
   lib/no_response/models/shared/failurereason.rbi:
     last_write_checksum: sha1:77b84e09c44791c61d720f0e1654e1083c93e74a
   lib/no_response/models/shared/filter.rb:
-    last_write_checksum: sha1:e39b6f31b1c062132aec17743bbb16875a523d9c
+    last_write_checksum: sha1:eef407dd47424239dff1b74b4eb5bcb8527f450f
   lib/no_response/models/shared/filter.rbi:
-    last_write_checksum: sha1:b86ef3430b49244233a22fe11dc9e2f0abbda7e0
+    last_write_checksum: sha1:f27fdbd14258ec4ed9edd3007a948caecd0adceb
   lib/no_response/models/shared/flow.rb:
     last_write_checksum: sha1:ec657bae0bc4a959868501b6eeb7d18cbae81334
   lib/no_response/models/shared/flow.rbi:
@@ -3315,6 +3317,10 @@ trackedFiles:
     last_write_checksum: sha1:d16d50a26b0dedf8df4ebf0946bcb0af8452fc5e
   lib/no_response/models/shared/useractor.rbi:
     last_write_checksum: sha1:55995e04e7a919815aa597f426279d0880fd3831
+  lib/no_response/models/shared/waiting_for.rb:
+    last_write_checksum: sha1:48ebb4bb7d73b4128b8db2eff2be270625bf8f8d
+  lib/no_response/models/shared/waiting_for.rbi:
+    last_write_checksum: sha1:38ceac195df1324ee46912658699de64f4f66f93
   lib/no_response/models/shared/webhookaggregaterequest.rb:
     last_write_checksum: sha1:569a2a5e4c3954f151f0b5c3d96f7eb0ee71bcde
   lib/no_response/models/shared/webhookaggregaterequest.rbi:
@@ -3426,13 +3432,13 @@ trackedFiles:
   lib/no_response/requests.rb:
     last_write_checksum: sha1:1941ab430bf8cc9c230a4443850272852134c4d3
   lib/no_response/reviews.rb:
-    last_write_checksum: sha1:17c08f65bc343db8bd116bd500e9709e3a62d944
+    last_write_checksum: sha1:ee6f19b4133bc5c681be281f39b82e4d76c107ad
   lib/no_response/sdk_hooks/hooks.rb:
     last_write_checksum: sha1:15a35ca350789268465c7ce721fd1bfadd976264
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:a4f0e88da208ffd307ade1727f0eba8a31d4d88e
+    last_write_checksum: sha1:b8ed6edbf30137a8a918cd2be2463327ebc62a67
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -3462,7 +3468,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:1b3b97bcf7d03965afa23636f0dc1f2683159ac6
   noresponse.gemspec:
-    last_write_checksum: sha1:44ebfa049dc0a91cdd655a7b8ff73d7d7d1a6070
+    last_write_checksum: sha1:0b4d56b9e4191ca2739d22c33b7b08b1c053ca71
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -4059,7 +4065,7 @@ examples:
   searchAccounts:
     noresponse-default-search-accounts:
       requestBody:
-        application/json: {"account_id": "acct_7f3a9c", "email": "new.user@example.com", "limit": 25, "cursor": "eyJ0IjoxNzY3MjI1NjAwMDAwMDAwLCJpIjoiYXNtX2V4YW1wbGUiLCJlIjoxNzY3MjI5MjAwfQ"}
+        application/json: {"needs_action": false, "account_id": "acct_7f3a9c", "email": "new.user@example.com", "limit": 25, "cursor": "eyJ0IjoxNzY3MjI1NjAwMDAwMDAwLCJpIjoiYXNtX2V4YW1wbGUiLCJlIjoxNzY3MjI5MjAwfQ"}
       responses:
         "200":
           application/json: {"schema_version": "1", "items": [{"account_id": "acct_7f3a9c", "latest": {"schema_version": "1", "id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "status": "complete", "flow": "account_creation", "depth": "full", "detail": {"schema_version": "1", "assessment_id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "account_id": "acct_7f3a9c", "identifiers": {"email": "New.User@Example.com", "username": "new.user", "phone": "+61412345678", "name": "Alex Example", "ip": "203.0.113.45"}, "request_id": "req-2026-10-14-0001", "status": "pending", "confidence": "low", "risk": {"score": 458926, "band": "critical", "recommendation": "review", "confidence": "high", "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "reasons": [{"code": "identity_attribute_conflict", "direction": "raises", "impact": "high", "list_entry_id": "lst_01JA2ZE4K5M6N7P8Q9R0S1T2V3"}], "summary": {"phone": {"country": "AU", "carrier": "Telstra"}, "ip": {"country": "AU"}}, "coverage": {"answered": 692050, "failed": 639360, "pending": 624361}, "details": {"phone_names": [{"value": "Alex Example", "seen_by": 969982}], "breaches": [{"name": "Example Forum", "domain": "forum.example.com", "category": "forum", "kind": "hacking_forum", "matched_on": "email"}], "breach_names": [{"value": "Alex Example", "seen_in": 986167, "sites": ["forum.example.com"]}], "events": [{"year": 795636, "kind": "last_active", "site": "example.com", "category": "site_breach", "family": "code_hosting", "identifier": "email"}]}}, "signals": [{"type": "account_presence", "identifier": "username", "outcome": "blocked", "source_id": "github", "evidence_ref": "evr_01JA2Z8K6Q4V7W9XBCDEFGHJKN", "observed_at": "2026-10-14T09:00:00.210Z", "last_checked_at": "2026-10-14T09:00:00.210Z", "freshness": "unknown", "enrichment": {"fields": {"phone": "+61412345678", "name": "Alex Example", "carrier": "Telstra", "line_type": "mobile", "entity_type": "person", "country_code": "61", "country": "Australia", "state": "New South Wales", "city": "Sydney", "location": "Sydney, New South Wales, Australia", "national_format": "0412 345 678", "job_title": "Engineer", "company_name": "Example Pty Ltd", "email": "new.user@example.com", "website": "https://example.com", "first_call_at": "2026-09-01T00:00:00.000Z", "last_call_at": "2026-10-10T00:00:00.000Z", "matched_name": "Alex Example", "alternate_names": ["Alex E."], "name_candidates": ["Alex Example"], "timezones": ["Australia/Sydney"], "emails": ["new.user@example.com"], "websites": ["https://example.com"], "locations": ["Sydney, New South Wales, Australia"], "social_profiles": ["https://example.com/alexexample"]}}}], "incomplete_sources": [{"lane": "breach", "reason": "timed_out"}], "policy_version": "heuristic-2026-10.1", "policy_basis": "heuristic_unvalidated", "assessment_version": 62154, "created_at": "2026-10-14T09:00:00.000Z", "updated_at": "2026-10-14T09:00:00.412Z", "expires_at": "2027-10-14T09:00:00.000Z", "assessment_url": "/v1/assessments/asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "timing": {"deadline_ms": 677174, "elapsed_ms": 553122}, "auth_context": {"provider": "clerk", "issuer": "https://example-app.clerk.accounts.dev", "subject": "user_2EXAMPLE", "session_id": "sess_2EXAMPLE", "organization_id": "org_2EXAMPLE", "verified": true, "transport": "browser"}}}, "current": {"schema_version": "1", "id": "acct_7f3a9c", "risk": {"score": 372346, "decision": "step_up", "reasons": [{"code": "test_scenario", "direction": "lowers", "impact": "medium", "list_entry_id": "lst_01JA2ZE4K5M6N7P8Q9R0S1T2V3"}]}, "decisions_by_flow": {"account_creation": "allow", "login": "review", "purchase": "review"}, "assessment_id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-14T09:00:00.412Z", "risk_version": 792041}, "assessments": 679145}], "total": 654329, "total_capped": false, "next_cursor": "eyJ0IjoxNzY3MjI1NjAwMDAwMDAwLCJpIjoiYXNtX2V4YW1wbGUiLCJlIjoxNzY3MjI5MjAwfQ"}
@@ -5275,7 +5281,7 @@ examples:
           environment: "live"
       responses:
         "200":
-          application/json: {"items": [{"id": "rvf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "name": "High priority reviews", "owner": "usr_customer_admin", "owner_type": "user", "shared": false, "version": 71517, "filter": {"assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "owner_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}]}
+          application/json: {"items": [{"id": "rvf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "name": "High priority reviews", "owner": "usr_customer_admin", "owner_type": "user", "shared": false, "version": 71517, "filter": {"account_id": "acct_7f3a9c", "assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "owner_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}]}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_request", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -5295,10 +5301,10 @@ examples:
           workspace_id: "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
           environment: "test"
       requestBody:
-        application/json: {"name": "High priority reviews", "shared": true, "filter": {"assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}}
+        application/json: {"name": "High priority reviews", "shared": true, "filter": {"account_id": "acct_7f3a9c", "assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}}
       responses:
         "201":
-          application/json: {"id": "rvf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "name": "High priority reviews", "owner": "usr_customer_admin", "owner_type": "user", "shared": true, "version": 740221, "filter": {"assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "owner_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
+          application/json: {"id": "rvf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "name": "High priority reviews", "owner": "usr_customer_admin", "owner_type": "user", "shared": true, "version": 740221, "filter": {"account_id": "acct_7f3a9c", "assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "owner_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_request", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -5319,10 +5325,10 @@ examples:
           environment: "test"
           view_id: "<id>"
       requestBody:
-        application/json: {"name": "High priority reviews", "shared": false, "filter": {"assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}}
+        application/json: {"name": "High priority reviews", "shared": false, "filter": {"account_id": "acct_7f3a9c", "assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}}
       responses:
         "200":
-          application/json: {"id": "rvf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "name": "High priority reviews", "owner": "usr_customer_admin", "owner_type": "user", "shared": true, "version": 530919, "filter": {"assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "owner_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
+          application/json: {"id": "rvf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "name": "High priority reviews", "owner": "usr_customer_admin", "owner_type": "user", "shared": true, "version": 530919, "filter": {"account_id": "acct_7f3a9c", "assignee": "usr_customer_admin", "assignee_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "owner_principal_id": "mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "webhook_url_refused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":

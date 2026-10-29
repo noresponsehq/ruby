@@ -360,6 +360,7 @@ module NoResponse
       autoload :SocialProfileUnion, "no_response/models/shared/social_profile_union.rb"
       autoload :Timezone, "no_response/models/shared/timezone.rb"
       autoload :TimezoneUnion, "no_response/models/shared/timezone_union.rb"
+      autoload :WaitingFor, "no_response/models/shared/waiting_for.rb"
       autoload :Website, "no_response/models/shared/website.rb"
       autoload :WebsiteUnion, "no_response/models/shared/website_union.rb"
     end

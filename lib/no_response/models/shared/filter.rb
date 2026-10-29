@@ -9,6 +9,13 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
+        # Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination.
+        field(
+          :account_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("account_id")}}
+        )
+
         field(
           :status,
           Crystalline::Nilable.new(Models::Shared::ReviewStatus),
@@ -51,6 +58,7 @@ module NoResponse
 
         sig {
           params(
+            account_id: T.nilable(::String),
             status: T.nilable(Models::Shared::ReviewStatus),
             priority: T.nilable(Models::Shared::Priority),
             assignee: T.nilable(::String),
@@ -59,7 +67,15 @@ module NoResponse
           )
             .void
         }
-        def initialize(status: nil, priority: nil, assignee: nil, unassigned: nil, assignee_principal_id: nil)
+        def initialize(
+          account_id: nil,
+          status: nil,
+          priority: nil,
+          assignee: nil,
+          unassigned: nil,
+          assignee_principal_id: nil
+        )
+          @account_id = account_id
           @status = status
           @priority = priority
           @assignee = assignee
@@ -70,6 +86,7 @@ module NoResponse
         sig { params(other: T.untyped).returns(T::Boolean) }
         def ==(other)
           return false unless other.is_a?(self.class)
+          return false unless @account_id == other.account_id
           return false unless @status == other.status
           return false unless @priority == other.priority
           return false unless @assignee == other.assignee
