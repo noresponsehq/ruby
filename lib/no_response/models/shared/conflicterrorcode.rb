@@ -22,6 +22,16 @@ module NoResponse
           LIST_ENTRY_EXISTS = new("list_entry_exists")
           LIST_LIMIT_REACHED = new("list_limit_reached")
           LIST_ENTRY_TOO_BROAD = new("list_entry_too_broad")
+          POLICY_VERSION_CONFLICT = new("policy_version_conflict")
+          REVIEW_VERSION_CONFLICT = new("review_version_conflict")
+          REVIEW_EXISTS = new("review_exists")
+          REVIEW_LIMIT_REACHED = new("review_limit_reached")
+          EXPORT_CONFLICT = new("export_conflict")
+          EVALUATION_CONFLICT = new("evaluation_conflict")
+          EVALUATION_NO_PROPOSAL = new("evaluation_no_proposal")
+          EVALUATION_LIMIT_REACHED = new("evaluation_limit_reached")
+          ALREADY_MEMBER = new("already_member")
+          MEMBER_LIMIT_REACHED = new("member_limit_reached")
         end
 
         open!

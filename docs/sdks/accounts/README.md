@@ -11,6 +11,7 @@ Your accounts, each with one current risk, and their assessment history.
 * [delete](#delete) - Erase an account and its history.
 * [list_assessments](#list_assessments) - Page through one account's unexpired assessments.
 * [record_enforcement](#record_enforcement) - Record what you did to an account in your identity provider.
+* [list_enforcements](#list_enforcements) - Page through account enforcements
 * [record_outcome](#record_outcome) - Record or correct an account outcome
 * [list_outcomes](#list_outcomes) - List retained account feedback
 * [retrieve_decision](#retrieve_decision) - Retrieve an exact historical account decision
@@ -18,6 +19,7 @@ Your accounts, each with one current risk, and their assessment history.
 * [list_credentials](#list_credentials) - List issued credential associations
 * [retire_credential](#retire_credential) - Retire an issued credential association
 * [export](#export) - Export an account
+* [list_decisions](#list_decisions) - Page through recorded account decisions
 
 ## list_changed
 
@@ -315,6 +317,52 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::RecordEnforcementResponse)](../../models/operations/recordenforcementresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## list_enforcements
+
+List retained enforcement reports for one account with an authenticated cursor.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="listAccountEnforcements" method="get" path="/v1/accounts/{account_id}/enforcements" example="page" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.accounts.list_enforcements(account_id: 'acct_7f3a9c', limit: 20)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                          | Type                                                                                                                                                                                                               | Required                                                                                                                                                                                                           | Description                                                                                                                                                                                                        | Example                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `account_id`                                                                                                                                                                                                       | *::String*                                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                 | The account_id the workspace sends with its assessments, as one path segment (percent-encode '\|' and ':' if the client requires it). A value that does not match the account_id shape answers 400 invalid_request. | acct_7f3a9c                                                                                                                                                                                                        |
+| `limit`                                                                                                                                                                                                            | *T.nilable(::Integer)*                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                 | Items per page.                                                                                                                                                                                                    |                                                                                                                                                                                                                    |
+| `cursor`                                                                                                                                                                                                           | *T.nilable(::String)*                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                 | next_cursor from the previous page, unchanged.                                                                                                                                                                     |                                                                                                                                                                                                                    |
+
+### Response
+
+**[T.nilable(Models::Operations::ListAccountEnforcementsResponse)](../../models/operations/listaccountenforcementsresponse.md)**
 
 ### Errors
 
@@ -640,6 +688,52 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::ExportAccountResponse)](../../models/operations/exportaccountresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## list_decisions
+
+List retained immutable risk decisions for one account with an authenticated cursor.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="listAccountDecisions" method="get" path="/v1/accounts/{account_id}/decisions" example="page" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.accounts.list_decisions(account_id: 'acct_7f3a9c', limit: 20)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                          | Type                                                                                                                                                                                                               | Required                                                                                                                                                                                                           | Description                                                                                                                                                                                                        | Example                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `account_id`                                                                                                                                                                                                       | *::String*                                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                 | The account_id the workspace sends with its assessments, as one path segment (percent-encode '\|' and ':' if the client requires it). A value that does not match the account_id shape answers 400 invalid_request. | acct_7f3a9c                                                                                                                                                                                                        |
+| `limit`                                                                                                                                                                                                            | *T.nilable(::Integer)*                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                 | Items per page.                                                                                                                                                                                                    |                                                                                                                                                                                                                    |
+| `cursor`                                                                                                                                                                                                           | *T.nilable(::String)*                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                 | next_cursor from the previous page, unchanged.                                                                                                                                                                     |                                                                                                                                                                                                                    |
+
+### Response
+
+**[T.nilable(Models::Operations::ListAccountDecisionsResponse)](../../models/operations/listaccountdecisionsresponse.md)**
 
 ### Errors
 

@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::AccountDeletion
 
   def deleted=(str_)
   end
+
+  def erasure_id
+  end
+
+  def erasure_id=(str_)
+  end
 end

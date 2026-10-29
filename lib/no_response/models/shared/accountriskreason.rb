@@ -33,7 +33,7 @@ module NoResponse
             }
           }
         )
-
+        # The selected reason's served impact band. Requires reason.
         field(
           :impact,
           Models::Shared::Impact,

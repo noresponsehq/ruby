@@ -54,6 +54,12 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("schema_version"), required: true}}
         )
+        # Captured in the same database snapshot as the counts. Capture start times describe when counting began, not the earliest creation time counted: an older assessment may first answer later. Older outcomes are not inferred to be absent. Erased detail cannot be returned by drill-down even while its anonymous count remains.
+        field(
+          :coverage,
+          Crystalline::Nilable.new(Models::Shared::AssessmentAggregateCoverage),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("coverage")}}
+        )
         # The calling workspace's configured retention period in days. Default 365 (12 months), which is also the maximum: a workspace may only shorten it, to at least 1 day. Each record expires from its own created_at; see assessment expires_at.
         field(
           :retention_days,
@@ -71,6 +77,7 @@ module NoResponse
             groups_truncated: T::Boolean,
             buckets: T::Array[Models::Shared::AggregateBucket],
             schema_version: ::String,
+            coverage: T.nilable(Models::Shared::AssessmentAggregateCoverage),
             retention_days: T.nilable(::Integer)
           )
             .void
@@ -84,6 +91,7 @@ module NoResponse
           groups_truncated:,
           buckets:,
           schema_version: "1",
+          coverage: nil,
           retention_days: 365
         )
           @from = from
@@ -98,6 +106,7 @@ module NoResponse
           end
 
           @schema_version = "1"
+          @coverage = coverage
           @retention_days = retention_days
         end
 
@@ -112,6 +121,7 @@ module NoResponse
           return false unless @groups_truncated == other.groups_truncated
           return false unless @buckets == other.buckets
           return false unless @schema_version == other.schema_version
+          return false unless @coverage == other.coverage
           return false unless @retention_days == other.retention_days
           true
         end

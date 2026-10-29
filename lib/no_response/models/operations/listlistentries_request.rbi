@@ -17,4 +17,16 @@ class NoResponse::Models::Operations::ListListEntriesRequest
 
   def environment=(str_)
   end
+
+  def limit
+  end
+
+  def limit=(str_)
+  end
+
+  def cursor
+  end
+
+  def cursor=(str_)
+  end
 end

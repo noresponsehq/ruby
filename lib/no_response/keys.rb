@@ -326,7 +326,7 @@ module NoResponse
     }
     def create(body:, workspace_id:, timeout_ms: nil, http_headers: nil)
       # create - Create an API key.
-      # Creates an API key in the environment of the key that signs the request, with scopes that key holds itself, and returns its secret once in key. Requires the management scope; the new key may hold it too. A scope the signing key lacks answers 403 workspace_forbidden, and the other environment 404 not_found. An environment holds at most 100 keys that authenticate (409 key_limit_reached). created_by is the signing key's prefix. Not idempotent: a retry after a lost answer creates a second key, which you can list and revoke.
+      # Create an API key in the signing key environment with authority no greater than the issuer holds. Requires management. Optional name, purpose, kind and expiry describe its lifecycle. Send request_id for safe issuance retries: the first successful response returns the secret once; a repeat returns existing metadata without the secret, and changed parameters conflict. Without request_id a retry can create another key. A service credential is independent of its issuer; personal credentials require an authenticated member and retire when that member loses authority.
       request = Models::Operations::CreateKeyRequest.new(
         workspace_id: workspace_id,
         body: body
@@ -419,7 +419,7 @@ module NoResponse
       end
 
       content_type = http_response.headers.fetch("Content-Type", "application/octet-stream")
-      if Utils.match_status_code(http_response.status, ["201"])
+      if Utils.match_status_code(http_response.status, ["200", "201"])
         if Utils.match_content_type(content_type, "application/json")
           @sdk_configuration.hooks.after_success(
             hook_ctx: SDKHooks::AfterSuccessHookContext.new(

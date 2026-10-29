@@ -15,15 +15,15 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("workspace_id"), required: true}}
         )
-        # The environment whose endpoints receive this event: live, or test for the workspace's test environment.
+
         field(
           :environment,
-          Models::Shared::Environment,
+          Models::Shared::AuditSettingsEnvironment,
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("environment"),
               required: true,
-              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::Environment, false)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::AuditSettingsEnvironment, false)
             }
           }
         )
@@ -34,7 +34,10 @@ module NoResponse
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("deleted_at"), required: true}}
         )
 
-        sig { params(workspace_id: ::String, environment: Models::Shared::Environment, deleted_at: ::String).void }
+        sig {
+          params(workspace_id: ::String, environment: Models::Shared::AuditSettingsEnvironment, deleted_at: ::String)
+            .void
+        }
         def initialize(workspace_id:, environment:, deleted_at:)
           @workspace_id = workspace_id
           @environment = environment

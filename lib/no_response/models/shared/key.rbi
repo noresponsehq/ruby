@@ -77,4 +77,40 @@ class NoResponse::Models::Shared::Key
 
   def key=(str_)
   end
+
+  def name
+  end
+
+  def name=(str_)
+  end
+
+  def purpose
+  end
+
+  def purpose=(str_)
+  end
+
+  def kind
+  end
+
+  def kind=(str_)
+  end
+
+  def owner_user_id
+  end
+
+  def owner_user_id=(str_)
+  end
+
+  def rotated_to
+  end
+
+  def rotated_to=(str_)
+  end
+
+  def last_used_at
+  end
+
+  def last_used_at=(str_)
+  end
 end

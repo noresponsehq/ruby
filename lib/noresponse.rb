@@ -9,9 +9,18 @@ module NoResponse
   autoload :Keys, "no_response/keys"
   autoload :Integrations, "no_response/integrations"
   autoload :WebhookEndpoints, "no_response/webhookendpoints"
+  autoload :Members, "no_response/members"
+  autoload :Audit, "no_response/audit"
+  autoload :Usage, "no_response/usage"
+  autoload :Invites, "no_response/invites"
   autoload :Settings, "no_response/settings"
   autoload :Requests, "no_response/requests"
   autoload :Lists, "no_response/lists"
+  autoload :Reviews, "no_response/reviews"
+  autoload :Erasures, "no_response/erasures"
+  autoload :Exports, "no_response/exports"
+  autoload :Evaluations, "no_response/evaluations"
+  autoload :Operations, "no_response/operations"
 
   module Models
     autoload :Shared, "no_response/models/shared"

@@ -54,6 +54,12 @@ class NoResponse::Models::Shared::AssessmentAggregate
   def schema_version=(str_)
   end
 
+  def coverage
+  end
+
+  def coverage=(str_)
+  end
+
   def retention_days
   end
 

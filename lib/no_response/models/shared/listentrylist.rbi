@@ -11,4 +11,10 @@ class NoResponse::Models::Shared::ListEntryList
 
   def items=(str_)
   end
+
+  def next_cursor
+  end
+
+  def next_cursor=(str_)
+  end
 end

@@ -22,9 +22,18 @@ module NoResponse
       :keys,
       :integrations,
       :webhook_endpoints,
+      :members,
+      :audit,
+      :usage,
+      :invites,
       :settings,
       :requests,
-      :lists
+      :lists,
+      :reviews,
+      :erasures,
+      :exports,
+      :evaluations,
+      :operations
     )
 
     # Instantiates the SDK, configuring it with the provided parameters.
@@ -103,9 +112,18 @@ module NoResponse
       @keys = Keys.new(@sdk_configuration)
       @integrations = Integrations.new(@sdk_configuration)
       @webhook_endpoints = WebhookEndpoints.new(@sdk_configuration)
+      @members = Members.new(@sdk_configuration)
+      @audit = Audit.new(@sdk_configuration)
+      @usage = Usage.new(@sdk_configuration)
+      @invites = Invites.new(@sdk_configuration)
       @settings = Settings.new(@sdk_configuration)
       @requests = Requests.new(@sdk_configuration)
       @lists = Lists.new(@sdk_configuration)
+      @reviews = Reviews.new(@sdk_configuration)
+      @erasures = Erasures.new(@sdk_configuration)
+      @exports = Exports.new(@sdk_configuration)
+      @evaluations = Evaluations.new(@sdk_configuration)
+      @operations = Operations.new(@sdk_configuration)
     end
 
     sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }

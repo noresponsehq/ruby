@@ -42,6 +42,12 @@ class NoResponse::Models::Operations::ListRequestDiagnosticsRequest
   def cursor=(str_)
   end
 
+  def api_key_id
+  end
+
+  def api_key_id=(str_)
+  end
+
   def limit
   end
 

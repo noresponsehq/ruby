@@ -65,7 +65,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("created_by")}}
         )
-        # When a rotated key stops authenticating (POST /v1/keys/rotate). Absent for a key with no end.
+        # The earlier of the explicit lifetime and any rotation overlap. Rotation preserves the original lifetime.
         field(
           :expires_at,
           Crystalline::Nilable.new(::String),
@@ -89,6 +89,47 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("key")}}
         )
+        # The optional display name supplied for this API key. Preserved on rotation.
+        field(
+          :name,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("name")}}
+        )
+        # Optional operational purpose, at most 200 printable characters without leading or trailing whitespace. Do not put secrets or personal data here. Preserved on rotation and included in the creation request fingerprint; omitted for older credentials.
+        field(
+          :purpose,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("purpose")}}
+        )
+
+        field(
+          :kind,
+          Crystalline::Nilable.new(Models::Shared::KeyKind),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("kind"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::KeyKind, true)
+            }
+          }
+        )
+        # The issuing member's external identity for a personal key. Personal ownership is fixed and the key is revoked when that member loses authority. Service keys belong to the workspace and omit this field.
+        field(
+          :owner_user_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("owner_user_id")}}
+        )
+        # Replacement public key identifier, or legacy when the successor predates recorded lineage. This field excludes the secret.
+        field(
+          :rotated_to,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("rotated_to")}}
+        )
+        # Latest recorded authenticated request observation, updated at most once per minute. Capture is best effort after the response and includes authenticated requests refused by authorization or rate limits. Absence means unknown and does not prove the key was unused. It is independent of diagnostic retention and resets on the replacement key after rotation. This field retains no raw IP or user-agent.
+        field(
+          :last_used_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("last_used_at")}}
+        )
 
         sig {
           params(
@@ -103,7 +144,13 @@ module NoResponse
             expires_at: T.nilable(::String),
             revoked_at: T.nilable(::String),
             revoked_by: T.nilable(::String),
-            key: T.nilable(::String)
+            key: T.nilable(::String),
+            name: T.nilable(::String),
+            purpose: T.nilable(::String),
+            kind: T.nilable(Models::Shared::KeyKind),
+            owner_user_id: T.nilable(::String),
+            rotated_to: T.nilable(::String),
+            last_used_at: T.nilable(::String)
           )
             .void
         }
@@ -119,7 +166,13 @@ module NoResponse
           expires_at: nil,
           revoked_at: nil,
           revoked_by: nil,
-          key: nil
+          key: nil,
+          name: nil,
+          purpose: nil,
+          kind: nil,
+          owner_user_id: nil,
+          rotated_to: nil,
+          last_used_at: nil
         )
           @id = id
           @workspace_id = workspace_id
@@ -133,6 +186,12 @@ module NoResponse
           @revoked_at = revoked_at
           @revoked_by = revoked_by
           @key = key
+          @name = name
+          @purpose = purpose
+          @kind = kind
+          @owner_user_id = owner_user_id
+          @rotated_to = rotated_to
+          @last_used_at = last_used_at
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -150,6 +209,12 @@ module NoResponse
           return false unless @revoked_at == other.revoked_at
           return false unless @revoked_by == other.revoked_by
           return false unless @key == other.key
+          return false unless @name == other.name
+          return false unless @purpose == other.purpose
+          return false unless @kind == other.kind
+          return false unless @owner_user_id == other.owner_user_id
+          return false unless @rotated_to == other.rotated_to
+          return false unless @last_used_at == other.last_used_at
           true
         end
       end

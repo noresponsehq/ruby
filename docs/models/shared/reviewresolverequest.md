@@ -1,0 +1,11 @@
+# ReviewResolveRequest
+
+
+## Fields
+
+| Field                                                           | Type                                                            | Required                                                        | Description                                                     | Example                                                         |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `expected_version`                                              | *::Integer*                                                     | :heavy_check_mark:                                              | N/A                                                             |                                                                 |
+| `expected_risk_version`                                         | *::Integer*                                                     | :heavy_check_mark:                                              | N/A                                                             |                                                                 |
+| `conclusion`                                                    | [Models::Shared::Conclusion](../../models/shared/conclusion.md) | :heavy_check_mark:                                              | N/A                                                             |                                                                 |
+| `note`                                                          | *::String*                                                      | :heavy_check_mark:                                              | N/A                                                             | Reviewed the retained account evidence and customer report.     |

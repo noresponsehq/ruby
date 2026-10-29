@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-
+      # Impact - The selected reason's served impact band. Requires reason.
       class Impact
         include ::Crystalline::Enum
         enums do

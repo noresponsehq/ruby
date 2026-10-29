@@ -1,16 +1,13 @@
 # ListMatch
 
-The action of the list entry that decided the account.
+The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
 
 ## Example Usage
 
 ```ruby
 require "noresponse"
 
-value = ListMatch::BLOCK
-
-# Open enum: use .deserialize() to create instances from custom string values
-custom = ListMatch.deserialize("custom_value")
+value = ListMatch::ALLOW
 ```
 
 
@@ -18,5 +15,6 @@ custom = ListMatch.deserialize("custom_value")
 
 | Name    | Value   |
 | ------- | ------- |
-| `BLOCK` | block   |
 | `ALLOW` | allow   |
+| `BLOCK` | block   |
+| `NONE`  | none    |

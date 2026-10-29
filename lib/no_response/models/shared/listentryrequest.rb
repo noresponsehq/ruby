@@ -45,21 +45,29 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("note")}}
         )
+        # Optional expiry. An expired entry stops matching immediately; bounded maintenance removes it and propagates account risk changes.
+        field(
+          :expires_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("expires_at")}}
+        )
 
         sig {
           params(
             kind: Models::Shared::ListEntryKind,
             value: ::String,
             action: Models::Shared::ListEntryAction,
-            note: T.nilable(::String)
+            note: T.nilable(::String),
+            expires_at: T.nilable(::String)
           )
             .void
         }
-        def initialize(kind:, value:, action:, note: nil)
+        def initialize(kind:, value:, action:, note: nil, expires_at: nil)
           @kind = kind
           @value = value
           @action = action
           @note = note
+          @expires_at = expires_at
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -69,6 +77,7 @@ module NoResponse
           return false unless @value == other.value
           return false unless @action == other.action
           return false unless @note == other.note
+          return false unless @expires_at == other.expires_at
           true
         end
       end

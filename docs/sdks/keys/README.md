@@ -99,30 +99,8 @@ end
 
 ## create
 
-Creates an API key in the environment of the key that signs the request, with scopes that key holds itself, and returns its secret once in key. Requires the management scope; the new key may hold it too. A scope the signing key lacks answers 403 workspace_forbidden, and the other environment 404 not_found. An environment holds at most 100 keys that authenticate (409 key_limit_reached). created_by is the signing key's prefix. Not idempotent: a retry after a lost answer creates a second key, which you can list and revoke.
+Create an API key in the signing key environment with authority no greater than the issuer holds. Requires management. Optional name, purpose, kind and expiry describe its lifecycle. Send request_id for safe issuance retries: the first successful response returns the secret once; a repeat returns existing metadata without the secret, and changed parameters conflict. Without request_id a retry can create another key. A service credential is independent of its issuer; personal credentials require an authenticated member and retire when that member loses authority.
 
-### Example Usage: key
-
-<!-- UsageSnippet language="ruby" operationID="createKey" method="post" path="/v1/workspaces/{workspace_id}/keys" example="key" -->
-```ruby
-require 'noresponse'
-
-Models = ::NoResponse::Models
-s = ::NoResponse::NoResponseClient.new(
-  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
-)
-res = s.keys.create(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::KeyRequest.new(
-  environment: Models::Shared::KeyEnvironment::LIVE,
-  scopes: [
-    Models::Shared::KeyRequestScope::DELETE,
-  ]
-))
-
-unless res.nil?
-  # handle response
-end
-
-```
 ### Example Usage: live
 
 <!-- UsageSnippet language="ruby" operationID="createKey" method="post" path="/v1/workspaces/{workspace_id}/keys" example="live" -->

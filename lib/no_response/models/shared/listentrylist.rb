@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # GET /v1/workspaces/{workspace_id}/lists/{environment}: every entry of the environment's list, newest first. An environment holds at most 10,000 entries.
+      # Newest first. Without a query, returns every active entry for compatibility. With limit or cursor, returns up to 100 entries and an authenticated workspace/environment-bound cursor. Expired entries are omitted.
       class ListEntryList
         extend T::Sig
         include Crystalline::MetadataFields
@@ -15,15 +15,23 @@ module NoResponse
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("items"), required: true}}
         )
 
-        sig { params(items: T::Array[Models::Shared::ListEntry]).void }
-        def initialize(items:)
+        field(
+          :next_cursor,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("next_cursor")}}
+        )
+
+        sig { params(items: T::Array[Models::Shared::ListEntry], next_cursor: T.nilable(::String)).void }
+        def initialize(items:, next_cursor: nil)
           @items = items
+          @next_cursor = next_cursor
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @items == other.items
+          return false unless @next_cursor == other.next_cursor
           true
         end
       end

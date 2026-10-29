@@ -77,4 +77,10 @@ class NoResponse::Models::Shared::RequestDiagnostic
 
   def decision=(str_)
   end
+
+  def api_key_id
+  end
+
+  def api_key_id=(str_)
+  end
 end

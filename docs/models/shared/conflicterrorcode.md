@@ -32,3 +32,13 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `LIST_ENTRY_EXISTS`              | list_entry_exists                |
 | `LIST_LIMIT_REACHED`             | list_limit_reached               |
 | `LIST_ENTRY_TOO_BROAD`           | list_entry_too_broad             |
+| `POLICY_VERSION_CONFLICT`        | policy_version_conflict          |
+| `REVIEW_VERSION_CONFLICT`        | review_version_conflict          |
+| `REVIEW_EXISTS`                  | review_exists                    |
+| `REVIEW_LIMIT_REACHED`           | review_limit_reached             |
+| `EXPORT_CONFLICT`                | export_conflict                  |
+| `EVALUATION_CONFLICT`            | evaluation_conflict              |
+| `EVALUATION_NO_PROPOSAL`         | evaluation_no_proposal           |
+| `EVALUATION_LIMIT_REACHED`       | evaluation_limit_reached         |
+| `ALREADY_MEMBER`                 | already_member                   |
+| `MEMBER_LIMIT_REACHED`           | member_limit_reached             |

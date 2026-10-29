@@ -32,7 +32,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -70,7 +70,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: true,
+    verified: false,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -105,7 +105,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -143,7 +143,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: true,
+    verified: false,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -208,7 +208,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -246,7 +246,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: true,
+    verified: false,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -337,7 +337,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
   account_id: 'acct_7f3a9c',
-  flow: Models::Shared::Flow::PURCHASE,
+  flow: Models::Shared::Flow::ACCOUNT_CREATION,
   identifiers: Models::Shared::AssessmentRequestIdentifiers.new(
     email: 'new.user@example.com',
     username: 'new.user',
@@ -375,7 +375,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: true,
+    verified: false,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -650,7 +650,7 @@ s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.assessments.record_outcome(assessment_id: 'asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::AssessmentOutcomeRequest.new(
-  outcome: Models::Shared::Outcome::ACCOUNT_TAKEOVER,
+  outcome: Models::Shared::Outcome::UNKNOWN,
   observed_at: '2026-10-14T09:04:30.000Z',
   external_ref: 'case-48213',
   notes: 'Chargeback filed two days after account creation.'
@@ -793,7 +793,8 @@ s = ::NoResponse::NoResponseClient.new(
 req = Models::Shared::AssessmentAggregateRequest.new(
   from: '2026-10-19T00:00:00Z',
   to: '2026-10-26T00:00:00Z',
-  bucket: Models::Shared::Bucket::WEEK
+  bucket: Models::Shared::Bucket::WEEK,
+  country: 'GB'
 )
 res = s.assessments.aggregate(request: req)
 
@@ -844,7 +845,8 @@ req = Models::Shared::AssessmentSearchRequest.new(
   from: '2026-01-01T00:00:00Z',
   to: '2026-01-02T00:00:00Z',
   account_id: 'acct_7f3a9c',
-  cursor: 'eyJ0IjoxNzY3MjI1NjAwMDAwMDAwLCJpIjoiYXNtX2V4YW1wbGUiLCJlIjoxNzY3MjI5MjAwfQ'
+  cursor: 'eyJ0IjoxNzY3MjI1NjAwMDAwMDAwLCJpIjoiYXNtX2V4YW1wbGUiLCJlIjoxNzY3MjI5MjAwfQ',
+  country: 'GB'
 )
 res = s.assessments.search(request: req)
 

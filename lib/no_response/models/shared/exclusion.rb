@@ -14,6 +14,7 @@ module NoResponse
           CROSS_CUSTOMER_DATA = new("cross_customer_data")
           LEGACY_OUTCOME_NOTES = new("legacy_outcome_notes")
           UNCAPTURED_HISTORICAL_DECISIONS = new("uncaptured_historical_decisions")
+          INVESTIGATOR_REVIEWS_REQUIRE_REVIEW_EXPORT = new("investigator_reviews_require_review_export")
         end
 
         open!

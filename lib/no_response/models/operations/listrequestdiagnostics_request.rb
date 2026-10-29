@@ -37,6 +37,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'query_param': {'field_name': "cursor", 'style': "form", 'explode': true}}
         )
+        # Filter by the public authenticated API key identifier; older unattributed rows do not match.
+        field(
+          :api_key_id,
+          Crystalline::Nilable.new(::String),
+          {'query_param': {'field_name': "api_key_id", 'style': "form", 'explode': true}}
+        )
         # Optional filter or paging parameter.
         field(
           :limit,
@@ -52,17 +58,19 @@ module NoResponse
             route: T.nilable(::String),
             status: T.nilable(::Integer),
             cursor: T.nilable(::String),
+            api_key_id: T.nilable(::String),
             limit: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(from:, to:, request_id: nil, route: nil, status: nil, cursor: nil, limit: 50)
+        def initialize(from:, to:, request_id: nil, route: nil, status: nil, cursor: nil, api_key_id: nil, limit: 50)
           @from = from
           @to = to
           @request_id = request_id
           @route = route
           @status = status
           @cursor = cursor
+          @api_key_id = api_key_id
           @limit = limit
         end
 
@@ -75,6 +83,7 @@ module NoResponse
           return false unless @route == other.route
           return false unless @status == other.status
           return false unless @cursor == other.cursor
+          return false unless @api_key_id == other.api_key_id
           return false unless @limit == other.limit
           true
         end

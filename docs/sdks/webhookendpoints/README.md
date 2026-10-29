@@ -13,6 +13,7 @@ Your webhook endpoints: register, list, rotate signing keys, send test events an
 * [send_test_event](#send_test_event) - Send a test event to an endpoint.
 * [list_deliveries](#list_deliveries) - List an endpoint's delivery attempts.
 * [replay_delivery](#replay_delivery) - Send one delivery again.
+* [aggregate](#aggregate) - Summarise retained webhook attempts and delivery queue
 
 ## list
 
@@ -411,6 +412,56 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::ReplayWebhookDeliveryResponse)](../../models/operations/replaywebhookdeliveryresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## aggregate
+
+Count retained webhook delivery attempts within thirty days and report current retained queue state.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="aggregateWebhooks" method="post" path="/v1/webhooks/aggregate" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+
+req = Models::Shared::WebhookAggregateRequest.new(
+  from: '2026-01-01T00:00:00Z',
+  to: '2026-01-01T00:00:00Z',
+  endpoint_id: 'whe_01JA2Z8K6Q4V7W9XBCDEFGHJKM'
+)
+res = s.webhook_endpoints.aggregate(request: req)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [Models::Shared::WebhookAggregateRequest](../../models/shared/webhookaggregaterequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+
+### Response
+
+**[T.nilable(Models::Operations::AggregateWebhooksResponse)](../../models/operations/aggregatewebhooksresponse.md)**
 
 ### Errors
 

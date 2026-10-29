@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # PATCH /v1/workspaces/{workspace_id}/settings/{environment} body. Changes only what it names, in one transaction; a policy change is one new policy_version. Needs the admin or owner role, or an API key with the management scope for its own environment.
+      # Changes only named settings, atomically. Every successful write advances policy_version and retains an immutable settings snapshot. expected_policy_version optionally guards against stale edits; restore always requires it.
       class SettingsRequest
         extend T::Sig
         include Crystalline::MetadataFields
@@ -26,19 +26,41 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::SettingsRequestFlows),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("flows")}}
         )
+        # Compare-and-set guard. A stale version returns 409 policy_version_conflict before any change; every settings write including retention advances the version.
+        field(
+          :expected_policy_version,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("expected_policy_version")}}
+        )
+
+        field(
+          :change_reason,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("change_reason")}}
+        )
 
         sig {
           params(
             retention_days: T.nilable(::Integer),
             refused_sources: T.nilable(T::Array[Models::Shared::SourceId]),
-            flows: T.nilable(Models::Shared::SettingsRequestFlows)
+            flows: T.nilable(Models::Shared::SettingsRequestFlows),
+            expected_policy_version: T.nilable(::Integer),
+            change_reason: T.nilable(::String)
           )
             .void
         }
-        def initialize(retention_days: nil, refused_sources: nil, flows: nil)
+        def initialize(
+          retention_days: nil,
+          refused_sources: nil,
+          flows: nil,
+          expected_policy_version: nil,
+          change_reason: nil
+        )
           @retention_days = retention_days
           @refused_sources = refused_sources
           @flows = flows
+          @expected_policy_version = expected_policy_version
+          @change_reason = change_reason
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -47,6 +69,8 @@ module NoResponse
           return false unless @retention_days == other.retention_days
           return false unless @refused_sources == other.refused_sources
           return false unless @flows == other.flows
+          return false unless @expected_policy_version == other.expected_policy_version
+          return false unless @change_reason == other.change_reason
           true
         end
       end

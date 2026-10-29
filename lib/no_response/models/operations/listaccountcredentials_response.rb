@@ -8,6 +8,8 @@ module NoResponse
       class ListAccountCredentialsResponse
         extend T::Sig
         include Crystalline::MetadataFields
+        sig { returns(T.proc.returns(T.nilable(ListAccountCredentialsResponse))) }
+        attr_accessor :next_page
 
         field :headers, Crystalline::Hash.new(Symbol, Crystalline::Array.new(::String))
 
@@ -25,6 +27,16 @@ module NoResponse
           return false unless @headers == other.headers
           return false unless @result == other.result
           true
+        end
+
+        def each
+          page = self
+          loop do
+            yield page
+            next_page = page.next_page.call if page.next_page
+            break if next_page.nil?
+            page = T.must(next_page)
+          end
         end
       end
     end

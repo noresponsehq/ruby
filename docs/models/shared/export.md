@@ -1,0 +1,14 @@
+# Export
+
+Retained review snapshot.
+
+
+## Fields
+
+| Field                                                                           | Type                                                                            | Required                                                                        | Description                                                                     | Example                                                                         |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `exported_at`                                                                   | *::String*                                                                      | :heavy_check_mark:                                                              | N/A                                                                             | 2026-01-01T00:00:00Z                                                            |
+| `review`                                                                        | [Models::Shared::Review](../../models/shared/review.md)                         | :heavy_check_mark:                                                              | N/A                                                                             |                                                                                 |
+| `comments`                                                                      | T::Array<[Models::Shared::ReviewComment](../../models/shared/reviewcomment.md)> | :heavy_check_mark:                                                              | N/A                                                                             |                                                                                 |
+| `resolutions`                                                                   | T::Array<[Models::Shared::Resolution](../../models/shared/resolution.md)>       | :heavy_check_mark:                                                              | N/A                                                                             |                                                                                 |
+| `subjects`                                                                      | T::Array<[Models::Shared::ReviewSubject](../../models/shared/reviewsubject.md)> | :heavy_check_mark:                                                              | N/A                                                                             |                                                                                 |

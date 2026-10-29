@@ -35,6 +35,12 @@ module NoResponse
           Crystalline::Boolean.new,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("deleted"), required: true}}
         )
+        # Receipt for GET /v1/erasures/{erasure_id}, when durable storage issued one.
+        field(
+          :erasure_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("erasure_id")}}
+        )
 
         sig {
           params(
@@ -42,11 +48,12 @@ module NoResponse
             account: Models::Shared::AssessmentDeletionAccount,
             deleted_at: ::String,
             schema_version: ::String,
-            deleted: T::Boolean
+            deleted: T::Boolean,
+            erasure_id: T.nilable(::String)
           )
             .void
         }
-        def initialize(id:, account:, deleted_at:, schema_version: "1", deleted: true)
+        def initialize(id:, account:, deleted_at:, schema_version: "1", deleted: true, erasure_id: nil)
           @id = id
           @account = account
           @deleted_at = deleted_at
@@ -60,6 +67,7 @@ module NoResponse
           end
 
           @deleted = true
+          @erasure_id = erasure_id
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -70,6 +78,7 @@ module NoResponse
           return false unless @deleted_at == other.deleted_at
           return false unless @schema_version == other.schema_version
           return false unless @deleted == other.deleted
+          return false unless @erasure_id == other.erasure_id
           true
         end
       end

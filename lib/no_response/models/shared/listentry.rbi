@@ -59,4 +59,10 @@ class NoResponse::Models::Shared::ListEntry
 
   def note=(str_)
   end
+
+  def expires_at
+  end
+
+  def expires_at=(str_)
+  end
 end

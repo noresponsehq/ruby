@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::AssessmentDeletion
 
   def deleted=(str_)
   end
+
+  def erasure_id
+  end
+
+  def erasure_id=(str_)
+  end
 end

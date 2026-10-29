@@ -22,10 +22,32 @@ module NoResponse
           {'path_param': {'field_name': "environment", 'style': "simple", 'explode': false}}
         )
 
-        sig { params(workspace_id: ::String, environment: Models::Shared::KeyEnvironment).void }
-        def initialize(workspace_id:, environment:)
+        field(
+          :limit,
+          Crystalline::Nilable.new(::Integer),
+          {'query_param': {'field_name': "limit", 'style': "form", 'explode': true}}
+        )
+
+        field(
+          :cursor,
+          Crystalline::Nilable.new(::String),
+          {'query_param': {'field_name': "cursor", 'style': "form", 'explode': true}}
+        )
+
+        sig {
+          params(
+            workspace_id: ::String,
+            environment: Models::Shared::KeyEnvironment,
+            limit: T.nilable(::Integer),
+            cursor: T.nilable(::String)
+          )
+            .void
+        }
+        def initialize(workspace_id:, environment:, limit: nil, cursor: nil)
           @workspace_id = workspace_id
           @environment = environment
+          @limit = limit
+          @cursor = cursor
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -33,6 +55,8 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @workspace_id == other.workspace_id
           return false unless @environment == other.environment
+          return false unless @limit == other.limit
+          return false unless @cursor == other.cursor
           true
         end
       end

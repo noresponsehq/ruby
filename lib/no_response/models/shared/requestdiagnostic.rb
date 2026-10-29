@@ -76,6 +76,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::DecisionReceipt),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("decision")}}
         )
+        # Public authenticated API key identifier. Absent for member requests and older unattributed diagnostics.
+        field(
+          :api_key_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("api_key_id")}}
+        )
 
         sig {
           params(
@@ -90,7 +96,8 @@ module NoResponse
             idempotent_replayed: T::Boolean,
             write_complete: T::Boolean,
             error_code: T.nilable(::String),
-            decision: T.nilable(Models::Shared::DecisionReceipt)
+            decision: T.nilable(Models::Shared::DecisionReceipt),
+            api_key_id: T.nilable(::String)
           )
             .void
         }
@@ -106,7 +113,8 @@ module NoResponse
           idempotent_replayed:,
           write_complete:,
           error_code: nil,
-          decision: nil
+          decision: nil,
+          api_key_id: nil
         )
           @id = id
           @request_id = request_id
@@ -120,6 +128,7 @@ module NoResponse
           @write_complete = write_complete
           @error_code = error_code
           @decision = decision
+          @api_key_id = api_key_id
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -137,6 +146,7 @@ module NoResponse
           return false unless @write_complete == other.write_complete
           return false unless @error_code == other.error_code
           return false unless @decision == other.decision
+          return false unless @api_key_id == other.api_key_id
           true
         end
       end

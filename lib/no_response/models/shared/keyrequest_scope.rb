@@ -14,6 +14,16 @@ module NoResponse
           DETAILED = new("detailed")
           INTEGRATIONS = new("integrations")
           MANAGEMENT = new("management")
+          AUDIT = new("audit")
+          USAGE = new("usage")
+          INVESTIGATE = new("investigate")
+          EVIDENCE = new("evidence")
+          EXPORTS = new("exports")
+          AUDIT_MANAGE = new("audit_manage")
+          SETTINGS = new("settings")
+          POLICY_PUBLISH = new("policy_publish")
+          MEMBERS = new("members")
+          MEMBERS_MANAGE = new("members_manage")
         end
       end
     end

@@ -6,15 +6,33 @@ class NoResponse::Models::Shared::AccountOutcomeActor
 end
 
 class NoResponse::Models::Shared::AccountOutcomeActor
+  def type
+  end
+
+  def type=(str_)
+  end
+
   def key_id
   end
 
   def key_id=(str_)
   end
 
-  def type
+  def external_user_id
   end
 
-  def type=(str_)
+  def external_user_id=(str_)
+  end
+
+  def console_credential_id
+  end
+
+  def console_credential_id=(str_)
+  end
+
+  def principal_id
+  end
+
+  def principal_id=(str_)
   end
 end

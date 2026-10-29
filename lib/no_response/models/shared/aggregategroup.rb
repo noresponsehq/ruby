@@ -47,7 +47,7 @@ module NoResponse
             }
           }
         )
-        # low 0-29, medium 30-59, high 60-84, critical 85-100.
+
         field(
           :band,
           Crystalline::Nilable.new(Models::Shared::Band),
@@ -58,14 +58,14 @@ module NoResponse
             }
           }
         )
-        # The action of the list entry that decided the account.
+        # The list action captured with the first answer. none means no matching entry was found. For retained_first_answers an absent field means the older assessment did not capture list state; this remains a separate group.
         field(
           :list_match,
-          Crystalline::Nilable.new(Models::Shared::ListMatch),
+          Crystalline::Nilable.new(Models::Shared::AggregateGroupListMatch),
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("list_match"),
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::ListMatch, true)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::AggregateGroupListMatch, true)
             }
           }
         )
@@ -80,7 +80,7 @@ module NoResponse
             }
           }
         )
-
+        # The selected reason's served impact band. Requires reason.
         field(
           :impact,
           Crystalline::Nilable.new(Models::Shared::Impact),
@@ -122,7 +122,7 @@ module NoResponse
             flow: T.nilable(Models::Shared::Flow),
             recommendation: T.nilable(Models::Shared::Recommendation),
             band: T.nilable(Models::Shared::Band),
-            list_match: T.nilable(Models::Shared::ListMatch),
+            list_match: T.nilable(Models::Shared::AggregateGroupListMatch),
             reason: T.nilable(Models::Shared::ReasonCode),
             impact: T.nilable(Models::Shared::Impact),
             lane: T.nilable(Models::Shared::Lane),

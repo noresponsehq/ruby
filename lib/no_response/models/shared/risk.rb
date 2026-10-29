@@ -14,7 +14,7 @@ module NoResponse
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("score"), required: true}}
         )
-        # low 0-29, medium 30-59, high 60-84, critical 85-100.
+
         field(
           :band,
           Models::Shared::Band,

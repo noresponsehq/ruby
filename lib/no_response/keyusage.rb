@@ -15,6 +15,8 @@ module NoResponse
   class KeyUsage
     extend T::Sig
 
+    # Usage of keys issued to your accounts.
+
     sig { params(sdk_config: SDKConfiguration).void }
     def initialize(sdk_config)
       @sdk_configuration = sdk_config

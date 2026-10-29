@@ -23,4 +23,16 @@ class NoResponse::Models::Shared::SettingsRequest
 
   def flows=(str_)
   end
+
+  def expected_policy_version
+  end
+
+  def expected_policy_version=(str_)
+  end
+
+  def change_reason
+  end
+
+  def change_reason=(str_)
+  end
 end

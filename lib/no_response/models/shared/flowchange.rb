@@ -20,14 +20,14 @@ module NoResponse
           Crystalline::Nilable.new(::Integer),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("review")}}
         )
-        # The depth a request for this flow that names none is served at. Defaults: full for account_creation and purchase, quick for login.
+        # assessments only.
         field(
           :default_depth,
-          Crystalline::Nilable.new(Models::Shared::DefaultDepth),
+          Crystalline::Nilable.new(Models::Shared::UsageCountDepth),
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("default_depth"),
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::DefaultDepth, true)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::UsageCountDepth, true)
             }
           }
         )
@@ -84,7 +84,7 @@ module NoResponse
           params(
             step_up: T.nilable(::Integer),
             review: T.nilable(::Integer),
-            default_depth: T.nilable(Models::Shared::DefaultDepth),
+            default_depth: T.nilable(Models::Shared::UsageCountDepth),
             inherits_account_creation: T.nilable(T::Boolean),
             inherits_signup: T.nilable(T::Boolean),
             admission: T.nilable(Models::Shared::Admission),

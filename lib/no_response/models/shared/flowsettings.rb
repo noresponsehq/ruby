@@ -20,15 +20,15 @@ module NoResponse
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("review"), required: true}}
         )
-        # The depth a request for this flow that names none is served at. Defaults: full for account_creation and purchase, quick for login.
+        # assessments only.
         field(
           :default_depth,
-          Models::Shared::DefaultDepth,
+          Models::Shared::UsageCountDepth,
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("default_depth"),
               required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::DefaultDepth, false)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::UsageCountDepth, false)
             }
           }
         )
@@ -79,7 +79,7 @@ module NoResponse
           params(
             step_up: ::Integer,
             review: ::Integer,
-            default_depth: Models::Shared::DefaultDepth,
+            default_depth: Models::Shared::UsageCountDepth,
             inherits_account_creation: T::Boolean,
             admission: Models::Shared::Admission,
             hold_seconds: ::Integer,

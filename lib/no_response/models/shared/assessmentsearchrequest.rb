@@ -92,6 +92,85 @@ module NoResponse
         )
 
         field(
+          :band,
+          Crystalline::Nilable.new(Models::Shared::Band),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("band"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Band, true)
+            }
+          }
+        )
+        # A stable reason code. New codes may appear; ignore any you do not know.
+        field(
+          :reason,
+          Crystalline::Nilable.new(Models::Shared::ReasonCode),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("reason"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::ReasonCode, true)
+            }
+          }
+        )
+        # The selected reason's served impact band. Requires reason.
+        field(
+          :impact,
+          Crystalline::Nilable.new(Models::Shared::Impact),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("impact"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Impact, true)
+            }
+          }
+        )
+        # An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
+        field(
+          :lane,
+          Crystalline::Nilable.new(Models::Shared::Lane),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("lane"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Lane, true)
+            }
+          }
+        )
+
+        field(
+          :country,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("country")}}
+        )
+
+        field(
+          :asn,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("asn")}}
+        )
+        # Inclusive lower score bound. Pending answers without a score do not match.
+        field(
+          :score_min,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("score_min")}}
+        )
+        # Inclusive upper score bound, at least score_min when both are supplied.
+        field(
+          :score_max,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("score_max")}}
+        )
+        # The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
+        field(
+          :list_match,
+          Crystalline::Nilable.new(Models::Shared::ListMatch),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("list_match"),
+              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::ListMatch, true)
+            }
+          }
+        )
+
+        field(
           :limit,
           Crystalline::Nilable.new(::Integer),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("limit")}}
@@ -109,6 +188,15 @@ module NoResponse
             response_mode: T.nilable(Models::Shared::ResponseMode),
             decision: T.nilable(Models::Shared::Decision),
             revision: T.nilable(Models::Shared::AnswerRevision),
+            band: T.nilable(Models::Shared::Band),
+            reason: T.nilable(Models::Shared::ReasonCode),
+            impact: T.nilable(Models::Shared::Impact),
+            lane: T.nilable(Models::Shared::Lane),
+            country: T.nilable(::String),
+            asn: T.nilable(::Integer),
+            score_min: T.nilable(::Integer),
+            score_max: T.nilable(::Integer),
+            list_match: T.nilable(Models::Shared::ListMatch),
             limit: T.nilable(::Integer)
           )
             .void
@@ -124,6 +212,15 @@ module NoResponse
           response_mode: nil,
           decision: nil,
           revision: nil,
+          band: nil,
+          reason: nil,
+          impact: nil,
+          lane: nil,
+          country: nil,
+          asn: nil,
+          score_min: nil,
+          score_max: nil,
+          list_match: nil,
           limit: 20
         )
           @from = from
@@ -136,6 +233,15 @@ module NoResponse
           @response_mode = response_mode
           @decision = decision
           @revision = revision
+          @band = band
+          @reason = reason
+          @impact = impact
+          @lane = lane
+          @country = country
+          @asn = asn
+          @score_min = score_min
+          @score_max = score_max
+          @list_match = list_match
           @limit = limit
         end
 
@@ -152,6 +258,15 @@ module NoResponse
           return false unless @response_mode == other.response_mode
           return false unless @decision == other.decision
           return false unless @revision == other.revision
+          return false unless @band == other.band
+          return false unless @reason == other.reason
+          return false unless @impact == other.impact
+          return false unless @lane == other.lane
+          return false unless @country == other.country
+          return false unless @asn == other.asn
+          return false unless @score_min == other.score_min
+          return false unless @score_max == other.score_max
+          return false unless @list_match == other.list_match
           return false unless @limit == other.limit
           true
         end

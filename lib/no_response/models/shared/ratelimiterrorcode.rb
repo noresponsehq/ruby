@@ -9,6 +9,8 @@ module NoResponse
         include ::Crystalline::Enum
         enums do
           RATE_LIMITED = new("rate_limited")
+          ASSESSMENT_BUDGET_EXHAUSTED = new("assessment_budget_exhausted")
+          EXPORT_LIMIT_REACHED = new("export_limit_reached")
         end
 
         open!
