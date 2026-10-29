@@ -29,4 +29,10 @@ class NoResponse::Models::Shared::Usage
 
   def items=(str_)
   end
+
+  def console_lookups
+  end
+
+  def console_lookups=(str_)
+  end
 end

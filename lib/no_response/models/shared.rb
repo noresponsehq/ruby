@@ -94,6 +94,7 @@ module NoResponse
       autoload :ConflictErrorCode, "no_response/models/shared/conflicterrorcode.rb"
       autoload :Consistency, "no_response/models/shared/consistency.rb"
       autoload :ConsistencyValue, "no_response/models/shared/consistencyvalue.rb"
+      autoload :ConsoleLookups, "no_response/models/shared/consolelookups.rb"
       autoload :Cost, "no_response/models/shared/cost.rb"
       autoload :Country, "no_response/models/shared/country.rb"
       autoload :Coverage, "no_response/models/shared/coverage.rb"

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: f8cb4bffbda0115d5e3366c9bfbfece9
+  docChecksum: a584e4eb13e7ab7e86e6892f58d4a269
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 9.0.0
-  configChecksum: 04f45b8541290cf9075c89d7209cd3ca
+  releaseVersion: 9.1.0
+  configChecksum: 48dc5e2a15c9c22b7f65969c88142015
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:51858b400f5e20572a26d33d3c04c931d685ba33
+    last_write_checksum: sha1:ebcd85b78a2b30e7526823b0eb54076f1c296a8c
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -613,6 +613,8 @@ trackedFiles:
     last_write_checksum: sha1:65425d080ed0a6110de199b6b5396701b027c0d8
   docs/models/shared/consistencyvalue.md:
     last_write_checksum: sha1:e21abcf4e2421afb4b3f0dc3f4d82a514e75c937
+  docs/models/shared/consolelookups.md:
+    last_write_checksum: sha1:e55bf29227853911d81d44d13b435872a692ec04
   docs/models/shared/cost.md:
     last_write_checksum: sha1:053fe4cc7b88b9b1912b5813ba34f9ed2f5591ec
   docs/models/shared/country.md:
@@ -1066,7 +1068,7 @@ trackedFiles:
   docs/models/shared/transport.md:
     last_write_checksum: sha1:0cf86f35ed74daa19314fe175c8576aae3b7f210
   docs/models/shared/usage.md:
-    last_write_checksum: sha1:f0b54316ba1fcc2b09073e6c49ec33f328630aa6
+    last_write_checksum: sha1:4d0402a6a3d73bbecf5e4ae29b1e5a75bda705cc
   docs/models/shared/usagecount.md:
     last_write_checksum: sha1:2e581ebb27f70daf1cb376d649a9b7df1da93ad7
   docs/models/shared/usagecountdepth.md:
@@ -1160,7 +1162,7 @@ trackedFiles:
   docs/sdks/settings/README.md:
     last_write_checksum: sha1:80a43d48843ce3bb1dce273acc9cdcee9f1327e4
   docs/sdks/usage/README.md:
-    last_write_checksum: sha1:ea215c35a7ac95bd9f7156bec74f067d82b2d4b2
+    last_write_checksum: sha1:73175f82efb7b13f3823e176ac7728817415f58f
   docs/sdks/webhookendpoints/README.md:
     last_write_checksum: sha1:892c6d41ca18b31b457c4ace2ab758c820c218f3
   lib/crystalline.rb:
@@ -1982,7 +1984,7 @@ trackedFiles:
   lib/no_response/models/operations/updatesettings_response.rbi:
     last_write_checksum: sha1:0834c9903587b61cbe3cd8bee544792b89c08362
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:2b0e17151a0f31d034f01176171b99e5908c0235
+    last_write_checksum: sha1:8b6d2fe52888e44a43f5465fc00c91f87213cac4
   lib/no_response/models/shared/account.rb:
     last_write_checksum: sha1:b9a77c4d6d6b9a55abd897645bdd74d79213a938
   lib/no_response/models/shared/account.rbi:
@@ -2355,6 +2357,10 @@ trackedFiles:
     last_write_checksum: sha1:252e2ed71a0409b5af096485a29d282ba41070e4
   lib/no_response/models/shared/consistencyvalue.rbi:
     last_write_checksum: sha1:181f54946867ec8608732e069c345763c1dee984
+  lib/no_response/models/shared/consolelookups.rb:
+    last_write_checksum: sha1:a9631dd6382e04d043311a4b01e3b0dc2910c746
+  lib/no_response/models/shared/consolelookups.rbi:
+    last_write_checksum: sha1:2853aff863266bd6218b8088afa23fac8251d90d
   lib/no_response/models/shared/cost.rb:
     last_write_checksum: sha1:0da937dc20545dcfc33f469cfd53282bd9e7a306
   lib/no_response/models/shared/cost.rbi:
@@ -3260,9 +3266,9 @@ trackedFiles:
   lib/no_response/models/shared/transport.rbi:
     last_write_checksum: sha1:39589203e90043d27efbcee60e7f66cc8ceb11e0
   lib/no_response/models/shared/usage.rb:
-    last_write_checksum: sha1:02b4f03cec4d5011761f3615bb3f724115e71fe8
+    last_write_checksum: sha1:3030fbb5022a5a4635f918c3c7e44bc5c78c9071
   lib/no_response/models/shared/usage.rbi:
-    last_write_checksum: sha1:1c10c74c1fb0f5444f2ec4e2d11cc764bbeb5aed
+    last_write_checksum: sha1:81ba0d7d2cab7a0adea20014cab6ad2ec8c522ec
   lib/no_response/models/shared/usagecount.rb:
     last_write_checksum: sha1:25aaf25a113edb6fca10df4c5f1ec529023d2165
   lib/no_response/models/shared/usagecount.rbi:
@@ -3396,13 +3402,13 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:9f0401a942dd2ca8775106ae57002466f520544e
+    last_write_checksum: sha1:041698346acb5d9c7feb9d6e7a0f216519dd4c17
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
     last_write_checksum: sha1:a8ef68ab39f84ba75f4a763b61b1d677424f25e3
   lib/no_response/usage.rb:
-    last_write_checksum: sha1:18ab6eab54d57ef6419e0ffc054a1da5d805004b
+    last_write_checksum: sha1:baf82685ee14fd6fbe9ac4d460bf918aaf65c48a
   lib/no_response/utils/forms.rb:
     last_write_checksum: sha1:5994e8eb54fd281c7f043474137baef6292c7b52
   lib/no_response/utils/headers.rb:
@@ -3426,7 +3432,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:1b3b97bcf7d03965afa23636f0dc1f2683159ac6
   noresponse.gemspec:
-    last_write_checksum: sha1:102c27079bd84b7cfcc2f717a0ea808c5947ea23
+    last_write_checksum: sha1:198715bbcdefa23a0af2395c5512afbb549fe620
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -4649,7 +4655,7 @@ examples:
           workspace_id: "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "from": "2026-10-22", "to": "2026-10-23", "items": [{"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "login", "depth": "quick", "count": 412}, {"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 96}, {"environment": "live", "day": "2026-10-22", "metric": "webhook_deliveries", "count": 508}, {"environment": "live", "day": "2026-10-23", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 101}, {"environment": "live", "day": "2026-10-23", "metric": "key_usage_events", "count": 2330}, {"environment": "test", "day": "2026-10-23", "metric": "assessments", "flow": "purchase", "depth": "full", "count": 7}]}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "from": "2026-10-22", "to": "2026-10-23", "items": [{"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "login", "depth": "quick", "count": 412}, {"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 96}, {"environment": "live", "day": "2026-10-22", "metric": "webhook_deliveries", "count": 508}, {"environment": "live", "day": "2026-10-23", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 101}, {"environment": "live", "day": "2026-10-23", "metric": "key_usage_events", "count": 2330}, {"environment": "test", "day": "2026-10-23", "metric": "assessments", "flow": "purchase", "depth": "full", "count": 7}], "console_lookups": {"used": 12, "limit": 50, "resets_at": "2026-10-24T00:00:00.000Z"}}
   createInvite:
     open:
       parameters:

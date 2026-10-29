@@ -50,7 +50,7 @@ module NoResponse
     }
     def get(workspace_id:, from: nil, to: nil, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Read a workspace's usage.
-      # Read daily usage units for the environments you can access. These counts are unpriced.
+      # Read daily usage units for the environments you can access. These counts are unpriced. With live access it also returns the daily console lookup cap: used, limit and resets_at.
       request = Models::Operations::GetUsageRequest.new(
         workspace_id: workspace_id,
         from: from,
