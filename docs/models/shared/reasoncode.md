@@ -22,6 +22,7 @@ custom = ReasonCode.deserialize("custom_value")
 | `VOIP_NUMBER`                   | voip_number                     |
 | `DISPOSABLE_EMAIL`              | disposable_email                |
 | `NEW_EMAIL`                     | new_email                       |
+| `NO_EMAIL_MATCHES`              | no_email_matches                |
 | `SPAM_REPORTS`                  | spam_reports                    |
 | `FRAUD_FLAG`                    | fraud_flag                      |
 | `IDENTITY_MISMATCH`             | identity_mismatch               |

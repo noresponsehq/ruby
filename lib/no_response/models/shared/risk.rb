@@ -62,7 +62,7 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::RiskReason),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("reasons"), required: true}}
         )
-        # Sources counted by state, not named.
+        # Counts of planned source-identifier pairs by evidence outcome, deduplicated across signals and incomplete entries. These counts do not measure identity agreement or prove that processing is still running. A lane that was not searched is not an answered source.
         field(
           :coverage,
           Models::Shared::RiskCoverage,

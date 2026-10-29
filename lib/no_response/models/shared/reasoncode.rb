@@ -12,6 +12,7 @@ module NoResponse
           VOIP_NUMBER = new("voip_number")
           DISPOSABLE_EMAIL = new("disposable_email")
           NEW_EMAIL = new("new_email")
+          NO_EMAIL_MATCHES = new("no_email_matches")
           SPAM_REPORTS = new("spam_reports")
           FRAUD_FLAG = new("fraud_flag")
           IDENTITY_MISMATCH = new("identity_mismatch")

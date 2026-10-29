@@ -4,24 +4,24 @@
 module NoResponse
   module Models
     module Shared
-      # Sources counted by state, not named.
+      # Counts of planned source-identifier pairs by evidence outcome, deduplicated across signals and incomplete entries. These counts do not measure identity agreement or prove that processing is still running. A lane that was not searched is not an answered source.
       class RiskCoverage
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # Sources that gave a definite answer.
+        # Source-identifier pairs that gave a definite found or not_found answer.
         field(
           :answered,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("answered"), required: true}}
         )
-        # Sources that could not answer.
+        # Source-identifier pairs that could not answer, including unsupported coverage markers and source failures. Read detailed signals to distinguish Not covered from Failed.
         field(
           :failed,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("failed"), required: true}}
         )
-        # Sources still being asked.
+        # Source-identifier pairs with deferred or timed_out evidence. A terminal timeout can remain here after processing finishes; use assessment status and continuation metadata to determine whether work is still running.
         field(
           :pending,
           ::Integer,
