@@ -17,4 +17,16 @@ class NoResponse::Models::Shared::RiskDetailsBreachName
 
   def seen_in=(str_)
   end
+
+  def sites
+  end
+
+  def sites=(str_)
+  end
+
+  def unsited
+  end
+
+  def unsited=(str_)
+  end
 end

@@ -20,7 +20,7 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Breach)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("breaches")}}
         )
-        # Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in.
+        # Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in and the sites of those tables.
         field(
           :breach_names,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsBreachName)),
