@@ -18,6 +18,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("account_id")}}
         )
+        # Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
+        field(
+          :email,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("email")}}
+        )
         # The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
         field(
           :flow,
@@ -169,6 +175,12 @@ module NoResponse
             }
           }
         )
+        # true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first.
+        field(
+          :changed,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("changed")}}
+        )
 
         field(
           :limit,
@@ -181,6 +193,7 @@ module NoResponse
             from: ::String,
             to: ::String,
             account_id: T.nilable(::String),
+            email: T.nilable(::String),
             flow: T.nilable(Models::Shared::Flow),
             status: T.nilable(Models::Shared::Status),
             recommendation: T.nilable(Models::Shared::Recommendation),
@@ -197,6 +210,7 @@ module NoResponse
             score_min: T.nilable(::Integer),
             score_max: T.nilable(::Integer),
             list_match: T.nilable(Models::Shared::ListMatch),
+            changed: T.nilable(T::Boolean),
             limit: T.nilable(::Integer)
           )
             .void
@@ -205,6 +219,7 @@ module NoResponse
           from:,
           to:,
           account_id: nil,
+          email: nil,
           flow: nil,
           status: nil,
           recommendation: nil,
@@ -221,11 +236,13 @@ module NoResponse
           score_min: nil,
           score_max: nil,
           list_match: nil,
+          changed: nil,
           limit: 20
         )
           @from = from
           @to = to
           @account_id = account_id
+          @email = email
           @flow = flow
           @status = status
           @recommendation = recommendation
@@ -242,6 +259,7 @@ module NoResponse
           @score_min = score_min
           @score_max = score_max
           @list_match = list_match
+          @changed = changed
           @limit = limit
         end
 
@@ -251,6 +269,7 @@ module NoResponse
           return false unless @from == other.from
           return false unless @to == other.to
           return false unless @account_id == other.account_id
+          return false unless @email == other.email
           return false unless @flow == other.flow
           return false unless @status == other.status
           return false unless @recommendation == other.recommendation
@@ -267,6 +286,7 @@ module NoResponse
           return false unless @score_min == other.score_min
           return false unless @score_max == other.score_max
           return false unless @list_match == other.list_match
+          return false unless @changed == other.changed
           return false unless @limit == other.limit
           true
         end

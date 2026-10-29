@@ -60,6 +60,7 @@ module NoResponse
       autoload :AssessmentRequestIssuedCredential, "no_response/models/shared/assessmentrequestissuedcredential.rb"
       autoload :AssessmentRequestPolicyContext, "no_response/models/shared/assessmentrequestpolicycontext.rb"
       autoload :AssessmentRevision, "no_response/models/shared/assessmentrevision.rb"
+      autoload :AssessmentSearchItem, "no_response/models/shared/assessmentsearchitem.rb"
       autoload :AssessmentSearchPage, "no_response/models/shared/assessmentsearchpage.rb"
       autoload :AssessmentSearchRequest, "no_response/models/shared/assessmentsearchrequest.rb"
       autoload :AssessmentUpdatedData, "no_response/models/shared/assessmentupdateddata.rb"

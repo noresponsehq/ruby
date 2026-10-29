@@ -24,6 +24,12 @@ class NoResponse::Models::Shared::AssessmentSearchRequest
   def account_id=(str_)
   end
 
+  def email
+  end
+
+  def email=(str_)
+  end
+
   def flow
   end
 
@@ -118,6 +124,12 @@ class NoResponse::Models::Shared::AssessmentSearchRequest
   end
 
   def list_match=(str_)
+  end
+
+  def changed
+  end
+
+  def changed=(str_)
   end
 
   def limit

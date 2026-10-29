@@ -4,15 +4,27 @@
 module NoResponse
   module Models
     module Shared
-      # A bounded page of latest assessment revisions, newest creation first. Each revision identifies the exact result found; no current account risk is attached.
+      # A bounded page of latest assessment revisions, newest creation first, with how many assessments match the filters. Each item is the revision found and its first answer's decision; no current account risk is attached.
       class AssessmentSearchPage
         extend T::Sig
         include Crystalline::MetadataFields
 
         field(
           :items,
-          Crystalline::Array.new(Models::Shared::AssessmentRevision),
+          Crystalline::Array.new(Models::Shared::AssessmentSearchItem),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("items"), required: true}}
+        )
+        # How many assessments match the filters over every page, counted when this page was read: exact up to 10000. At 10000 or more it is 10000 and total_capped is true. The cursor does not change it; a later page can count differently, as results are live.
+        field(
+          :total,
+          ::Integer,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("total"), required: true}}
+        )
+        # True when at least 10000 assessments match, so total is 10000 and not the exact count.
+        field(
+          :total_capped,
+          Crystalline::Boolean.new,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("total_capped"), required: true}}
         )
         # Version of the body shape.
         field(
@@ -35,15 +47,19 @@ module NoResponse
 
         sig {
           params(
-            items: T::Array[Models::Shared::AssessmentRevision],
+            items: T::Array[Models::Shared::AssessmentSearchItem],
+            total: ::Integer,
+            total_capped: T::Boolean,
             schema_version: ::String,
             next_cursor: T.nilable(::String),
             retention_days: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(items:, schema_version: "1", next_cursor: nil, retention_days: 365)
+        def initialize(items:, total:, total_capped:, schema_version: "1", next_cursor: nil, retention_days: 365)
           @items = items
+          @total = total
+          @total_capped = total_capped
           unless schema_version == "1"
             raise ArgumentError, "Invalid value for schema_version"
           end
@@ -57,6 +73,8 @@ module NoResponse
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @items == other.items
+          return false unless @total == other.total
+          return false unless @total_capped == other.total_capped
           return false unless @schema_version == other.schema_version
           return false unless @next_cursor == other.next_cursor
           return false unless @retention_days == other.retention_days

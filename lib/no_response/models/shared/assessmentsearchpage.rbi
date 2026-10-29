@@ -12,6 +12,18 @@ class NoResponse::Models::Shared::AssessmentSearchPage
   def items=(str_)
   end
 
+  def total
+  end
+
+  def total=(str_)
+  end
+
+  def total_capped
+  end
+
+  def total_capped=(str_)
+  end
+
   def schema_version
   end
 
