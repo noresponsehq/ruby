@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Count this environment's assessments created in [from,to) by bucket, from counts kept as each assessment is first answered, not by scanning assessments. Each assessment counts once, by its first answer (the answer served when it was first answered); later revisions and late results do not count it again, and late_flips counts its later account decision changes. from and to start a bucket (an hour, a UTC day, or a week from Monday 00:00 UTC), cover at most 366 days (31 for hour buckets) and from is inside the retention period. The filters are POST /v1/assessments/search's and describe the first answer, so a cell drills down to search with the same filters, revision first and the cell's bucket as from and to. Counts hold no identifier and stay when an assessment or account is deleted or erased; they expire with retention and go with the workspace. Reasons are counted by code and impact band, not by weight. No Idempotency-Key. Select retained_first_answers for exact facet filters and pairs over retained detail. This mode supports count, score_histogram and score_outcomes, and refuses late_flips. It has a 31-day and 100000-record work budget.
+      # Count this environment's assessments created in [from,to) by bucket, from counts kept as each assessment is first answered, not by scanning assessments. Each assessment counts once, by its first answer (the answer served when it was first answered); later revisions and late results do not count it again, and late_flips counts its later account decision changes. from and to start a bucket (an hour, or a day or a week from Monday that starts at midnight in time_zone, UTC by default), cover at most 366 days (31 for hour buckets, 92 for day and week buckets in a time_zone other than UTC) and from is inside the retention period. The filters are POST /v1/assessments/search's and describe the first answer, so a cell drills down to search with the same filters, revision first and the cell's bucket as from and to. Counts hold no identifier and stay when an assessment or account is deleted or erased; they expire with retention and go with the workspace. Reasons are counted by code and impact band, not by weight. No Idempotency-Key. Select retained_first_answers for exact facet filters and pairs over retained detail. This mode supports count, score_histogram and score_outcomes, and refuses late_flips. It has a 31-day and 100000-record work budget.
       class AssessmentAggregateRequest
         extend T::Sig
         include Crystalline::MetadataFields
@@ -13,7 +13,7 @@ module NoResponse
         field :from, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("from"), required: true}}
         # The end, excluded: the start of the bucket after the last.
         field :to, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("to"), required: true}}
-        # The period each count covers, in UTC; a week starts on Monday.
+        # The period each count covers: an hour, or a day or a week (from Monday) in time_zone. Hour buckets are whole UTC hours in any time zone.
         field(
           :bucket,
           Models::Shared::Bucket,
@@ -182,6 +182,12 @@ module NoResponse
             }
           }
         )
+        # The IANA time zone whose local midnight starts each day and week bucket, such as Europe/London or Asia/Kolkata; daylight saving changes make those days 23 or 25 hours long. A name the zone database does not know is refused (400 invalid_request naming time_zone). Day and week buckets in a zone other than UTC cover at most 92 days (400 invalid_request naming to); a year of them reads too many hourly counts to answer in time. Hour buckets stay whole UTC hours. Bucket starts, from and to stay instants. With the default population, a zone whose local midnight falls inside a UTC hour (a half-hour offset such as Asia/Kolkata) is refused for day and week buckets, as those counts are kept by the hour; retained_first_answers counts it.
+        field(
+          :time_zone,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("time_zone")}}
+        )
         # The most groups answered: the largest over the whole range, then by value. groups_truncated says when there were more.
         field(
           :limit,
@@ -211,6 +217,7 @@ module NoResponse
             score_min: T.nilable(::Integer),
             score_max: T.nilable(::Integer),
             list_match: T.nilable(Models::Shared::ListMatch),
+            time_zone: T.nilable(::String),
             limit: T.nilable(::Integer)
           )
             .void
@@ -236,6 +243,7 @@ module NoResponse
           score_min: nil,
           score_max: nil,
           list_match: nil,
+          time_zone: "UTC",
           limit: 20
         )
           @from = from
@@ -258,6 +266,7 @@ module NoResponse
           @score_min = score_min
           @score_max = score_max
           @list_match = list_match
+          @time_zone = time_zone
           @limit = limit
         end
 
@@ -284,6 +293,7 @@ module NoResponse
           return false unless @score_min == other.score_min
           return false unless @score_max == other.score_max
           return false unless @list_match == other.list_match
+          return false unless @time_zone == other.time_zone
           return false unless @limit == other.limit
           true
         end

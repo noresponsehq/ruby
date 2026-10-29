@@ -12,7 +12,7 @@ module NoResponse
         field :from, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("from"), required: true}}
 
         field :to, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("to"), required: true}}
-        # The period each count covers, in UTC; a week starts on Monday.
+        # The period each count covers: an hour, or a day or a week (from Monday) in time_zone. Hour buckets are whole UTC hours in any time zone.
         field(
           :bucket,
           Models::Shared::Bucket,
@@ -35,6 +35,12 @@ module NoResponse
           :metrics,
           Crystalline::Array.new(Models::Shared::AssessmentAggregateMetric),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("metrics"), required: true}}
+        )
+        # The time zone whose local midnight started each day and week bucket, as requested; UTC when the request named none.
+        field(
+          :time_zone,
+          ::String,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("time_zone"), required: true}}
         )
         # true when more groups had counts than limit allowed.
         field(
@@ -74,6 +80,7 @@ module NoResponse
             bucket: Models::Shared::Bucket,
             group_by: T::Array[Models::Shared::AggregateDimension],
             metrics: T::Array[Models::Shared::AssessmentAggregateMetric],
+            time_zone: ::String,
             groups_truncated: T::Boolean,
             buckets: T::Array[Models::Shared::AggregateBucket],
             schema_version: ::String,
@@ -88,6 +95,7 @@ module NoResponse
           bucket:,
           group_by:,
           metrics:,
+          time_zone:,
           groups_truncated:,
           buckets:,
           schema_version: "1",
@@ -99,6 +107,7 @@ module NoResponse
           @bucket = bucket
           @group_by = group_by
           @metrics = metrics
+          @time_zone = time_zone
           @groups_truncated = groups_truncated
           @buckets = buckets
           unless schema_version == "1"
@@ -118,6 +127,7 @@ module NoResponse
           return false unless @bucket == other.bucket
           return false unless @group_by == other.group_by
           return false unless @metrics == other.metrics
+          return false unless @time_zone == other.time_zone
           return false unless @groups_truncated == other.groups_truncated
           return false unless @buckets == other.buckets
           return false unless @schema_version == other.schema_version

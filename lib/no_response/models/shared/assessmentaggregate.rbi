@@ -36,6 +36,12 @@ class NoResponse::Models::Shared::AssessmentAggregate
   def metrics=(str_)
   end
 
+  def time_zone
+  end
+
+  def time_zone=(str_)
+  end
+
   def groups_truncated
   end
 

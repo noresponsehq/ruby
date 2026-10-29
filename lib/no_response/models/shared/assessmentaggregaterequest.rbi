@@ -126,6 +126,12 @@ class NoResponse::Models::Shared::AssessmentAggregateRequest
   def list_match=(str_)
   end
 
+  def time_zone
+  end
+
+  def time_zone=(str_)
+  end
+
   def limit
   end
 
