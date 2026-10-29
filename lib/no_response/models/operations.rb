@@ -182,6 +182,7 @@ module NoResponse
       autoload :RotateIntegrationSecretResponse, "no_response/models/operations/rotateintegrationsecret_response.rb"
       autoload :RotateWebhookSigningKeyRequest, "no_response/models/operations/rotatewebhooksigningkey_request.rb"
       autoload :RotateWebhookSigningKeyResponse, "no_response/models/operations/rotatewebhooksigningkey_response.rb"
+      autoload :SearchAccountsResponse, "no_response/models/operations/searchaccounts_response.rb"
       autoload :SearchAssessmentsResponse, "no_response/models/operations/searchassessments_response.rb"
       autoload :SendWebhookTestEventRequest, "no_response/models/operations/sendwebhooktestevent_request.rb"
       autoload :SendWebhookTestEventResponse, "no_response/models/operations/sendwebhooktestevent_response.rb"

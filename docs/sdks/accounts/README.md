@@ -20,6 +20,7 @@ Your accounts, each with one current risk, and their assessment history.
 * [retire_credential](#retire_credential) - Retire an issued credential association
 * [export](#export) - Export an account
 * [list_decisions](#list_decisions) - Page through recorded account decisions
+* [search](#search) - Search distinct accounts by email or account ID
 
 ## list_changed
 
@@ -734,6 +735,56 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::ListAccountDecisionsResponse)](../../models/operations/listaccountdecisionsresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## search
+
+Search distinct accounts observed in retained assessments in this environment. Match an exact account_id or canonical email; an email matches any retained assessment belonging to the account. The response contains one row per account with its newest retained assessment, current decision when available, per-account assessment count, and total distinct-account count. Send next_cursor with unchanged filters to continue. Totals are exact below 10000 and capped at 10000. Results are live across pages. Requires history access and identifier access for email. Read-only and safe to retry.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="searchAccounts" method="post" path="/v1/accounts/search" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+
+req = Models::Shared::AccountDirectorySearchRequest.new(
+  account_id: 'acct_7f3a9c',
+  email: 'new.user@example.com',
+  cursor: 'eyJ0IjoxNzY3MjI1NjAwMDAwMDAwLCJpIjoiYXNtX2V4YW1wbGUiLCJlIjoxNzY3MjI5MjAwfQ'
+)
+res = s.accounts.search(request: req)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `request`                                                                                             | [Models::Shared::AccountDirectorySearchRequest](../../models/shared/accountdirectorysearchrequest.md) | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
+
+### Response
+
+**[T.nilable(Models::Operations::SearchAccountsResponse)](../../models/operations/searchaccountsresponse.md)**
 
 ### Errors
 
