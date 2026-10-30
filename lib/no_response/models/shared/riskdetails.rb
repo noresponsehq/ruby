@@ -32,21 +32,29 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsEvent)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("events")}}
         )
+        # Every online-account search of the email or username: the platform, what the search came to and, for an account found, what the platform returned beside it. Found first, then not found, then searches that failed or are still running, each by platform name; at most 64. A failed or running search keeps its own outcome and is not reported as not_found.
+        field(
+          :accounts,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::OnlineAccount)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("accounts")}}
+        )
 
         sig {
           params(
             phone_names: T.nilable(T::Array[Models::Shared::RiskDetailsPhoneName]),
             breaches: T.nilable(T::Array[Models::Shared::Breach]),
             breach_names: T.nilable(T::Array[Models::Shared::RiskDetailsBreachName]),
-            events: T.nilable(T::Array[Models::Shared::RiskDetailsEvent])
+            events: T.nilable(T::Array[Models::Shared::RiskDetailsEvent]),
+            accounts: T.nilable(T::Array[Models::Shared::OnlineAccount])
           )
             .void
         }
-        def initialize(phone_names: nil, breaches: nil, breach_names: nil, events: nil)
+        def initialize(phone_names: nil, breaches: nil, breach_names: nil, events: nil, accounts: nil)
           @phone_names = phone_names
           @breaches = breaches
           @breach_names = breach_names
           @events = events
+          @accounts = accounts
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -56,6 +64,7 @@ module NoResponse
           return false unless @breaches == other.breaches
           return false unless @breach_names == other.breach_names
           return false unless @events == other.events
+          return false unless @accounts == other.accounts
           true
         end
       end

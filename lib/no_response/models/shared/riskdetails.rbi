@@ -29,4 +29,10 @@ class NoResponse::Models::Shared::RiskDetails
 
   def events=(str_)
   end
+
+  def accounts
+  end
+
+  def accounts=(str_)
+  end
 end
