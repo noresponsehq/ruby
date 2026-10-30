@@ -10,6 +10,9 @@ module NoResponse
         enums do
           WORKSPACE_FORBIDDEN = new("workspace_forbidden")
           ROLE_FORBIDDEN = new("role_forbidden")
+          EMAIL_UNVERIFIED = new("email_unverified")
+          ONBOARDING_IN_REVIEW = new("onboarding_in_review")
+          ONBOARDING_REFUSED = new("onboarding_refused")
         end
 
         open!

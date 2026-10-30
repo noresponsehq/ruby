@@ -16,7 +16,10 @@ custom = PermissionDeniedErrorCode.deserialize("custom_value")
 
 ## Values
 
-| Name                  | Value                 |
-| --------------------- | --------------------- |
-| `WORKSPACE_FORBIDDEN` | workspace_forbidden   |
-| `ROLE_FORBIDDEN`      | role_forbidden        |
+| Name                   | Value                  |
+| ---------------------- | ---------------------- |
+| `WORKSPACE_FORBIDDEN`  | workspace_forbidden    |
+| `ROLE_FORBIDDEN`       | role_forbidden         |
+| `EMAIL_UNVERIFIED`     | email_unverified       |
+| `ONBOARDING_IN_REVIEW` | onboarding_in_review   |
+| `ONBOARDING_REFUSED`   | onboarding_refused     |
