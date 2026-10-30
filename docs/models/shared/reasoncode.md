@@ -60,6 +60,14 @@ custom = ReasonCode.deserialize("custom_value")
 | `YOUNG_EMAIL_DOMAIN`            | young_email_domain              |
 | `EMAIL_DOMAIN_NO_MX`            | email_domain_no_mx              |
 | `EMAIL_DOMAIN_NONEXISTENT`      | email_domain_nonexistent        |
+| `GOOGLE_ACCOUNT_MISSING`        | google_account_missing          |
+| `GOOGLE_EMPTY_ACCOUNT`          | google_empty_account            |
+| `GOOGLE_ACTIVE_PROFILE`         | google_active_profile           |
+| `GOOGLE_AGED_ACCOUNT`           | google_aged_account             |
+| `GOOGLE_NAME_MATCH`             | google_name_match               |
+| `GOOGLE_NAME_MISMATCH`          | google_name_mismatch            |
+| `GOOGLE_COUNTRY_MATCH`          | google_country_match            |
+| `GOOGLE_COUNTRY_MISMATCH`       | google_country_mismatch         |
 | `FORUM_SANCTIONED`              | forum_sanctioned                |
 | `PRIOR_PAYMENT_ABUSE`           | prior_payment_abuse             |
 | `IP_HISTORY_MATCH`              | ip_history_match                |
