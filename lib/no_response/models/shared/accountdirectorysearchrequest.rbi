@@ -30,6 +30,12 @@ class NoResponse::Models::Shared::AccountDirectorySearchRequest
   def identifier=(str_)
   end
 
+  def identifier_expression
+  end
+
+  def identifier_expression=(str_)
+  end
+
   def needs_action
   end
 

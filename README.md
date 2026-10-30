@@ -13,7 +13,7 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v9.4.4"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v9.5.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -276,6 +276,23 @@ Names that changed:
 | `record_outcome(body:, assessment_id:, idempotency_key:)` with the key required | `idempotency_key:` is optional |
 
 </details>
+
+## Combine submitted identifiers
+
+Search accounts and assessments with explicit AND/OR combinations of submitted
+email, phone and customer-namespace username terms. Use `IdentifierExpression`
+and its required `scope`: `assessment` requires one submission to satisfy the
+whole expression; `account` can combine different retained submissions of the
+same account and is accepted only by account search. Pass the expression through the generated search request `identifier_expression` field.
+
+Expressions have at most eight raw terms and three group levels. The original
+exact, canonical and explicit mailbox matching rules still apply to each term.
+Expression results contain indexed `IdentifierTermMatch` records with the
+original submitted value and originating assessment, separate from current
+account risk. Single-identifier and legacy email filters retain their behavior.
+
+See the [combined-search contract and examples](https://docs.noresponse.org/reference/investigation#combine-submitted-identifiers)
+for the expression shape, scope differences, permissions and pagination.
 
 ## Support
 

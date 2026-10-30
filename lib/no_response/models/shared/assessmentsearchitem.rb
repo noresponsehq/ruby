@@ -76,6 +76,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::IdentifierMatch),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_identifier")}}
         )
+        # Present only for identifier_expression. All satisfied unique terms, ordered by term_index, with original submitted values and retained assessment witnesses. A duplicate normalized term appears once at its first raw leaf index. The legacy single identifier filter instead returns matched_identifier.
+        field(
+          :matched_identifiers,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::IdentifierTermMatch)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_identifiers")}}
+        )
 
         sig {
           params(
@@ -86,7 +92,8 @@ module NoResponse
             detail: Models::Shared::AssessmentDetail,
             schema_version: ::String,
             first_decision: T.nilable(Models::Shared::Decision),
-            matched_identifier: T.nilable(Models::Shared::IdentifierMatch)
+            matched_identifier: T.nilable(Models::Shared::IdentifierMatch),
+            matched_identifiers: T.nilable(T::Array[Models::Shared::IdentifierTermMatch])
           )
             .void
         }
@@ -98,7 +105,8 @@ module NoResponse
           detail:,
           schema_version: "1",
           first_decision: nil,
-          matched_identifier: nil
+          matched_identifier: nil,
+          matched_identifiers: nil
         )
           @id = id
           @status = status
@@ -112,6 +120,7 @@ module NoResponse
           @schema_version = "1"
           @first_decision = first_decision
           @matched_identifier = matched_identifier
+          @matched_identifiers = matched_identifiers
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -125,6 +134,7 @@ module NoResponse
           return false unless @schema_version == other.schema_version
           return false unless @first_decision == other.first_decision
           return false unless @matched_identifier == other.matched_identifier
+          return false unless @matched_identifiers == other.matched_identifiers
           true
         end
       end

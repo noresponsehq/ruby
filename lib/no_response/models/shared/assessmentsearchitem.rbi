@@ -53,4 +53,10 @@ class NoResponse::Models::Shared::AssessmentSearchItem
 
   def matched_identifier=(str_)
   end
+
+  def matched_identifiers
+  end
+
+  def matched_identifiers=(str_)
+  end
 end

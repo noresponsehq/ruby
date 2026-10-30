@@ -138,6 +138,12 @@ class NoResponse::Models::Shared::AssessmentSearchRequest
   def identifier=(str_)
   end
 
+  def identifier_expression
+  end
+
+  def identifier_expression=(str_)
+  end
+
   def limit
   end
 

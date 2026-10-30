@@ -45,6 +45,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::IdentifierMatch),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_identifier")}}
         )
+        # Present only for identifier_expression. All satisfied unique terms, ordered by term_index, with original submitted values and retained assessment witnesses. A duplicate normalized term appears once at its first raw leaf index. The legacy single identifier filter instead returns matched_identifier.
+        field(
+          :matched_identifiers,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::IdentifierTermMatch)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_identifiers")}}
+        )
 
         sig {
           params(
@@ -53,17 +59,27 @@ module NoResponse
             assessments: ::Integer,
             waiting_for: T.nilable(T::Array[Models::Shared::WaitingFor]),
             current: T.nilable(Models::Shared::Account),
-            matched_identifier: T.nilable(Models::Shared::IdentifierMatch)
+            matched_identifier: T.nilable(Models::Shared::IdentifierMatch),
+            matched_identifiers: T.nilable(T::Array[Models::Shared::IdentifierTermMatch])
           )
             .void
         }
-        def initialize(account_id:, latest:, assessments:, waiting_for: nil, current: nil, matched_identifier: nil)
+        def initialize(
+          account_id:,
+          latest:,
+          assessments:,
+          waiting_for: nil,
+          current: nil,
+          matched_identifier: nil,
+          matched_identifiers: nil
+        )
           @account_id = account_id
           @latest = latest
           @assessments = assessments
           @waiting_for = waiting_for
           @current = current
           @matched_identifier = matched_identifier
+          @matched_identifiers = matched_identifiers
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -75,6 +91,7 @@ module NoResponse
           return false unless @waiting_for == other.waiting_for
           return false unless @current == other.current
           return false unless @matched_identifier == other.matched_identifier
+          return false unless @matched_identifiers == other.matched_identifiers
           true
         end
       end

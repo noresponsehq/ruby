@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Bounded distinct-account search for one authenticated workspace/environment. identifier matches any retained admitted assessment of an account, including historical submitted values. email preserves the legacy canonical-mailbox filter. identifier and email cannot be combined. All other filters combine using AND. Typed identifier search uses stable opaque account order; ordinary and legacy email searches retain newest-seen ordering. Pages are live, not a cross-page snapshot. Requires history or investigate authority and identifier-read permission for identifier or email filtering.
+      # Bounded distinct-account search for one authenticated workspace/environment. identifier matches any retained admitted assessment of an account, including historical submitted values. email preserves the legacy canonical-mailbox filter. identifier and email cannot be combined. All other filters combine using AND. Typed identifier search uses stable opaque account order; ordinary and legacy email searches retain newest-seen ordering. Pages are live, not a cross-page snapshot. Requires history or investigate authority and identifier-read permission for identifier, identifier_expression or email filtering. identifier_expression explicitly chooses scope assessment (one whole matching submission) or account (terms may match different retained submissions of one account). At most 8 raw terms and 3 group levels. Mutually exclusive with identifier and email. Expression search uses the same stable opaque account order as typed identifier search.
       class AccountDirectorySearchRequest
         extend T::Sig
         include Crystalline::MetadataFields
@@ -21,7 +21,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("email")}}
         )
-        # Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged.
+        # Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change.
         field(
           :cursor,
           Crystalline::Nilable.new(::String),
@@ -32,6 +32,12 @@ module NoResponse
           :identifier,
           Crystalline::Nilable.new(Models::Shared::IdentifierSearch),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("identifier")}}
+        )
+        # A bounded AND/OR expression over submitted identifiers. Required scope assessment means the entire expression must match one retained assessment. Scope account permits each term to match a different retained assessment of the same account and is accepted only by account search. Exactly one of term, and or or is allowed at every node. Groups contain 2 to 8 operands, with at most 3 nested group levels and 8 raw term occurrences over the entire expression. A root term is allowed. Duplicate terms with the same kind, match rule, namespace and normalized comparison are idempotent, but count toward the raw limit. Match rules default to exact and preserve the existing identifier contract. Only retained submitted identifiers can satisfy a term. Unknown fields, unsupported scopes and malformed or oversized expressions return 400 invalid_request.
+        field(
+          :identifier_expression,
+          Crystalline::Nilable.new(Models::Shared::IdentifierExpression),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("identifier_expression")}}
         )
         # Select accounts with a retained open or in-progress review, or a current review/block account decision with no retained effective account outcome. The server applies this filter before counting and pagination. Requires reviews.read as well as history.read for console members; API keys additionally require management.
         field(
@@ -52,16 +58,26 @@ module NoResponse
             email: T.nilable(::String),
             cursor: T.nilable(::String),
             identifier: T.nilable(Models::Shared::IdentifierSearch),
+            identifier_expression: T.nilable(Models::Shared::IdentifierExpression),
             needs_action: T.nilable(T::Boolean),
             limit: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(account_id: nil, email: nil, cursor: nil, identifier: nil, needs_action: false, limit: 25)
+        def initialize(
+          account_id: nil,
+          email: nil,
+          cursor: nil,
+          identifier: nil,
+          identifier_expression: nil,
+          needs_action: false,
+          limit: 25
+        )
           @account_id = account_id
           @email = email
           @cursor = cursor
           @identifier = identifier
+          @identifier_expression = identifier_expression
           @needs_action = needs_action
           @limit = limit
         end
@@ -73,6 +89,7 @@ module NoResponse
           return false unless @email == other.email
           return false unless @cursor == other.cursor
           return false unless @identifier == other.identifier
+          return false unless @identifier_expression == other.identifier_expression
           return false unless @needs_action == other.needs_action
           return false unless @limit == other.limit
           true
