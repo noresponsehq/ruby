@@ -10,6 +10,7 @@ Your accounts, each with one current risk, and their assessment history.
 * [get](#get) - Read an account's one current risk.
 * [delete](#delete) - Erase an account and its history.
 * [list_assessments](#list_assessments) - Page through one account's unexpired assessments.
+* [list_linked](#list_linked) - List accounts that share a submitted identifier with this account.
 * [record_enforcement](#record_enforcement) - Record what you did to an account in your identity provider.
 * [list_enforcements](#list_enforcements) - Page through account enforcements
 * [record_outcome](#record_outcome) - Record or correct an account outcome
@@ -241,6 +242,52 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::ListAccountAssessmentsResponse)](../../models/operations/listaccountassessmentsresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## list_linked
+
+Lists the other accounts in this environment whose retained assessments submitted an email, phone or customer-namespace username that one of this account's retained assessments also submitted. Matching uses the identifier search rules: exact, canonical and, for email, mailbox. Each linked account names one entry per shared kind, at the strictest basis that links the two accounts, with the original value, assessment_id and submitted_at of each account's newest retained submission of it. Only customer-submitted identifiers link accounts; source-discovered identifiers do not. Expired, deleted and erased assessments link nothing. The account itself is not listed, and an account with no retained submissions answers 200 with empty items. A shared identifier is not verified ownership. Totals are exact below 10000 and capped at 10000. The cursor is opaque, expiring and bound to your workspace, environment and the account; a tampered or expired cursor answers 400 invalid_cursor. Requires the history scope, or investigate with evidence. Read-only and safe to retry.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="listLinkedAccounts" method="get" path="/v1/accounts/{account_id}/linked_accounts" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.accounts.list_linked(account_id: 'acct_7f3a9c', limit: 25)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                                                          | Type                                                                                                                                                                                                               | Required                                                                                                                                                                                                           | Description                                                                                                                                                                                                        | Example                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `account_id`                                                                                                                                                                                                       | *::String*                                                                                                                                                                                                         | :heavy_check_mark:                                                                                                                                                                                                 | The account_id the workspace sends with its assessments, as one path segment (percent-encode '\|' and ':' if the client requires it). A value that does not match the account_id shape answers 400 invalid_request. | acct_7f3a9c                                                                                                                                                                                                        |
+| `limit`                                                                                                                                                                                                            | *T.nilable(::Integer)*                                                                                                                                                                                             | :heavy_minus_sign:                                                                                                                                                                                                 | Linked accounts per page.                                                                                                                                                                                          |                                                                                                                                                                                                                    |
+| `cursor`                                                                                                                                                                                                           | *T.nilable(::String)*                                                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                                                                 | next_cursor from the previous page, unchanged.                                                                                                                                                                     |                                                                                                                                                                                                                    |
+
+### Response
+
+**[T.nilable(Models::Operations::ListLinkedAccountsResponse)](../../models/operations/listlinkedaccountsresponse.md)**
 
 ### Errors
 

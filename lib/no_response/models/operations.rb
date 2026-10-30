@@ -117,6 +117,8 @@ module NoResponse
       autoload :ListInvitesResponse, "no_response/models/operations/listinvites_response.rb"
       autoload :ListKeysRequest, "no_response/models/operations/listkeys_request.rb"
       autoload :ListKeysResponse, "no_response/models/operations/listkeys_response.rb"
+      autoload :ListLinkedAccountsRequest, "no_response/models/operations/listlinkedaccounts_request.rb"
+      autoload :ListLinkedAccountsResponse, "no_response/models/operations/listlinkedaccounts_response.rb"
       autoload :ListListEntriesRequest, "no_response/models/operations/listlistentries_request.rb"
       autoload :ListListEntriesResponse, "no_response/models/operations/listlistentries_response.rb"
       autoload :ListMembersRequest, "no_response/models/operations/listmembers_request.rb"
