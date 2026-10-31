@@ -13,7 +13,7 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v10.0.0"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v10.0.1"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -241,6 +241,8 @@ status 204
 `NoResponse::WebhookVerification.construct_event(payload, headers, secrets, tolerance_seconds: 300, now: nil)` takes the raw body and a hash of headers in any letter case, and returns one typed event class per `type` from `NoResponse::Models::Shared`. It refuses a missing or repeated header, a stale delivery, an unknown key id, a bad signature or a body that is not a known event, and `VerificationError#code` says which: `"missing_header"`, `"duplicate_header"`, `"invalid_timestamp"`, `"unknown_key"`, `"invalid_signature"` or `"invalid_payload"`. Deliveries are at least once: deduplicate on `event.id`. `event.test` is true only on an `assessment.updated` event sent by `send_test_event`; its `data` is a fixed example assessment, so acknowledge it and apply nothing.
 
 ### Late results
+
+Deliveries can overlap. Give `with_account_lock:` a lock on the account that all your workers share. Store the result's risk version inside it. Without the lock, an old decision can undo a newer one. [Overlapping deliveries](https://docs.noresponse.org/guides/late-results#overlapping-deliveries) says what the lock must do.
 
 `account.risk_changed` only wakes your handler. `NoResponse::LateResults.handle_risk_change` verifies the delivery with `construct_event`, reads the account's current risk with `accounts.get` (the event's own decision is ignored), asks your `get_account_state` where the account is in your flow, and acts through Clerk, WorkOS or Auth0 from the table every SDK shares: an onboarding account fails onboarding, a provisional one is refused activation, an active one is restricted on `block` or signed out on `review`, and each also has its sessions revoked. Every action, or `none`, is recorded with `accounts.record_enforcement` at the `risk_version` read.
 

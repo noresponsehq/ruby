@@ -948,7 +948,7 @@ module NoResponse
     }
     def preview(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
       # preview - Preview a list override change without side effects.
-      # Preview canonical list matches and current override effects with settings or management. The result states its bounded coverage and changes no list entries.
+      # Preview canonical list matches and current override effects with settings or management, plus legacy history, or investigate with evidence or detailed. The result states its bounded coverage and changes no list entries.
       request = Models::Operations::PreviewListRequest.new(
         workspace_id: workspace_id,
         environment: environment,

@@ -73,26 +73,81 @@ module NoResponse
       # current risk. A delivery that fails verification raises
       # WebhookVerification::VerificationError before anything is read; any
       # other event, and a test event, does nothing.
+      #
+      # with_account_lock serializes enforcement of one account across your
+      # workers. It is called with the account id and a callable: hold an
+      # exclusive lock on the account, call the callable, store the result's
+      # risk_version and any state change, then release the lock. An exception
+      # must propagate. Inside the lock the handler reads the account's risk and
+      # your state again, so a stale event or listed account cannot undo a newer
+      # decision. Without it, overlapping calls can act on an old decision after
+      # a newer one.
       def handle_risk_change(client, payload, headers, secrets, provider:, get_account_state:, flows: {},
-                             tolerance_seconds: WebhookVerification::DEFAULT_TOLERANCE_SECONDS, now: nil)
+                             tolerance_seconds: WebhookVerification::DEFAULT_TOLERANCE_SECONDS, now: nil,
+                             with_account_lock: nil)
         event = WebhookVerification.construct_event(payload, headers, secrets, tolerance_seconds: tolerance_seconds, now: now)
         if event.type != 'account.risk_changed' || (event.respond_to?(:test) && event.test == true)
           return EnforcementResult.new(event: event, skipped: 'not_actionable', enforcements: [])
         end
 
-        begin
-          account = client.accounts.get(account_id: event.data.account.id).result
-        rescue Models::Errors::NotFoundError
-          return EnforcementResult.new(event: event, skipped: 'account_gone', enforcements: [])
-        end
-        result = enforce_account(client, account, provider: provider, get_account_state: get_account_state, flows: flows)
+        result = under_account_lock(client, event.data.account.id, provider, get_account_state, flows, with_account_lock)
         result.event = event
         result
       end
 
-      # Enforce one account as read: the account a handler fetched, or one from
-      # accounts.list_changed(unenforced: true) when catching up.
-      def enforce_account(client, account, provider:, get_account_state:, flows: {})
+      # Enforce one account: the account a handler fetched, or one from
+      # accounts.list_changed(unenforced: true) when catching up. With
+      # with_account_lock the account is read again inside the lock; without it
+      # the account is enforced as given.
+      def enforce_account(client, account, provider:, get_account_state:, flows: {}, with_account_lock: nil)
+        return under_account_lock(client, account.id, provider, get_account_state, flows, with_account_lock) if with_account_lock
+
+        enforce_as_read(client, account, provider, get_account_state, flows)
+      end
+
+      # Clerk, WorkOS or Auth0, run from the shared action table. token is the
+      # Clerk secret key, WorkOS API key or Auth0 Management API token; domain
+      # is the Auth0 tenant domain. Pass http (a Faraday connection) for a proxy or for tests.
+      def identity_provider(name, token:, domain: nil, base_url: nil, http: nil)
+        name = name.to_s
+        spec = TABLE.fetch('providers')[name] or raise ArgumentError, "unknown identity provider #{name.inspect}"
+        raise ArgumentError, "#{name} needs token" if token.to_s.empty?
+
+        base = base_url || spec.fetch('base_url')
+        if base.include?('{domain}')
+          raise ArgumentError, "#{name} needs domain or base_url" if domain.to_s.empty?
+
+          base = base.sub('{domain}', domain)
+        end
+        TableProvider.new(name, spec, base.sub(%r{/+\z}, ''), token, http || Faraday.new(request: { timeout: 10 }))
+      end
+
+      # Your own user store: one callable per action you support, keyed by
+      # action. A callable may return other actions it ran. An action without one fails.
+      def custom_provider(handlers)
+        CustomProvider.new(handlers.transform_keys(&:to_s))
+      end
+
+      private
+
+      # Read the account's current risk and enforce it, inside with_account_lock when you gave one.
+      def under_account_lock(client, account_id, provider, get_account_state, flows, with_account_lock)
+        enforce = lambda do
+          begin
+            account = client.accounts.get(account_id: account_id).result
+          rescue Models::Errors::NotFoundError
+            next EnforcementResult.new(skipped: 'account_gone', enforcements: [])
+          end
+          enforce_as_read(client, account, provider, get_account_state, flows)
+        end
+        return enforce.call unless with_account_lock
+
+        result = nil
+        with_account_lock.call(account_id, -> { result = enforce.call })
+        result or raise 'with_account_lock returned without running enforce'
+      end
+
+      def enforce_as_read(client, account, provider, get_account_state, flows)
         answer = get_account_state.call(account)
         return EnforcementResult.new(account: account, skipped: 'unknown_user', enforcements: []) if answer.nil?
 
@@ -148,31 +203,6 @@ module NoResponse
         end
         EnforcementResult.new(account: account, state: state, risk_version: risk_version, enforcements: enforcements)
       end
-
-      # Clerk, WorkOS or Auth0, run from the shared action table. token is the
-      # Clerk secret key, WorkOS API key or Auth0 Management API token; domain
-      # is the Auth0 tenant domain. Pass http (a Faraday connection) for a proxy or for tests.
-      def identity_provider(name, token:, domain: nil, base_url: nil, http: nil)
-        name = name.to_s
-        spec = TABLE.fetch('providers')[name] or raise ArgumentError, "unknown identity provider #{name.inspect}"
-        raise ArgumentError, "#{name} needs token" if token.to_s.empty?
-
-        base = base_url || spec.fetch('base_url')
-        if base.include?('{domain}')
-          raise ArgumentError, "#{name} needs domain or base_url" if domain.to_s.empty?
-
-          base = base.sub('{domain}', domain)
-        end
-        TableProvider.new(name, spec, base.sub(%r{/+\z}, ''), token, http || Faraday.new(request: { timeout: 10 }))
-      end
-
-      # Your own user store: one callable per action you support, keyed by
-      # action. A callable may return other actions it ran. An action without one fails.
-      def custom_provider(handlers)
-        CustomProvider.new(handlers.transform_keys(&:to_s))
-      end
-
-      private
 
       # The error_code of a failed action: the provider's code, else its HTTP status, as <provider>.<code>.
       def failure_code(provider, error)

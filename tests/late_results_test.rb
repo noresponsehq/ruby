@@ -158,4 +158,56 @@ class LateResultsTest < Minitest::Test
     assert_raises(ArgumentError) { LateResults.identity_provider('auth0', token: 't') }
     assert_raises(ArgumentError) { LateResults.identity_provider('okta', token: 't') }
   end
+
+  def named(name) = VECTORS['cases'].find { |c| c['name'] == name }
+
+  def test_with_account_lock_covers_the_read_the_provider_change_and_the_record
+    vector = named('workos_restricted_allow_reinstates_when_opted_in')
+    Transcript.current = Transcript.new(vector['exchanges'])
+    http = connection
+    provider = LateResults.identity_provider(vector['provider'], token: VECTORS['provider_token'], http: http)
+    raw, headers = sign(vector['event'])
+    seen = []
+    lock = lambda do |account_id, enforce|
+      seen.push(account_id, Transcript.current.served)
+      enforce.call
+      seen.push(Transcript.current.served)
+    end
+    answer = LateResults::AccountStateAnswer.new(state: 'restricted', user_id: vector['state']['user_id'])
+    options = { provider: provider, get_account_state: ->(_account) { answer }, now: VECTORS['now'],
+                flows: { 'login' => LateResults::FlowPolicy.new(reinstate: true) }, with_account_lock: lock }
+    result = LateResults.handle_risk_change(client(http), raw, headers, SECRETS, **options)
+    assert_equal [vector['event']['data']['account']['id'], 0, vector['exchanges'].length], seen
+    assert_equal ['unrestrict'], result.enforcements.map(&:action)
+    assert_equal vector['event']['id'], result.event.id
+  end
+
+  def test_under_with_account_lock_enforce_account_acts_on_the_current_risk
+    vector = named('restricted_account_records_none')
+    first = JSON.parse(JSON.generate(vector['exchanges'][0]))
+    first['response']['body']['risk_version'] = 1
+    first['response']['body']['decisions_by_flow']['login'] = 'allow'
+    Transcript.current = Transcript.new([first, *vector['exchanges']])
+    http = connection
+    api = client(http)
+    stale = api.accounts.get(account_id: vector['event']['data']['account']['id']).result
+    provider = LateResults.identity_provider(vector['provider'], token: VECTORS['provider_token'], http: http)
+    answer = LateResults::AccountStateAnswer.new(state: 'restricted')
+    options = { provider: provider, get_account_state: ->(_account) { answer },
+                flows: { 'login' => LateResults::FlowPolicy.new(reinstate: true) },
+                with_account_lock: ->(_id, enforce) { enforce.call } }
+    result = LateResults.enforce_account(api, stale, **options)
+    assert Transcript.current.done?, 'every exchange was requested'
+    assert_equal ['none'], result.enforcements.map(&:action)
+  end
+
+  def test_a_with_account_lock_that_does_not_run_enforce_fails
+    account = Struct.new(:id).new('acct_7f3a9c')
+    error = assert_raises(RuntimeError) do
+      options = { provider: LateResults.custom_provider({}), get_account_state: ->(_account) {},
+                  with_account_lock: ->(_id, _enforce) {} }
+      LateResults.enforce_account(nil, account, **options)
+    end
+    assert_match(/without running enforce/, error.message)
+  end
 end
