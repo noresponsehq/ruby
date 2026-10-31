@@ -21,6 +21,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("email")}}
         )
+        # Every account that one of its retained admitted assessments sent an email of this domain or its subdomains, matched as lists match an email_domain entry and with the same identifier-read permission as email. A value that is not a registrable domain is refused with 400. Mutually exclusive with email, identifier and identifier_expression.
+        field(
+          :email_domain,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("email_domain")}}
+        )
         # Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change.
         field(
           :cursor,
@@ -56,6 +62,7 @@ module NoResponse
           params(
             account_id: T.nilable(::String),
             email: T.nilable(::String),
+            email_domain: T.nilable(::String),
             cursor: T.nilable(::String),
             identifier: T.nilable(Models::Shared::IdentifierSearch),
             identifier_expression: T.nilable(Models::Shared::IdentifierExpression),
@@ -67,6 +74,7 @@ module NoResponse
         def initialize(
           account_id: nil,
           email: nil,
+          email_domain: nil,
           cursor: nil,
           identifier: nil,
           identifier_expression: nil,
@@ -75,6 +83,7 @@ module NoResponse
         )
           @account_id = account_id
           @email = email
+          @email_domain = email_domain
           @cursor = cursor
           @identifier = identifier
           @identifier_expression = identifier_expression
@@ -87,6 +96,7 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @account_id == other.account_id
           return false unless @email == other.email
+          return false unless @email_domain == other.email_domain
           return false unless @cursor == other.cursor
           return false unless @identifier == other.identifier
           return false unless @identifier_expression == other.identifier_expression

@@ -57,6 +57,18 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attempted_at"), required: true}}
         )
+        # The assessment an assessment.updated event reported, while that assessment is held. Absent on every other event, on a test event and on a notice that the assessment was erased or expired.
+        field(
+          :assessment_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("assessment_id")}}
+        )
+        # The account an account.risk_changed event reported. Absent on every other event.
+        field(
+          :account_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("account_id")}}
+        )
         # The HTTP status the endpoint answered. Absent when no response was read.
         field(
           :response_code,
@@ -84,6 +96,8 @@ module NoResponse
             status: Models::Shared::WebhookDeliveryAttemptStatus,
             latency_ms: ::Integer,
             attempted_at: ::String,
+            assessment_id: T.nilable(::String),
+            account_id: T.nilable(::String),
             response_code: T.nilable(::Integer),
             failure: T.nilable(Models::Shared::Failure)
           )
@@ -97,6 +111,8 @@ module NoResponse
           status:,
           latency_ms:,
           attempted_at:,
+          assessment_id: nil,
+          account_id: nil,
           response_code: nil,
           failure: nil
         )
@@ -107,6 +123,8 @@ module NoResponse
           @status = status
           @latency_ms = latency_ms
           @attempted_at = attempted_at
+          @assessment_id = assessment_id
+          @account_id = account_id
           @response_code = response_code
           @failure = failure
         end
@@ -121,6 +139,8 @@ module NoResponse
           return false unless @status == other.status
           return false unless @latency_ms == other.latency_ms
           return false unless @attempted_at == other.attempted_at
+          return false unless @assessment_id == other.assessment_id
+          return false unless @account_id == other.account_id
           return false unless @response_code == other.response_code
           return false unless @failure == other.failure
           true

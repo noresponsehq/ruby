@@ -18,6 +18,12 @@ class NoResponse::Models::Shared::AccountDirectorySearchRequest
   def email=(str_)
   end
 
+  def email_domain
+  end
+
+  def email_domain=(str_)
+  end
+
   def cursor
   end
 

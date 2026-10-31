@@ -48,6 +48,18 @@ class NoResponse::Models::Shared::WebhookDeliveryAttempt
   def attempted_at=(str_)
   end
 
+  def assessment_id
+  end
+
+  def assessment_id=(str_)
+  end
+
+  def account_id
+  end
+
+  def account_id=(str_)
+  end
+
   def response_code
   end
 

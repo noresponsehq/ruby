@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: ff8780134bf8ee923ff841bf032f49e0
+  docChecksum: 0561522ed1633ce389f955c4abb41a8b
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 10.0.6
-  configChecksum: ac8295531394d02d7abfc0423af6f526
+  releaseVersion: 10.0.7
+  configChecksum: caacbc002908c84b4819c71daaf83299
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:5991e59dea1927ee7ef0f58c58f7dc60afee25f6
+    last_write_checksum: sha1:d864e06586005497b1b41b21fcc360bf7236507d
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -464,7 +464,7 @@ trackedFiles:
   docs/models/shared/accountdirectorypageitem.md:
     last_write_checksum: sha1:f1c428c465c0665ce5b119e27e57fafa2fe82d02
   docs/models/shared/accountdirectorysearchrequest.md:
-    last_write_checksum: sha1:e2a262c049d796383fb4dbdd20efe0866f34cea1
+    last_write_checksum: sha1:26889cca9134db7853680628b75ee45b39b10aa5
   docs/models/shared/accountenforcementlist.md:
     last_write_checksum: sha1:f066c4c7b65672b53cce5a5354f1a5dac15963db
   docs/models/shared/accountexport.md:
@@ -1150,7 +1150,7 @@ trackedFiles:
   docs/models/shared/webhookaggregaterequest.md:
     last_write_checksum: sha1:55d4dfe729d71933ce4b2d4c832091727dd4a3f3
   docs/models/shared/webhookdeliveryattempt.md:
-    last_write_checksum: sha1:971354dae8b80c3cce9614042a8139eb98341265
+    last_write_checksum: sha1:3c0f38379c796a157106667f40aff835f9e5baa4
   docs/models/shared/webhookdeliveryattemptstatus.md:
     last_write_checksum: sha1:87d3be03628b26eedb542b46d3ac5499a0fcc052
   docs/models/shared/webhookdeliverylist.md:
@@ -2128,9 +2128,9 @@ trackedFiles:
   lib/no_response/models/shared/accountdirectorypageitem.rbi:
     last_write_checksum: sha1:07c9e7aae0a4c87764b6394ace1cc7d570741035
   lib/no_response/models/shared/accountdirectorysearchrequest.rb:
-    last_write_checksum: sha1:720c68ba2d481e224f5861f2dfce6aac3a3d5b37
+    last_write_checksum: sha1:1c6612397cf650a4f2b18142bf8c05d2d93816a9
   lib/no_response/models/shared/accountdirectorysearchrequest.rbi:
-    last_write_checksum: sha1:bcd1949fc2afca2afe02242b2774175430d40cf0
+    last_write_checksum: sha1:74e471827609765b381d02b014f16f7178d1e765
   lib/no_response/models/shared/accountenforcementlist.rb:
     last_write_checksum: sha1:e9d7f3582d7132e322f1b152a62a29a07c8fd8ab
   lib/no_response/models/shared/accountenforcementlist.rbi:
@@ -3500,9 +3500,9 @@ trackedFiles:
   lib/no_response/models/shared/webhookaggregaterequest.rbi:
     last_write_checksum: sha1:5f82f9479883809f2bae006939383ec04e8b81b8
   lib/no_response/models/shared/webhookdeliveryattempt.rb:
-    last_write_checksum: sha1:a1bb6869ad51e46a87c9897ec70cc99c2625e88d
+    last_write_checksum: sha1:3126cd6c158a249f23a547e931a59a28b71035af
   lib/no_response/models/shared/webhookdeliveryattempt.rbi:
-    last_write_checksum: sha1:d75f5cc79c0e045bf445380171c371d1ea6c23a0
+    last_write_checksum: sha1:8b66f2fed116f7cf2b31b0352dd4a1e5a70a0f3d
   lib/no_response/models/shared/webhookdeliveryattemptstatus.rb:
     last_write_checksum: sha1:e38dcbd8488d3d521733617d000661d319722c78
   lib/no_response/models/shared/webhookdeliveryattemptstatus.rbi:
@@ -3612,7 +3612,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:6bce818ae95d640e62749f48f8ee687c51ccb36a
+    last_write_checksum: sha1:95b032ef06f976238299545cb14472a20cb41f5b
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -3642,7 +3642,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:1b3b97bcf7d03965afa23636f0dc1f2683159ac6
   noresponse.gemspec:
-    last_write_checksum: sha1:6c1e4ac3c6fb96bbdf6ed7486b8eaf412bda1cda
+    last_write_checksum: sha1:f64cf45d58cf002b627a471d892a50758475fa1a
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -4642,7 +4642,7 @@ examples:
           limit: 20
       responses:
         "200":
-          application/json: {"endpoint_id": "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9", "items": [{"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 1, "replay": true, "status": "delivered", "response_code": 200, "latency_ms": 184, "attempted_at": "2026-10-22T10:15:02.118Z"}, {"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 2, "replay": false, "status": "failed", "response_code": 500, "failure": "non_2xx", "latency_ms": 96, "attempted_at": "2026-10-22T09:00:31.402Z"}, {"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 1, "replay": false, "status": "failed", "failure": "timeout", "latency_ms": 5000, "attempted_at": "2026-10-22T09:00:00.951Z"}], "next_cursor": "AQAAAABpG1CXAAYqJ2gK4cQAx1dJ2Hk3Q6CjhYbJ9xU8Pz0qRkL1n3VbW2c"}
+          application/json: {"endpoint_id": "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9", "items": [{"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "assessment_id": "asm_01JA2ZD3K4M5N6P7Q8R9S0T1V3", "attempt": 1, "replay": true, "status": "delivered", "response_code": 200, "latency_ms": 184, "attempted_at": "2026-10-22T10:15:02.118Z"}, {"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 2, "replay": false, "status": "failed", "response_code": 500, "failure": "non_2xx", "latency_ms": 96, "attempted_at": "2026-10-22T09:00:31.402Z"}, {"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 1, "replay": false, "status": "failed", "failure": "timeout", "latency_ms": 5000, "attempted_at": "2026-10-22T09:00:00.951Z"}], "next_cursor": "AQAAAABpG1CXAAYqJ2gK4cQAx1dJ2Hk3Q6CjhYbJ9xU8Pz0qRkL1n3VbW2c"}
   replayWebhookDelivery:
     empty:
       parameters:
