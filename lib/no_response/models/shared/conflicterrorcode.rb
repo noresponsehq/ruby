@@ -32,6 +32,7 @@ module NoResponse
           EVALUATION_LIMIT_REACHED = new("evaluation_limit_reached")
           ALREADY_MEMBER = new("already_member")
           MEMBER_LIMIT_REACHED = new("member_limit_reached")
+          OWNER_INVITE_PENDING = new("owner_invite_pending")
           AGGREGATE_ERASED_DATA = new("aggregate_erased_data")
         end
 
