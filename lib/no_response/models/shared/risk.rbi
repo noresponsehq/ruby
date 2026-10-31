@@ -60,6 +60,18 @@ class NoResponse::Models::Shared::Risk
   def block_threshold=(str_)
   end
 
+  def step_up_threshold
+  end
+
+  def step_up_threshold=(str_)
+  end
+
+  def review_threshold
+  end
+
+  def review_threshold=(str_)
+  end
+
   def policy_basis
   end
 

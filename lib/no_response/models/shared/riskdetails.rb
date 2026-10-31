@@ -38,6 +38,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::OnlineAccount)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("accounts")}}
         )
+        # What an identity_attribute_conflict reason weighed: each attribute the records disagree on and the sites reporting it. Absent when the reason did not fire, and on an answer stored before conflicts were recorded. No value is served.
+        field(
+          :attribute_conflicts,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RiskDetailsAttributeConflict)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attribute_conflicts")}}
+        )
 
         sig {
           params(
@@ -45,16 +51,25 @@ module NoResponse
             breaches: T.nilable(T::Array[Models::Shared::Breach]),
             breach_names: T.nilable(T::Array[Models::Shared::RiskDetailsBreachName]),
             events: T.nilable(T::Array[Models::Shared::RiskDetailsEvent]),
-            accounts: T.nilable(T::Array[Models::Shared::OnlineAccount])
+            accounts: T.nilable(T::Array[Models::Shared::OnlineAccount]),
+            attribute_conflicts: T.nilable(T::Array[Models::Shared::RiskDetailsAttributeConflict])
           )
             .void
         }
-        def initialize(phone_names: nil, breaches: nil, breach_names: nil, events: nil, accounts: nil)
+        def initialize(
+          phone_names: nil,
+          breaches: nil,
+          breach_names: nil,
+          events: nil,
+          accounts: nil,
+          attribute_conflicts: nil
+        )
           @phone_names = phone_names
           @breaches = breaches
           @breach_names = breach_names
           @events = events
           @accounts = accounts
+          @attribute_conflicts = attribute_conflicts
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -65,6 +80,7 @@ module NoResponse
           return false unless @breach_names == other.breach_names
           return false unless @events == other.events
           return false unless @accounts == other.accounts
+          return false unless @attribute_conflicts == other.attribute_conflicts
           true
         end
       end

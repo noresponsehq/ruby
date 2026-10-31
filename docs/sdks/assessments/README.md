@@ -70,7 +70,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
+    verified: true,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -143,7 +143,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
+    verified: true,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -246,7 +246,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
+    verified: true,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',
@@ -375,7 +375,7 @@ res = s.assessments.create(body: Models::Shared::AssessmentRequest.new(
     session_created_at: '2026-10-14T08:57:00.000Z',
     auth_time: '2026-10-14T08:55:00.000Z',
     account_created_at: '2026-10-14T08:56:00.000Z',
-    verified: false,
+    verified: true,
     mfa: Models::Shared::AuthContextMfa.new(
       methods: [
         'totp',

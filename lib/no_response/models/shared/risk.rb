@@ -80,6 +80,18 @@ module NoResponse
           Crystalline::Nilable.new(::Integer),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("block_threshold")}}
         )
+        # The score at which this answer's flow starts to recommend step_up. Absent from an answer stored before it was recorded.
+        field(
+          :step_up_threshold,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("step_up_threshold")}}
+        )
+        # The score at which this answer's flow starts to recommend review. An answer nothing answered recommends review below it, with confidence unavailable. Absent from an answer stored before it was recorded.
+        field(
+          :review_threshold,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("review_threshold")}}
+        )
         # Labels the v0 policy as hand-authored and not statistically validated.
         field(
           :policy_basis,
@@ -110,6 +122,8 @@ module NoResponse
             coverage: Models::Shared::RiskCoverage,
             block: T.nilable(T::Boolean),
             block_threshold: T.nilable(::Integer),
+            step_up_threshold: T.nilable(::Integer),
+            review_threshold: T.nilable(::Integer),
             policy_basis: ::String,
             summary: T.nilable(Models::Shared::RiskSummary),
             details: T.nilable(Models::Shared::RiskDetails)
@@ -126,6 +140,8 @@ module NoResponse
           coverage:,
           block: nil,
           block_threshold: nil,
+          step_up_threshold: nil,
+          review_threshold: nil,
           policy_basis: "heuristic_unvalidated",
           summary: nil,
           details: nil
@@ -139,6 +155,8 @@ module NoResponse
           @coverage = coverage
           @block = block
           @block_threshold = block_threshold
+          @step_up_threshold = step_up_threshold
+          @review_threshold = review_threshold
           unless policy_basis == "heuristic_unvalidated"
             raise ArgumentError, "Invalid value for policy_basis"
           end
@@ -160,6 +178,8 @@ module NoResponse
           return false unless @coverage == other.coverage
           return false unless @block == other.block
           return false unless @block_threshold == other.block_threshold
+          return false unless @step_up_threshold == other.step_up_threshold
+          return false unless @review_threshold == other.review_threshold
           return false unless @policy_basis == other.policy_basis
           return false unless @summary == other.summary
           return false unless @details == other.details

@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::RiskDetails
 
   def accounts=(str_)
   end
+
+  def attribute_conflicts
+  end
+
+  def attribute_conflicts=(str_)
+  end
 end
