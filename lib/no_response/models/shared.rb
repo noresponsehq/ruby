@@ -90,6 +90,7 @@ module NoResponse
       autoload :BadRequestErrorCode, "no_response/models/shared/badrequesterrorcode.rb"
       autoload :Band, "no_response/models/shared/band.rb"
       autoload :Breach, "no_response/models/shared/breach.rb"
+      autoload :BreachConduct, "no_response/models/shared/breachconduct.rb"
       autoload :BreachExposed, "no_response/models/shared/breachexposed.rb"
       autoload :BreachKind, "no_response/models/shared/breachkind.rb"
       autoload :BreachSelector, "no_response/models/shared/breachselector.rb"

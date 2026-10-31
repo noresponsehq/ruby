@@ -64,6 +64,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::BreachExposed)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("exposed")}}
         )
+        # What this table's rows record against the matched email or username: the tables behind the forum_sanctioned and prior_payment_abuse reasons. Absent when the rows record none, for a table matched on an IP address, and from an answer stored before it was recorded.
+        field(
+          :conduct,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::BreachConduct)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("conduct")}}
+        )
 
         sig {
           params(
@@ -74,11 +80,22 @@ module NoResponse
             category: T.nilable(::String),
             year: T.nilable(::Integer),
             month: T.nilable(::Integer),
-            exposed: T.nilable(T::Array[Models::Shared::BreachExposed])
+            exposed: T.nilable(T::Array[Models::Shared::BreachExposed]),
+            conduct: T.nilable(T::Array[Models::Shared::BreachConduct])
           )
             .void
         }
-        def initialize(name:, kind:, matched_on:, domain: nil, category: nil, year: nil, month: nil, exposed: nil)
+        def initialize(
+          name:,
+          kind:,
+          matched_on:,
+          domain: nil,
+          category: nil,
+          year: nil,
+          month: nil,
+          exposed: nil,
+          conduct: nil
+        )
           @name = name
           @kind = kind
           @matched_on = matched_on
@@ -87,6 +104,7 @@ module NoResponse
           @year = year
           @month = month
           @exposed = exposed
+          @conduct = conduct
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -100,6 +118,7 @@ module NoResponse
           return false unless @year == other.year
           return false unless @month == other.month
           return false unless @exposed == other.exposed
+          return false unless @conduct == other.conduct
           true
         end
       end

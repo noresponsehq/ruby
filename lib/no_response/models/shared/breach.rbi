@@ -53,4 +53,10 @@ class NoResponse::Models::Shared::Breach
 
   def exposed=(str_)
   end
+
+  def conduct
+  end
+
+  def conduct=(str_)
+  end
 end

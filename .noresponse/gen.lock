@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: e9c16a8aa0191b0c9d820ae350bad16b
+  docChecksum: f873783882ce2d7c28a513beb61861fd
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 10.0.2
-  configChecksum: 8318b07f032f585f6fa3d7d20c5b0350
+  releaseVersion: 10.0.3
+  configChecksum: ca0ede1bdce372d06caeb657c3c8964f
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:91c90d706b8193e7e1555b0f76d8a71056b53a68
+    last_write_checksum: sha1:a46193cc1f702417205b709bf812ea3ad1344ec1
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -614,7 +614,9 @@ trackedFiles:
   docs/models/shared/band.md:
     last_write_checksum: sha1:05ad9cf7375126398a5eb96612aed265ba700fb0
   docs/models/shared/breach.md:
-    last_write_checksum: sha1:85f8877fdcb39926a72f955515a774acf388d501
+    last_write_checksum: sha1:936057f78c1819a8d3bb3c1f343e482567938839
+  docs/models/shared/breachconduct.md:
+    last_write_checksum: sha1:fcb8d5458e2eeee697bd0f475b26fb457752775a
   docs/models/shared/breachexposed.md:
     last_write_checksum: sha1:9df646aac8ed349cf6ffc2142961b70ba8c43eaf
   docs/models/shared/breachkind.md:
@@ -2070,7 +2072,7 @@ trackedFiles:
   lib/no_response/models/operations/updatesettings_response.rbi:
     last_write_checksum: sha1:0834c9903587b61cbe3cd8bee544792b89c08362
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:4cb5cccf1b0e31086494f268040ec424fd82382e
+    last_write_checksum: sha1:1d2aa28fe96218e8bbb86e11162cd41331fed8b8
   lib/no_response/models/shared/account.rb:
     last_write_checksum: sha1:b9a77c4d6d6b9a55abd897645bdd74d79213a938
   lib/no_response/models/shared/account.rbi:
@@ -2424,9 +2426,13 @@ trackedFiles:
   lib/no_response/models/shared/band.rbi:
     last_write_checksum: sha1:d0ab4781bb4ee90e4731ecd087da4adfddb1e596
   lib/no_response/models/shared/breach.rb:
-    last_write_checksum: sha1:4c2e591f3f1020c518f721852aa140bccef5273d
+    last_write_checksum: sha1:caf258f1eca592711958285b605e6b3d8762e096
   lib/no_response/models/shared/breach.rbi:
-    last_write_checksum: sha1:870e01bb073905149cc8a98509653faad309f6c2
+    last_write_checksum: sha1:bca1259ed6447dc3bbcbd460acc2b4f762b3816c
+  lib/no_response/models/shared/breachconduct.rb:
+    last_write_checksum: sha1:64a241e9876c4d230a79505d370ac419dc88d9f1
+  lib/no_response/models/shared/breachconduct.rbi:
+    last_write_checksum: sha1:5edc29b382f3f1c81a7171b24d983fe38d01726d
   lib/no_response/models/shared/breachexposed.rb:
     last_write_checksum: sha1:e32303a0c470a8cc84c51b74f33db5085476da89
   lib/no_response/models/shared/breachexposed.rbi:
@@ -3600,7 +3606,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:604ae4dabeafe69c6572647237a7ad85b6c07ec0
+    last_write_checksum: sha1:20f827a31cafeec0124e6c9e8fdb4202309a0c46
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -3630,7 +3636,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:1b3b97bcf7d03965afa23636f0dc1f2683159ac6
   noresponse.gemspec:
-    last_write_checksum: sha1:10ada56c3e42b476852a8304894718d5bc51abe9
+    last_write_checksum: sha1:13422d2aa76ecc480c2ab4757bcb2e59ca75ae5d
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
