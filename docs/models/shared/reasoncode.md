@@ -77,3 +77,5 @@ custom = ReasonCode.deserialize("custom_value")
 | `NATIONALITY_MISMATCH`          | nationality_mismatch            |
 | `MINOR_IDENTITY`                | minor_identity                  |
 | `REPORTED_ACCOUNT_ABUSE`        | reported_account_abuse          |
+| `BREACH_CITY_MATCH`             | breach_city_match               |
+| `BREACH_CITY_MISMATCH`          | breach_city_mismatch            |

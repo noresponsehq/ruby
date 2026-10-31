@@ -67,6 +67,8 @@ module NoResponse
           NATIONALITY_MISMATCH = new("nationality_mismatch")
           MINOR_IDENTITY = new("minor_identity")
           REPORTED_ACCOUNT_ABUSE = new("reported_account_abuse")
+          BREACH_CITY_MATCH = new("breach_city_match")
+          BREACH_CITY_MISMATCH = new("breach_city_mismatch")
         end
 
         open!
