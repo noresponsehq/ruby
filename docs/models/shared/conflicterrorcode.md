@@ -42,3 +42,4 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `EVALUATION_LIMIT_REACHED`       | evaluation_limit_reached         |
 | `ALREADY_MEMBER`                 | already_member                   |
 | `MEMBER_LIMIT_REACHED`           | member_limit_reached             |
+| `AGGREGATE_ERASED_DATA`          | aggregate_erased_data            |

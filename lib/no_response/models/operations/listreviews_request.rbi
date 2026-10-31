@@ -54,12 +54,6 @@ class NoResponse::Models::Operations::ListReviewsRequest
   def assignee_principal_id=(str_)
   end
 
-  def account_id
-  end
-
-  def account_id=(str_)
-  end
-
   def limit
   end
 

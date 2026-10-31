@@ -289,6 +289,7 @@ module NoResponse
       autoload :ReviewCommentRequest, "no_response/models/shared/reviewcommentrequest.rb"
       autoload :ReviewCreateRequest, "no_response/models/shared/reviewcreaterequest.rb"
       autoload :ReviewList, "no_response/models/shared/reviewlist.rb"
+      autoload :ReviewQueryRequest, "no_response/models/shared/reviewqueryrequest.rb"
       autoload :ReviewResolutionList, "no_response/models/shared/reviewresolutionlist.rb"
       autoload :ReviewResolveRequest, "no_response/models/shared/reviewresolverequest.rb"
       autoload :ReviewStatus, "no_response/models/shared/reviewstatus.rb"

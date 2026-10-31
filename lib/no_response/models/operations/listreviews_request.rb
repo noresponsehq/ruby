@@ -57,12 +57,6 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'query_param': {'field_name': "assignee_principal_id", 'style': "form", 'explode': true}}
         )
-        # Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination and bound into the cursor.
-        field(
-          :account_id,
-          Crystalline::Nilable.new(::String),
-          {'query_param': {'field_name': "account_id", 'style': "form", 'explode': true}}
-        )
 
         field(
           :limit,
@@ -80,7 +74,6 @@ module NoResponse
             assignee: T.nilable(::String),
             unassigned: T.nilable(T::Boolean),
             assignee_principal_id: T.nilable(::String),
-            account_id: T.nilable(::String),
             limit: T.nilable(::Integer)
           )
             .void
@@ -94,7 +87,6 @@ module NoResponse
           assignee: nil,
           unassigned: nil,
           assignee_principal_id: nil,
-          account_id: nil,
           limit: 50
         )
           @workspace_id = workspace_id
@@ -105,7 +97,6 @@ module NoResponse
           @assignee = assignee
           @unassigned = unassigned
           @assignee_principal_id = assignee_principal_id
-          @account_id = account_id
           @limit = limit
         end
 
@@ -120,7 +111,6 @@ module NoResponse
           return false unless @assignee == other.assignee
           return false unless @unassigned == other.unassigned
           return false unless @assignee_principal_id == other.assignee_principal_id
-          return false unless @account_id == other.account_id
           return false unless @limit == other.limit
           true
         end

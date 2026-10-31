@@ -22,10 +22,11 @@ Collaborative review cases, comments and linked subjects.
 * [list_subjects](#list_subjects) - List retained subjects linked to a review.
 * [add_subject](#add_subject) - Link retained tenant-local evidence to an investigation.
 * [delete_subject](#delete_subject) - Remove a linked subject using the current review version.
+* [query](#query) - Query retained reviews without identifiers in URLs.
 
 ## list
 
-List retained investigation reviews using filters and an authenticated cursor. Optional account_id selects one exact account in this environment before pagination. All filters are bound into the cursor.
+List retained investigation reviews using filters and an authenticated cursor. Use reviews.query to filter by account_id in a JSON body. All filters are bound into the cursor.
 
 ### Example Usage
 
@@ -801,6 +802,57 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::DeleteReviewSubjectResponse)](../../models/operations/deletereviewsubjectresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## query
+
+Query retained investigation reviews using a JSON body, including an exact account_id filter. All filters are bound into the cursor.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="queryReviews" method="post" path="/v1/workspaces/{workspace_id}/reviews/{environment}/query" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.reviews.query(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: Models::Shared::KeyEnvironment::LIVE, body: Models::Shared::ReviewQueryRequest.new(
+  account_id: 'acct_7f3a9c',
+  assignee: 'usr_customer_admin',
+  assignee_principal_id: 'mem_01JA2Z8K6Q4V7W9XBCDEFGHJKM',
+  cursor: 'eyJvIjoyMH0'
+))
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                              | Type                                                                                                                                                                   | Required                                                                                                                                                               | Description                                                                                                                                                            | Example                                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `workspace_id`                                                                                                                                                         | *::String*                                                                                                                                                             | :heavy_check_mark:                                                                                                                                                     | Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.                                     | tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                         |
+| `environment`                                                                                                                                                          | [Models::Shared::KeyEnvironment](../../models/shared/keyenvironment.md)                                                                                                | :heavy_check_mark:                                                                                                                                                     | The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404. |                                                                                                                                                                        |
+| `body`                                                                                                                                                                 | [Models::Shared::ReviewQueryRequest](../../models/shared/reviewqueryrequest.md)                                                                                        | :heavy_check_mark:                                                                                                                                                     | N/A                                                                                                                                                                    |                                                                                                                                                                        |
+
+### Response
+
+**[T.nilable(Models::Operations::QueryReviewsResponse)](../../models/operations/queryreviewsresponse.md)**
 
 ### Errors
 

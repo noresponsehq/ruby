@@ -149,6 +149,8 @@ module NoResponse
       autoload :PublishPolicyEvaluationRequest, "no_response/models/operations/publishpolicyevaluation_request.rb"
       autoload :PublishPolicyEvaluationResponse, "no_response/models/operations/publishpolicyevaluation_response.rb"
       autoload :QueryAccountAssessmentsResponse, "no_response/models/operations/queryaccountassessments_response.rb"
+      autoload :QueryReviewsRequest, "no_response/models/operations/queryreviews_request.rb"
+      autoload :QueryReviewsResponse, "no_response/models/operations/queryreviews_response.rb"
       autoload :RecordAccountOutcomeRequest, "no_response/models/operations/recordaccountoutcome_request.rb"
       autoload :RecordAccountOutcomeResponse, "no_response/models/operations/recordaccountoutcome_response.rb"
       autoload :RecordAssessmentOutcomeRequest, "no_response/models/operations/recordassessmentoutcome_request.rb"
