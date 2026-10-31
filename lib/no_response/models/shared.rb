@@ -236,6 +236,7 @@ module NoResponse
       autoload :OperationalAggregateBucket, "no_response/models/shared/operationalaggregatebucket.rb"
       autoload :OperationalAggregateQueue, "no_response/models/shared/operationalaggregatequeue.rb"
       autoload :OperationalAggregateTotals, "no_response/models/shared/operationalaggregatetotals.rb"
+      autoload :Origin, "no_response/models/shared/origin.rb"
       autoload :Outcome, "no_response/models/shared/outcome.rb"
       autoload :Outcomes, "no_response/models/shared/outcomes.rb"
       autoload :OutcomesByOutcome, "no_response/models/shared/outcomesbyoutcome.rb"

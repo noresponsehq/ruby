@@ -42,6 +42,12 @@ class NoResponse::Models::Shared::AssessmentSearchRequest
   def status=(str_)
   end
 
+  def origin
+  end
+
+  def origin=(str_)
+  end
+
   def recommendation
   end
 

@@ -46,6 +46,17 @@ module NoResponse
             }
           }
         )
+        # api (the default) searches the assessments your integration sent. lookup searches the assessments your team ran by hand on the console's Lookup page. The API sets an assessment's origin from the credential that sent it. A lookup is not in any other list, count, webhook event or account.
+        field(
+          :origin,
+          Crystalline::Nilable.new(Models::Shared::Origin),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("origin"),
+              'decoder': ::NoResponse::Utils.enum_from_string(Models::Shared::Origin, true)
+            }
+          }
+        )
         # The recommended action: allow, step_up or review. Your application applies it.
         field(
           :recommendation,
@@ -208,6 +219,7 @@ module NoResponse
             email: T.nilable(::String),
             flow: T.nilable(Models::Shared::Flow),
             status: T.nilable(Models::Shared::Status),
+            origin: T.nilable(Models::Shared::Origin),
             recommendation: T.nilable(Models::Shared::Recommendation),
             cursor: T.nilable(::String),
             response_mode: T.nilable(Models::Shared::ResponseMode),
@@ -236,6 +248,7 @@ module NoResponse
           email: nil,
           flow: nil,
           status: nil,
+          origin: nil,
           recommendation: nil,
           cursor: nil,
           response_mode: nil,
@@ -261,6 +274,7 @@ module NoResponse
           @email = email
           @flow = flow
           @status = status
+          @origin = origin
           @recommendation = recommendation
           @cursor = cursor
           @response_mode = response_mode
@@ -290,6 +304,7 @@ module NoResponse
           return false unless @email == other.email
           return false unless @flow == other.flow
           return false unless @status == other.status
+          return false unless @origin == other.origin
           return false unless @recommendation == other.recommendation
           return false unless @cursor == other.cursor
           return false unless @response_mode == other.response_mode
