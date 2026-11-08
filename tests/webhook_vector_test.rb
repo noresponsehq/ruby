@@ -24,7 +24,10 @@ class WebhookVectorTest < Minitest::Test
     'workspace.deleted' => Shared::WorkspaceDeletedEvent,
     'webhook_endpoint.disabled' => Shared::WebhookEndpointDisabledEvent,
     'account.risk_changed' => Shared::AccountRiskChangedEvent,
-    'audit.event' => Shared::AuditEventEvent
+    'audit.event' => Shared::AuditEventEvent,
+    'screening.completed' => Shared::ScreeningCompletedEvent,
+    'attendee.flagged' => Shared::AttendeeFlaggedEvent,
+    'attendee.decided' => Shared::AttendeeDecidedEvent
   }.freeze
 
   def test_the_vector_verifies_into_a_typed_assessment_event

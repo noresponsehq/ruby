@@ -45,7 +45,10 @@ module NoResponse
         "workspace.deleted" => Models::Shared::WorkspaceDeletedEvent,
         "webhook_endpoint.disabled" => Models::Shared::WebhookEndpointDisabledEvent,
         "account.risk_changed" => Models::Shared::AccountRiskChangedEvent,
-        "audit.event" => Models::Shared::AuditEventEvent
+        "audit.event" => Models::Shared::AuditEventEvent,
+        "screening.completed" => Models::Shared::ScreeningCompletedEvent,
+        "attendee.flagged" => Models::Shared::AttendeeFlaggedEvent,
+        "attendee.decided" => Models::Shared::AttendeeDecidedEvent
       }
     )
     private_constant :EVENT_TYPE
@@ -76,7 +79,10 @@ module NoResponse
               Models::Shared::WorkspaceDeletedEvent,
               Models::Shared::WebhookEndpointDisabledEvent,
               Models::Shared::AccountRiskChangedEvent,
-              Models::Shared::AuditEventEvent
+              Models::Shared::AuditEventEvent,
+              Models::Shared::ScreeningCompletedEvent,
+              Models::Shared::AttendeeFlaggedEvent,
+              Models::Shared::AttendeeDecidedEvent
             )
           )
       end

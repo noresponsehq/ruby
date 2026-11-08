@@ -13,7 +13,7 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v10.0.11"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v10.0.12"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -232,6 +232,12 @@ when NoResponse::Models::Shared::WorkspaceDeletedEvent
   # the workspace is deleted: the last event this endpoint receives, once per event.data.environment
 when NoResponse::Models::Shared::WebhookEndpointDisabledEvent
   # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
+when NoResponse::Models::Shared::ScreeningCompletedEvent
+  # a screening of an event finished: counts by band, no footprint and partial coverage; it names no attendee
+when NoResponse::Models::Shared::AttendeeFlaggedEvent
+  # a screening flagged event.data.attendee_id: its highest band and match state, never what was posted
+when NoResponse::Models::Shared::AttendeeDecidedEvent
+  # a reviewer marked the attendee cleared, watch or escalated; keep the latest decided_at per attendee
 when NoResponse::Models::Shared::AccountRiskChangedEvent
   # the one event to act on: a flow's decision changed, at event.data.account.risk_version.
   # This verifier alone does not enforce it: use handle_risk_change (below) as this endpoint's receiver.
