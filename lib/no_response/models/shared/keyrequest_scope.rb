@@ -24,6 +24,7 @@ module NoResponse
           POLICY_PUBLISH = new("policy_publish")
           MEMBERS = new("members")
           MEMBERS_MANAGE = new("members_manage")
+          EVENTS = new("events")
         end
       end
     end

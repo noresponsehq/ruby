@@ -1,0 +1,104 @@
+# typed: true
+# frozen_string_literal: true
+
+class NoResponse::Models::Shared::Screening
+  extend ::Crystalline::MetadataFields::ClassMethods
+end
+
+class NoResponse::Models::Shared::Screening
+  def id
+  end
+
+  def id=(str_)
+  end
+
+  def event_id
+  end
+
+  def event_id=(str_)
+  end
+
+  def environment
+  end
+
+  def environment=(str_)
+  end
+
+  def status
+  end
+
+  def status=(str_)
+  end
+
+  def depth
+  end
+
+  def depth=(str_)
+  end
+
+  def platforms
+  end
+
+  def platforms=(str_)
+  end
+
+  def requested_by
+  end
+
+  def requested_by=(str_)
+  end
+
+  def created_at
+  end
+
+  def created_at=(str_)
+  end
+
+  def expires_at
+  end
+
+  def expires_at=(str_)
+  end
+
+  def attendees_total
+  end
+
+  def attendees_total=(str_)
+  end
+
+  def attendees_done
+  end
+
+  def attendees_done=(str_)
+  end
+
+  def attendees_flagged
+  end
+
+  def attendees_flagged=(str_)
+  end
+
+  def attendees_failed
+  end
+
+  def attendees_failed=(str_)
+  end
+
+  def started_at
+  end
+
+  def started_at=(str_)
+  end
+
+  def finished_at
+  end
+
+  def finished_at=(str_)
+  end
+
+  def error_code
+  end
+
+  def error_code=(str_)
+  end
+end

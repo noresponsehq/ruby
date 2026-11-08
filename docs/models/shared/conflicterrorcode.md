@@ -44,3 +44,6 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `MEMBER_LIMIT_REACHED`           | member_limit_reached             |
 | `OWNER_INVITE_PENDING`           | owner_invite_pending             |
 | `AGGREGATE_ERASED_DATA`          | aggregate_erased_data            |
+| `EVENT_CONFLICT`                 | event_conflict                   |
+| `EVENT_LIMIT_REACHED`            | event_limit_reached              |
+| `SCREENING_UNAVAILABLE`          | screening_unavailable            |

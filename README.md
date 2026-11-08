@@ -13,7 +13,7 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v10.0.9"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v10.0.10"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -55,6 +55,7 @@ Every method returns an envelope: `result` holds the object and `headers` the re
 | --- | --- |
 | Configure this client and explore its methods | [Ruby SDK guide](https://docs.noresponse.org/sdks/ruby) |
 | Act when an account's decision changes | [Late results](https://docs.noresponse.org/guides/late-results) |
+| Screen an event's attendees and record decisions | [Events and screenings](https://docs.noresponse.org/reference/events) |
 | Explore request and response fields | [API reference](https://docs.noresponse.org/api-reference) |
 
 <details>

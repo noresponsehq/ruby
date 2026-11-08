@@ -21,6 +21,7 @@ module NoResponse
   autoload :Exports, "no_response/exports"
   autoload :Evaluations, "no_response/evaluations"
   autoload :Operations, "no_response/operations"
+  autoload :Events, "no_response/events"
 
   module Models
     autoload :Shared, "no_response/models/shared"

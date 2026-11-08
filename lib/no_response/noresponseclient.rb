@@ -33,7 +33,8 @@ module NoResponse
       :erasures,
       :exports,
       :evaluations,
-      :operations
+      :operations,
+      :events
     )
 
     # Instantiates the SDK, configuring it with the provided parameters.
@@ -124,6 +125,7 @@ module NoResponse
       @exports = Exports.new(@sdk_configuration)
       @evaluations = Evaluations.new(@sdk_configuration)
       @operations = Operations.new(@sdk_configuration)
+      @events = Events.new(@sdk_configuration)
     end
 
     sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }

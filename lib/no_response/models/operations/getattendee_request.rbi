@@ -1,0 +1,32 @@
+# typed: true
+# frozen_string_literal: true
+
+class NoResponse::Models::Operations::GetAttendeeRequest
+  extend ::Crystalline::MetadataFields::ClassMethods
+end
+
+class NoResponse::Models::Operations::GetAttendeeRequest
+  def workspace_id
+  end
+
+  def workspace_id=(str_)
+  end
+
+  def environment
+  end
+
+  def environment=(str_)
+  end
+
+  def event_id
+  end
+
+  def event_id=(str_)
+  end
+
+  def attendee_id
+  end
+
+  def attendee_id=(str_)
+  end
+end
