@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, and the sources it refuses. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it.
+      # One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, the sources it refuses, and the daily cap on screening spend. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it.
       class Settings
         extend T::Sig
         include Crystalline::MetadataFields
@@ -63,6 +63,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("updated_at")}}
         )
+        # The most the environment's screenings may spend in one UTC day, in minor units of USD (cents), 0 to 100000000; null is no cap. Default 50000. A screening whose estimated_spend exceeds the cap less the day's recorded spend and what open screenings may still spend answers 409 screening_cap_exceeded.
+        field(
+          :screening_daily_cap,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("screening_daily_cap"), required: true}}
+        )
 
         sig {
           params(
@@ -73,7 +79,8 @@ module NoResponse
             flows: Models::Shared::SettingsFlows,
             refused_sources: T::Array[Models::Shared::SourceId],
             updated_by: T.nilable(::String),
-            updated_at: T.nilable(::String)
+            updated_at: T.nilable(::String),
+            screening_daily_cap: T.nilable(::Integer)
           )
             .void
         }
@@ -85,7 +92,8 @@ module NoResponse
           flows:,
           refused_sources:,
           updated_by: nil,
-          updated_at: nil
+          updated_at: nil,
+          screening_daily_cap: nil
         )
           @workspace_id = workspace_id
           @environment = environment
@@ -95,6 +103,7 @@ module NoResponse
           @refused_sources = refused_sources
           @updated_by = updated_by
           @updated_at = updated_at
+          @screening_daily_cap = screening_daily_cap
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -108,6 +117,7 @@ module NoResponse
           return false unless @refused_sources == other.refused_sources
           return false unless @updated_by == other.updated_by
           return false unless @updated_at == other.updated_at
+          return false unless @screening_daily_cap == other.screening_daily_cap
           true
         end
       end

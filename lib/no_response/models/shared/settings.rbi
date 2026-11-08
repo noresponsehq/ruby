@@ -53,4 +53,10 @@ class NoResponse::Models::Shared::Settings
 
   def updated_at=(str_)
   end
+
+  def screening_daily_cap
+  end
+
+  def screening_daily_cap=(str_)
+  end
 end

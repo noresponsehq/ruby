@@ -38,6 +38,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("change_reason")}}
         )
+        # Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days.
+        field(
+          :screening_daily_cap,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("screening_daily_cap")}}
+        )
 
         sig {
           params(
@@ -45,7 +51,8 @@ module NoResponse
             refused_sources: T.nilable(T::Array[Models::Shared::SourceId]),
             flows: T.nilable(Models::Shared::SettingsRequestFlows),
             expected_policy_version: T.nilable(::Integer),
-            change_reason: T.nilable(::String)
+            change_reason: T.nilable(::String),
+            screening_daily_cap: T.nilable(::Integer)
           )
             .void
         }
@@ -54,13 +61,15 @@ module NoResponse
           refused_sources: nil,
           flows: nil,
           expected_policy_version: nil,
-          change_reason: nil
+          change_reason: nil,
+          screening_daily_cap: nil
         )
           @retention_days = retention_days
           @refused_sources = refused_sources
           @flows = flows
           @expected_policy_version = expected_policy_version
           @change_reason = change_reason
+          @screening_daily_cap = screening_daily_cap
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -71,6 +80,7 @@ module NoResponse
           return false unless @flows == other.flows
           return false unless @expected_policy_version == other.expected_policy_version
           return false unless @change_reason == other.change_reason
+          return false unless @screening_daily_cap == other.screening_daily_cap
           true
         end
       end

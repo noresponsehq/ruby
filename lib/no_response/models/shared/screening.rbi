@@ -84,6 +84,18 @@ class NoResponse::Models::Shared::Screening
   def attendees_failed=(str_)
   end
 
+  def estimated_spend
+  end
+
+  def estimated_spend=(str_)
+  end
+
+  def spent
+  end
+
+  def spent=(str_)
+  end
+
   def started_at
   end
 

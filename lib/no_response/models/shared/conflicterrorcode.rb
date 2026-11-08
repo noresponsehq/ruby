@@ -36,6 +36,7 @@ module NoResponse
           AGGREGATE_ERASED_DATA = new("aggregate_erased_data")
           EVENT_CONFLICT = new("event_conflict")
           EVENT_LIMIT_REACHED = new("event_limit_reached")
+          SCREENING_CAP_EXCEEDED = new("screening_cap_exceeded")
           SCREENING_UNAVAILABLE = new("screening_unavailable")
         end
 

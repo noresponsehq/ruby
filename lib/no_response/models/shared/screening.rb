@@ -100,6 +100,18 @@ module NoResponse
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_failed"), required: true}}
         )
+        # What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap.
+        field(
+          :estimated_spend,
+          ::Integer,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("estimated_spend"), required: true}}
+        )
+        # What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing.
+        field(
+          :spent,
+          ::Integer,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("spent"), required: true}}
+        )
 
         field(
           :started_at,
@@ -134,6 +146,8 @@ module NoResponse
             attendees_done: ::Integer,
             attendees_flagged: ::Integer,
             attendees_failed: ::Integer,
+            estimated_spend: ::Integer,
+            spent: ::Integer,
             started_at: T.nilable(::String),
             finished_at: T.nilable(::String),
             error_code: T.nilable(::String)
@@ -154,6 +168,8 @@ module NoResponse
           attendees_done:,
           attendees_flagged:,
           attendees_failed:,
+          estimated_spend:,
+          spent:,
           started_at: nil,
           finished_at: nil,
           error_code: nil
@@ -171,6 +187,8 @@ module NoResponse
           @attendees_done = attendees_done
           @attendees_flagged = attendees_flagged
           @attendees_failed = attendees_failed
+          @estimated_spend = estimated_spend
+          @spent = spent
           @started_at = started_at
           @finished_at = finished_at
           @error_code = error_code
@@ -192,6 +210,8 @@ module NoResponse
           return false unless @attendees_done == other.attendees_done
           return false unless @attendees_flagged == other.attendees_flagged
           return false unless @attendees_failed == other.attendees_failed
+          return false unless @estimated_spend == other.estimated_spend
+          return false unless @spent == other.spent
           return false unless @started_at == other.started_at
           return false unless @finished_at == other.finished_at
           return false unless @error_code == other.error_code

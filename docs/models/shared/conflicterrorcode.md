@@ -46,4 +46,5 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `AGGREGATE_ERASED_DATA`          | aggregate_erased_data            |
 | `EVENT_CONFLICT`                 | event_conflict                   |
 | `EVENT_LIMIT_REACHED`            | event_limit_reached              |
+| `SCREENING_CAP_EXCEEDED`         | screening_cap_exceeded           |
 | `SCREENING_UNAVAILABLE`          | screening_unavailable            |

@@ -4,13 +4,14 @@
 module NoResponse
   module Models
     module Shared
-      # Metric - assessments: assessments admitted. webhook_deliveries: events sent to endpoints, one per event per endpoint. key_usage_events: key-usage events accepted.
+      # Metric - assessments: assessments admitted. webhook_deliveries: events sent to endpoints, one per event per endpoint. key_usage_events: key-usage events accepted. screenings: attendees a screening recorded a final result for, one per attendee per screening; a failed attendee counts nothing.
       class Metric
         include ::Crystalline::Enum
         enums do
           ASSESSMENTS = new("assessments")
           WEBHOOK_DELIVERIES = new("webhook_deliveries")
           KEY_USAGE_EVENTS = new("key_usage_events")
+          SCREENINGS = new("screenings")
         end
 
         open!

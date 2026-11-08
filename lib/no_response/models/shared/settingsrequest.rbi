@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::SettingsRequest
 
   def change_reason=(str_)
   end
+
+  def screening_daily_cap
+  end
+
+  def screening_daily_cap=(str_)
+  end
 end
