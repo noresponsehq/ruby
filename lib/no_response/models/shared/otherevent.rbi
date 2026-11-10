@@ -42,6 +42,12 @@ class NoResponse::Models::Shared::OtherEvent
   def match_state=(str_)
   end
 
+  def no_profile_to_check
+  end
+
+  def no_profile_to_check=(str_)
+  end
+
   def highest_band
   end
 

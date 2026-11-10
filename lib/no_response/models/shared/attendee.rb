@@ -18,7 +18,7 @@ module NoResponse
         )
         # The attendee's full name.
         field :name, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("name"), required: true}}
-        # How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee.
+        # How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee, and after one that had no profile to check (no_profile_to_check).
         field(
           :match_state,
           Models::Shared::MatchState,
@@ -101,6 +101,12 @@ module NoResponse
             }
           }
         )
+        # true when the latest screening reached the attendee but the list gave nothing to look up on any requested platform, such as no handle for a platform that reads supplied handles only: nobody looked for a profile. match_state stays unscreened, every platform is in coverage.not_searched, and the attendee is neither none_found nor failed and does not make the screening partial. Its lookups are on its report. Left out otherwise.
+        field(
+          :no_profile_to_check,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("no_profile_to_check")}}
+        )
         # The most severe finding's band, or null when nothing was flagged.
         field(
           :highest_band,
@@ -173,6 +179,7 @@ module NoResponse
             city: T.nilable(::String),
             handles: T.nilable(T::Array[Models::Shared::Handle]),
             role: T.nilable(Models::Shared::AttendeeRole),
+            no_profile_to_check: T.nilable(T::Boolean),
             highest_band: T.nilable(Models::Shared::HighestBand),
             decision: T.nilable(Models::Shared::AttendeeDecision),
             decision_note: T.nilable(::String),
@@ -199,6 +206,7 @@ module NoResponse
           city: nil,
           handles: nil,
           role: nil,
+          no_profile_to_check: nil,
           highest_band: nil,
           decision: nil,
           decision_note: nil,
@@ -222,6 +230,7 @@ module NoResponse
           @city = city
           @handles = handles
           @role = role
+          @no_profile_to_check = no_profile_to_check
           @highest_band = highest_band
           @decision = decision
           @decision_note = decision_note
@@ -249,6 +258,7 @@ module NoResponse
           return false unless @city == other.city
           return false unless @handles == other.handles
           return false unless @role == other.role
+          return false unless @no_profile_to_check == other.no_profile_to_check
           return false unless @highest_band == other.highest_band
           return false unless @decision == other.decision
           return false unless @decision_note == other.decision_note

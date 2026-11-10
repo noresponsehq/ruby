@@ -71,4 +71,10 @@ class NoResponse::Models::Shared::ScreeningCompleted
 
   def error_code=(str_)
   end
+
+  def no_profile_to_check
+  end
+
+  def no_profile_to_check=(str_)
+  end
 end

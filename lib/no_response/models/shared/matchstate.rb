@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # MatchState - How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee.
+      # MatchState - How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee, and after one that had no profile to check (no_profile_to_check).
       class MatchState
         include ::Crystalline::Enum
         enums do

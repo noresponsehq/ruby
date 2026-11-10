@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # A screening of an event finished. It counts only the attendees this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/events/{environment}/{event_id}/attendees, filtered by band, to act on them. attendees_screened + partial_coverage = attendees_total, attendees_flagged is the sum of by_band, and no_footprint counts screened attendees with no flag whose accounts were not found. A cancelled screening sends no event.
+      # A screening of an event finished. It counts only the attendees this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/events/{environment}/{event_id}/attendees, filtered by band, to act on them. attendees_screened + partial_coverage = attendees_total, attendees_flagged is the sum of by_band, no_footprint counts screened attendees with no flag whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event.
       class ScreeningCompleted
         extend T::Sig
         include Crystalline::MetadataFields
@@ -81,6 +81,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("error_code")}}
         )
+        # Screened attendees with no profile to check: the list gave nothing to look up on any requested platform, such as no handle, so nobody looked for a profile (no_profile_to_check on the attendee). Not in no_footprint, and not partial: nothing failed. Their lookups are on their reports.
+        field(
+          :no_profile_to_check,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("no_profile_to_check")}}
+        )
 
         sig {
           params(
@@ -94,7 +100,8 @@ module NoResponse
             no_footprint: ::Integer,
             partial_coverage: ::Integer,
             finished_at: ::String,
-            error_code: T.nilable(::String)
+            error_code: T.nilable(::String),
+            no_profile_to_check: T.nilable(::Integer)
           )
             .void
         }
@@ -109,7 +116,8 @@ module NoResponse
           no_footprint:,
           partial_coverage:,
           finished_at:,
-          error_code: nil
+          error_code: nil,
+          no_profile_to_check: nil
         )
           @screening_id = screening_id
           @event_id = event_id
@@ -122,6 +130,7 @@ module NoResponse
           @partial_coverage = partial_coverage
           @finished_at = finished_at
           @error_code = error_code
+          @no_profile_to_check = no_profile_to_check
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -138,6 +147,7 @@ module NoResponse
           return false unless @partial_coverage == other.partial_coverage
           return false unless @finished_at == other.finished_at
           return false unless @error_code == other.error_code
+          return false unless @no_profile_to_check == other.no_profile_to_check
           true
         end
       end

@@ -38,7 +38,7 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::MatchedOn),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_on"), required: true}}
         )
-        # How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee.
+        # How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee, and after one that had no profile to check (no_profile_to_check).
         field(
           :match_state,
           Models::Shared::MatchState,
@@ -49,6 +49,12 @@ module NoResponse
               'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::MatchState, false)
             }
           }
+        )
+        # true when that attendee's latest screening had no profile to check (see the attendee's no_profile_to_check). Left out otherwise.
+        field(
+          :no_profile_to_check,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("no_profile_to_check")}}
         )
         # That attendee's most severe band at that event, or null.
         field(
@@ -95,6 +101,7 @@ module NoResponse
             attendee_id: ::String,
             matched_on: T::Array[Models::Shared::MatchedOn],
             match_state: Models::Shared::MatchState,
+            no_profile_to_check: T.nilable(T::Boolean),
             highest_band: T.nilable(Models::Shared::HighestBand),
             decision: T.nilable(Models::Shared::AttendeeDecision),
             decided_by: T.nilable(::String),
@@ -109,6 +116,7 @@ module NoResponse
           attendee_id:,
           matched_on:,
           match_state:,
+          no_profile_to_check: nil,
           highest_band: nil,
           decision: nil,
           decided_by: nil,
@@ -120,6 +128,7 @@ module NoResponse
           @attendee_id = attendee_id
           @matched_on = matched_on
           @match_state = match_state
+          @no_profile_to_check = no_profile_to_check
           @highest_band = highest_band
           @decision = decision
           @decided_by = decided_by
@@ -135,6 +144,7 @@ module NoResponse
           return false unless @attendee_id == other.attendee_id
           return false unless @matched_on == other.matched_on
           return false unless @match_state == other.match_state
+          return false unless @no_profile_to_check == other.no_profile_to_check
           return false unless @highest_band == other.highest_band
           return false unless @decision == other.decision
           return false unless @decided_by == other.decided_by
