@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # ScreeningMatchEvidenceKind - What matched. email, phone, supplied_handle and source_fact are hard identifiers; company, city and school are soft.
+      # ScreeningMatchEvidenceKind - What matched. email, phone, supplied_handle and source_fact are hard identifiers; company, city and school are soft. supplied_handle is a handle on the attendee row; source_fact is an account a profile found by the attendee's lookups lists.
       class ScreeningMatchEvidenceKind
         include ::Crystalline::Enum
         enums do
