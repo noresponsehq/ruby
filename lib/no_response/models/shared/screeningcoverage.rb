@@ -50,6 +50,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("period_to")}}
         )
+        # Requested platforms where the attendee gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the attendee partial.
+        field(
+          :not_searched,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::HandlePlatform)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("not_searched")}}
+        )
 
         sig {
           params(
@@ -59,7 +65,8 @@ module NoResponse
             platforms: T::Array[Models::Shared::ScreeningPlatformCoverage],
             items_not_analysed: T.nilable(::Integer),
             period_from: T.nilable(::String),
-            period_to: T.nilable(::String)
+            period_to: T.nilable(::String),
+            not_searched: T.nilable(T::Array[Models::Shared::HandlePlatform])
           )
             .void
         }
@@ -70,7 +77,8 @@ module NoResponse
           platforms:,
           items_not_analysed: nil,
           period_from: nil,
-          period_to: nil
+          period_to: nil,
+          not_searched: nil
         )
           @accounts_found = accounts_found
           @accounts_accessible = accounts_accessible
@@ -79,6 +87,7 @@ module NoResponse
           @items_not_analysed = items_not_analysed
           @period_from = period_from
           @period_to = period_to
+          @not_searched = not_searched
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -91,6 +100,7 @@ module NoResponse
           return false unless @items_not_analysed == other.items_not_analysed
           return false unless @period_from == other.period_from
           return false unless @period_to == other.period_to
+          return false unless @not_searched == other.not_searched
           true
         end
       end

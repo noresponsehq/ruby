@@ -47,4 +47,10 @@ class NoResponse::Models::Shared::ScreeningCoverage
 
   def period_to=(str_)
   end
+
+  def not_searched
+  end
+
+  def not_searched=(str_)
+  end
 end
