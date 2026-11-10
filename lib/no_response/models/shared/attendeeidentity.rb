@@ -47,6 +47,17 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Handle)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("handles")}}
         )
+        # The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results.
+        field(
+          :role,
+          Crystalline::Nilable.new(Models::Shared::AttendeeRole),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("role"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::AttendeeRole, true)
+            }
+          }
+        )
 
         sig {
           params(
@@ -56,11 +67,21 @@ module NoResponse
             phone: T.nilable(::String),
             company: T.nilable(::String),
             city: T.nilable(::String),
-            handles: T.nilable(T::Array[Models::Shared::Handle])
+            handles: T.nilable(T::Array[Models::Shared::Handle]),
+            role: T.nilable(Models::Shared::AttendeeRole)
           )
             .void
         }
-        def initialize(name:, external_id: nil, email: nil, phone: nil, company: nil, city: nil, handles: nil)
+        def initialize(
+          name:,
+          external_id: nil,
+          email: nil,
+          phone: nil,
+          company: nil,
+          city: nil,
+          handles: nil,
+          role: nil
+        )
           @name = name
           @external_id = external_id
           @email = email
@@ -68,6 +89,7 @@ module NoResponse
           @company = company
           @city = city
           @handles = handles
+          @role = role
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -80,6 +102,7 @@ module NoResponse
           return false unless @company == other.company
           return false unless @city == other.city
           return false unless @handles == other.handles
+          return false unless @role == other.role
           true
         end
       end

@@ -47,4 +47,10 @@ class NoResponse::Models::Shared::AttendeeIdentity
 
   def handles=(str_)
   end
+
+  def role
+  end
+
+  def role=(str_)
+  end
 end

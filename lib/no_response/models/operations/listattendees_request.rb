@@ -41,6 +41,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::ListAttendeesDecision),
           {'query_param': {'field_name': "decision", 'style': "form", 'explode': true}}
         )
+        # Only attendees with this role; unstated for attendees whose role was not given.
+        field(
+          :role,
+          Crystalline::Nilable.new(Models::Shared::ListAttendeesRole),
+          {'query_param': {'field_name': "role", 'style': "form", 'explode': true}}
+        )
         # At most this many attendees.
         field(
           :limit,
@@ -56,17 +62,28 @@ module NoResponse
             after: T.nilable(::String),
             band: T.nilable(Models::Shared::ListAttendeesBand),
             decision: T.nilable(Models::Shared::ListAttendeesDecision),
+            role: T.nilable(Models::Shared::ListAttendeesRole),
             limit: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(workspace_id:, environment:, event_id:, after: nil, band: nil, decision: nil, limit: 100)
+        def initialize(
+          workspace_id:,
+          environment:,
+          event_id:,
+          after: nil,
+          band: nil,
+          decision: nil,
+          role: nil,
+          limit: 100
+        )
           @workspace_id = workspace_id
           @environment = environment
           @event_id = event_id
           @after = after
           @band = band
           @decision = decision
+          @role = role
           @limit = limit
         end
 
@@ -79,6 +96,7 @@ module NoResponse
           return false unless @after == other.after
           return false unless @band == other.band
           return false unless @decision == other.decision
+          return false unless @role == other.role
           return false unless @limit == other.limit
           true
         end

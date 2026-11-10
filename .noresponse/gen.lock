@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 8d58044ec9be8d633d01a2d2df2a0d4e
+  docChecksum: 4512a02e90ca86549d22d3ab95ac342a
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 10.0.13
-  configChecksum: c09089e263a1fe2e99e2984ac0986cb0
+  releaseVersion: 10.0.14
+  configChecksum: 7ab935654d4b543b3e65073ccbe4cf70
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:5970ecf9d12120482c9771e918ed5c4211b702f0
+    last_write_checksum: sha1:1524961dc005570ff52b204cb5324fa46e4bb6a1
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -274,7 +274,7 @@ trackedFiles:
   docs/models/operations/listaccountsresponse.md:
     last_write_checksum: sha1:20fa802efc19abb0797c3e1c34d1578bb6bd583e
   docs/models/operations/listattendeesrequest.md:
-    last_write_checksum: sha1:5101985fb2390bf633730a63a96bd690f78e11bd
+    last_write_checksum: sha1:6106b50f4134c625cb478ad254f17c1a0922ba6d
   docs/models/operations/listattendeesresponse.md:
     last_write_checksum: sha1:3cc84ab4c99a4321233089a5369e163488521934
   docs/models/operations/listauditeventsrequest.md:
@@ -630,7 +630,7 @@ trackedFiles:
   docs/models/shared/assurancelevel.md:
     last_write_checksum: sha1:b60956139e93964b2bf463e492333f2794fb9045
   docs/models/shared/attendee.md:
-    last_write_checksum: sha1:3ae0393635c8b9a738b2d1d9e9206e8879e0506c
+    last_write_checksum: sha1:003e3405a51aeb682983d3caba8dd73ad35617a4
   docs/models/shared/attendeebatch.md:
     last_write_checksum: sha1:4feeea2e149d18155d27edfc1810d52f15b064d7
   docs/models/shared/attendeebatchitem.md:
@@ -652,7 +652,7 @@ trackedFiles:
   docs/models/shared/attendeeflaggedmatchstate.md:
     last_write_checksum: sha1:db080398b374b18e2a2a8100e024ab06664b6b75
   docs/models/shared/attendeeidentity.md:
-    last_write_checksum: sha1:4c6c13903d2ffd39f760132d54e42db681a60cda
+    last_write_checksum: sha1:4d5759c8df20669ea9f3ff555feee7e7603f1b82
   docs/models/shared/attendeelist.md:
     last_write_checksum: sha1:7164dc83015bc8aec4a20de2fe4538bc7ab69fbc
   docs/models/shared/attendeereport.md:
@@ -661,6 +661,8 @@ trackedFiles:
     last_write_checksum: sha1:7abc8ca11a2ff8471a4c18560ca8fd760b3ac1e3
   docs/models/shared/attendeereviewrequest.md:
     last_write_checksum: sha1:be52fb5070c461d333c40582be91aaaadfc7141b
+  docs/models/shared/attendeerole.md:
+    last_write_checksum: sha1:359ab330aab6a8cb83de569834a0c020558bb221
   docs/models/shared/attribute.md:
     last_write_checksum: sha1:a7fa6419c6d222c337a408c422ed6afc3c3bd05a
   docs/models/shared/attributeagreement.md:
@@ -957,6 +959,8 @@ trackedFiles:
     last_write_checksum: sha1:b88e97d26cac3c8fb51b62bbc198a0f0f1ef99c7
   docs/models/shared/listattendeesdecision.md:
     last_write_checksum: sha1:4e4d0405fec6f0c98c95e689c03fa18b41f955a4
+  docs/models/shared/listattendeesrole.md:
+    last_write_checksum: sha1:f1abd9a701204a4f80cab43bd4ce68dc6dcb6133
   docs/models/shared/listbulkrequest.md:
     last_write_checksum: sha1:a19ef23c325c7d687b4912ba4380e83cf623ab8a
   docs/models/shared/listchange.md:
@@ -1912,9 +1916,9 @@ trackedFiles:
   lib/no_response/models/operations/listaccounts_response.rbi:
     last_write_checksum: sha1:9d37d1517bd272f9f4271aeee17632aabc0f69e4
   lib/no_response/models/operations/listattendees_request.rb:
-    last_write_checksum: sha1:9bd1795970bd017a1829617a5636bbb7a3b94ef1
+    last_write_checksum: sha1:9a220aa7d636df49b0168a0a0cb344e7e84c9c50
   lib/no_response/models/operations/listattendees_request.rbi:
-    last_write_checksum: sha1:6e625281c491cbc0ac91d112d7d3c4373dcd8b0e
+    last_write_checksum: sha1:5a2a6bcb5306d209906f04b8c6a1bae00ac032f3
   lib/no_response/models/operations/listattendees_response.rb:
     last_write_checksum: sha1:31a361907e9414408d0f2f04d5d6a70c8e8e4f18
   lib/no_response/models/operations/listattendees_response.rbi:
@@ -2344,7 +2348,7 @@ trackedFiles:
   lib/no_response/models/operations/updatesettings_response.rbi:
     last_write_checksum: sha1:0834c9903587b61cbe3cd8bee544792b89c08362
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:97360d2a8d2a72e3c4d3930ee7f02a5a99c6a991
+    last_write_checksum: sha1:7a508bfa3dd153aa81dee83d9074b792707dd6f4
   lib/no_response/models/shared/access.rb:
     last_write_checksum: sha1:da8cdfb41547b10b13592a7560d48fe6e5ca2b37
   lib/no_response/models/shared/access.rbi:
@@ -2626,9 +2630,9 @@ trackedFiles:
   lib/no_response/models/shared/assurancelevel.rbi:
     last_write_checksum: sha1:151710726cac8b06d6d88f1b5619a41c453e274a
   lib/no_response/models/shared/attendee.rb:
-    last_write_checksum: sha1:59540a98c8e53a7716158cb4e65e0260429bf21c
+    last_write_checksum: sha1:ab4e5dc8d6a1db8cb62d500ea5b4ef73f6e0aad4
   lib/no_response/models/shared/attendee.rbi:
-    last_write_checksum: sha1:51cd4cc6b4b71d388d78acc89255f08e2d8e5707
+    last_write_checksum: sha1:fa59d1c6ebe9bb66d61dca3f59635f6a6117db20
   lib/no_response/models/shared/attendeebatch.rb:
     last_write_checksum: sha1:2eb536ad0f958d372104b81cda50836895aeacb4
   lib/no_response/models/shared/attendeebatch.rbi:
@@ -2670,9 +2674,9 @@ trackedFiles:
   lib/no_response/models/shared/attendeeflaggedmatchstate.rbi:
     last_write_checksum: sha1:1ddcdb1d8364987a85b5de53ed6cdc45f6670348
   lib/no_response/models/shared/attendeeidentity.rb:
-    last_write_checksum: sha1:9b877b2980b0bba7c0f30d941c53178023e58630
+    last_write_checksum: sha1:b4c123626e346b59dd429062081c274a6388b75d
   lib/no_response/models/shared/attendeeidentity.rbi:
-    last_write_checksum: sha1:58b4e894f5875040be52cfcaaf114d1b1a54efb8
+    last_write_checksum: sha1:bbc95f537738f213c776ee9a6575d1bb630893a7
   lib/no_response/models/shared/attendeelist.rb:
     last_write_checksum: sha1:0727d1fd4439ce6f99fa45aba159bd486eca2d75
   lib/no_response/models/shared/attendeelist.rbi:
@@ -2689,6 +2693,10 @@ trackedFiles:
     last_write_checksum: sha1:7a9ab23d7751ec348babea48974a01fa6ac035b0
   lib/no_response/models/shared/attendeereviewrequest.rbi:
     last_write_checksum: sha1:b7d6a5c12e7e2ea6f93d07e3291fb52b875fb971
+  lib/no_response/models/shared/attendeerole.rb:
+    last_write_checksum: sha1:b8d9dc645855e6b00fa352aaaaaf21bc3d252e5c
+  lib/no_response/models/shared/attendeerole.rbi:
+    last_write_checksum: sha1:915555c438c77764a150e9122de9405d16516415
   lib/no_response/models/shared/attribute.rb:
     last_write_checksum: sha1:711998a10f338dad15396a4e7c66760c20859e1c
   lib/no_response/models/shared/attribute.rbi:
@@ -3281,6 +3289,10 @@ trackedFiles:
     last_write_checksum: sha1:3ff7bdb52ea02e219aed734675e80e7fd8947f3b
   lib/no_response/models/shared/listattendeesdecision.rbi:
     last_write_checksum: sha1:9c6d4fef79489c6ed425735325a82d49cc9a31a8
+  lib/no_response/models/shared/listattendeesrole.rb:
+    last_write_checksum: sha1:4e495d2d897898fe3dbffc316265f6154822c027
+  lib/no_response/models/shared/listattendeesrole.rbi:
+    last_write_checksum: sha1:56162b6b85938b0d7a19ecc503c3676c692e5346
   lib/no_response/models/shared/listbulkrequest.rb:
     last_write_checksum: sha1:453fd172ddaa95f2f79860c9cc249af1fc335fa8
   lib/no_response/models/shared/listbulkrequest.rbi:
@@ -4102,7 +4114,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:4130ddf8d3cba8ea591921063e0af6d550a4d14b
+    last_write_checksum: sha1:3e60de927d45021114316fdc2eb2fd047e0aabd2
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4132,7 +4144,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:356d8a17af84ba661a4ff5cebd74ac7b627ee1be
   noresponse.gemspec:
-    last_write_checksum: sha1:333528a4c6077b1908b076d5bc00286b1f16e169
+    last_write_checksum: sha1:4cfa999075aa3731ef73bf6650b49ce7ae60c8d9
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:

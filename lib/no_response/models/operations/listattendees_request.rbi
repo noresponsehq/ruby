@@ -42,6 +42,12 @@ class NoResponse::Models::Operations::ListAttendeesRequest
   def decision=(str_)
   end
 
+  def role
+  end
+
+  def role=(str_)
+  end
+
   def limit
   end
 

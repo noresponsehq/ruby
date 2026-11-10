@@ -90,6 +90,17 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Handle)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("handles")}}
         )
+        # The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results.
+        field(
+          :role,
+          Crystalline::Nilable.new(Models::Shared::AttendeeRole),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("role"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::AttendeeRole, true)
+            }
+          }
+        )
         # The most severe finding's band, or null when nothing was flagged.
         field(
           :highest_band,
@@ -161,6 +172,7 @@ module NoResponse
             company: T.nilable(::String),
             city: T.nilable(::String),
             handles: T.nilable(T::Array[Models::Shared::Handle]),
+            role: T.nilable(Models::Shared::AttendeeRole),
             highest_band: T.nilable(Models::Shared::HighestBand),
             decision: T.nilable(Models::Shared::AttendeeDecision),
             decision_note: T.nilable(::String),
@@ -186,6 +198,7 @@ module NoResponse
           company: nil,
           city: nil,
           handles: nil,
+          role: nil,
           highest_band: nil,
           decision: nil,
           decision_note: nil,
@@ -208,6 +221,7 @@ module NoResponse
           @company = company
           @city = city
           @handles = handles
+          @role = role
           @highest_band = highest_band
           @decision = decision
           @decision_note = decision_note
@@ -234,6 +248,7 @@ module NoResponse
           return false unless @company == other.company
           return false unless @city == other.city
           return false unless @handles == other.handles
+          return false unless @role == other.role
           return false unless @highest_band == other.highest_band
           return false unless @decision == other.decision
           return false unless @decision_note == other.decision_note

@@ -90,6 +90,12 @@ class NoResponse::Models::Shared::Attendee
   def handles=(str_)
   end
 
+  def role
+  end
+
+  def role=(str_)
+  end
+
   def highest_band
   end
 
