@@ -51,6 +51,12 @@ module NoResponse
           Models::Shared::OtherEvents,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("other_events"), required: true}}
         )
+        # What the signup check's lookups found for an attendee: account presence for the email, phone and usernames (the attendee's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state.
+        field(
+          :lookup,
+          Crystalline::Nilable.new(Models::Shared::ScreeningLookup),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("lookup")}}
+        )
 
         sig {
           params(
@@ -60,11 +66,12 @@ module NoResponse
             posts: T::Array[Models::Shared::ScreeningPost],
             media: T::Array[Models::Shared::ScreeningMedia],
             reviews: T::Array[Models::Shared::AttendeeReview],
-            other_events: Models::Shared::OtherEvents
+            other_events: Models::Shared::OtherEvents,
+            lookup: T.nilable(Models::Shared::ScreeningLookup)
           )
             .void
         }
-        def initialize(attendee:, profiles:, findings:, posts:, media:, reviews:, other_events:)
+        def initialize(attendee:, profiles:, findings:, posts:, media:, reviews:, other_events:, lookup: nil)
           @attendee = attendee
           @profiles = profiles
           @findings = findings
@@ -72,6 +79,7 @@ module NoResponse
           @media = media
           @reviews = reviews
           @other_events = other_events
+          @lookup = lookup
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -84,6 +92,7 @@ module NoResponse
           return false unless @media == other.media
           return false unless @reviews == other.reviews
           return false unless @other_events == other.other_events
+          return false unless @lookup == other.lookup
           true
         end
       end

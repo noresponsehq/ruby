@@ -47,4 +47,10 @@ class NoResponse::Models::Shared::AttendeeReport
 
   def other_events=(str_)
   end
+
+  def lookup
+  end
+
+  def lookup=(str_)
+  end
 end
