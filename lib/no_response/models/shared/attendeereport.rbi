@@ -24,6 +24,18 @@ class NoResponse::Models::Shared::AttendeeReport
   def findings=(str_)
   end
 
+  def posts
+  end
+
+  def posts=(str_)
+  end
+
+  def media
+  end
+
+  def media=(str_)
+  end
+
   def reviews
   end
 

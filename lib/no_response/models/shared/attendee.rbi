@@ -48,6 +48,12 @@ class NoResponse::Models::Shared::Attendee
   def updated_at=(str_)
   end
 
+  def spend
+  end
+
+  def spend=(str_)
+  end
+
   def external_id
   end
 

@@ -1,0 +1,12 @@
+# ScreeningSpendLine
+
+What one implementation cost.
+
+
+## Fields
+
+| Field                                                                                   | Type                                                                                    | Required                                                                                | Description                                                                             | Example                                                                                 |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `implementation`                                                                        | *::String*                                                                              | :heavy_check_mark:                                                                      | The resolver, collector or analyser that produced a record, by its catalogue name.      | synthetic                                                                               |
+| `role`                                                                                  | [Models::Shared::ScreeningSpendLineRole](../../models/shared/screeningspendlinerole.md) | :heavy_check_mark:                                                                      | N/A                                                                                     |                                                                                         |
+| `spend_minor`                                                                           | *::Integer*                                                                             | :heavy_check_mark:                                                                      | N/A                                                                                     |                                                                                         |

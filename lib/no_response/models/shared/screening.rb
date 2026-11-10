@@ -28,7 +28,7 @@ module NoResponse
             }
           }
         )
-        # partial finished with some attendees not covered; attendees_failed counts them.
+        # partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them.
         field(
           :status,
           Models::Shared::ScreeningStatus,
@@ -55,7 +55,7 @@ module NoResponse
 
         field(
           :platforms,
-          Crystalline::Array.new(Models::Shared::ScreeningPlatform),
+          Crystalline::Array.new(Models::Shared::HandlePlatform),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms"), required: true}}
         )
 
@@ -100,6 +100,12 @@ module NoResponse
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_failed"), required: true}}
         )
+        # Attendees screened with some requested platform not covered; their coverage names which.
+        field(
+          :attendees_partial,
+          ::Integer,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_partial"), required: true}}
+        )
         # What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap.
         field(
           :estimated_spend,
@@ -111,6 +117,12 @@ module NoResponse
           :spent,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("spent"), required: true}}
+        )
+        # What screening cost, in US cents, in total and per implementation.
+        field(
+          :spend,
+          Models::Shared::ScreeningSpend,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("spend"), required: true}}
         )
 
         field(
@@ -138,7 +150,7 @@ module NoResponse
             environment: Models::Shared::AuditSettingsEnvironment,
             status: Models::Shared::ScreeningStatus,
             depth: Models::Shared::ScreeningDepth,
-            platforms: T::Array[Models::Shared::ScreeningPlatform],
+            platforms: T::Array[Models::Shared::HandlePlatform],
             requested_by: ::String,
             created_at: ::String,
             expires_at: ::String,
@@ -146,8 +158,10 @@ module NoResponse
             attendees_done: ::Integer,
             attendees_flagged: ::Integer,
             attendees_failed: ::Integer,
+            attendees_partial: ::Integer,
             estimated_spend: ::Integer,
             spent: ::Integer,
+            spend: Models::Shared::ScreeningSpend,
             started_at: T.nilable(::String),
             finished_at: T.nilable(::String),
             error_code: T.nilable(::String)
@@ -168,8 +182,10 @@ module NoResponse
           attendees_done:,
           attendees_flagged:,
           attendees_failed:,
+          attendees_partial:,
           estimated_spend:,
           spent:,
+          spend:,
           started_at: nil,
           finished_at: nil,
           error_code: nil
@@ -187,8 +203,10 @@ module NoResponse
           @attendees_done = attendees_done
           @attendees_flagged = attendees_flagged
           @attendees_failed = attendees_failed
+          @attendees_partial = attendees_partial
           @estimated_spend = estimated_spend
           @spent = spent
+          @spend = spend
           @started_at = started_at
           @finished_at = finished_at
           @error_code = error_code
@@ -210,8 +228,10 @@ module NoResponse
           return false unless @attendees_done == other.attendees_done
           return false unless @attendees_flagged == other.attendees_flagged
           return false unless @attendees_failed == other.attendees_failed
+          return false unless @attendees_partial == other.attendees_partial
           return false unless @estimated_spend == other.estimated_spend
           return false unless @spent == other.spent
+          return false unless @spend == other.spend
           return false unless @started_at == other.started_at
           return false unless @finished_at == other.finished_at
           return false unless @error_code == other.error_code

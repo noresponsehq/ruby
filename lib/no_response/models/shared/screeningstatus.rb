@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # ScreeningStatus - partial finished with some attendees not covered; attendees_failed counts them.
+      # ScreeningStatus - partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them.
       class ScreeningStatus
         include ::Crystalline::Enum
         enums do

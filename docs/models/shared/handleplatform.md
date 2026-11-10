@@ -1,5 +1,7 @@
 # HandlePlatform
 
+A platform a screening can cover. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network.
+
 ## Example Usage
 
 ```ruby
@@ -26,3 +28,4 @@ custom = HandlePlatform.deserialize("custom_value")
 | `REDDIT`    | reddit      |
 | `TELEGRAM`  | telegram    |
 | `LINKEDIN`  | linkedin    |
+| `SYNTHETIC` | synthetic   |

@@ -30,10 +30,10 @@ module NoResponse
             }
           }
         )
-        # What the latest screening read, per platform.
+        # The denominator of a screening: accounts found, how many could be read, items read and the period they span, so a clean result is distinct from a person nobody could see.
         field(
           :coverage,
-          Models::Shared::AttendeeCoverage,
+          Models::Shared::ScreeningCoverage,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("coverage"), required: true}}
         )
 
@@ -47,6 +47,12 @@ module NoResponse
           :updated_at,
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("updated_at"), required: true}}
+        )
+        # What screening cost, in US cents, in total and per implementation.
+        field(
+          :spend,
+          Models::Shared::ScreeningSpend,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("spend"), required: true}}
         )
         # Your own id for the attendee, unique within the event. A later row with the same external id updates this attendee.
         field(
@@ -145,9 +151,10 @@ module NoResponse
             event_id: ::String,
             name: ::String,
             match_state: Models::Shared::MatchState,
-            coverage: Models::Shared::AttendeeCoverage,
+            coverage: Models::Shared::ScreeningCoverage,
             created_at: ::String,
             updated_at: ::String,
+            spend: Models::Shared::ScreeningSpend,
             external_id: T.nilable(::String),
             email: T.nilable(::String),
             phone: T.nilable(::String),
@@ -172,6 +179,7 @@ module NoResponse
           coverage:,
           created_at:,
           updated_at:,
+          spend:,
           external_id: nil,
           email: nil,
           phone: nil,
@@ -193,6 +201,7 @@ module NoResponse
           @coverage = coverage
           @created_at = created_at
           @updated_at = updated_at
+          @spend = spend
           @external_id = external_id
           @email = email
           @phone = phone
@@ -218,6 +227,7 @@ module NoResponse
           return false unless @coverage == other.coverage
           return false unless @created_at == other.created_at
           return false unless @updated_at == other.updated_at
+          return false unless @spend == other.spend
           return false unless @external_id == other.external_id
           return false unless @email == other.email
           return false unless @phone == other.phone
