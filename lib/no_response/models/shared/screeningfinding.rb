@@ -87,6 +87,12 @@ module NoResponse
             }
           }
         )
+        # The exact words of the first evidence item that the finding rests on, as the analyser quoted them.
+        field(
+          :quote,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("quote")}}
+        )
 
         sig {
           params(
@@ -100,7 +106,8 @@ module NoResponse
             model: ::String,
             spend_minor: ::Integer,
             created_at: ::String,
-            capped_from: T.nilable(Models::Shared::FindingBand)
+            capped_from: T.nilable(Models::Shared::FindingBand),
+            quote: T.nilable(::String)
           )
             .void
         }
@@ -115,7 +122,8 @@ module NoResponse
           model:,
           spend_minor:,
           created_at:,
-          capped_from: nil
+          capped_from: nil,
+          quote: nil
         )
           @id = id
           @category = category
@@ -128,6 +136,7 @@ module NoResponse
           @spend_minor = spend_minor
           @created_at = created_at
           @capped_from = capped_from
+          @quote = quote
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -144,6 +153,7 @@ module NoResponse
           return false unless @spend_minor == other.spend_minor
           return false unless @created_at == other.created_at
           return false unless @capped_from == other.capped_from
+          return false unless @quote == other.quote
           true
         end
       end

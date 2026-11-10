@@ -32,6 +32,12 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::ScreeningPlatformCoverage),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms"), required: true}}
         )
+        # Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them.
+        field(
+          :items_not_analysed,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("items_not_analysed")}}
+        )
         # The oldest item read on any platform.
         field(
           :period_from,
@@ -51,16 +57,26 @@ module NoResponse
             accounts_accessible: ::Integer,
             items_read: ::Integer,
             platforms: T::Array[Models::Shared::ScreeningPlatformCoverage],
+            items_not_analysed: T.nilable(::Integer),
             period_from: T.nilable(::String),
             period_to: T.nilable(::String)
           )
             .void
         }
-        def initialize(accounts_found:, accounts_accessible:, items_read:, platforms:, period_from: nil, period_to: nil)
+        def initialize(
+          accounts_found:,
+          accounts_accessible:,
+          items_read:,
+          platforms:,
+          items_not_analysed: nil,
+          period_from: nil,
+          period_to: nil
+        )
           @accounts_found = accounts_found
           @accounts_accessible = accounts_accessible
           @items_read = items_read
           @platforms = platforms
+          @items_not_analysed = items_not_analysed
           @period_from = period_from
           @period_to = period_to
         end
@@ -72,6 +88,7 @@ module NoResponse
           return false unless @accounts_accessible == other.accounts_accessible
           return false unless @items_read == other.items_read
           return false unless @platforms == other.platforms
+          return false unless @items_not_analysed == other.items_not_analysed
           return false unless @period_from == other.period_from
           return false unless @period_to == other.period_to
           true

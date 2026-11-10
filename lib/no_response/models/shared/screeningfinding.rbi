@@ -71,4 +71,10 @@ class NoResponse::Models::Shared::ScreeningFinding
 
   def capped_from=(str_)
   end
+
+  def quote
+  end
+
+  def quote=(str_)
+  end
 end
