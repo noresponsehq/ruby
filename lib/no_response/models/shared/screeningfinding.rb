@@ -93,6 +93,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("quote")}}
         )
+        # What the analyser saw in each image among evidence that the finding rests on. Unlike quote, an observation cannot be checked against the record: judge it against the image at the media item's permalink.
+        field(
+          :media_observations,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::ScreeningMediaObservation)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("media_observations")}}
+        )
 
         sig {
           params(
@@ -107,7 +113,8 @@ module NoResponse
             spend_minor: ::Integer,
             created_at: ::String,
             capped_from: T.nilable(Models::Shared::FindingBand),
-            quote: T.nilable(::String)
+            quote: T.nilable(::String),
+            media_observations: T.nilable(T::Array[Models::Shared::ScreeningMediaObservation])
           )
             .void
         }
@@ -123,7 +130,8 @@ module NoResponse
           spend_minor:,
           created_at:,
           capped_from: nil,
-          quote: nil
+          quote: nil,
+          media_observations: nil
         )
           @id = id
           @category = category
@@ -137,6 +145,7 @@ module NoResponse
           @created_at = created_at
           @capped_from = capped_from
           @quote = quote
+          @media_observations = media_observations
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -154,6 +163,7 @@ module NoResponse
           return false unless @created_at == other.created_at
           return false unless @capped_from == other.capped_from
           return false unless @quote == other.quote
+          return false unless @media_observations == other.media_observations
           true
         end
       end

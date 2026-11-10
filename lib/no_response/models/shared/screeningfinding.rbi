@@ -77,4 +77,10 @@ class NoResponse::Models::Shared::ScreeningFinding
 
   def quote=(str_)
   end
+
+  def media_observations
+  end
+
+  def media_observations=(str_)
+  end
 end

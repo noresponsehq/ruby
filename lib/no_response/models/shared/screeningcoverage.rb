@@ -38,6 +38,12 @@ module NoResponse
           Crystalline::Nilable.new(::Integer),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("items_not_analysed")}}
         )
+        # items_not_analysed split by reason, each reason once with at least one item.
+        field(
+          :not_analysed_by_reason,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::ScreeningNotAnalysedCount)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("not_analysed_by_reason")}}
+        )
         # The oldest item read on any platform.
         field(
           :period_from,
@@ -64,6 +70,7 @@ module NoResponse
             items_read: ::Integer,
             platforms: T::Array[Models::Shared::ScreeningPlatformCoverage],
             items_not_analysed: T.nilable(::Integer),
+            not_analysed_by_reason: T.nilable(T::Array[Models::Shared::ScreeningNotAnalysedCount]),
             period_from: T.nilable(::String),
             period_to: T.nilable(::String),
             not_searched: T.nilable(T::Array[Models::Shared::HandlePlatform])
@@ -76,6 +83,7 @@ module NoResponse
           items_read:,
           platforms:,
           items_not_analysed: nil,
+          not_analysed_by_reason: nil,
           period_from: nil,
           period_to: nil,
           not_searched: nil
@@ -85,6 +93,7 @@ module NoResponse
           @items_read = items_read
           @platforms = platforms
           @items_not_analysed = items_not_analysed
+          @not_analysed_by_reason = not_analysed_by_reason
           @period_from = period_from
           @period_to = period_to
           @not_searched = not_searched
@@ -98,6 +107,7 @@ module NoResponse
           return false unless @items_read == other.items_read
           return false unless @platforms == other.platforms
           return false unless @items_not_analysed == other.items_not_analysed
+          return false unless @not_analysed_by_reason == other.not_analysed_by_reason
           return false unless @period_from == other.period_from
           return false unless @period_to == other.period_to
           return false unless @not_searched == other.not_searched
