@@ -41,4 +41,10 @@ class NoResponse::Models::Shared::AttendeeReport
 
   def reviews=(str_)
   end
+
+  def other_events
+  end
+
+  def other_events=(str_)
+  end
 end

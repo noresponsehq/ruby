@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Everything known about one attendee.
+      # Everything known about one attendee, and where else in the environment they appear.
       class AttendeeReport
         extend T::Sig
         include Crystalline::MetadataFields
@@ -45,6 +45,12 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::AttendeeReview),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("reviews"), required: true}}
         )
+        # Where else in the environment the attendee appears, read live from those events: deleting one removes it here.
+        field(
+          :other_events,
+          Models::Shared::OtherEvents,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("other_events"), required: true}}
+        )
 
         sig {
           params(
@@ -53,17 +59,19 @@ module NoResponse
             findings: T::Array[Models::Shared::ScreeningFinding],
             posts: T::Array[Models::Shared::ScreeningPost],
             media: T::Array[Models::Shared::ScreeningMedia],
-            reviews: T::Array[Models::Shared::AttendeeReview]
+            reviews: T::Array[Models::Shared::AttendeeReview],
+            other_events: Models::Shared::OtherEvents
           )
             .void
         }
-        def initialize(attendee:, profiles:, findings:, posts:, media:, reviews:)
+        def initialize(attendee:, profiles:, findings:, posts:, media:, reviews:, other_events:)
           @attendee = attendee
           @profiles = profiles
           @findings = findings
           @posts = posts
           @media = media
           @reviews = reviews
+          @other_events = other_events
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -75,6 +83,7 @@ module NoResponse
           return false unless @posts == other.posts
           return false unless @media == other.media
           return false unless @reviews == other.reviews
+          return false unless @other_events == other.other_events
           true
         end
       end
