@@ -1,0 +1,67 @@
+# typed: true
+# frozen_string_literal: true
+
+module NoResponse
+  module Models
+    module Operations
+
+      class RunSearchRequest
+        extend T::Sig
+        include Crystalline::MetadataFields
+
+        # Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
+        field(
+          :workspace_id,
+          ::String,
+          {'path_param': {'field_name': "workspace_id", 'style': "simple", 'explode': false}}
+        )
+        # The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
+        field(
+          :environment,
+          Models::Shared::KeyEnvironment,
+          {'path_param': {'field_name': "environment", 'style': "simple", 'explode': false}}
+        )
+
+        field :group_id, ::String, {'path_param': {'field_name': "group_id", 'style': "simple", 'explode': false}}
+
+        field :person_id, ::String, {'path_param': {'field_name': "person_id", 'style': "simple", 'explode': false}}
+
+        field :search_id, ::String, {'path_param': {'field_name': "search_id", 'style': "simple", 'explode': false}}
+
+        field :body, Models::Shared::ScreeningCancelRequest, {'request': {'media_type': "application/json"}}
+
+        sig {
+          params(
+            workspace_id: ::String,
+            environment: Models::Shared::KeyEnvironment,
+            group_id: ::String,
+            person_id: ::String,
+            search_id: ::String,
+            body: Models::Shared::ScreeningCancelRequest
+          )
+            .void
+        }
+        def initialize(workspace_id:, environment:, group_id:, person_id:, search_id:, body:)
+          @workspace_id = workspace_id
+          @environment = environment
+          @group_id = group_id
+          @person_id = person_id
+          @search_id = search_id
+          @body = body
+        end
+
+        sig { params(other: T.untyped).returns(T::Boolean) }
+        def ==(other)
+          return false unless other.is_a?(self.class)
+          return false unless @workspace_id == other.workspace_id
+          return false unless @environment == other.environment
+          return false unless @group_id == other.group_id
+          return false unless @person_id == other.person_id
+          return false unless @search_id == other.search_id
+          return false unless @body == other.body
+          true
+        end
+      end
+    end
+  end
+end

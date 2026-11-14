@@ -33,13 +33,13 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::RiskDetails),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("details")}}
         )
-        # What each source answered, whole, each answer once: every field of each account a connector found, and every column of each breach row the person's email or usernames matched, under the source's own names. Anyone who may read the person reads them: no extra permission applies, breach passwords and hashes included.
+        # What each source answered, whole, each answer once: every field of each account a connector found, and every column of each breach row the person's email or usernames matched, under the source's own names, and what each search a person started found, each match naming its search. Anyone who may read the person reads them: no extra permission applies, breach passwords and hashes included.
         field(
           :records,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Record)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("records")}}
         )
-        # For each search and source whose matched rows records leave out, how many: a breach search returns at most 20 rows of a table and 100 in all, from its first 64 tables by name. Absent when records hold every matched row.
+        # For each search and source whose matched rows records leave out, how many: a breach search returns at most 20 rows of a table and 100 in all, from its first 64 tables by name. A search a person starts on one table of its source fetches the rest of that table, up to 100 rows. Absent when records hold every matched row.
         field(
           :remaining,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RecordRemaining)),

@@ -57,6 +57,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::ScreeningLookup),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("lookup")}}
         )
+        # The searches people started on this person's values, newest first: each names the value, and the record and field it came from. Absent when nobody searched.
+        field(
+          :searches,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Search)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("searches")}}
+        )
 
         sig {
           params(
@@ -67,11 +73,22 @@ module NoResponse
             media: T::Array[Models::Shared::ScreeningMedia],
             reviews: T::Array[Models::Shared::PersonReview],
             other_groups: Models::Shared::OtherGroups,
-            lookup: T.nilable(Models::Shared::ScreeningLookup)
+            lookup: T.nilable(Models::Shared::ScreeningLookup),
+            searches: T.nilable(T::Array[Models::Shared::Search])
           )
             .void
         }
-        def initialize(person:, profiles:, findings:, posts:, media:, reviews:, other_groups:, lookup: nil)
+        def initialize(
+          person:,
+          profiles:,
+          findings:,
+          posts:,
+          media:,
+          reviews:,
+          other_groups:,
+          lookup: nil,
+          searches: nil
+        )
           @person = person
           @profiles = profiles
           @findings = findings
@@ -80,6 +97,7 @@ module NoResponse
           @reviews = reviews
           @other_groups = other_groups
           @lookup = lookup
+          @searches = searches
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -93,6 +111,7 @@ module NoResponse
           return false unless @reviews == other.reviews
           return false unless @other_groups == other.other_groups
           return false unless @lookup == other.lookup
+          return false unless @searches == other.searches
           true
         end
       end

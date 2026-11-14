@@ -19,12 +19,21 @@ module NoResponse
         field :by, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("by"), required: true}}
         # How many rows of the source that search matched beyond the records the lookup carries.
         field :rows, ::Integer, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("rows"), required: true}}
+        # The search a person started that matched the rows. Searching the same field again with this source's table fetches them.
+        field(
+          :search,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("search")}}
+        )
 
-        sig { params(source: Models::Shared::RecordSource, by: ::String, rows: ::Integer).void }
-        def initialize(source:, by:, rows:)
+        sig {
+          params(source: Models::Shared::RecordSource, by: ::String, rows: ::Integer, search: T.nilable(::String)).void
+        }
+        def initialize(source:, by:, rows:, search: nil)
           @source = source
           @by = by
           @rows = rows
+          @search = search
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -33,6 +42,7 @@ module NoResponse
           return false unless @source == other.source
           return false unless @by == other.by
           return false unless @rows == other.rows
+          return false unless @search == other.search
           true
         end
       end

@@ -210,12 +210,16 @@ module NoResponse
       autoload :RotateIntegrationSecretResponse, "no_response/models/operations/rotateintegrationsecret_response.rb"
       autoload :RotateWebhookSigningKeyRequest, "no_response/models/operations/rotatewebhooksigningkey_request.rb"
       autoload :RotateWebhookSigningKeyResponse, "no_response/models/operations/rotatewebhooksigningkey_response.rb"
+      autoload :RunSearchRequest, "no_response/models/operations/runsearch_request.rb"
+      autoload :RunSearchResponse, "no_response/models/operations/runsearch_response.rb"
       autoload :SearchAccountsResponse, "no_response/models/operations/searchaccounts_response.rb"
       autoload :SearchAssessmentsResponse, "no_response/models/operations/searchassessments_response.rb"
       autoload :SendWebhookTestEventRequest, "no_response/models/operations/sendwebhooktestevent_request.rb"
       autoload :SendWebhookTestEventResponse, "no_response/models/operations/sendwebhooktestevent_response.rb"
       autoload :StartScreeningRequest, "no_response/models/operations/startscreening_request.rb"
       autoload :StartScreeningResponse, "no_response/models/operations/startscreening_response.rb"
+      autoload :StartSearchRequest, "no_response/models/operations/startsearch_request.rb"
+      autoload :StartSearchResponse, "no_response/models/operations/startsearch_response.rb"
       autoload(
         :SummarizeWorkspaceOperationsRequest,
         "no_response/models/operations/summarizeworkspaceoperations_request.rb"

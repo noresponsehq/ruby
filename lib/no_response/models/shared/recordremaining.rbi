@@ -23,4 +23,10 @@ class NoResponse::Models::Shared::RecordRemaining
 
   def rows=(str_)
   end
+
+  def search
+  end
+
+  def search=(str_)
+  end
 end

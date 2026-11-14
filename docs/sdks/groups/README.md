@@ -16,6 +16,8 @@ Groups, lists of people, screenings and reviewer decisions.
 * [get_person](#get_person) - Read a person's report.
 * [review_person](#review_person) - Record a decision on a person.
 * [judge_record](#judge_record) - Join one of a person's records to them, or reject it.
+* [start_search](#start_search) - Search again on a value of one of a person's records.
+* [run_search](#run_search) - Run a counted password or hash search.
 * [list_screenings](#list_screenings) - List a group's screenings.
 * [start_screening](#start_screening) - Start a screening.
 * [get_screening](#get_screening) - Read a screening.
@@ -523,6 +525,111 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::JudgeRecordResponse)](../../models/operations/judgerecordresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## start_search
+
+Search again on the value of one field of one of a person's records, named by the record and field. Nothing searches again by itself. A password or hash search counts its breach rows first and runs only when you run it; read the person to see each search and what it found.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="startSearch" method="post" path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.groups.start_search(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: Models::Shared::KeyEnvironment::LIVE, group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM', person_id: 'per_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::SearchRequest.new(
+  record_id: 'rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7',
+  field: 'username',
+  table: 'FORUM_EXAMPLE_COM_2019'
+))
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                              | Type                                                                                                                                                                   | Required                                                                                                                                                               | Description                                                                                                                                                            | Example                                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `workspace_id`                                                                                                                                                         | *::String*                                                                                                                                                             | :heavy_check_mark:                                                                                                                                                     | Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.                                     | tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                         |
+| `environment`                                                                                                                                                          | [Models::Shared::KeyEnvironment](../../models/shared/keyenvironment.md)                                                                                                | :heavy_check_mark:                                                                                                                                                     | The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404. |                                                                                                                                                                        |
+| `group_id`                                                                                                                                                             | *::String*                                                                                                                                                             | :heavy_check_mark:                                                                                                                                                     | N/A                                                                                                                                                                    | grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                         |
+| `person_id`                                                                                                                                                            | *::String*                                                                                                                                                             | :heavy_check_mark:                                                                                                                                                     | N/A                                                                                                                                                                    | per_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                         |
+| `body`                                                                                                                                                                 | [Models::Shared::SearchRequest](../../models/shared/searchrequest.md)                                                                                                  | :heavy_check_mark:                                                                                                                                                     | N/A                                                                                                                                                                    |                                                                                                                                                                        |
+
+### Response
+
+**[T.nilable(Models::Operations::StartSearchResponse)](../../models/operations/startsearchresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## run_search
+
+Run a counted password or hash search once you have seen how many breach rows hold the value.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="runSearch" method="post" path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches/{search_id}/run" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+
+req = Models::Operations::RunSearchRequest.new(
+  workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM',
+  environment: Models::Shared::KeyEnvironment::LIVE,
+  group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM',
+  person_id: 'per_01JA2Z8K6Q4V7W9XBCDEFGHJKM',
+  search_id: 'srh_01JA2Z8K6Q4V7W9XBCDEFGHJKM',
+  body: Models::Shared::ScreeningCancelRequest.new
+)
+res = s.groups.run_search(request: req)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [Models::Operations::RunSearchRequest](../../models/operations/runsearchrequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[T.nilable(Models::Operations::RunSearchResponse)](../../models/operations/runsearchresponse.md)**
 
 ### Errors
 

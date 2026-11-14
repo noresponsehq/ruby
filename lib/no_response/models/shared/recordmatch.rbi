@@ -17,4 +17,10 @@ class NoResponse::Models::Shared::RecordMatch
 
   def field=(str_)
   end
+
+  def search
+  end
+
+  def search=(str_)
+  end
 end

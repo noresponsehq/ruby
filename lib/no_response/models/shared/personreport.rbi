@@ -53,4 +53,10 @@ class NoResponse::Models::Shared::PersonReport
 
   def lookup=(str_)
   end
+
+  def searches
+  end
+
+  def searches=(str_)
+  end
 end
