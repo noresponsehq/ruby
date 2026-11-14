@@ -50,6 +50,36 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("quote_of")}}
         )
+        # A place a post names, as the platform shows it.
+        field(
+          :place,
+          Crystalline::Nilable.new(Models::Shared::PostPlace),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("place")}}
+        )
+        # The handles of the accounts the post tags, on its own platform.
+        field(
+          :tagged,
+          Crystalline::Nilable.new(Crystalline::Array.new(::String)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("tagged")}}
+        )
+        # How many likes the platform shows for the post.
+        field(
+          :likes,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("likes")}}
+        )
+        # How many comments the platform shows for the post.
+        field(
+          :comments,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("comments")}}
+        )
+        # How many views or plays the platform shows for the post.
+        field(
+          :views,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("views")}}
+        )
         # SHA-256 of the screenshot taken of a flagged item.
         field(
           :screenshot_sha256,
@@ -74,6 +104,11 @@ module NoResponse
             reply_to: T.nilable(::String),
             repost_of: T.nilable(::String),
             quote_of: T.nilable(::String),
+            place: T.nilable(Models::Shared::PostPlace),
+            tagged: T.nilable(T::Array[::String]),
+            likes: T.nilable(::Integer),
+            comments: T.nilable(::Integer),
+            views: T.nilable(::Integer),
             screenshot_sha256: T.nilable(::String),
             captured_at: T.nilable(::String)
           )
@@ -89,6 +124,11 @@ module NoResponse
           reply_to: nil,
           repost_of: nil,
           quote_of: nil,
+          place: nil,
+          tagged: nil,
+          likes: nil,
+          comments: nil,
+          views: nil,
           screenshot_sha256: nil,
           captured_at: nil
         )
@@ -105,6 +145,11 @@ module NoResponse
           @reply_to = reply_to
           @repost_of = repost_of
           @quote_of = quote_of
+          @place = place
+          @tagged = tagged
+          @likes = likes
+          @comments = comments
+          @views = views
           @screenshot_sha256 = screenshot_sha256
           @captured_at = captured_at
         end
@@ -121,6 +166,11 @@ module NoResponse
           return false unless @reply_to == other.reply_to
           return false unless @repost_of == other.repost_of
           return false unless @quote_of == other.quote_of
+          return false unless @place == other.place
+          return false unless @tagged == other.tagged
+          return false unless @likes == other.likes
+          return false unless @comments == other.comments
+          return false unless @views == other.views
           return false unless @screenshot_sha256 == other.screenshot_sha256
           return false unless @captured_at == other.captured_at
           true

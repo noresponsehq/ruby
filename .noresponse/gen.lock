@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: e5aa973b4e142fd9bbbc2502c3ede384
+  docChecksum: d4b6d4e8b6321272e3706aded11ecbfb
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.6
-  configChecksum: d498608bcdf7e0d9a0bbef99f8b1c219
+  releaseVersion: 12.0.7
+  configChecksum: ba99c0dd051d30c248eb2eef92e1a9c6
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:525e99e32926e3f4a4e675420d3f7d60a508f0aa
+    last_write_checksum: sha1:5b70e5875d53d52e651e333f4401545f65d088e2
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -1117,6 +1117,8 @@ trackedFiles:
     last_write_checksum: sha1:099e7bc4d171fae212d1695c429ee9eebc51201e
   docs/models/shared/population.md:
     last_write_checksum: sha1:06526328c22ade423966011a02cf9df96f844eff
+  docs/models/shared/postplace.md:
+    last_write_checksum: sha1:79f0985047fb97d7869715d8f15437e85c43e563
   docs/models/shared/postsstopped.md:
     last_write_checksum: sha1:3676687dd3dfb281793ef36683d95d5698855c9b
   docs/models/shared/principal.md:
@@ -1302,7 +1304,7 @@ trackedFiles:
   docs/models/shared/screeningplatformcoveragestatus.md:
     last_write_checksum: sha1:ce6234d18d93d34cf9b94824132d629bb2e17bbf
   docs/models/shared/screeningpost.md:
-    last_write_checksum: sha1:7e9ce61784d2433608878f19aa9809493202a2b6
+    last_write_checksum: sha1:c89fe240c2cdfb3801ceca698e6d82ea458c1910
   docs/models/shared/screeningprofile.md:
     last_write_checksum: sha1:1e1224f648862cebd159c0dd1bb72bbc86e1a104
   docs/models/shared/screeningrequest.md:
@@ -2438,7 +2440,7 @@ trackedFiles:
   lib/no_response/models/operations/updatesettings_response.rbi:
     last_write_checksum: sha1:0834c9903587b61cbe3cd8bee544792b89c08362
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:520bfd9442cda2fcd9b5eb59469674d9216a44f9
+    last_write_checksum: sha1:8a542709f31b55f5e62b67a8db96fa6881dff6a4
   lib/no_response/models/shared/access.rb:
     last_write_checksum: sha1:da8cdfb41547b10b13592a7560d48fe6e5ca2b37
   lib/no_response/models/shared/access.rbi:
@@ -3671,6 +3673,10 @@ trackedFiles:
     last_write_checksum: sha1:7cefd388058cf2db47682449ccb82c47fc944c2e
   lib/no_response/models/shared/population.rbi:
     last_write_checksum: sha1:db05bae9a8280a429729ff423580becf883dd5e6
+  lib/no_response/models/shared/postplace.rb:
+    last_write_checksum: sha1:7fea803f2864b24272bebd50d9723b9fd97abb66
+  lib/no_response/models/shared/postplace.rbi:
+    last_write_checksum: sha1:d4f5a1d27414e27d3dc233845d9803016b2d680b
   lib/no_response/models/shared/postsstopped.rb:
     last_write_checksum: sha1:93631ace82afd08f615b3a3afbc63fa3d1799b11
   lib/no_response/models/shared/postsstopped.rbi:
@@ -4040,9 +4046,9 @@ trackedFiles:
   lib/no_response/models/shared/screeningplatformcoveragestatus.rbi:
     last_write_checksum: sha1:84b9fff073eb11f9aaadc4590fa471c181cceee6
   lib/no_response/models/shared/screeningpost.rb:
-    last_write_checksum: sha1:3da214da5f0328f06ac7ffb1bc98fa5298b6227e
+    last_write_checksum: sha1:46d81b8a78994163b96a4861e41af2f8de7944ba
   lib/no_response/models/shared/screeningpost.rbi:
-    last_write_checksum: sha1:c6e1bf1d3d1f04af81289605bef967fd7e2f33c3
+    last_write_checksum: sha1:79e04710ab67aa3ca6c047ff5311bab365c6ab96
   lib/no_response/models/shared/screeningprofile.rb:
     last_write_checksum: sha1:d3a499db92a8d90f1a389a288660cc799d0d3b84
   lib/no_response/models/shared/screeningprofile.rbi:
@@ -4312,7 +4318,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:808a3430a24c3b4b4456fe35d312edb87396cbb2
+    last_write_checksum: sha1:e50587283db03251fc492ce26a1ddb5f2e46e41f
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4342,7 +4348,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:538b9010cd75e80c2d9e39f0733ba04dd29b91e8
   noresponse.gemspec:
-    last_write_checksum: sha1:33f3469db7fe4200a494d3dcc5515fd135336495
+    last_write_checksum: sha1:e400d6f2c1deaa8ec376839eadfa79c488b0fe95
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:

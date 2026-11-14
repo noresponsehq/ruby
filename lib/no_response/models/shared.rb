@@ -301,6 +301,7 @@ module NoResponse
       autoload :PolicyPreviewTransition, "no_response/models/shared/policypreviewtransition.rb"
       autoload :PolicyRestoreRequest, "no_response/models/shared/policyrestorerequest.rb"
       autoload :Population, "no_response/models/shared/population.rb"
+      autoload :PostPlace, "no_response/models/shared/postplace.rb"
       autoload :PostsStopped, "no_response/models/shared/postsstopped.rb"
       autoload :Principal, "no_response/models/shared/principal.rb"
       autoload :Priority, "no_response/models/shared/priority.rb"

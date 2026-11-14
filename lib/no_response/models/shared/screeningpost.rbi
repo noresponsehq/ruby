@@ -60,6 +60,36 @@ class NoResponse::Models::Shared::ScreeningPost
   def quote_of=(str_)
   end
 
+  def place
+  end
+
+  def place=(str_)
+  end
+
+  def tagged
+  end
+
+  def tagged=(str_)
+  end
+
+  def likes
+  end
+
+  def likes=(str_)
+  end
+
+  def comments
+  end
+
+  def comments=(str_)
+  end
+
+  def views
+  end
+
+  def views=(str_)
+  end
+
   def screenshot_sha256
   end
 
