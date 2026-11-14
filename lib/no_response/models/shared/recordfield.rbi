@@ -41,4 +41,10 @@ class NoResponse::Models::Shared::RecordField
 
   def detail=(str_)
   end
+
+  def distinctive
+  end
+
+  def distinctive=(str_)
+  end
 end

@@ -55,6 +55,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("detail")}}
         )
+        # How distinctive a searchable value is: an email, phone, username, password, hash, person name or IP. Absent for other values, and when its rating could not be worked out, such as when a count failed.
+        field(
+          :distinctive,
+          Crystalline::Nilable.new(Models::Shared::RecordDistinctive),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("distinctive")}}
+        )
 
         sig {
           params(
@@ -63,17 +69,19 @@ module NoResponse
             kind: T.nilable(Models::Shared::RecordKind),
             role: T.nilable(Models::Shared::RecordRole),
             value: T.nilable(::String),
-            detail: T.nilable(::String)
+            detail: T.nilable(::String),
+            distinctive: T.nilable(Models::Shared::RecordDistinctive)
           )
             .void
         }
-        def initialize(field:, original:, kind: nil, role: nil, value: nil, detail: nil)
+        def initialize(field:, original:, kind: nil, role: nil, value: nil, detail: nil, distinctive: nil)
           @field = field
           @original = original
           @kind = kind
           @role = role
           @value = value
           @detail = detail
+          @distinctive = distinctive
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -85,6 +93,7 @@ module NoResponse
           return false unless @role == other.role
           return false unless @value == other.value
           return false unless @detail == other.detail
+          return false unless @distinctive == other.distinctive
           true
         end
       end
