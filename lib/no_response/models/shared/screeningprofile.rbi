@@ -101,4 +101,10 @@ class NoResponse::Models::Shared::ScreeningProfile
 
   def period_to=(str_)
   end
+
+  def record
+  end
+
+  def record=(str_)
+  end
 end

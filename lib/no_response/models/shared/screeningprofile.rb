@@ -108,6 +108,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("period_to")}}
         )
+        # One answer from one source: where it came from, what found it and every field it holds.
+        field(
+          :record,
+          Crystalline::Nilable.new(Models::Shared::Record),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("record")}}
+        )
 
         sig {
           params(
@@ -126,7 +132,8 @@ module NoResponse
             followers: T.nilable(::Integer),
             account_created_at: T.nilable(::String),
             period_from: T.nilable(::String),
-            period_to: T.nilable(::String)
+            period_to: T.nilable(::String),
+            record: T.nilable(Models::Shared::Record)
           )
             .void
         }
@@ -146,7 +153,8 @@ module NoResponse
           followers: nil,
           account_created_at: nil,
           period_from: nil,
-          period_to: nil
+          period_to: nil,
+          record: nil
         )
           @id = id
           @platform = platform
@@ -164,6 +172,7 @@ module NoResponse
           @account_created_at = account_created_at
           @period_from = period_from
           @period_to = period_to
+          @record = record
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -185,6 +194,7 @@ module NoResponse
           return false unless @account_created_at == other.account_created_at
           return false unless @period_from == other.period_from
           return false unless @period_to == other.period_to
+          return false unless @record == other.record
           true
         end
       end

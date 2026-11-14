@@ -33,21 +33,29 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::RiskDetails),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("details")}}
         )
+        # What each source that found an account answered, whole: every field under the source's own names, each answer once. Served only to a caller who may read evidence, as details are.
+        field(
+          :records,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Record)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("records")}}
+        )
 
         sig {
           params(
             checks: T::Array[Models::Shared::ScreeningLookupCheck],
             looked_at: ::String,
             summary: T.nilable(Models::Shared::RiskSummary),
-            details: T.nilable(Models::Shared::RiskDetails)
+            details: T.nilable(Models::Shared::RiskDetails),
+            records: T.nilable(T::Array[Models::Shared::Record])
           )
             .void
         }
-        def initialize(checks:, looked_at:, summary: nil, details: nil)
+        def initialize(checks:, looked_at:, summary: nil, details: nil, records: nil)
           @checks = checks
           @looked_at = looked_at
           @summary = summary
           @details = details
+          @records = records
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -57,6 +65,7 @@ module NoResponse
           return false unless @looked_at == other.looked_at
           return false unless @summary == other.summary
           return false unless @details == other.details
+          return false unless @records == other.records
           true
         end
       end

@@ -29,4 +29,10 @@ class NoResponse::Models::Shared::ScreeningLookup
 
   def details=(str_)
   end
+
+  def records
+  end
+
+  def records=(str_)
+  end
 end
