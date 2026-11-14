@@ -35,4 +35,34 @@ class NoResponse::Models::Shared::Record
 
   def observed_at=(str_)
   end
+
+  def likelihood
+  end
+
+  def likelihood=(str_)
+  end
+
+  def agreed
+  end
+
+  def agreed=(str_)
+  end
+
+  def clashed
+  end
+
+  def clashed=(str_)
+  end
+
+  def joined
+  end
+
+  def joined=(str_)
+  end
+
+  def verdict
+  end
+
+  def verdict=(str_)
+  end
 end

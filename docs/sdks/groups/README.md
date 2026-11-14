@@ -15,6 +15,7 @@ Groups, lists of people, screenings and reviewer decisions.
 * [add_people](#add_people) - Add or update a batch of people.
 * [get_person](#get_person) - Read a person's report.
 * [review_person](#review_person) - Record a decision on a person.
+* [judge_record](#judge_record) - Join one of a person's records to them, or reject it.
 * [list_screenings](#list_screenings) - List a group's screenings.
 * [start_screening](#start_screening) - Start a screening.
 * [get_screening](#get_screening) - Read a screening.
@@ -471,6 +472,57 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::ReviewPersonResponse)](../../models/operations/reviewpersonresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## judge_record
+
+Join one of a person's lookup records to them whatever its likelihood, or reject it so it stays a lead. The verdict sticks while lookups find the same record.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="judgeRecord" method="post" path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/records" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.groups.judge_record(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: Models::Shared::KeyEnvironment::TEST, group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM', person_id: 'per_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::RecordVerdictRequest.new(
+  record_id: 'rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7',
+  verdict: Models::Shared::Verdict::REJECTED
+))
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                              | Type                                                                                                                                                                   | Required                                                                                                                                                               | Description                                                                                                                                                            | Example                                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `workspace_id`                                                                                                                                                         | *::String*                                                                                                                                                             | :heavy_check_mark:                                                                                                                                                     | Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.                                     | tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                         |
+| `environment`                                                                                                                                                          | [Models::Shared::KeyEnvironment](../../models/shared/keyenvironment.md)                                                                                                | :heavy_check_mark:                                                                                                                                                     | The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404. |                                                                                                                                                                        |
+| `group_id`                                                                                                                                                             | *::String*                                                                                                                                                             | :heavy_check_mark:                                                                                                                                                     | N/A                                                                                                                                                                    | grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                         |
+| `person_id`                                                                                                                                                            | *::String*                                                                                                                                                             | :heavy_check_mark:                                                                                                                                                     | N/A                                                                                                                                                                    | per_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                                                         |
+| `body`                                                                                                                                                                 | [Models::Shared::RecordVerdictRequest](../../models/shared/recordverdictrequest.md)                                                                                    | :heavy_check_mark:                                                                                                                                                     | N/A                                                                                                                                                                    |                                                                                                                                                                        |
+
+### Response
+
+**[T.nilable(Models::Operations::JudgeRecordResponse)](../../models/operations/judgerecordresponse.md)**
 
 ### Errors
 

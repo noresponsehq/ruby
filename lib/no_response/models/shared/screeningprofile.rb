@@ -119,7 +119,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("period_to")}}
         )
-        # One answer from one source: where it came from, what found it and every field it holds.
+        # One answer from one source: where it came from, what found it and every field it holds. A person's lookup records also say how likely each is the person.
         field(
           :record,
           Crystalline::Nilable.new(Models::Shared::Record),

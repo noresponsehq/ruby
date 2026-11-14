@@ -108,6 +108,8 @@ module NoResponse
       autoload :GetSettingsResponse, "no_response/models/operations/getsettings_response.rb"
       autoload :GetUsageRequest, "no_response/models/operations/getusage_request.rb"
       autoload :GetUsageResponse, "no_response/models/operations/getusage_response.rb"
+      autoload :JudgeRecordRequest, "no_response/models/operations/judgerecord_request.rb"
+      autoload :JudgeRecordResponse, "no_response/models/operations/judgerecord_response.rb"
       autoload :ListAccountAssessmentsRequest, "no_response/models/operations/listaccountassessments_request.rb"
       autoload :ListAccountAssessmentsResponse, "no_response/models/operations/listaccountassessments_response.rb"
       autoload :ListAccountCredentialsRequest, "no_response/models/operations/listaccountcredentials_request.rb"
