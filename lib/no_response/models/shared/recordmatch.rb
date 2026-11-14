@@ -9,7 +9,7 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # The kind of searched value: email, phone, username, name, or handle for a profile read of a handle.
+        # The kind of searched value: email, phone, username, ip, name, or handle for a profile read of a handle.
         field :by, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("by"), required: true}}
         # The field the searched value hit, when the record holds it.
         field(

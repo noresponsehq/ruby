@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::ScreeningLookup
 
   def records=(str_)
   end
+
+  def remaining
+  end
+
+  def remaining=(str_)
+  end
 end

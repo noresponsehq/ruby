@@ -9,13 +9,13 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # The id of the connector that read the record.
+        # The id of the connector that read the record: breach for a breach row.
         field(
           :connector,
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("connector"), required: true}}
         )
-        # The kind of source: platform for an account read off a live platform.
+        # The kind of source: platform for an account read off a live platform; for a breach row, the kind of leak its table is: site_breach, credential_list, stealer_log, scrape, hacking_forum, abuse_service or darkweb_site.
         field :kind, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("kind"), required: true}}
         # The host a person knows the source's site by.
         field(
@@ -29,7 +29,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("table")}}
         )
-        # When the source's data dates from, at the precision it is known.
+        # When the source's data dates from, at the precision it is known: YYYY or YYYY-MM for a breach table.
         field(
           :date,
           Crystalline::Nilable.new(::String),

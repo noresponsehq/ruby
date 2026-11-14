@@ -23,7 +23,7 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::RecordMatch),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched"), required: true}}
         )
-        # Every field the source returned, in the order the source's connector lists them.
+        # Every field the source returned, in the order the source's connector lists them; a breach row's columns in name order. Nothing is withheld: a breach row's passwords, hashes and salts are fields like any other.
         field(
           :fields_,
           Crystalline::Array.new(Models::Shared::RecordField),

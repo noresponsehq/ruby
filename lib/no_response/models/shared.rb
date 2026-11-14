@@ -313,6 +313,7 @@ module NoResponse
       autoload :Record, "no_response/models/shared/record.rb"
       autoload :RecordField, "no_response/models/shared/recordfield.rb"
       autoload :RecordMatch, "no_response/models/shared/recordmatch.rb"
+      autoload :RecordRemaining, "no_response/models/shared/recordremaining.rb"
       autoload :RecordSource, "no_response/models/shared/recordsource.rb"
       autoload :Report, "no_response/models/shared/report.rb"
       autoload :ReportScope, "no_response/models/shared/report_scope.rb"
