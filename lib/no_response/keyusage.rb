@@ -56,7 +56,7 @@ module NoResponse
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
-      url = "#{base_url}/v1/key_usage/batches"
+      url = "#{base_url}/v1/keys/usage"
       headers = Utils.get_headers(request)
       headers = T.cast(headers, T::Hash[String, String])
       req_content_type, data, form = Utils.serialize_request_body(request, false, false, :body, :json)

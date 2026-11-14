@@ -55,7 +55,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ListAuditEventsRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/audit_events",
+        "/v1/workspaces/{workspace_id}/audit",
         request
       )
       headers = {}
@@ -377,7 +377,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::GetAuditRetentionRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/audit_settings/{environment}",
+        "/v1/workspaces/{workspace_id}/retention/{environment}",
         request
       )
       headers = {}
@@ -669,7 +669,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::UpdateAuditRetentionRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/audit_settings/{environment}",
+        "/v1/workspaces/{workspace_id}/retention/{environment}",
         request
       )
       headers = {}
@@ -972,7 +972,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ListAuditStreamsRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/audit_streams/{environment}",
+        "/v1/workspaces/{workspace_id}/streams/{environment}",
         request
       )
       headers = {}
@@ -1264,7 +1264,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ConfigureAuditStreamRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/audit_streams/{environment}",
+        "/v1/workspaces/{workspace_id}/streams/{environment}",
         request
       )
       headers = {}
@@ -1569,7 +1569,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::RemoveAuditStreamRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/audit_streams/{environment}/{endpoint_id}",
+        "/v1/workspaces/{workspace_id}/streams/{environment}/{endpoint_id}",
         request
       )
       headers = {}
@@ -1862,7 +1862,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ReplayAuditStreamRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/audit_streams/{environment}/{endpoint_id}/replay",
+        "/v1/workspaces/{workspace_id}/streams/{environment}/{endpoint_id}/replay",
         request
       )
       headers = {}

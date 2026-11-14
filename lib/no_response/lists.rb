@@ -1579,7 +1579,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::GetListChangeRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/list_changes/{environment}/{change_id}",
+        "/v1/workspaces/{workspace_id}/changes/{environment}/{change_id}",
         request
       )
       headers = {}

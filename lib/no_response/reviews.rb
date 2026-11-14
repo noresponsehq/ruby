@@ -2469,7 +2469,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ListReviewViewsRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/review_views/{environment}",
+        "/v1/workspaces/{workspace_id}/views/{environment}",
         request
       )
       headers = {}
@@ -2760,7 +2760,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::CreateReviewViewRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/review_views/{environment}",
+        "/v1/workspaces/{workspace_id}/views/{environment}",
         request
       )
       headers = {}
@@ -3052,7 +3052,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::UpdateReviewViewRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/review_views/{environment}/{view_id}",
+        "/v1/workspaces/{workspace_id}/views/{environment}/{view_id}",
         request
       )
       headers = {}
@@ -3345,7 +3345,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::DeleteReviewViewRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/review_views/{environment}/{view_id}",
+        "/v1/workspaces/{workspace_id}/views/{environment}/{view_id}",
         request
       )
       headers = {}

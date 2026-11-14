@@ -275,7 +275,7 @@ Read retained propagation progress for a list change with settings or management
 
 ### Example Usage
 
-<!-- UsageSnippet language="ruby" operationID="getListChange" method="get" path="/v1/workspaces/{workspace_id}/list_changes/{environment}/{change_id}" -->
+<!-- UsageSnippet language="ruby" operationID="getListChange" method="get" path="/v1/workspaces/{workspace_id}/changes/{environment}/{change_id}" -->
 ```ruby
 require 'noresponse'
 

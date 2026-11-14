@@ -14,7 +14,7 @@ Records requests made with API keys your platform issued to your accounts, one e
 
 ### Example Usage: batch
 
-<!-- UsageSnippet language="ruby" operationID="recordKeyUsage" method="post" path="/v1/key_usage/batches" example="batch" -->
+<!-- UsageSnippet language="ruby" operationID="recordKeyUsage" method="post" path="/v1/keys/usage" example="batch" -->
 ```ruby
 require 'noresponse'
 
@@ -49,7 +49,7 @@ end
 ```
 ### Example Usage: recorded
 
-<!-- UsageSnippet language="ruby" operationID="recordKeyUsage" method="post" path="/v1/key_usage/batches" example="recorded" -->
+<!-- UsageSnippet language="ruby" operationID="recordKeyUsage" method="post" path="/v1/keys/usage" example="recorded" -->
 ```ruby
 require 'noresponse'
 

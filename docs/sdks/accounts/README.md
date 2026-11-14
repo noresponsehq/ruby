@@ -261,7 +261,7 @@ Lists the other accounts in this environment whose retained assessments submitte
 
 ### Example Usage
 
-<!-- UsageSnippet language="ruby" operationID="listLinkedAccounts" method="get" path="/v1/accounts/{account_id}/linked_accounts" -->
+<!-- UsageSnippet language="ruby" operationID="listLinkedAccounts" method="get" path="/v1/accounts/{account_id}/links" -->
 ```ruby
 require 'noresponse'
 

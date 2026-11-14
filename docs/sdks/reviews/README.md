@@ -422,7 +422,7 @@ List private and shared saved review filters visible to you.
 
 ### Example Usage
 
-<!-- UsageSnippet language="ruby" operationID="listReviewViews" method="get" path="/v1/workspaces/{workspace_id}/review_views/{environment}" -->
+<!-- UsageSnippet language="ruby" operationID="listReviewViews" method="get" path="/v1/workspaces/{workspace_id}/views/{environment}" -->
 ```ruby
 require 'noresponse'
 
@@ -467,7 +467,7 @@ Save a private or shared review filter.
 
 ### Example Usage
 
-<!-- UsageSnippet language="ruby" operationID="createReviewView" method="post" path="/v1/workspaces/{workspace_id}/review_views/{environment}" -->
+<!-- UsageSnippet language="ruby" operationID="createReviewView" method="post" path="/v1/workspaces/{workspace_id}/views/{environment}" -->
 ```ruby
 require 'noresponse'
 
@@ -521,7 +521,7 @@ Update your saved review filter after checking its expected version.
 
 ### Example Usage
 
-<!-- UsageSnippet language="ruby" operationID="updateReviewView" method="patch" path="/v1/workspaces/{workspace_id}/review_views/{environment}/{view_id}" -->
+<!-- UsageSnippet language="ruby" operationID="updateReviewView" method="patch" path="/v1/workspaces/{workspace_id}/views/{environment}/{view_id}" -->
 ```ruby
 require 'noresponse'
 
@@ -576,7 +576,7 @@ Delete your saved review filter after checking its expected version.
 
 ### Example Usage
 
-<!-- UsageSnippet language="ruby" operationID="deleteReviewView" method="delete" path="/v1/workspaces/{workspace_id}/review_views/{environment}/{view_id}" -->
+<!-- UsageSnippet language="ruby" operationID="deleteReviewView" method="delete" path="/v1/workspaces/{workspace_id}/views/{environment}/{view_id}" -->
 ```ruby
 require 'noresponse'
 

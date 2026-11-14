@@ -1252,7 +1252,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ListLinkedAccountsRequest,
         base_url,
-        "/v1/accounts/{account_id}/linked_accounts",
+        "/v1/accounts/{account_id}/links",
         request
       )
       headers = {}
