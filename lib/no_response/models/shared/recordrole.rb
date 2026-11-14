@@ -22,14 +22,18 @@ module NoResponse
           BANNED = new("banned")
           # What the person wrote about themselves (`long_text`).
           BIO = new("bio")
-          # The date of birth (`date`).
+          # The date of birth (`date` or `date_time`).
           BORN = new("born")
           # Whether the site marks the account as a bot (`flag`).
           BOT = new("bot")
           # The category callers give a phone number, such as telemarketer (`label`).
           CALLER_CATEGORY = new("caller_category")
+          # How many chargebacks a shop recorded against the account, or whether it has one (`count` or `flag`).
+          CHARGEBACKS = new("chargebacks")
           # The banner picture of the profile (`image`).
           COVER_PICTURE = new("cover_picture")
+          # How many of the account's payments a shop declined (`count`).
+          DECLINES = new("declines")
           # Whether the account is deleted or inactive (`flag`).
           DELETED = new("deleted")
           # When the account was deleted (`date` or `date_time`).
@@ -100,6 +104,8 @@ module NoResponse
           PAID = new("paid")
           # When the password last changed (`date` or `date_time`).
           PASSWORD_CHANGED = new("password_changed")
+          # The payment method or card brand the account paid with (`label`).
+          PAYMENT_METHOD = new("payment_method")
           # The profile picture (`image`).
           PICTURE = new("picture")
           # Points on the site (`score`).
@@ -140,6 +146,8 @@ module NoResponse
           SPAM_SCORE = new("spam_score")
           # A street line of an address (`address`).
           STREET = new("street")
+          # How many trades a forum account completed (`count`).
+          TRADES = new("trades")
           # Whether the site verified the account (`flag`).
           VERIFIED = new("verified")
           # Warnings and infractions on the account (`count`).
