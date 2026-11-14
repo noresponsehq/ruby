@@ -90,6 +90,48 @@ class NoResponse::Models::Shared::ScreeningPost
   def views=(str_)
   end
 
+  def shares
+  end
+
+  def shares=(str_)
+  end
+
+  def language
+  end
+
+  def language=(str_)
+  end
+
+  def edited
+  end
+
+  def edited=(str_)
+  end
+
+  def sponsored
+  end
+
+  def sponsored=(str_)
+  end
+
+  def ai_generated
+  end
+
+  def ai_generated=(str_)
+  end
+
+  def posted_with
+  end
+
+  def posted_with=(str_)
+  end
+
+  def stated
+  end
+
+  def stated=(str_)
+  end
+
   def screenshot_sha256
   end
 

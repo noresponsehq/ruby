@@ -80,6 +80,48 @@ module NoResponse
           Crystalline::Nilable.new(::Integer),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("views")}}
         )
+        # How many times the platform shows the post was shared or reposted.
+        field(
+          :shares,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("shares")}}
+        )
+        # The language the platform says the post is in, as the platform codes it, such as en or pt-BR.
+        field(
+          :language,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("language")}}
+        )
+        # true when the platform marks the post as edited after it went up. Absent when it does not mark it.
+        field(
+          :edited,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("edited")}}
+        )
+        # true when the platform marks the post as a paid partnership or an ad. Absent when it does not mark it.
+        field(
+          :sponsored,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("sponsored")}}
+        )
+        # true when the platform labels the post as made or changed with AI. Absent when it does not label it.
+        field(
+          :ai_generated,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("ai_generated")}}
+        )
+        # The app or device the platform says the post was made with.
+        field(
+          :posted_with,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("posted_with")}}
+        )
+        # Everything else the platform sent about the post, under the platform's own names and as it typed them: counts, ids of linked posts and accounts, links, media details, labels and notices. The fields above are not repeated here. Nothing that describes the account the screening read with, such as whether it liked or saved the post, is ever here.
+        field(
+          :stated,
+          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("stated")}}
+        )
         # SHA-256 of the screenshot taken of a flagged item.
         field(
           :screenshot_sha256,
@@ -109,6 +151,13 @@ module NoResponse
             likes: T.nilable(::Integer),
             comments: T.nilable(::Integer),
             views: T.nilable(::Integer),
+            shares: T.nilable(::Integer),
+            language: T.nilable(::String),
+            edited: T.nilable(T::Boolean),
+            sponsored: T.nilable(T::Boolean),
+            ai_generated: T.nilable(T::Boolean),
+            posted_with: T.nilable(::String),
+            stated: T.nilable(T::Hash[Symbol, ::Object]),
             screenshot_sha256: T.nilable(::String),
             captured_at: T.nilable(::String)
           )
@@ -129,6 +178,13 @@ module NoResponse
           likes: nil,
           comments: nil,
           views: nil,
+          shares: nil,
+          language: nil,
+          edited: nil,
+          sponsored: nil,
+          ai_generated: nil,
+          posted_with: nil,
+          stated: nil,
           screenshot_sha256: nil,
           captured_at: nil
         )
@@ -150,6 +206,13 @@ module NoResponse
           @likes = likes
           @comments = comments
           @views = views
+          @shares = shares
+          @language = language
+          @edited = edited
+          @sponsored = sponsored
+          @ai_generated = ai_generated
+          @posted_with = posted_with
+          @stated = stated
           @screenshot_sha256 = screenshot_sha256
           @captured_at = captured_at
         end
@@ -171,6 +234,13 @@ module NoResponse
           return false unless @likes == other.likes
           return false unless @comments == other.comments
           return false unless @views == other.views
+          return false unless @shares == other.shares
+          return false unless @language == other.language
+          return false unless @edited == other.edited
+          return false unless @sponsored == other.sponsored
+          return false unless @ai_generated == other.ai_generated
+          return false unless @posted_with == other.posted_with
+          return false unless @stated == other.stated
           return false unless @screenshot_sha256 == other.screenshot_sha256
           return false unless @captured_at == other.captured_at
           true
