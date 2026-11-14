@@ -21,41 +21,59 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("original"), required: true}}
         )
-        # What sort of value the field holds. Absent until the field's kind is known.
+        # What sort of value a field holds, which decides how it is cleaned, compared and searched again. It comes from the value itself where its shape is certain (an email, an IP, a URL, an international phone number), else from the answer stored for the source's column, else text. A value of any kind is returned.
         field(
           :kind,
-          Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("kind")}}
+          Crystalline::Nilable.new(Models::Shared::RecordKind),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("kind"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::RecordKind, true)
+            }
+          }
         )
-        # Which common field it is, where many sources share it, such as handle, display_name, account_id, profile_link, picture, bio, website, linked_account (named by its network), account_status, joined, last_updated, organisation, location, followers, following or posts. Absent for a field only this source returns.
+        # Which common field a value is, where many sources share it: a join date and a birth date are both dates, with the roles joined and born. A platform account's field and a breach row's column with the same meaning carry the same kind and role. A linked_account field is named by its network. Absent for a field only its source returns.
         field(
           :role,
-          Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("role")}}
+          Crystalline::Nilable.new(Models::Shared::RecordRole),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("role"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::RecordRole, true)
+            }
+          }
         )
-        # The cleaned value. Absent when it cannot be cleaned, or until the field's kind is known.
+        # The value cleaned to its kind's one form: an email in lower case, a phone number in international form when its country is known, a date in ISO form, a country as its two-letter code, a flag as true or false. Absent when the value cannot be cleaned as its kind; original still holds it.
         field(
           :value,
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("value")}}
+        )
+        # What the value shows of itself beyond its kind: the likely algorithm of a hash, the likely coin of a crypto address or the currency of an amount.
+        field(
+          :detail,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("detail")}}
         )
 
         sig {
           params(
             field: ::String,
             original: ::String,
-            kind: T.nilable(::String),
-            role: T.nilable(::String),
-            value: T.nilable(::String)
+            kind: T.nilable(Models::Shared::RecordKind),
+            role: T.nilable(Models::Shared::RecordRole),
+            value: T.nilable(::String),
+            detail: T.nilable(::String)
           )
             .void
         }
-        def initialize(field:, original:, kind: nil, role: nil, value: nil)
+        def initialize(field:, original:, kind: nil, role: nil, value: nil, detail: nil)
           @field = field
           @original = original
           @kind = kind
           @role = role
           @value = value
+          @detail = detail
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -66,6 +84,7 @@ module NoResponse
           return false unless @kind == other.kind
           return false unless @role == other.role
           return false unless @value == other.value
+          return false unless @detail == other.detail
           true
         end
       end

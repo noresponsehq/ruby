@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::RecordField
 
   def value=(str_)
   end
+
+  def detail
+  end
+
+  def detail=(str_)
+  end
 end
