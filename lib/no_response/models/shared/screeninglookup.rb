@@ -4,12 +4,12 @@
 module NoResponse
   module Models
     module Shared
-      # What the signup check's lookups found for an attendee: account presence for the email, phone and usernames (the attendee's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state.
+      # What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state.
       class ScreeningLookup
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # Each lane each identifier was looked up in, identifiers in the order email, phone, username and lanes in the order accounts, phone, breach, domain. Every lane the attendee's identifiers are looked up in is listed: one that no source answered, or that no source could be asked in, is not_covered. Empty when the attendee has no email, phone or handle to look up.
+        # Each lane each identifier was looked up in, identifiers in the order email, phone, username and lanes in the order accounts, phone, breach, domain. Every lane the person's identifiers are looked up in is listed: one that no source answered, or that no source could be asked in, is not_covered. Empty when the person has no email, phone or handle to look up.
         field(
           :checks,
           Crystalline::Array.new(Models::Shared::ScreeningLookupCheck),
@@ -21,7 +21,7 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("looked_at"), required: true}}
         )
-        # A few typed facts per identifier: an assessment's risk.summary, and an event screening attendee's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer.
+        # A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer.
         field(
           :summary,
           Crystalline::Nilable.new(Models::Shared::RiskSummary),

@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Screened attendees by the band of their most severe finding.
+      # Screened people by the band of their most severe finding.
       class ScreeningCompletedByBand
         extend T::Sig
         include Crystalline::MetadataFields

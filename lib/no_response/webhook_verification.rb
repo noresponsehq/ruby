@@ -47,8 +47,8 @@ module NoResponse
         "account.risk_changed" => Models::Shared::AccountRiskChangedEvent,
         "audit.event" => Models::Shared::AuditEventEvent,
         "screening.completed" => Models::Shared::ScreeningCompletedEvent,
-        "attendee.flagged" => Models::Shared::AttendeeFlaggedEvent,
-        "attendee.decided" => Models::Shared::AttendeeDecidedEvent
+        "person.flagged" => Models::Shared::PersonFlaggedEvent,
+        "person.decided" => Models::Shared::PersonDecidedEvent
       }
     )
     private_constant :EVENT_TYPE
@@ -81,8 +81,8 @@ module NoResponse
               Models::Shared::AccountRiskChangedEvent,
               Models::Shared::AuditEventEvent,
               Models::Shared::ScreeningCompletedEvent,
-              Models::Shared::AttendeeFlaggedEvent,
-              Models::Shared::AttendeeDecidedEvent
+              Models::Shared::PersonFlaggedEvent,
+              Models::Shared::PersonDecidedEvent
             )
           )
       end

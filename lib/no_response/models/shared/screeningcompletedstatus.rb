@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # ScreeningCompletedStatus - completed reached every attendee; partial left some not fully covered (partial_coverage); failed covered nobody.
+      # ScreeningCompletedStatus - completed reached every person; partial left some not fully covered (partial_coverage); failed covered nobody.
       class ScreeningCompletedStatus < T::Enum
         enums do
           COMPLETED = new("completed")

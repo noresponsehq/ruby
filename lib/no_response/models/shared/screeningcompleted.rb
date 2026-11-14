@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # A screening of an event finished. It counts only the attendees this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/events/{environment}/{event_id}/attendees, filtered by band, to act on them. attendees_screened + partial_coverage = attendees_total, attendees_flagged is the sum of by_band, no_footprint counts screened attendees with no flag whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event.
+      # A screening of a group finished. It counts only the people this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people, filtered by band, to act on them. people_screened + partial_coverage = people_total, people_flagged is the sum of by_band, no_footprint counts screened people with no flag whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event.
       class ScreeningCompleted
         extend T::Sig
         include Crystalline::MetadataFields
@@ -15,13 +15,13 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("screening_id"), required: true}}
         )
-        # The event it screened.
+        # The group it screened.
         field(
-          :event_id,
+          :group_id,
           ::String,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("event_id"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("group_id"), required: true}}
         )
-        # completed reached every attendee; partial left some not fully covered (partial_coverage); failed covered nobody.
+        # completed reached every person; partial left some not fully covered (partial_coverage); failed covered nobody.
         field(
           :status,
           Models::Shared::ScreeningCompletedStatus,
@@ -33,37 +33,37 @@ module NoResponse
             }
           }
         )
-        # Every attendee the screening set out to reach: those no screening had reached and those on watch or escalated.
+        # Every person the screening set out to reach: those no screening had reached and those on watch or escalated.
         field(
-          :attendees_total,
+          :people_total,
           ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_total"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_total"), required: true}}
         )
-        # Attendees the screening covered, flagged or not.
+        # People the screening covered, flagged or not.
         field(
-          :attendees_screened,
+          :people_screened,
           ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_screened"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_screened"), required: true}}
         )
-        # Screened attendees with a finding: the sum of by_band.
+        # Screened people with a finding: the sum of by_band.
         field(
-          :attendees_flagged,
+          :people_flagged,
           ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_flagged"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_flagged"), required: true}}
         )
-        # Screened attendees by the band of their most severe finding.
+        # Screened people by the band of their most severe finding.
         field(
           :by_band,
           Models::Shared::ScreeningCompletedByBand,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("by_band"), required: true}}
         )
-        # Screened attendees with no finding whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read.
+        # Screened people with no finding whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read.
         field(
           :no_footprint,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("no_footprint"), required: true}}
         )
-        # Attendees the screening did not fully cover. Read each one's coverage on its attendee.
+        # People the screening did not fully cover. Read each one's coverage on its person.
         field(
           :partial_coverage,
           ::Integer,
@@ -81,7 +81,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("error_code")}}
         )
-        # Screened attendees with no profile to check: the list gave nothing to look up on any requested platform, such as no handle, so nobody looked for a profile (no_profile_to_check on the attendee). Not in no_footprint, and not partial: nothing failed. Their lookups are on their reports.
+        # Screened people with no profile to check: the list gave nothing to look up on any requested platform, such as no handle, so nobody looked for a profile (no_profile_to_check on the person). Not in no_footprint, and not partial: nothing failed. Their lookups are on their reports.
         field(
           :no_profile_to_check,
           Crystalline::Nilable.new(::Integer),
@@ -91,11 +91,11 @@ module NoResponse
         sig {
           params(
             screening_id: ::String,
-            event_id: ::String,
+            group_id: ::String,
             status: Models::Shared::ScreeningCompletedStatus,
-            attendees_total: ::Integer,
-            attendees_screened: ::Integer,
-            attendees_flagged: ::Integer,
+            people_total: ::Integer,
+            people_screened: ::Integer,
+            people_flagged: ::Integer,
             by_band: Models::Shared::ScreeningCompletedByBand,
             no_footprint: ::Integer,
             partial_coverage: ::Integer,
@@ -107,11 +107,11 @@ module NoResponse
         }
         def initialize(
           screening_id:,
-          event_id:,
+          group_id:,
           status:,
-          attendees_total:,
-          attendees_screened:,
-          attendees_flagged:,
+          people_total:,
+          people_screened:,
+          people_flagged:,
           by_band:,
           no_footprint:,
           partial_coverage:,
@@ -120,11 +120,11 @@ module NoResponse
           no_profile_to_check: nil
         )
           @screening_id = screening_id
-          @event_id = event_id
+          @group_id = group_id
           @status = status
-          @attendees_total = attendees_total
-          @attendees_screened = attendees_screened
-          @attendees_flagged = attendees_flagged
+          @people_total = people_total
+          @people_screened = people_screened
+          @people_flagged = people_flagged
           @by_band = by_band
           @no_footprint = no_footprint
           @partial_coverage = partial_coverage
@@ -137,11 +137,11 @@ module NoResponse
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @screening_id == other.screening_id
-          return false unless @event_id == other.event_id
+          return false unless @group_id == other.group_id
           return false unless @status == other.status
-          return false unless @attendees_total == other.attendees_total
-          return false unless @attendees_screened == other.attendees_screened
-          return false unless @attendees_flagged == other.attendees_flagged
+          return false unless @people_total == other.people_total
+          return false unless @people_screened == other.people_screened
+          return false unless @people_flagged == other.people_flagged
           return false unless @by_band == other.by_band
           return false unless @no_footprint == other.no_footprint
           return false unless @partial_coverage == other.partial_coverage

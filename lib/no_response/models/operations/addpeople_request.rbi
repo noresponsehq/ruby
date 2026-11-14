@@ -1,0 +1,38 @@
+# typed: true
+# frozen_string_literal: true
+
+class NoResponse::Models::Operations::AddPeopleRequest
+  extend ::Crystalline::MetadataFields::ClassMethods
+end
+
+class NoResponse::Models::Operations::AddPeopleRequest
+  def workspace_id
+  end
+
+  def workspace_id=(str_)
+  end
+
+  def environment
+  end
+
+  def environment=(str_)
+  end
+
+  def group_id
+  end
+
+  def group_id=(str_)
+  end
+
+  def body
+  end
+
+  def body=(str_)
+  end
+
+  def idempotency_key
+  end
+
+  def idempotency_key=(str_)
+  end
+end

@@ -13,7 +13,7 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v10.0.21"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v11.0.0"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
@@ -55,7 +55,7 @@ Every method returns an envelope: `result` holds the object and `headers` the re
 | --- | --- |
 | Configure this client and explore its methods | [Ruby SDK guide](https://docs.noresponse.org/sdks/ruby) |
 | Act when an account's decision changes | [Late results](https://docs.noresponse.org/guides/late-results) |
-| Screen an event's attendees and record decisions | [Events and screenings](https://docs.noresponse.org/reference/events) |
+| Screen a group's people and record decisions | [Groups and screenings](https://docs.noresponse.org/reference/groups) |
 | Explore request and response fields | [API reference](https://docs.noresponse.org/api-reference) |
 
 <details>
@@ -233,11 +233,11 @@ when NoResponse::Models::Shared::WorkspaceDeletedEvent
 when NoResponse::Models::Shared::WebhookEndpointDisabledEvent
   # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
 when NoResponse::Models::Shared::ScreeningCompletedEvent
-  # a screening of an event finished: counts by band, no footprint and partial coverage; it names no attendee
-when NoResponse::Models::Shared::AttendeeFlaggedEvent
-  # a screening flagged event.data.attendee_id: its highest band and match state, never what was posted
-when NoResponse::Models::Shared::AttendeeDecidedEvent
-  # a reviewer marked the attendee cleared, watch or escalated; keep the latest decided_at per attendee
+  # a screening of a group finished: counts by band, no footprint and partial coverage; it names no person
+when NoResponse::Models::Shared::PersonFlaggedEvent
+  # a screening flagged event.data.person_id: its highest band and match state, never what was posted
+when NoResponse::Models::Shared::PersonDecidedEvent
+  # a reviewer marked the person cleared, watch or escalated; keep the latest decided_at per person
 when NoResponse::Models::Shared::AccountRiskChangedEvent
   # the one event to act on: a flow's decision changed, at event.data.account.risk_version.
   # This verifier alone does not enforce it: use handle_risk_change (below) as this endpoint's receiver.

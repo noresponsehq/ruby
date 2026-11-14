@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    noresponse (10.0.21)
+    noresponse (11.0.0)
       base64 (>= 0.2.0, < 1.0)
       faraday (>= 2.14.3)
       faraday-multipart (~> 1.2.0)

@@ -18,10 +18,10 @@ class NoResponse::Models::Operations::StartScreeningRequest
   def environment=(str_)
   end
 
-  def event_id
+  def group_id
   end
 
-  def event_id=(str_)
+  def group_id=(str_)
   end
 
   def body

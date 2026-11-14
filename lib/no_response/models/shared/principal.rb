@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # A person the event protects.
+      # A person the group protects.
       class Principal
         extend T::Sig
         include Crystalline::MetadataFields

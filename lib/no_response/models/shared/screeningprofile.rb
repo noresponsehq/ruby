@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # An account the screening matched to the attendee, how it was matched, and how much of it was read.
+      # An account the screening matched to the person, how it was matched, and how much of it was read.
       class ScreeningProfile
         extend T::Sig
         include Crystalline::MetadataFields
@@ -42,7 +42,7 @@ module NoResponse
             }
           }
         )
-        # How a profile was matched to the attendee: the state its evidence earns, and the evidence.
+        # How a profile was matched to the person: the state its evidence earns, and the evidence.
         field(
           :match,
           Models::Shared::ScreeningMatch,

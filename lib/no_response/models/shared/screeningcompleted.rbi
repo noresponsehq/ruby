@@ -12,10 +12,10 @@ class NoResponse::Models::Shared::ScreeningCompleted
   def screening_id=(str_)
   end
 
-  def event_id
+  def group_id
   end
 
-  def event_id=(str_)
+  def group_id=(str_)
   end
 
   def status
@@ -24,22 +24,22 @@ class NoResponse::Models::Shared::ScreeningCompleted
   def status=(str_)
   end
 
-  def attendees_total
+  def people_total
   end
 
-  def attendees_total=(str_)
+  def people_total=(str_)
   end
 
-  def attendees_screened
+  def people_screened
   end
 
-  def attendees_screened=(str_)
+  def people_screened=(str_)
   end
 
-  def attendees_flagged
+  def people_flagged
   end
 
-  def attendees_flagged=(str_)
+  def people_flagged=(str_)
   end
 
   def by_band

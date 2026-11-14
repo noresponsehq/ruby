@@ -22,7 +22,7 @@ module NoResponse
           {'path_param': {'field_name': "environment", 'style': "simple", 'explode': false}}
         )
 
-        field :event_id, ::String, {'path_param': {'field_name': "event_id", 'style': "simple", 'explode': false}}
+        field :group_id, ::String, {'path_param': {'field_name': "group_id", 'style': "simple", 'explode': false}}
 
         field(
           :screening_id,
@@ -34,15 +34,15 @@ module NoResponse
           params(
             workspace_id: ::String,
             environment: Models::Shared::KeyEnvironment,
-            event_id: ::String,
+            group_id: ::String,
             screening_id: ::String
           )
             .void
         }
-        def initialize(workspace_id:, environment:, event_id:, screening_id:)
+        def initialize(workspace_id:, environment:, group_id:, screening_id:)
           @workspace_id = workspace_id
           @environment = environment
-          @event_id = event_id
+          @group_id = group_id
           @screening_id = screening_id
         end
 
@@ -51,7 +51,7 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @workspace_id == other.workspace_id
           return false unless @environment == other.environment
-          return false unless @event_id == other.event_id
+          return false unless @group_id == other.group_id
           return false unless @screening_id == other.screening_id
           true
         end

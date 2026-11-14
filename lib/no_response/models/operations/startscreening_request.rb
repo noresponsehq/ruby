@@ -22,7 +22,7 @@ module NoResponse
           {'path_param': {'field_name': "environment", 'style': "simple", 'explode': false}}
         )
 
-        field :event_id, ::String, {'path_param': {'field_name': "event_id", 'style': "simple", 'explode': false}}
+        field :group_id, ::String, {'path_param': {'field_name': "group_id", 'style': "simple", 'explode': false}}
 
         field :body, Models::Shared::ScreeningRequest, {'request': {'media_type': "application/json"}}
         # Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours. Optional: the SDK generates a UUID when you omit it and sends the same key on every retry of the call.
@@ -36,16 +36,16 @@ module NoResponse
           params(
             workspace_id: ::String,
             environment: Models::Shared::KeyEnvironment,
-            event_id: ::String,
+            group_id: ::String,
             body: Models::Shared::ScreeningRequest,
             idempotency_key: T.nilable(::String)
           )
             .void
         }
-        def initialize(workspace_id:, environment:, event_id:, body:, idempotency_key: nil)
+        def initialize(workspace_id:, environment:, group_id:, body:, idempotency_key: nil)
           @workspace_id = workspace_id
           @environment = environment
-          @event_id = event_id
+          @group_id = group_id
           @body = body
           @idempotency_key = idempotency_key
         end
@@ -55,7 +55,7 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @workspace_id == other.workspace_id
           return false unless @environment == other.environment
-          return false unless @event_id == other.event_id
+          return false unless @group_id == other.group_id
           return false unless @body == other.body
           return false unless @idempotency_key == other.idempotency_key
           true

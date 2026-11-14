@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # An account the attendee is known to hold.
+      # An account the person is known to hold.
       class Handle
         extend T::Sig
         include Crystalline::MetadataFields

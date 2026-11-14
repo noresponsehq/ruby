@@ -34,8 +34,8 @@ module NoResponse
           MEMBER_LIMIT_REACHED = new("member_limit_reached")
           OWNER_INVITE_PENDING = new("owner_invite_pending")
           AGGREGATE_ERASED_DATA = new("aggregate_erased_data")
-          EVENT_CONFLICT = new("event_conflict")
-          EVENT_LIMIT_REACHED = new("event_limit_reached")
+          GROUP_CONFLICT = new("group_conflict")
+          GROUP_LIMIT_REACHED = new("group_limit_reached")
           SCREENING_CAP_EXCEEDED = new("screening_cap_exceeded")
           SCREENING_UNAVAILABLE = new("screening_unavailable")
         end

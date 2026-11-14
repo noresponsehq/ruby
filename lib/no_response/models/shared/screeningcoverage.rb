@@ -32,7 +32,7 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::ScreeningPlatformCoverage),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms"), required: true}}
         )
-        # Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them.
+        # Items read that the analyser could not analyse. Above zero, the person is partial: a finding may be missing from them.
         field(
           :items_not_analysed,
           Crystalline::Nilable.new(::Integer),
@@ -56,7 +56,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("period_to")}}
         )
-        # Requested platforms where the attendee gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the attendee partial.
+        # Requested platforms where the person gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the person partial.
         field(
           :not_searched,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::HandlePlatform)),

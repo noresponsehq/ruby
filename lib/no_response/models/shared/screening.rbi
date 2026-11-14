@@ -12,10 +12,10 @@ class NoResponse::Models::Shared::Screening
   def id=(str_)
   end
 
-  def event_id
+  def group_id
   end
 
-  def event_id=(str_)
+  def group_id=(str_)
   end
 
   def environment
@@ -60,34 +60,34 @@ class NoResponse::Models::Shared::Screening
   def expires_at=(str_)
   end
 
-  def attendees_total
+  def people_total
   end
 
-  def attendees_total=(str_)
+  def people_total=(str_)
   end
 
-  def attendees_done
+  def people_done
   end
 
-  def attendees_done=(str_)
+  def people_done=(str_)
   end
 
-  def attendees_flagged
+  def people_flagged
   end
 
-  def attendees_flagged=(str_)
+  def people_flagged=(str_)
   end
 
-  def attendees_failed
+  def people_failed
   end
 
-  def attendees_failed=(str_)
+  def people_failed=(str_)
   end
 
-  def attendees_partial
+  def people_partial
   end
 
-  def attendees_partial=(str_)
+  def people_partial=(str_)
   end
 
   def estimated_spend

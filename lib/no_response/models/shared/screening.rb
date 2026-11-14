@@ -12,9 +12,9 @@ module NoResponse
         field :id, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("id"), required: true}}
 
         field(
-          :event_id,
+          :group_id,
           ::String,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("event_id"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("group_id"), required: true}}
         )
 
         field(
@@ -28,7 +28,7 @@ module NoResponse
             }
           }
         )
-        # partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them.
+        # partial finished with some people or platforms not covered; people_failed and people_partial count them.
         field(
           :status,
           Models::Shared::ScreeningStatus,
@@ -76,43 +76,43 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("expires_at"), required: true}}
         )
-        # Attendees selected when the screening started.
+        # People selected when the screening started.
         field(
-          :attendees_total,
+          :people_total,
           ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_total"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_total"), required: true}}
         )
-        # Attendees screened so far, failed ones included.
+        # People screened so far, failed ones included.
         field(
-          :attendees_done,
+          :people_done,
           ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_done"), required: true}}
-        )
-
-        field(
-          :attendees_flagged,
-          ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_flagged"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_done"), required: true}}
         )
 
         field(
-          :attendees_failed,
+          :people_flagged,
           ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_failed"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_flagged"), required: true}}
         )
-        # Attendees screened with some requested platform not covered; their coverage names which.
+
         field(
-          :attendees_partial,
+          :people_failed,
           ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attendees_partial"), required: true}}
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_failed"), required: true}}
         )
-        # What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap.
+        # People screened with some requested platform not covered; their coverage names which.
+        field(
+          :people_partial,
+          ::Integer,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_partial"), required: true}}
+        )
+        # What the screening was estimated to cost when it started, in minor units of USD (cents): its people at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap.
         field(
           :estimated_spend,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("estimated_spend"), required: true}}
         )
-        # What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing.
+        # What the people it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed person records nothing.
         field(
           :spent,
           ::Integer,
@@ -146,7 +146,7 @@ module NoResponse
         sig {
           params(
             id: ::String,
-            event_id: ::String,
+            group_id: ::String,
             environment: Models::Shared::AuditSettingsEnvironment,
             status: Models::Shared::ScreeningStatus,
             depth: Models::Shared::ScreeningDepth,
@@ -154,11 +154,11 @@ module NoResponse
             requested_by: ::String,
             created_at: ::String,
             expires_at: ::String,
-            attendees_total: ::Integer,
-            attendees_done: ::Integer,
-            attendees_flagged: ::Integer,
-            attendees_failed: ::Integer,
-            attendees_partial: ::Integer,
+            people_total: ::Integer,
+            people_done: ::Integer,
+            people_flagged: ::Integer,
+            people_failed: ::Integer,
+            people_partial: ::Integer,
             estimated_spend: ::Integer,
             spent: ::Integer,
             spend: Models::Shared::ScreeningSpend,
@@ -170,7 +170,7 @@ module NoResponse
         }
         def initialize(
           id:,
-          event_id:,
+          group_id:,
           environment:,
           status:,
           depth:,
@@ -178,11 +178,11 @@ module NoResponse
           requested_by:,
           created_at:,
           expires_at:,
-          attendees_total:,
-          attendees_done:,
-          attendees_flagged:,
-          attendees_failed:,
-          attendees_partial:,
+          people_total:,
+          people_done:,
+          people_flagged:,
+          people_failed:,
+          people_partial:,
           estimated_spend:,
           spent:,
           spend:,
@@ -191,7 +191,7 @@ module NoResponse
           error_code: nil
         )
           @id = id
-          @event_id = event_id
+          @group_id = group_id
           @environment = environment
           @status = status
           @depth = depth
@@ -199,11 +199,11 @@ module NoResponse
           @requested_by = requested_by
           @created_at = created_at
           @expires_at = expires_at
-          @attendees_total = attendees_total
-          @attendees_done = attendees_done
-          @attendees_flagged = attendees_flagged
-          @attendees_failed = attendees_failed
-          @attendees_partial = attendees_partial
+          @people_total = people_total
+          @people_done = people_done
+          @people_flagged = people_flagged
+          @people_failed = people_failed
+          @people_partial = people_partial
           @estimated_spend = estimated_spend
           @spent = spent
           @spend = spend
@@ -216,7 +216,7 @@ module NoResponse
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @id == other.id
-          return false unless @event_id == other.event_id
+          return false unless @group_id == other.group_id
           return false unless @environment == other.environment
           return false unless @status == other.status
           return false unless @depth == other.depth
@@ -224,11 +224,11 @@ module NoResponse
           return false unless @requested_by == other.requested_by
           return false unless @created_at == other.created_at
           return false unless @expires_at == other.expires_at
-          return false unless @attendees_total == other.attendees_total
-          return false unless @attendees_done == other.attendees_done
-          return false unless @attendees_flagged == other.attendees_flagged
-          return false unless @attendees_failed == other.attendees_failed
-          return false unless @attendees_partial == other.attendees_partial
+          return false unless @people_total == other.people_total
+          return false unless @people_done == other.people_done
+          return false unless @people_flagged == other.people_flagged
+          return false unless @people_failed == other.people_failed
+          return false unless @people_partial == other.people_partial
           return false unless @estimated_spend == other.estimated_spend
           return false unless @spent == other.spent
           return false unless @spend == other.spend
