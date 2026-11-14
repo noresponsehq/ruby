@@ -38,6 +38,18 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("reply_to")}}
         )
+        # The permalink of the post this one reposts. text then holds that post's author's words, not the person's.
+        field(
+          :repost_of,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("repost_of")}}
+        )
+        # The permalink of the post this one quotes. text holds the person's own words alone.
+        field(
+          :quote_of,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("quote_of")}}
+        )
         # SHA-256 of the screenshot taken of a flagged item.
         field(
           :screenshot_sha256,
@@ -60,6 +72,8 @@ module NoResponse
             posted_at: ::String,
             kind: ::String,
             reply_to: T.nilable(::String),
+            repost_of: T.nilable(::String),
+            quote_of: T.nilable(::String),
             screenshot_sha256: T.nilable(::String),
             captured_at: T.nilable(::String)
           )
@@ -73,6 +87,8 @@ module NoResponse
           posted_at:,
           kind: "post",
           reply_to: nil,
+          repost_of: nil,
+          quote_of: nil,
           screenshot_sha256: nil,
           captured_at: nil
         )
@@ -87,6 +103,8 @@ module NoResponse
 
           @kind = "post"
           @reply_to = reply_to
+          @repost_of = repost_of
+          @quote_of = quote_of
           @screenshot_sha256 = screenshot_sha256
           @captured_at = captured_at
         end
@@ -101,6 +119,8 @@ module NoResponse
           return false unless @posted_at == other.posted_at
           return false unless @kind == other.kind
           return false unless @reply_to == other.reply_to
+          return false unless @repost_of == other.repost_of
+          return false unless @quote_of == other.quote_of
           return false unless @screenshot_sha256 == other.screenshot_sha256
           return false unless @captured_at == other.captured_at
           true

@@ -96,6 +96,17 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("account_created_at")}}
         )
+        # Why fewer posts were read than the screening's depth asks for while the account holds more. platform_limit: the platform shows the screening no more of them. page_limit: the pages a screening reads ran out first. rate_limited or unavailable: a later page was held back or failed; the posts before it are kept and the person is partial. Absent when the account was read to its end or to the depth.
+        field(
+          :posts_stopped,
+          Crystalline::Nilable.new(Models::Shared::PostsStopped),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("posts_stopped"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::PostsStopped, true)
+            }
+          }
+        )
         # The oldest item read.
         field(
           :period_from,
@@ -131,6 +142,7 @@ module NoResponse
             avatar_url: T.nilable(::String),
             followers: T.nilable(::Integer),
             account_created_at: T.nilable(::String),
+            posts_stopped: T.nilable(Models::Shared::PostsStopped),
             period_from: T.nilable(::String),
             period_to: T.nilable(::String),
             record: T.nilable(Models::Shared::Record)
@@ -152,6 +164,7 @@ module NoResponse
           avatar_url: nil,
           followers: nil,
           account_created_at: nil,
+          posts_stopped: nil,
           period_from: nil,
           period_to: nil,
           record: nil
@@ -170,6 +183,7 @@ module NoResponse
           @avatar_url = avatar_url
           @followers = followers
           @account_created_at = account_created_at
+          @posts_stopped = posts_stopped
           @period_from = period_from
           @period_to = period_to
           @record = record
@@ -192,6 +206,7 @@ module NoResponse
           return false unless @avatar_url == other.avatar_url
           return false unless @followers == other.followers
           return false unless @account_created_at == other.account_created_at
+          return false unless @posts_stopped == other.posts_stopped
           return false unless @period_from == other.period_from
           return false unless @period_to == other.period_to
           return false unless @record == other.record

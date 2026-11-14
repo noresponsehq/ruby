@@ -90,6 +90,12 @@ class NoResponse::Models::Shared::ScreeningProfile
   def account_created_at=(str_)
   end
 
+  def posts_stopped
+  end
+
+  def posts_stopped=(str_)
+  end
+
   def period_from
   end
 

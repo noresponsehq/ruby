@@ -48,6 +48,18 @@ class NoResponse::Models::Shared::ScreeningPost
   def reply_to=(str_)
   end
 
+  def repost_of
+  end
+
+  def repost_of=(str_)
+  end
+
+  def quote_of
+  end
+
+  def quote_of=(str_)
+  end
+
   def screenshot_sha256
   end
 
