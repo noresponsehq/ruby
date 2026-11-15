@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: d55fffffe664cd9ce23a0d58541748bc
+  docChecksum: 65c8fdb4797da032221b96292febcc1f
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.9
-  configChecksum: bf5d8541a5bbd44782d494ced2b190e5
+  releaseVersion: 12.0.10
+  configChecksum: f82ece97a9d878ebbd2032ec6023f0be
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:134a035c9fb3c517c70b39870e2368034e4a38c1
+    last_write_checksum: sha1:fee757b396e48270b29e3e1320c0ea7d7489a10b
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -1356,7 +1356,7 @@ trackedFiles:
   docs/models/shared/source.md:
     last_write_checksum: sha1:4f5ca92cb5874d7c0910d39d17d76887155d56a7
   docs/models/shared/sourceid.md:
-    last_write_checksum: sha1:14f6015c49f84a3ea37a924f7fedca7797b179a8
+    last_write_checksum: sha1:328dc98f249b57859a6fb92e9642871f92ff934a
   docs/models/shared/status.md:
     last_write_checksum: sha1:8e942b3f451f3953d86f4a446f91b50e678bc16f
   docs/models/shared/thresholds.md:
@@ -4150,7 +4150,7 @@ trackedFiles:
   lib/no_response/models/shared/source.rbi:
     last_write_checksum: sha1:02f1bff75a989b93dc01640d5e272c7792cea642
   lib/no_response/models/shared/sourceid.rb:
-    last_write_checksum: sha1:3383da06ac4faada4d9d95c15321a3fe0722a57f
+    last_write_checksum: sha1:5fbb96af165cf19fa0e96261a092e1502f06a471
   lib/no_response/models/shared/sourceid.rbi:
     last_write_checksum: sha1:cb84b7a75851680298b8e8f391ed19a806324119
   lib/no_response/models/shared/status.rb:
@@ -4318,7 +4318,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:eef02877e61af8ae7ec3f198793e760b7e7580f8
+    last_write_checksum: sha1:f2b442960aa7220925eb2ca2548392fa4113e29e
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4348,7 +4348,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:538b9010cd75e80c2d9e39f0733ba04dd29b91e8
   noresponse.gemspec:
-    last_write_checksum: sha1:9401e63ce56f3757896ef87035c67424227a90e2
+    last_write_checksum: sha1:a8047a003f4780719df245687fed3db164b356fa
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -5722,7 +5722,7 @@ examples:
         application/json: {"retention_days": 90, "refused_sources": ["phone"], "flows": {"account_creation": {"admission": "held", "hold_seconds": 600, "on_expiry": "review"}, "login": {"step_up": 30, "review": 60, "block": null, "default_depth": "full"}, "purchase": {"inherits_account_creation": true}}}
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["nvidia"], "screening_daily_cap": null}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["zapier"], "screening_daily_cap": null}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -5744,7 +5744,7 @@ examples:
         application/json: {"flows": {"account_creation": {"block": 95}}}
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["nvidia"], "screening_daily_cap": null}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["zapier"], "screening_daily_cap": null}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -5800,7 +5800,7 @@ examples:
         application/json: {"version": 157178, "expected_policy_version": 260899, "change_reason": "Adjust thresholds after reviewing retained evidence"}
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "retention_days": 450670, "policy_version": 529327, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 477126, "review": 980395, "default_depth": "quick", "inherits_account_creation": false, "admission": "immediate", "hold_seconds": 948838, "on_expiry": "block"}, "login": {"step_up": 867829, "review": 523593, "default_depth": "quick", "inherits_account_creation": false, "admission": "held", "hold_seconds": 363505, "on_expiry": "block"}, "purchase": {"step_up": 374559, "review": 194632, "default_depth": "quick", "inherits_account_creation": true, "admission": "held", "hold_seconds": 365509, "on_expiry": "allow"}}, "refused_sources": ["scratch"], "screening_daily_cap": null}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "retention_days": 450670, "policy_version": 529327, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 477126, "review": 980395, "default_depth": "quick", "inherits_account_creation": false, "admission": "immediate", "hold_seconds": 948838, "on_expiry": "block"}, "login": {"step_up": 867829, "review": 523593, "default_depth": "quick", "inherits_account_creation": false, "admission": "held", "hold_seconds": 363505, "on_expiry": "block"}, "purchase": {"step_up": 374559, "review": 194632, "default_depth": "quick", "inherits_account_creation": true, "admission": "held", "hold_seconds": 365509, "on_expiry": "allow"}}, "refused_sources": ["internetarchive"], "screening_daily_cap": null}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
