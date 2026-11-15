@@ -408,6 +408,7 @@ module NoResponse
       autoload :SearchStatus, "no_response/models/shared/searchstatus.rb"
       autoload :Security, "no_response/models/shared/security.rb"
       autoload :SentIdentifiers, "no_response/models/shared/sentidentifiers.rb"
+      autoload :ServiceActor, "no_response/models/shared/serviceactor.rb"
       autoload :Settings, "no_response/models/shared/settings.rb"
       autoload :SettingsFlows, "no_response/models/shared/settingsflows.rb"
       autoload :SettingsRequest, "no_response/models/shared/settingsrequest.rb"

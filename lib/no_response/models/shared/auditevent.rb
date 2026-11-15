@@ -55,12 +55,20 @@ module NoResponse
           :actor,
           Crystalline::DiscriminatedUnion.new(
             "type",
-            {"user" => Models::Shared::UserActor, "api_key" => Models::Shared::KeyActor}
+            {
+              "user" => Models::Shared::UserActor,
+              "api_key" => Models::Shared::KeyActor,
+              "service" => Models::Shared::ServiceActor
+            }
           ),
           {
             'format_json': {'letter_case': ::NoResponse::Utils.field_name("actor"), required: true},
             'discriminator': "type",
-            'discriminator_mapping': {"user" => Models::Shared::UserActor, "api_key" => Models::Shared::KeyActor}
+            'discriminator_mapping': {
+              "user" => Models::Shared::UserActor,
+              "api_key" => Models::Shared::KeyActor,
+              "service" => Models::Shared::ServiceActor
+            }
           }
         )
 
@@ -106,7 +114,7 @@ module NoResponse
             environment: Models::Shared::AuditSettingsEnvironment,
             action: ::String,
             outcome: Models::Shared::CustomerExportRequestFilterOutcome,
-            actor: T.any(Models::Shared::UserActor, Models::Shared::KeyActor),
+            actor: T.any(Models::Shared::UserActor, Models::Shared::KeyActor, Models::Shared::ServiceActor),
             target: Models::Shared::AuditEventTarget,
             created_at: ::String,
             detail: T.nilable(T::Hash[Symbol, ::String]),
