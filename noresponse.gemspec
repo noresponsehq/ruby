@@ -4,11 +4,11 @@ $LOAD_PATH.push File.expand_path('lib', __dir__)
 
 Gem::Specification.new do |s|
   s.name        = 'noresponse'
-  s.version     = '12.0.22'
+  s.version     = '12.0.23'
   s.platform    = Gem::Platform::RUBY
   s.licenses    = ['Apache-2.0']
   s.summary     = ''
-  s.description = 'NoResponse signup and gateway risk assessment client for Ruby'
+  s.description = 'NoResponse identity investigation, people screening and signup assessment client for Ruby'
   s.authors     = ['NoResponse']
 
   s.files         = Dir['{lib,test}/**/*'].reject { |f| f.start_with?('test/mockserver') }

@@ -2,7 +2,7 @@
 
 # NoResponse for Ruby
 
-Assess sign-ups, logins and purchases with the NoResponse Identity Intelligence API.
+Investigate everyone, everywhere, all at once. Find the accounts and leaked rows behind an email, phone, username or name, screen groups of people, and assess sign-ups with the NoResponse API. The client's `groups` calls create groups, add people, screen them and read each person's records: see the [quickstart](https://docs.noresponse.org/quickstart).
 
 Ruby 3.2+ · Bundler.
 
@@ -13,7 +13,7 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v12.0.22"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v12.0.23"
 ```
 
 Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
