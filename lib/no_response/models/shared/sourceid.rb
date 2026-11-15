@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # SourceId - A NoResponse source: github (GitHub accounts), phone (the phone lookup), breach (breach exposure), rdap (the email domain's registration), mx (the email domain's mail servers), ipintel (IP intelligence) or an email account source that searches one platform for an account by email address (adobe, nvidia, wix, life360, zapier, google, duolingo_email). google runs only for Gmail addresses. scratch, dailymotion, substack, duolingo, dockerhub, wikipedia, internetarchive, telegram, spotify, patreon, wordpress, okru and flickr each search that platform for an account by username; telegram also searches by phone number, through a logged-in Telegram lookup account. whatsapp searches WhatsApp for an account by phone number. youtube searches YouTube for a channel by username.
+      # SourceId - A NoResponse source: github (GitHub accounts), phone (the phone lookup), breach (breach exposure), rdap (the email domain's registration), mx (the email domain's mail servers), ipintel (IP intelligence) or an email account source that searches one platform for an account by email address (adobe, nvidia, wix, life360, zapier, x_email, snapchat_email, amazon, spotify_email, google, duolingo_email). x_email, snapchat_email, amazon and spotify_email only say whether the email has an account on X, Snapchat, Amazon or Spotify. google runs only for Gmail addresses. scratch, dailymotion, substack, duolingo, dockerhub, wikipedia, internetarchive, telegram, spotify, patreon, wordpress, okru and flickr each search that platform for an account by username; telegram also searches by phone number, through a logged-in Telegram lookup account. whatsapp searches WhatsApp for an account by phone number. youtube searches YouTube for a channel by username.
       class SourceId
         include ::Crystalline::Enum
         enums do
@@ -19,6 +19,10 @@ module NoResponse
           WIX = new("wix")
           LIFE360 = new("life360")
           ZAPIER = new("zapier")
+          X_EMAIL = new("x_email")
+          SNAPCHAT_EMAIL = new("snapchat_email")
+          AMAZON = new("amazon")
+          SPOTIFY_EMAIL = new("spotify_email")
           GOOGLE = new("google")
           SCRATCH = new("scratch")
           DAILYMOTION = new("dailymotion")

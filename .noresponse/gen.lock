@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 943e5939240c7f767f6d59ba1431bebf
+  docChecksum: 564861a08a1df8d2552e082527daca42
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.17
-  configChecksum: 4d1bd903fb70ace2fdf23188bf37e6b0
+  releaseVersion: 12.0.18
+  configChecksum: c969c8b7f629d3ad3ed288dc6aa891dc
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:a209a0fd43f8a8208f5acd7ebf71e7ecbd7d3a22
+    last_write_checksum: sha1:c6ddfe124816e9c6fb9f64c5b64c10be29bc2882
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -1356,7 +1356,7 @@ trackedFiles:
   docs/models/shared/source.md:
     last_write_checksum: sha1:4f5ca92cb5874d7c0910d39d17d76887155d56a7
   docs/models/shared/sourceid.md:
-    last_write_checksum: sha1:422fde84d6a8acf87f0a449e2b715cd05cfb2fcd
+    last_write_checksum: sha1:58ce93d9dece5a2fe4d1d204227193e493d82b1f
   docs/models/shared/status.md:
     last_write_checksum: sha1:8e942b3f451f3953d86f4a446f91b50e678bc16f
   docs/models/shared/thresholds.md:
@@ -4150,7 +4150,7 @@ trackedFiles:
   lib/no_response/models/shared/source.rbi:
     last_write_checksum: sha1:02f1bff75a989b93dc01640d5e272c7792cea642
   lib/no_response/models/shared/sourceid.rb:
-    last_write_checksum: sha1:7a7b214a03a905672ba2b07147ef11419a039c20
+    last_write_checksum: sha1:d70f558d4db8f3849659bc36e854e3b82928cfab
   lib/no_response/models/shared/sourceid.rbi:
     last_write_checksum: sha1:cb84b7a75851680298b8e8f391ed19a806324119
   lib/no_response/models/shared/status.rb:
@@ -4318,7 +4318,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:793c1dc3eae5188e8cef05f645c18a80682657f3
+    last_write_checksum: sha1:f47ca8f677c4e00ccfd723c3350d5f5a7178c090
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4348,7 +4348,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:538b9010cd75e80c2d9e39f0733ba04dd29b91e8
   noresponse.gemspec:
-    last_write_checksum: sha1:10a1b1593f1958312bf0236312cb9b983d665ebd
+    last_write_checksum: sha1:82b224f01e6e546b774de0b80c0f126a716ff3ad
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -5722,7 +5722,7 @@ examples:
         application/json: {"retention_days": 90, "refused_sources": ["phone"], "flows": {"account_creation": {"admission": "held", "hold_seconds": 600, "on_expiry": "review"}, "login": {"step_up": 30, "review": 60, "block": null, "default_depth": "full"}, "purchase": {"inherits_account_creation": true}}}
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["duolingo"], "screening_daily_cap": null}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["substack"], "screening_daily_cap": null}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -5744,7 +5744,7 @@ examples:
         application/json: {"flows": {"account_creation": {"block": 95}}}
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["duolingo"], "screening_daily_cap": null}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "retention_days": 896627, "policy_version": 109406, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 804810, "review": 421824, "default_depth": "full", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 933763, "on_expiry": "allow"}, "login": {"step_up": 70360, "review": 336058, "default_depth": "full", "inherits_account_creation": true, "admission": "held", "hold_seconds": 231689, "on_expiry": "block"}, "purchase": {"step_up": 196078, "review": 146494, "default_depth": "quick", "inherits_account_creation": true, "admission": "immediate", "hold_seconds": 552383, "on_expiry": "allow"}}, "refused_sources": ["substack"], "screening_daily_cap": null}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
