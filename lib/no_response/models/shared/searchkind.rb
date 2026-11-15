@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # SearchKind - The kind of the value searched.
+      # SearchKind - The kind of the value searched. A domain search finds the leaked rows of every email address at the domain.
       class SearchKind
         include ::Crystalline::Enum
         enums do
@@ -15,6 +15,7 @@ module NoResponse
           PASSWORD = new("password")
           HASH = new("hash")
           IP = new("ip")
+          DOMAIN = new("domain")
         end
 
         open!

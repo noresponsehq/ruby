@@ -1,6 +1,6 @@
 # SearchKind
 
-The kind of the value searched.
+The kind of the value searched. A domain search finds the leaked rows of every email address at the domain.
 
 ## Example Usage
 
@@ -25,3 +25,4 @@ custom = SearchKind.deserialize("custom_value")
 | `PASSWORD`    | password      |
 | `HASH`        | hash          |
 | `IP`          | ip            |
+| `DOMAIN`      | domain        |

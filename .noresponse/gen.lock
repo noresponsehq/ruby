@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 564861a08a1df8d2552e082527daca42
+  docChecksum: a5109e6fdd097fc31a48e27d14d690ff
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.18
-  configChecksum: c969c8b7f629d3ad3ed288dc6aa891dc
+  releaseVersion: 12.0.19
+  configChecksum: 046a275c7c8b7c0997d8eaa1f54ecd2f
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:c6ddfe124816e9c6fb9f64c5b64c10be29bc2882
+    last_write_checksum: sha1:188aed1092432c6a8c0471eede2d4e1fde4d767d
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -1152,7 +1152,7 @@ trackedFiles:
   docs/models/shared/recordkind.md:
     last_write_checksum: sha1:7dee3ac2f40d7f9b0873ec72b7bf44797cee968d
   docs/models/shared/recordmatch.md:
-    last_write_checksum: sha1:2f43e995a0a1dc2bd6635209a2117befe2ce8f2e
+    last_write_checksum: sha1:904088cdac26b28162b7332c5c06e1e8d457d12c
   docs/models/shared/recordremaining.md:
     last_write_checksum: sha1:18b27a184d083001f1159dc5ed9bbe7a93af219d
   docs/models/shared/recordrole.md:
@@ -1318,9 +1318,9 @@ trackedFiles:
   docs/models/shared/screeningstatus.md:
     last_write_checksum: sha1:e4eb2733874ed39a6c21d9d50cf5d83d1698714d
   docs/models/shared/search.md:
-    last_write_checksum: sha1:a973fe97637364a5b94df8f136a6d2b6adab1baa
+    last_write_checksum: sha1:66c3dce30b78a912859bf4e23c5b05226031617f
   docs/models/shared/searchkind.md:
-    last_write_checksum: sha1:0eaf6297ecffb42ef845a60bbfa276c3b4a8f319
+    last_write_checksum: sha1:63e91d269c1b1263332993a4a4b059c92bdd6121
   docs/models/shared/searchrequest.md:
     last_write_checksum: sha1:8a03f01c77dc163331155f478ea2a278d42a5011
   docs/models/shared/searchstatus.md:
@@ -3742,7 +3742,7 @@ trackedFiles:
   lib/no_response/models/shared/recordkind.rbi:
     last_write_checksum: sha1:477054ec4af2cb786c9eb0b56b3987f1da976ce1
   lib/no_response/models/shared/recordmatch.rb:
-    last_write_checksum: sha1:646c8c225fc7bd0f38dc03be7d3092a8e6c2e962
+    last_write_checksum: sha1:211d0a953bfeba7deeb24600443d1b3e190d66fe
   lib/no_response/models/shared/recordmatch.rbi:
     last_write_checksum: sha1:f9bcb1e7cfd8417e8190d6589b68d78e98c88fc8
   lib/no_response/models/shared/recordremaining.rb:
@@ -4074,11 +4074,11 @@ trackedFiles:
   lib/no_response/models/shared/screeningstatus.rbi:
     last_write_checksum: sha1:369eadef017682e591b62b71f21939dd758b0de2
   lib/no_response/models/shared/search.rb:
-    last_write_checksum: sha1:a0404615f40bff244a758a8edd79a2fd6e1c8967
+    last_write_checksum: sha1:ae31129706e9bcf2ec66e5bb3c0891c2cea3f407
   lib/no_response/models/shared/search.rbi:
     last_write_checksum: sha1:c49fec15b81ac61456b7925c62759fd7b718412b
   lib/no_response/models/shared/searchkind.rb:
-    last_write_checksum: sha1:f5e4860c960c547bdd929dd76c5be5cfafd485c0
+    last_write_checksum: sha1:5807fc217f448cb39609a4127a7984fa3fac27e9
   lib/no_response/models/shared/searchkind.rbi:
     last_write_checksum: sha1:4dc1cb3563606e4e894fb52c7af9f3e9e5210bf0
   lib/no_response/models/shared/searchrequest.rb:
@@ -4318,7 +4318,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:f47ca8f677c4e00ccfd723c3350d5f5a7178c090
+    last_write_checksum: sha1:8c1450fa05e3de5fdb3d8970f9631cb4ade1b370
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4348,7 +4348,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:538b9010cd75e80c2d9e39f0733ba04dd29b91e8
   noresponse.gemspec:
-    last_write_checksum: sha1:82b224f01e6e546b774de0b80c0f126a716ff3ad
+    last_write_checksum: sha1:da3c9acef38cf9271f4b2b76bbac1f187af2dbd3
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -6909,7 +6909,7 @@ examples:
         application/json: {"record_id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "field": "username", "table": "FORUM_EXAMPLE_COM_2019"}
       responses:
         "202":
-          application/json: {"search_id": "srh_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "record_id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "field": "username", "table": "FORUM_EXAMPLE_COM_2019", "kind": "email", "value": "jordanexample42", "status": "completed", "sources": 369225, "answered": 317146, "found": 776513, "estimated_spend": 346465, "spent": 341223, "requested_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "finished_at": "2026-01-01T00:00:05Z"}
+          application/json: {"search_id": "srh_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "record_id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "field": "username", "table": "FORUM_EXAMPLE_COM_2019", "kind": "phone", "value": "jordanexample42", "status": "completed", "sources": 369225, "answered": 317146, "found": 776513, "estimated_spend": 346465, "spent": 341223, "requested_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "finished_at": "2026-01-01T00:00:05Z"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "webhook_url_refused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":

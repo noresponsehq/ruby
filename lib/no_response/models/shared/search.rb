@@ -26,7 +26,7 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("field"), required: true}}
         )
-        # The kind of the value searched.
+        # The kind of the value searched. A domain search finds the leaked rows of every email address at the domain.
         field(
           :kind,
           Models::Shared::SearchKind,
