@@ -29,7 +29,7 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("table")}}
         )
-        # When the source's data dates from, at the precision it is known: YYYY or YYYY-MM for a breach table.
+        # When the source's data dates from, at the precision it is known: YYYY or YYYY-MM for a breach table, and YYYY-MM-DD, the day the computer was infected, for a row of a stealer log.
         field(
           :date,
           Crystalline::Nilable.new(::String),

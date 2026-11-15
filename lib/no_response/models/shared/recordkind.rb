@@ -12,9 +12,9 @@ module NoResponse
           EMAIL = new("email")
           # A phone number. value: in E.164 form, such as +447700900123. A national number is cleaned only when the country of the source's site is known.
           PHONE = new("phone")
-          # A handle a person chose. value: as written. Compare it in lower case.
+          # A handle a person chose. value: as written. Compare it in lower case. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
           USERNAME = new("username")
-          # A platform's own id for an account. value: as written.
+          # A platform's own id for an account. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
           ACCOUNT_ID = new("account_id")
           # A web address. value: the scheme and host in lower case, the path, query and fragment as written.
           URL = new("url")
@@ -40,7 +40,7 @@ module NoResponse
           REGION = new("region")
           # A city or town. value: as written.
           CITY = new("city")
-          # A street address or one line of it. value: as written.
+          # A street address or one line of it. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
           ADDRESS = new("address")
           # A postal code. value: in upper case with single spaces.
           POSTCODE = new("postcode")
@@ -58,7 +58,7 @@ module NoResponse
           IP = new("ip")
           # A network card address. value: in lower case with colons.
           MAC_ADDRESS = new("mac_address")
-          # An id of a phone, computer or browser. value: as written.
+          # An id of a phone, computer or browser. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
           DEVICE_ID = new("device_id")
           # A browser or app signature. value: as written.
           USER_AGENT = new("user_agent")
@@ -68,7 +68,7 @@ module NoResponse
           HASH = new("hash")
           # The salt for a hash. value: exactly as written.
           SALT = new("salt")
-          # A session, reset or API token. value: as written.
+          # A session, reset or API token. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
           TOKEN = new("token")
           # A security question or its answer. value: exactly as written.
           SECURITY_ANSWER = new("security_answer")
@@ -80,7 +80,7 @@ module NoResponse
           CRYPTO_ADDRESS = new("crypto_address")
           # Money, with its currency when given. value: a plain decimal. detail names the currency, such as USD.
           AMOUNT = new("amount")
-          # A passport, tax, national or licence number. value: as written.
+          # A passport, tax, national or licence number. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
           ID_NUMBER = new("id_number")
           # A number plate or a VIN. value: in upper case with no spaces.
           VEHICLE = new("vehicle")
