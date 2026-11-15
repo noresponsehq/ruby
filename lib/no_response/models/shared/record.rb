@@ -9,7 +9,7 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # Made from the source and the fields' names and original values, so the same answer found twice is one record with the same id.
+        # Made from the source and the fields' names and original values, so the same answer found twice is one record with the same id. Its fields are typed as its latest finding typed them.
         field :id, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("id"), required: true}}
         # Where a record came from.
         field(
