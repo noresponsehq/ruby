@@ -73,6 +73,12 @@ module NoResponse
             }
           }
         )
+        # Each source that did not give a definite answer, by connector, with why: the same connector id a record's source names. A source of the lane that no connector covers is counted in sources and not named here.
+        field(
+          :unanswered,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::ScreeningLookupCheckUnansweredItem)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("unanswered")}}
+        )
 
         sig {
           params(
@@ -82,11 +88,12 @@ module NoResponse
             sources: ::Integer,
             answered: ::Integer,
             found: ::Integer,
-            reason: T.nilable(Models::Shared::FailureReason)
+            reason: T.nilable(Models::Shared::FailureReason),
+            unanswered: T.nilable(T::Array[Models::Shared::ScreeningLookupCheckUnansweredItem])
           )
             .void
         }
-        def initialize(identifier:, lane:, status:, sources:, answered:, found:, reason: nil)
+        def initialize(identifier:, lane:, status:, sources:, answered:, found:, reason: nil, unanswered: nil)
           @identifier = identifier
           @lane = lane
           @status = status
@@ -94,6 +101,7 @@ module NoResponse
           @answered = answered
           @found = found
           @reason = reason
+          @unanswered = unanswered
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -106,6 +114,7 @@ module NoResponse
           return false unless @answered == other.answered
           return false unless @found == other.found
           return false unless @reason == other.reason
+          return false unless @unanswered == other.unanswered
           true
         end
       end

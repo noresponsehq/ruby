@@ -47,4 +47,10 @@ class NoResponse::Models::Shared::ScreeningLookupCheck
 
   def reason=(str_)
   end
+
+  def unanswered
+  end
+
+  def unanswered=(str_)
+  end
 end

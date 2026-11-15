@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 5558d66f436220af2fa39d1fed58a886
+  docChecksum: 46a362dc92e48ab18bf0a342bc55573a
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.28
-  configChecksum: 749d1f398c1bada2f72faee9dbc151e4
+  releaseVersion: 12.0.29
+  configChecksum: 7cc304aec3f05197607d4acfeacd1c5d
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:885a63502fbb7ff11e565e1ad8c46bf9e4029a11
+    last_write_checksum: sha1:ccd5405374d452d509ae942be652721d5ac326c8
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -1282,9 +1282,11 @@ trackedFiles:
   docs/models/shared/screeninglookup.md:
     last_write_checksum: sha1:edbe529abe1b4a09e59b9cf853620b4d90ad4596
   docs/models/shared/screeninglookupcheck.md:
-    last_write_checksum: sha1:7e435b59d6cdea6d512f40b0446c315afbd694b3
+    last_write_checksum: sha1:abf0db4ffccab2e3407f2c44c82922978dba0903
   docs/models/shared/screeninglookupcheckstatus.md:
     last_write_checksum: sha1:de5a0f83ad202d23af2e48c7279ae7c51c944216
+  docs/models/shared/screeninglookupcheckunanswereditem.md:
+    last_write_checksum: sha1:c4e2d96b031548f5a1d100c309d81be41c5e44c1
   docs/models/shared/screeningmatch.md:
     last_write_checksum: sha1:53151d0cf068fe0093e53f48fb76050cb9451782
   docs/models/shared/screeningmatchevidence.md:
@@ -2440,7 +2442,7 @@ trackedFiles:
   lib/no_response/models/operations/updatesettings_response.rbi:
     last_write_checksum: sha1:0834c9903587b61cbe3cd8bee544792b89c08362
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:8a542709f31b55f5e62b67a8db96fa6881dff6a4
+    last_write_checksum: sha1:e060a5da485a8a96028a7227cc3fab93acfd8a21
   lib/no_response/models/shared/access.rb:
     last_write_checksum: sha1:da8cdfb41547b10b13592a7560d48fe6e5ca2b37
   lib/no_response/models/shared/access.rbi:
@@ -4002,13 +4004,17 @@ trackedFiles:
   lib/no_response/models/shared/screeninglookup.rbi:
     last_write_checksum: sha1:2c40287b712a77d73023edf98ef8fa359505acf1
   lib/no_response/models/shared/screeninglookupcheck.rb:
-    last_write_checksum: sha1:233190aa339198b866feb7ca8e0bca76dc7589b2
+    last_write_checksum: sha1:9cf8d9f81a1dcd722d57bf64f54549bdcd91a76a
   lib/no_response/models/shared/screeninglookupcheck.rbi:
-    last_write_checksum: sha1:8f19783c8b3e829a62e993c4c4914c393b2c2abe
+    last_write_checksum: sha1:bb6438797555490ff86f7cafac2e7a4de3d7a04c
   lib/no_response/models/shared/screeninglookupcheckstatus.rb:
     last_write_checksum: sha1:a548d5e34d8ca8192a11d9460b970601292ac1e3
   lib/no_response/models/shared/screeninglookupcheckstatus.rbi:
     last_write_checksum: sha1:9526765492a23e1055602785b5ca925aaffeae7f
+  lib/no_response/models/shared/screeninglookupcheckunanswereditem.rb:
+    last_write_checksum: sha1:18b906b61971613fb6d1aefe81f245cc059d9a73
+  lib/no_response/models/shared/screeninglookupcheckunanswereditem.rbi:
+    last_write_checksum: sha1:e63af57d680c55cd4a039e9a8f984b50cada4066
   lib/no_response/models/shared/screeningmatch.rb:
     last_write_checksum: sha1:42029431a12753be0ab9eae93e700fe6114e7322
   lib/no_response/models/shared/screeningmatch.rbi:
@@ -4318,7 +4324,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:6fcb180336424c1702eb3d70a785ca208f3cd984
+    last_write_checksum: sha1:a36a37bddb7f8f0fe214fe2197925067642824a7
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4348,7 +4354,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:538b9010cd75e80c2d9e39f0733ba04dd29b91e8
   noresponse.gemspec:
-    last_write_checksum: sha1:0ab9534ca9ea39e165c1b82521fe5c2a4c886cfa
+    last_write_checksum: sha1:f13bb96e80a6486a7daf8ef49620cfda12352be2
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:

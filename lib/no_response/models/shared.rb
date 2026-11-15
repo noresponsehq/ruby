@@ -385,6 +385,7 @@ module NoResponse
       autoload :ScreeningLookup, "no_response/models/shared/screeninglookup.rb"
       autoload :ScreeningLookupCheck, "no_response/models/shared/screeninglookupcheck.rb"
       autoload :ScreeningLookupCheckStatus, "no_response/models/shared/screeninglookupcheckstatus.rb"
+      autoload :ScreeningLookupCheckUnansweredItem, "no_response/models/shared/screeninglookupcheckunanswereditem.rb"
       autoload :ScreeningMatch, "no_response/models/shared/screeningmatch.rb"
       autoload :ScreeningMatchEvidence, "no_response/models/shared/screeningmatchevidence.rb"
       autoload :ScreeningMatchEvidenceKind, "no_response/models/shared/screeningmatchevidencekind.rb"
