@@ -44,6 +44,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::ScreeningNotAnalysedCount)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("not_analysed_by_reason")}}
         )
+        # Videos the analyser read from their cover frame and caption alone, without their sound or later frames. They count as analysed and do not make the person partial. Left out when none.
+        field(
+          :items_frame_only,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("items_frame_only")}}
+        )
         # The oldest item read on any platform.
         field(
           :period_from,
@@ -71,6 +77,7 @@ module NoResponse
             platforms: T::Array[Models::Shared::ScreeningPlatformCoverage],
             items_not_analysed: T.nilable(::Integer),
             not_analysed_by_reason: T.nilable(T::Array[Models::Shared::ScreeningNotAnalysedCount]),
+            items_frame_only: T.nilable(::Integer),
             period_from: T.nilable(::String),
             period_to: T.nilable(::String),
             not_searched: T.nilable(T::Array[Models::Shared::HandlePlatform])
@@ -84,6 +91,7 @@ module NoResponse
           platforms:,
           items_not_analysed: nil,
           not_analysed_by_reason: nil,
+          items_frame_only: nil,
           period_from: nil,
           period_to: nil,
           not_searched: nil
@@ -94,6 +102,7 @@ module NoResponse
           @platforms = platforms
           @items_not_analysed = items_not_analysed
           @not_analysed_by_reason = not_analysed_by_reason
+          @items_frame_only = items_frame_only
           @period_from = period_from
           @period_to = period_to
           @not_searched = not_searched
@@ -108,6 +117,7 @@ module NoResponse
           return false unless @platforms == other.platforms
           return false unless @items_not_analysed == other.items_not_analysed
           return false unless @not_analysed_by_reason == other.not_analysed_by_reason
+          return false unless @items_frame_only == other.items_frame_only
           return false unless @period_from == other.period_from
           return false unless @period_to == other.period_to
           return false unless @not_searched == other.not_searched

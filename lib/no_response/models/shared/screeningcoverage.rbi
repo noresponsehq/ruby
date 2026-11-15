@@ -42,6 +42,12 @@ class NoResponse::Models::Shared::ScreeningCoverage
   def not_analysed_by_reason=(str_)
   end
 
+  def items_frame_only
+  end
+
+  def items_frame_only=(str_)
+  end
+
   def period_from
   end
 

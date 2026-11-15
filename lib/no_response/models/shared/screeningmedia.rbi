@@ -54,6 +54,18 @@ class NoResponse::Models::Shared::ScreeningMedia
   def post_id=(str_)
   end
 
+  def cover_of
+  end
+
+  def cover_of=(str_)
+  end
+
+  def frame_only
+  end
+
+  def frame_only=(str_)
+  end
+
   def text
   end
 
