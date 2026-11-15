@@ -59,4 +59,10 @@ class NoResponse::Models::Shared::PersonReport
 
   def searches=(str_)
   end
+
+  def evidence_restricted
+  end
+
+  def evidence_restricted=(str_)
+  end
 end

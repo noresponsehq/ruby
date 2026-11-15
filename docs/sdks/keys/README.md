@@ -10,6 +10,7 @@ Your own API keys.
 * [create](#create) - Create an API key.
 * [list](#list) - List API keys.
 * [revoke](#revoke) - Revoke an API key.
+* [update_access](#update_access) - Restrict an API key.
 
 ## rotate
 
@@ -247,6 +248,56 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::RevokeKeyResponse)](../../models/operations/revokekeyresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## update_access
+
+Replaces the explicit restrictions on an active key. Restrictions take effect on its next request and survive rotation. The issuer must be able to grant the resulting access in the key environment. A restricted caller cannot remove its own restrictions or grant unrestricted access to another key. Changes are audited without recording the secret.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="updateKeyAccess" method="patch" path="/v1/workspaces/{workspace_id}/keys/{key_id}" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.keys.update_access(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', key_id: '01JA2ZE4K5M6N7P8Q9R0S1T2V3', body: Models::Shared::KeyAccessRequest.new(
+  denied_actions: [
+    Models::Shared::KeyAccessRequestDeniedAction::POLICY_PUBLISH,
+  ]
+))
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                                                                          | Type                                                                                                                               | Required                                                                                                                           | Description                                                                                                                        | Example                                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `workspace_id`                                                                                                                     | *::String*                                                                                                                         | :heavy_check_mark:                                                                                                                 | Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404. | tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                                                                     |
+| `key_id`                                                                                                                           | *::String*                                                                                                                         | :heavy_check_mark:                                                                                                                 | The key's id. A key of another workspace answers 404, as does a key of the other environment to an API key.                        | 01JA2ZE4K5M6N7P8Q9R0S1T2V3                                                                                                         |
+| `body`                                                                                                                             | [Models::Shared::KeyAccessRequest](../../models/shared/keyaccessrequest.md)                                                        | :heavy_check_mark:                                                                                                                 | N/A                                                                                                                                |                                                                                                                                    |
+
+### Response
+
+**[T.nilable(Models::Operations::UpdateKeyAccessResponse)](../../models/operations/updatekeyaccessresponse.md)**
 
 ### Errors
 

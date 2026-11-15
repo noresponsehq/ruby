@@ -38,7 +38,7 @@ module NoResponse
             }
           }
         )
-        # The value searched: the field's cleaned value, else as the source wrote it.
+        # The searched value. Empty in person reports when evidence.read is denied.
         field(
           :value,
           ::String,

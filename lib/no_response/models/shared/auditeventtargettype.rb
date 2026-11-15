@@ -17,6 +17,8 @@ module NoResponse
           INTEGRATION = new("integration")
           BILLING = new("billing")
           REVIEW = new("review")
+          PERSON = new("person")
+          GROUP = new("group")
         end
 
         open!

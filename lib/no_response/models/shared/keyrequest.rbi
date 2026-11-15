@@ -47,4 +47,10 @@ class NoResponse::Models::Shared::KeyRequest
 
   def request_id=(str_)
   end
+
+  def denied_actions
+  end
+
+  def denied_actions=(str_)
+  end
 end

@@ -63,6 +63,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Search)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("searches")}}
         )
+        # True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, findings, posts, media, discovered values and free-text decision notes are withheld.
+        field(
+          :evidence_restricted,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("evidence_restricted")}}
+        )
 
         sig {
           params(
@@ -74,7 +80,8 @@ module NoResponse
             reviews: T::Array[Models::Shared::PersonReview],
             other_groups: Models::Shared::OtherGroups,
             lookup: T.nilable(Models::Shared::ScreeningLookup),
-            searches: T.nilable(T::Array[Models::Shared::Search])
+            searches: T.nilable(T::Array[Models::Shared::Search]),
+            evidence_restricted: T.nilable(T::Boolean)
           )
             .void
         }
@@ -87,7 +94,8 @@ module NoResponse
           reviews:,
           other_groups:,
           lookup: nil,
-          searches: nil
+          searches: nil,
+          evidence_restricted: nil
         )
           @person = person
           @profiles = profiles
@@ -98,6 +106,7 @@ module NoResponse
           @other_groups = other_groups
           @lookup = lookup
           @searches = searches
+          @evidence_restricted = evidence_restricted
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -112,6 +121,7 @@ module NoResponse
           return false unless @other_groups == other.other_groups
           return false unless @lookup == other.lookup
           return false unless @searches == other.searches
+          return false unless @evidence_restricted == other.evidence_restricted
           true
         end
       end

@@ -62,6 +62,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("request_id")}}
         )
+        # Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions.
+        field(
+          :denied_actions,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::KeyRequestDeniedAction)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("denied_actions")}}
+        )
 
         sig {
           params(
@@ -71,11 +77,21 @@ module NoResponse
             purpose: T.nilable(::String),
             kind: T.nilable(Models::Shared::KeyKind),
             expires_at: T.nilable(::String),
-            request_id: T.nilable(::String)
+            request_id: T.nilable(::String),
+            denied_actions: T.nilable(T::Array[Models::Shared::KeyRequestDeniedAction])
           )
             .void
         }
-        def initialize(environment:, scopes:, name: nil, purpose: nil, kind: nil, expires_at: nil, request_id: nil)
+        def initialize(
+          environment:,
+          scopes:,
+          name: nil,
+          purpose: nil,
+          kind: nil,
+          expires_at: nil,
+          request_id: nil,
+          denied_actions: nil
+        )
           @environment = environment
           @scopes = scopes
           @name = name
@@ -83,6 +99,7 @@ module NoResponse
           @kind = kind
           @expires_at = expires_at
           @request_id = request_id
+          @denied_actions = denied_actions
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -95,6 +112,7 @@ module NoResponse
           return false unless @kind == other.kind
           return false unless @expires_at == other.expires_at
           return false unless @request_id == other.request_id
+          return false unless @denied_actions == other.denied_actions
           true
         end
       end

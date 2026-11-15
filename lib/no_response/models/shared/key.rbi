@@ -113,4 +113,10 @@ class NoResponse::Models::Shared::Key
 
   def last_used_at=(str_)
   end
+
+  def denied_actions
+  end
+
+  def denied_actions=(str_)
+  end
 end

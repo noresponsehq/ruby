@@ -130,6 +130,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("last_used_at")}}
         )
+        # Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions.
+        field(
+          :denied_actions,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::KeyDeniedAction)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("denied_actions")}}
+        )
 
         sig {
           params(
@@ -150,7 +156,8 @@ module NoResponse
             kind: T.nilable(Models::Shared::KeyKind),
             owner_user_id: T.nilable(::String),
             rotated_to: T.nilable(::String),
-            last_used_at: T.nilable(::String)
+            last_used_at: T.nilable(::String),
+            denied_actions: T.nilable(T::Array[Models::Shared::KeyDeniedAction])
           )
             .void
         }
@@ -172,7 +179,8 @@ module NoResponse
           kind: nil,
           owner_user_id: nil,
           rotated_to: nil,
-          last_used_at: nil
+          last_used_at: nil,
+          denied_actions: nil
         )
           @id = id
           @workspace_id = workspace_id
@@ -192,6 +200,7 @@ module NoResponse
           @owner_user_id = owner_user_id
           @rotated_to = rotated_to
           @last_used_at = last_used_at
+          @denied_actions = denied_actions
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -215,6 +224,7 @@ module NoResponse
           return false unless @owner_user_id == other.owner_user_id
           return false unless @rotated_to == other.rotated_to
           return false unless @last_used_at == other.last_used_at
+          return false unless @denied_actions == other.denied_actions
           true
         end
       end

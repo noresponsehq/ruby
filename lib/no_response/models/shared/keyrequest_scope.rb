@@ -25,6 +25,10 @@ module NoResponse
           MEMBERS = new("members")
           MEMBERS_MANAGE = new("members_manage")
           GROUPS = new("groups")
+          PEOPLE = new("people")
+          PEOPLE_WRITE = new("people_write")
+          INVESTIGATIONS = new("investigations")
+          DECISIONS = new("decisions")
         end
       end
     end
