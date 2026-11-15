@@ -29,6 +29,7 @@ custom = RecordRole.deserialize("custom_value")
 | `BOT`              | bot                |
 | `CALLER_CATEGORY`  | caller_category    |
 | `CHARGEBACKS`      | chargebacks        |
+| `CONTACT`          | contact            |
 | `COVER_PICTURE`    | cover_picture      |
 | `DECLINES`         | declines           |
 | `DELETED`          | deleted            |

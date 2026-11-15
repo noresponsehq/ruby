@@ -30,6 +30,8 @@ module NoResponse
           CALLER_CATEGORY = new("caller_category")
           # How many chargebacks a shop recorded against the account, or whether it has one (`count` or `flag`).
           CHARGEBACKS = new("chargebacks")
+          # Another account on the same platform the account deals with, such as an opponent it plays most or a follower (`username`). Fields beside it under the same name say how, how often and when last. It names another person, never the account's owner.
+          CONTACT = new("contact")
           # The banner picture of the profile (`image`).
           COVER_PICTURE = new("cover_picture")
           # How many of the account's payments a shop declined (`count`).

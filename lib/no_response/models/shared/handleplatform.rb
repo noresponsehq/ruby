@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # HandlePlatform - A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network.
+      # HandlePlatform - A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts; chesscom also reads the profile's stats, clubs and last two months of games, for its activity and contacts. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network.
       class HandlePlatform
         include ::Crystalline::Enum
         enums do
@@ -31,6 +31,7 @@ module NoResponse
           WORDPRESS = new("wordpress")
           OKRU = new("okru")
           FLICKR = new("flickr")
+          CHESSCOM = new("chesscom")
           SYNTHETIC = new("synthetic")
         end
 
