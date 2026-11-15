@@ -47,7 +47,7 @@ module NoResponse
         .returns(Models::Operations::GetErasureReceiptResponse)
     }
     def get(erasure_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Read an erasure receipt
+      # Method: get - Read an erasure receipt
       # Read retained erasure progress and downstream acknowledgements. Completion does not certify deletion from backups.
       request = Models::Operations::GetErasureReceiptRequest.new(
         erasure_id: erasure_id

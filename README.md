@@ -2,7 +2,7 @@
 
 # NoResponse for Ruby
 
-Investigate everyone, everywhere, all at once. Find the accounts and leaked rows behind an email, phone, username or name, screen groups of people, and assess sign-ups with the NoResponse API. The client's `groups` calls create groups, add people, screen them and read each person's records: see the [quickstart](https://docs.noresponse.org/quickstart).
+NoResponse is an identity and people risk engine. Create a person, investigate the accounts and source records behind their identifiers, and keep investigation history. Groups organize people for events, venues and team review. Signup assessment uses the same engine.
 
 Ruby 3.2+ · Bundler.
 
@@ -13,12 +13,36 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v13.0.4"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v14.0.0"
 ```
 
-Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 3.0"`.
+Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 14.0.0"`.
 
-## Quick start
+## Investigate a person
+
+```ruby
+require "noresponse"
+
+Models = NoResponse::Models
+client = NoResponse::NoResponseClient.new(api_key: ENV.fetch("NORESPONSE_API_KEY"))
+created = client.people.create(
+  body: Models::Shared::WorkspacePersonRequest.new(external_id: "case-person-1042", name: "Jordan Example", email: "jordan@example.com"),
+  idempotency_key: "case-1042-person-create"
+).result
+job = client.investigations.create(
+  body: Models::Shared::InvestigationRequest.new(person_id: created.person.id, depth: Models::Shared::ScreeningDepth::STANDARD, platforms: ["x"]),
+  idempotency_key: "case-1042-investigation-1"
+).result
+puts job.id
+```
+
+After `investigation.completed`, use `client.investigations.get(investigation_id: id).result` to read that investigation's report.
+
+The API key selects the workspace and environment. This flow needs `people_write` to create a person, `investigations` to start work, and `people` to read the report. Save the investigation id and key: retry the same work with the same key; use a new key for a deliberate new investigation. A person can belong to several groups or none. Their `expires_at` comes from workspace retention.
+
+Evidence is included by default for pre-verified customers. An explicit evidence restriction keeps submitted details, status, coverage and decision summaries, and withholds collected records, profiles, posts, media and discovered identifiers. Each investigation and group keeps its own review context.
+
+## Assess a signup
 
 ```ruby
 require "noresponse"

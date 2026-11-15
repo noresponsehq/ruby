@@ -23,4 +23,10 @@ class NoResponse::Models::Shared::PersonBatchItem
 
   def outcome=(str_)
   end
+
+  def suggested_matches
+  end
+
+  def suggested_matches=(str_)
+  end
 end

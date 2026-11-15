@@ -60,12 +60,6 @@ module NoResponse
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("version"), required: true}}
         )
-        # When raw collected items and unmatched candidate profiles are purged: 30 days after the group ends.
-        field(
-          :purge_after,
-          ::String,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("purge_after"), required: true}}
-        )
         # The member or key label that created the group.
         field(
           :created_by,
@@ -108,7 +102,6 @@ module NoResponse
             topics: T::Array[::String],
             people: ::Integer,
             version: ::Integer,
-            purge_after: ::String,
             created_by: ::String,
             created_at: ::String,
             updated_at: ::String,
@@ -127,7 +120,6 @@ module NoResponse
           topics:,
           people:,
           version:,
-          purge_after:,
           created_by:,
           created_at:,
           updated_at:,
@@ -143,7 +135,6 @@ module NoResponse
           @topics = topics
           @people = people
           @version = version
-          @purge_after = purge_after
           @created_by = created_by
           @created_at = created_at
           @updated_at = updated_at
@@ -163,7 +154,6 @@ module NoResponse
           return false unless @topics == other.topics
           return false unless @people == other.people
           return false unless @version == other.version
-          return false unless @purge_after == other.purge_after
           return false unless @created_by == other.created_by
           return false unless @created_at == other.created_at
           return false unless @updated_at == other.updated_at

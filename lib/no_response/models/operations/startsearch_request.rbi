@@ -6,18 +6,6 @@ class NoResponse::Models::Operations::StartSearchRequest
 end
 
 class NoResponse::Models::Operations::StartSearchRequest
-  def workspace_id
-  end
-
-  def workspace_id=(str_)
-  end
-
-  def environment
-  end
-
-  def environment=(str_)
-  end
-
   def group_id
   end
 

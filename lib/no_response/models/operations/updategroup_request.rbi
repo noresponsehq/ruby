@@ -6,18 +6,6 @@ class NoResponse::Models::Operations::UpdateGroupRequest
 end
 
 class NoResponse::Models::Operations::UpdateGroupRequest
-  def workspace_id
-  end
-
-  def workspace_id=(str_)
-  end
-
-  def environment
-  end
-
-  def environment=(str_)
-  end
-
   def group_id
   end
 

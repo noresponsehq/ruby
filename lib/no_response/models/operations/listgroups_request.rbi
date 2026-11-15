@@ -6,18 +6,6 @@ class NoResponse::Models::Operations::ListGroupsRequest
 end
 
 class NoResponse::Models::Operations::ListGroupsRequest
-  def workspace_id
-  end
-
-  def workspace_id=(str_)
-  end
-
-  def environment
-  end
-
-  def environment=(str_)
-  end
-
   def before
   end
 

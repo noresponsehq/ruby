@@ -11,7 +11,7 @@ module NoResponse
     class IdempotencyKeyHook < AbstractSDKHook
       extend T::Sig
 
-      OPERATIONS = %w[createAssessment recordAssessmentOutcome recordKeyUsage recordAccountOutcome changeLists createPolicyEvaluation].freeze
+      OPERATIONS = %w[createAssessment recordAssessmentOutcome recordKeyUsage recordAccountOutcome changeLists createPolicyEvaluation addPeople startScreening createInvestigation].freeze
 
       sig { override.params(hook_ctx: BeforeRequestHookContext, request: Faraday::Request).returns(Faraday::Request) }
       def before_request(hook_ctx:, request:)

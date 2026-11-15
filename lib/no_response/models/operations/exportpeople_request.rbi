@@ -6,18 +6,6 @@ class NoResponse::Models::Operations::ExportPeopleRequest
 end
 
 class NoResponse::Models::Operations::ExportPeopleRequest
-  def workspace_id
-  end
-
-  def workspace_id=(str_)
-  end
-
-  def environment
-  end
-
-  def environment=(str_)
-  end
-
   def group_id
   end
 

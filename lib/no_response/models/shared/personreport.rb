@@ -15,25 +15,25 @@ module NoResponse
           Models::Shared::Person,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("person"), required: true}}
         )
-        # The accounts the latest screening matched, with how each was matched.
+        # The accounts this result matched, with how each was matched.
         field(
           :profiles,
           Crystalline::Array.new(Models::Shared::ScreeningProfile),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("profiles"), required: true}}
         )
-        # What the latest screening flagged, most severe first, each citing its evidence.
+        # What this result flagged, most severe first, each citing its evidence.
         field(
           :findings,
           Crystalline::Array.new(Models::Shared::ScreeningFinding),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("findings"), required: true}}
         )
-        # The posts the findings cite.
+        # All posts retained for this result, including posts that no finding cites.
         field(
           :posts,
           Crystalline::Array.new(Models::Shared::ScreeningPost),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("posts"), required: true}}
         )
-        # The images and videos the findings cite.
+        # All images and videos retained for this result, including media that no finding cites.
         field(
           :media,
           Crystalline::Array.new(Models::Shared::ScreeningMedia),

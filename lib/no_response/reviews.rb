@@ -48,7 +48,7 @@ module NoResponse
         .returns(Models::Operations::ListReviewsResponse)
     }
     def list(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List retained account reviews.
+      # Method: list - List retained account reviews.
       # List retained investigation reviews using filters and an authenticated cursor. Use reviews.query to filter by account_id in a JSON body. All filters are bound into the cursor.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -364,7 +364,7 @@ module NoResponse
         .returns(Models::Operations::CreateReviewResponse)
     }
     def create(body:, workspace_id:, environment:, timeout_ms: nil, http_headers: nil)
-      # create - Open a review for a retained account.
+      # Method: create - Open a review for a retained account.
       # Open a review for one account. An account can have one active review in its environment.
       request = Models::Operations::CreateReviewRequest.new(
         workspace_id: workspace_id,
@@ -655,7 +655,7 @@ module NoResponse
         .returns(Models::Operations::GetReviewResponse)
     }
     def get(workspace_id:, environment:, review_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Read an account review.
+      # Method: get - Read an account review.
       # Read a retained review and its current version.
       request = Models::Operations::GetReviewRequest.new(
         workspace_id: workspace_id,
@@ -947,7 +947,7 @@ module NoResponse
         .returns(Models::Operations::UpdateReviewResponse)
     }
     def update(body:, workspace_id:, environment:, review_id:, timeout_ms: nil, http_headers: nil)
-      # update - Assign, prioritize or reopen a guarded review.
+      # Method: update - Assign, prioritize or reopen a guarded review.
       # Change review status, priority or assignment after checking the expected version.
       request = Models::Operations::UpdateReviewRequest.new(
         workspace_id: workspace_id,
@@ -1239,7 +1239,7 @@ module NoResponse
         .returns(Models::Operations::ResolveReviewResponse)
     }
     def resolve(body:, workspace_id:, environment:, review_id:, timeout_ms: nil, http_headers: nil)
-      # resolve - Resolve a review against an exact account risk version.
+      # Method: resolve - Resolve a review against an exact account risk version.
       # Resolve a review against the exact current review and account decision versions. A resolution does not report a factual outcome or execute enforcement.
       request = Models::Operations::ResolveReviewRequest.new(
         workspace_id: workspace_id,
@@ -1542,7 +1542,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # list_comments - Read retained review comments.
+      # Method: list_comments - Read retained review comments.
       # Page through retained review comments.
       request = Models::Operations::ListReviewCommentsRequest.new(
         workspace_id: workspace_id,
@@ -1860,7 +1860,7 @@ module NoResponse
         .returns(Models::Operations::CommentReviewResponse)
     }
     def comment(body:, workspace_id:, environment:, review_id:, timeout_ms: nil, http_headers: nil)
-      # comment - Append a comment against the current review version.
+      # Method: comment - Append a comment against the current review version.
       # Append a comment after checking the expected review version.
       request = Models::Operations::CommentReviewRequest.new(
         workspace_id: workspace_id,
@@ -2163,7 +2163,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # list_resolutions - Read immutable review resolution history.
+      # Method: list_resolutions - Read immutable review resolution history.
       # Page through immutable review resolutions.
       request = Models::Operations::ListReviewResolutionsRequest.new(
         workspace_id: workspace_id,
@@ -2458,7 +2458,7 @@ module NoResponse
         .returns(Models::Operations::ListReviewViewsResponse)
     }
     def list_views(workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_views - List your private and shared review filters.
+      # Method: list_views - List your private and shared review filters.
       # List private and shared saved review filters visible to you.
       request = Models::Operations::ListReviewViewsRequest.new(
         workspace_id: workspace_id,
@@ -2748,7 +2748,7 @@ module NoResponse
         .returns(Models::Operations::CreateReviewViewResponse)
     }
     def create_view(body:, workspace_id:, environment:, timeout_ms: nil, http_headers: nil)
-      # create_view - Save a tenant-local review filter.
+      # Method: create_view - Save a tenant-local review filter.
       # Save a private or shared review filter.
       request = Models::Operations::CreateReviewViewRequest.new(
         workspace_id: workspace_id,
@@ -3039,7 +3039,7 @@ module NoResponse
         .returns(Models::Operations::UpdateReviewViewResponse)
     }
     def update_view(body:, workspace_id:, environment:, view_id:, timeout_ms: nil, http_headers: nil)
-      # update_view - Replace your saved filter with optimistic concurrency.
+      # Method: update_view - Replace your saved filter with optimistic concurrency.
       # Update your saved review filter after checking its expected version.
       request = Models::Operations::UpdateReviewViewRequest.new(
         workspace_id: workspace_id,
@@ -3332,7 +3332,7 @@ module NoResponse
         .returns(Models::Operations::DeleteReviewViewResponse)
     }
     def delete_view(body:, workspace_id:, environment:, view_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # delete_view - Delete your saved filter with optimistic concurrency.
+      # Method: delete_view - Delete your saved filter with optimistic concurrency.
       # Delete your saved review filter after checking its expected version.
       request = Models::Operations::DeleteReviewViewRequest.new(
         workspace_id: workspace_id,
@@ -3621,7 +3621,7 @@ module NoResponse
         .returns(Models::Operations::ExportReviewResponse)
     }
     def export(workspace_id:, environment:, review_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # export - Export an account review
+      # Method: export - Export an account review
       # Export retained review details, comments, resolutions and linked subjects. Requires current reviews.read and exports.read; API keys need management together with exports, history or audit_manage. The audit event commits before any bytes are returned. Oversized exports are refused without truncation; use the bounded collection APIs.
       request = Models::Operations::ExportReviewRequest.new(
         workspace_id: workspace_id,
@@ -3913,7 +3913,7 @@ module NoResponse
         .returns(Models::Operations::ListReviewSubjectsResponse)
     }
     def list_subjects(workspace_id:, environment:, review_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_subjects - List retained subjects linked to a review.
+      # Method: list_subjects - List retained subjects linked to a review.
       # List retained subjects linked to this review. A link supplies investigation context and does not prove a relationship or change account risk.
       request = Models::Operations::ListReviewSubjectsRequest.new(
         workspace_id: workspace_id,
@@ -4205,7 +4205,7 @@ module NoResponse
         .returns(Models::Operations::AddReviewSubjectResponse)
     }
     def add_subject(body:, workspace_id:, environment:, review_id:, timeout_ms: nil, http_headers: nil)
-      # add_subject - Link retained tenant-local evidence to an investigation.
+      # Method: add_subject - Link retained tenant-local evidence to an investigation.
       # Link an account, exact assessment revision or issued-key association within this environment. Supply the expected review version. A review permits 100 links. Erasure removes links to erased subjects. This action records context without creating feedback or enforcement.
       request = Models::Operations::AddReviewSubjectRequest.new(
         workspace_id: workspace_id,
@@ -4508,7 +4508,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # delete_subject - Remove a linked subject using the current review version.
+      # Method: delete_subject - Remove a linked subject using the current review version.
       # Remove a subject link with the expected review version. The linked account, assessment or key association remains unchanged.
       request = Models::Operations::DeleteReviewSubjectRequest.new(
         workspace_id: workspace_id,
@@ -4815,7 +4815,7 @@ module NoResponse
         .returns(Models::Operations::QueryReviewsResponse)
     }
     def query(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # query - Query retained reviews without identifiers in URLs.
+      # Method: query - Query retained reviews without identifiers in URLs.
       # Query retained investigation reviews using a JSON body, including an exact account_id filter. All filters are bound into the cursor.
       request = Models::Operations::QueryReviewsRequest.new(
         workspace_id: workspace_id,

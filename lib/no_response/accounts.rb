@@ -50,7 +50,7 @@ module NoResponse
         .returns(Models::Operations::ListAccountsResponse)
     }
     def list_changed(changed_since: nil, limit: nil, unenforced: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_changed - Poll the accounts whose risk changed.
+      # Method: list_changed - Poll the accounts whose risk changed.
       # Your accounts whose risk changed, oldest change first, each as accounts.get answers it. Every page carries next_cursor: pass it back as changed_since to read the changes made after that page; without changed_since the list starts from the oldest change. When nothing changed, items is empty and next_cursor is the cursor you sent, so poll by calling again with the latest next_cursor. An account appears again each time its risk changes, with a higher risk_version; keep the copy with the highest. unenforced=true lists only accounts with a decision other than allow for some flow and no applied enforcement at their current risk_version; such a page can hold fewer than limit items, or none, while later changes exist, so keep polling with next_cursor. Requires the history scope. Read-only and safe to retry. A tampered or foreign cursor answers 400 invalid_cursor.
       request = Models::Operations::ListAccountsRequest.new(
         changed_since: changed_since,
@@ -337,7 +337,7 @@ module NoResponse
         .returns(Models::Operations::GetAccountResponse)
     }
     def get(account_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Read an account's one current risk.
+      # Method: get - Read an account's one current risk.
       # An account is the account_id you send with your assessments. Its current risk is the risk of its latest assessment with a decision (status complete or partial), scored as GET /v1/assessments/{assessment_id} scores that assessment, with a decision for each flow; risk.decision is the decision for the flow of that assessment. Every assessment answers with this same account. Every assessment updates its account: once an assessment completes, the account carries its risk. Requires the history scope. Read-only and safe to retry. An account with no unexpired assessment that has a decision answers 404 not_found, and a malformed account_id answers 400 invalid_request.
       request = Models::Operations::GetAccountRequest.new(
         account_id: account_id
@@ -625,7 +625,7 @@ module NoResponse
         .returns(Models::Operations::DeleteAccountResponse)
     }
     def delete(account_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # delete - Erase an account and its history.
+      # Method: delete - Erase an account and its history.
       # Erases the account in the environment of your key, for an erasure request from your user: every assessment of it, with its revisions, evidence and outcomes, and the identity-graph marks its outcomes set. An assessment of the account begun before the call is refused or stopped. Afterwards the account and each erased assessment answer 404 and the history is empty. When the call deleted at least one assessment, an account.deleted event goes to your verified webhook endpoints. Requires the history scope. Idempotent and safe to retry: a repeat, or an account with nothing to erase, answers 200 with assessments_deleted 0 and sends no event. The account_id can be assessed again later, as a new account.
       request = Models::Operations::DeleteAccountRequest.new(
         account_id: account_id
@@ -924,7 +924,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # list_assessments - Page through one account's unexpired assessments.
+      # Method: list_assessments - Page through one account's unexpired assessments.
       # The account's history: the same page as POST /v1/assessments/query for this account_id, newest first, each at its latest assessment_version. Requires the history scope. Read-only and safe to retry. An account with no assessments answers 200 with empty items. The cursor is opaque and bound to your workspace and the account; a tampered or expired cursor answers 400 invalid_cursor. response_mode=detailed needs the detailed scope. Each item's identifiers holds the identifiers its assessment was sent, exactly as received. The account_id travels in the URL; use POST /v1/assessments/query to keep it out of access logs.
       request = Models::Operations::ListAccountAssessmentsRequest.new(
         account_id: account_id,
@@ -1240,7 +1240,7 @@ module NoResponse
         .returns(Models::Operations::ListLinkedAccountsResponse)
     }
     def list_linked(account_id:, limit: nil, cursor: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_linked - List accounts that share a submitted identifier with this account.
+      # Method: list_linked - List accounts that share a submitted identifier with this account.
       # Lists the other accounts in this environment whose retained assessments submitted an email, phone or customer-namespace username that one of this account's retained assessments also submitted. Matching uses the identifier search rules: exact, canonical and, for email, mailbox. Each linked account names one entry per shared kind, at the strictest basis that links the two accounts, with the original value, assessment_id and submitted_at of each account's newest retained submission of it. Only customer-submitted identifiers link accounts; source-discovered identifiers do not. Expired, deleted and erased assessments link nothing. The account itself is not listed, and an account with no retained submissions answers 200 with empty items. A shared identifier is not verified ownership. Totals are exact below 10000 and capped at 10000. The cursor is opaque, expiring and bound to your workspace, environment and the account; a tampered or expired cursor answers 400 invalid_cursor. Requires the history scope, or investigate with evidence. Read-only and safe to retry.
       request = Models::Operations::ListLinkedAccountsRequest.new(
         account_id: account_id,
@@ -1553,7 +1553,7 @@ module NoResponse
         .returns(Models::Operations::RecordEnforcementResponse)
     }
     def record_enforcement(body:, account_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # record_enforcement - Record what you did to an account in your identity provider.
+      # Method: record_enforcement - Record what you did to an account in your identity provider.
       # Records what you did to the account in your identity provider for one flow's decision at one risk_version: the action (or none), the account's state before it, the provider and whether it was applied or failed. It is your action, not an outcome, and it leaves the account's risk unchanged. A record is kept once per account, risk_version, flow and action: the first report answers 201, and a repeat answers 200 with the stored record unchanged, so retries are safe without an Idempotency-Key. An applied report after a failed one replaces the failed record, keeping its id and created_at, and answers 201. A risk_version older than the account's current one is accepted and stored, but only an applied record at the current risk_version takes the account out of listChanged with unenforced=true; a newer one answers 409 risk_version_ahead. An account with no current risk answers 404 not_found. error_code is allowed only with status failed. Requires the history scope.
       request = Models::Operations::RecordEnforcementRequest.new(
         account_id: account_id,
@@ -1857,7 +1857,7 @@ module NoResponse
         .returns(Models::Operations::ListAccountEnforcementsResponse)
     }
     def list_enforcements(account_id:, limit: nil, cursor: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_enforcements - Page through account enforcements
+      # Method: list_enforcements - Page through account enforcements
       # List retained enforcement reports for one account with an authenticated cursor.
       request = Models::Operations::ListAccountEnforcementsRequest.new(
         account_id: account_id,
@@ -2171,7 +2171,7 @@ module NoResponse
         .returns(Models::Operations::RecordAccountOutcomeResponse)
     }
     def record_outcome(body:, account_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # record_outcome - Record or correct an account outcome
+      # Method: record_outcome - Record or correct an account outcome
       # Record a factual report, not an enforcement action. A known outcome replaces the effective report. unknown alone records uncertainty without changing it; unknown with supersedes explicitly retracts it. supersedes must name the current effective report or the request answers 409 outcome_conflict. Reports remain append-only. Idempotency-Key is required. observed_at defaults to receipt time and cannot be over five minutes ahead.
       request = Models::Operations::RecordAccountOutcomeRequest.new(
         account_id: account_id,
@@ -2476,7 +2476,7 @@ module NoResponse
         .returns(Models::Operations::ListAccountOutcomesResponse)
     }
     def list_outcomes(account_id:, limit: nil, cursor: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_outcomes - List retained account feedback
+      # Method: list_outcomes - List retained account feedback
       # List retained account reports, newest first. The page-level effective outcome id names the current report. Each receipt preserves the effective report and risk version from its original write. Page with the returned cursor.
       request = Models::Operations::ListAccountOutcomesRequest.new(
         account_id: account_id,
@@ -2789,7 +2789,7 @@ module NoResponse
         .returns(Models::Operations::GetAccountDecisionResponse)
     }
     def retrieve_decision(account_id:, risk_version:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # retrieve_decision - Retrieve an exact historical account decision
+      # Method: retrieve_decision - Retrieve an exact historical account decision
       # Retrieve the account decision at one recorded risk version. The answer uses the original assessment and account-specific risk inputs. Earlier versions that were not captured return 404. The assessment version, policy version and account calculation version identify the decision.
       request = Models::Operations::GetAccountDecisionRequest.new(
         account_id: account_id,
@@ -3079,7 +3079,7 @@ module NoResponse
         .returns(Models::Operations::AssociateCredentialResponse)
     }
     def associate_credential(body:, account_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # associate_credential - Associate a customer-issued API key
+      # Method: associate_credential - Associate a customer-issued API key
       # Associate the SHA-256 of a high-entropy key issued by your service. Send the hash instead of the key. Repeating a hash returns its original association, including its retirement state. A hash associated with another account returns a conflict.
       request = Models::Operations::AssociateCredentialRequest.new(
         account_id: account_id,
@@ -3383,7 +3383,7 @@ module NoResponse
         .returns(Models::Operations::ListAccountCredentialsResponse)
     }
     def list_credentials(account_id:, limit: nil, cursor: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_credentials - List issued credential associations
+      # Method: list_credentials - List issued credential associations
       # Retained credential associations, ordered by id. Page with the authenticated cursor. Associations are removed on account erasure.
       request = Models::Operations::ListAccountCredentialsRequest.new(
         account_id: account_id,
@@ -3696,7 +3696,7 @@ module NoResponse
         .returns(Models::Operations::RetireAccountCredentialResponse)
     }
     def retire_credential(account_id:, credential_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # retire_credential - Retire an issued credential association
+      # Method: retire_credential - Retire an issued credential association
       # Mark this association retired, idempotently. This does not revoke the actual key. Requires delete scope.
       request = Models::Operations::RetireAccountCredentialRequest.new(
         account_id: account_id,
@@ -3986,7 +3986,7 @@ module NoResponse
         .returns(Models::Operations::ExportAccountResponse)
     }
     def export(account_id:, response_mode: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # export - Export an account
+      # Method: export - Export an account
       # Retrieve one consistent snapshot of retained customer-accessible records, including assessment revisions, account decisions, feedback, key associations, enforcements and request diagnostics. Each assessment revision's detail.identifiers holds the identifiers that assessment was sent, exactly as received. Secrets, restricted source information, other customers' data and legacy free-text notes are excluded. The same standard/detailed permissions apply. An export exceeding 10000 records or 8 MiB returns export_too_large without a partial result. Historical decisions that were not captured are identified as an exclusion.
       request = Models::Operations::ExportAccountRequest.new(
         account_id: account_id,
@@ -4279,7 +4279,7 @@ module NoResponse
         .returns(Models::Operations::ListAccountDecisionsResponse)
     }
     def list_decisions(account_id:, limit: nil, cursor: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_decisions - Page through recorded account decisions
+      # Method: list_decisions - Page through recorded account decisions
       # List retained immutable risk decisions for one account with an authenticated cursor.
       request = Models::Operations::ListAccountDecisionsRequest.new(
         account_id: account_id,
@@ -4591,7 +4591,7 @@ module NoResponse
         .returns(Models::Operations::SearchAccountsResponse)
     }
     def search(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # search - Search distinct accounts by submitted identifier or account ID
+      # Method: search - Search distinct accounts by submitted identifier or account ID
       # Search distinct accounts observed in retained assessments in this environment. identifier matches an exact, canonical or explicitly selected mailbox form of a submitted email, phone or customer-namespace username. It matches historical retained inputs and returns matched_identifier with the original value and matching assessment. Each row has its newest retained assessment, current account decision when available, retained assessment count, and total distinct-account count. identifier and legacy email are mutually exclusive; account_id and needs_action combine with either using AND. Set needs_action to select accounts with a retained open or in-progress review, or a current review/block account decision without an effective retained account outcome. This filter applies before counting and pagination and adds waiting_for reasons. Current decisions include account list overrides and shared-key scoring and preserve admission holds. Typed identifier search uses stable opaque account order; ordinary and legacy email searches retain newest-seen order. Results are live across pages; each page's items and total share a database snapshot, while current account risk is read separately. Cursors are expiring and bound to scope, operation and filters. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier, identifier_expression or email filtering. needs_action additionally requires management scope. Source-discovered associations are not searched and equality is not verified ownership. identifier_expression combines submitted terms with bounded AND/OR, at most 8 raw terms and 3 group levels. Each node selects exactly one of term, and, or. Groups have 2 to 8 operands. Duplicate normalized terms are idempotent and still count toward the limit. identifier_expression, identifier and email are mutually exclusive. Expression results use matched_identifiers with original submitted witnesses and zero-based depth-first term_index. All satisfied unique terms are returned in first-occurrence order. Cursors bind scope, ordered structure, original values, matching modes and all other filters; changing only page limit is allowed. Required expression scope assessment evaluates the whole expression in one retained submission; scope account allows different retained submissions of the same account to satisfy different terms. Both use stable opaque account ordering and distinct-account counting before pagination.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

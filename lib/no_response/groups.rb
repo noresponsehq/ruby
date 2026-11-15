@@ -39,8 +39,6 @@ module NoResponse
 
     sig {
       params(
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         limit: T.nilable(::Integer),
         before: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
@@ -49,23 +47,16 @@ module NoResponse
       )
         .returns(Models::Operations::ListGroupsResponse)
     }
-    def list(workspace_id:, environment:, limit: nil, before: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List an environment's groups.
-      # Groups, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def list(limit: nil, before: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: list - List an environment's groups.
+      # Groups, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::ListGroupsRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         limit: limit,
         before: before
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
-      url = Utils.generate_url(
-        Models::Operations::ListGroupsRequest,
-        base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}",
-        request
-      )
+      url = "#{base_url}/v1/groups"
       headers = {}
       headers = T.cast(headers, T::Hash[String, String])
       query_params = Utils.get_query_params(Models::Operations::ListGroupsRequest, request, nil)
@@ -336,31 +327,22 @@ module NoResponse
     sig {
       params(
         body: Models::Shared::GroupRequest,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         idempotency_key: T.nilable(::String),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::CreateGroupResponse)
     }
-    def create(body:, workspace_id:, environment:, idempotency_key: nil, timeout_ms: nil, http_headers: nil)
-      # create - Create a group to screen.
-      # Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def create(body:, idempotency_key: nil, timeout_ms: nil, http_headers: nil)
+      # Method: create - Create a group to screen.
+      # Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::CreateGroupRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         body: body,
         idempotency_key: idempotency_key
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
-      url = Utils.generate_url(
-        Models::Operations::CreateGroupRequest,
-        base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}",
-        request
-      )
+      url = "#{base_url}/v1/groups"
       headers = Utils.get_headers(request)
       headers = T.cast(headers, T::Hash[String, String])
       req_content_type, data, form = Utils.serialize_request_body(request, false, false, :body, :json)
@@ -627,8 +609,6 @@ module NoResponse
 
     sig {
       params(
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
@@ -636,12 +616,10 @@ module NoResponse
       )
         .returns(Models::Operations::GetGroupResponse)
     }
-    def get(workspace_id:, environment:, group_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Read a group.
-      # The group and how many people it holds. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def get(group_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: get - Read a group.
+      # The group and how many people it holds. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::GetGroupRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id
       )
       url, params = @sdk_configuration.get_server_details
@@ -649,7 +627,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::GetGroupRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+        "/v1/groups/{group_id}",
         request
       )
       headers = {}
@@ -920,8 +898,6 @@ module NoResponse
     sig {
       params(
         body: Models::Shared::GroupUpdate,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
@@ -929,12 +905,10 @@ module NoResponse
       )
         .returns(Models::Operations::UpdateGroupResponse)
     }
-    def update(body:, workspace_id:, environment:, group_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # update - Change a group.
-      # Changes the fields the body names. With expected_version, the change applies only to that version (409 group_conflict otherwise). The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def update(body:, group_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: update - Change a group.
+      # Changes the fields the body names. With expected_version, the change applies only to that version (409 group_conflict otherwise). The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::UpdateGroupRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         body: body
       )
@@ -943,7 +917,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::UpdateGroupRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+        "/v1/groups/{group_id}",
         request
       )
       headers = {}
@@ -1226,8 +1200,6 @@ module NoResponse
 
     sig {
       params(
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
@@ -1235,12 +1207,10 @@ module NoResponse
       )
         .returns(Models::Operations::DeleteGroupResponse)
     }
-    def delete(workspace_id:, environment:, group_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # delete - Erase a group.
-      # Erases the group with its people, their reviews and its screenings, and stops any screening still running. The delete scope is required; group read, write, investigation and review access do not grant deletion.
+    def delete(group_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: delete - Erase a group.
+      # Deletes the group, its memberships and its review context, and cancels unfinished group work. Workspace people, source evidence and completed investigations remain available. Retained investigations no longer name the deleted group. The delete scope is required; group read, write, investigation and review access do not grant deletion. The API key selects the workspace and environment.
       request = Models::Operations::DeleteGroupRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id
       )
       url, params = @sdk_configuration.get_server_details
@@ -1248,7 +1218,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::DeleteGroupRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+        "/v1/groups/{group_id}",
         request
       )
       headers = {}
@@ -1509,14 +1479,14 @@ module NoResponse
         .returns(Models::Operations::ListPeopleResponse)
     }
     def list_people(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_people - List a group's people.
-      # The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+      # Method: list_people - List a group's people.
+      # The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
         Models::Operations::ListPeopleRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people",
+        "/v1/groups/{group_id}/people",
         request
       )
       headers = {}
@@ -1789,8 +1759,6 @@ module NoResponse
     sig {
       params(
         body: Models::Shared::PersonBatchRequest,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
@@ -1799,21 +1767,10 @@ module NoResponse
       )
         .returns(Models::Operations::AddPeopleResponse)
     }
-    def add_people(
-      body:,
-      workspace_id:,
-      environment:,
-      group_id:,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
-      # add_people - Add or update a batch of people.
-      # Adds 1 to 500 people, at most 512 KiB. A row naming an existing person in the group (the same external_id, else the same email, else the same phone) updates it; a changed identity is screened afresh by the next screening. Identities are stored encrypted under the workspace's key. Idempotency-Key is required: a retry with the same key and body within 24 hours answers the first result with Idempotent-Replayed: true, and the same key with another body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def add_people(body:, group_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: add_people - Add or update a batch of people.
+      # Adds 1 to 500 workspace people to this group, at most 512 KiB. An explicit person_id or external_id reuses the named workspace person. A reference-only row keeps submitted details; an identity supplied with that reference replaces those details. A shared email or phone only suggests matches and does not merge people. A changed identity clears current group screening summaries; prior investigation history remains available. Identities are encrypted under the workspace key. Idempotency-Key is required: the same key and body return the original import result while it is retained, with Idempotent-Replayed: true. A different body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation; groups is also accepted. Suggested matches require people-read access. The API key selects the workspace and environment.
       request = Models::Operations::AddPeopleRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         body: body,
         idempotency_key: idempotency_key
@@ -1823,7 +1780,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::AddPeopleRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people",
+        "/v1/groups/{group_id}/people",
         request
       )
       headers = Utils.get_headers(request)
@@ -2106,8 +2063,6 @@ module NoResponse
 
     sig {
       params(
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         person_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
@@ -2116,12 +2071,10 @@ module NoResponse
       )
         .returns(Models::Operations::GetPersonResponse)
     }
-    def get_person(workspace_id:, environment:, group_id:, person_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get_person - Read a person's report.
-      # The person, the profiles the screening matched with how each was matched, its findings with their evidence, every recorded decision, and the other groups in the environment where a person with the same email or phone appears, with the decision recorded there. Profiles and findings fill in as the screening pipeline ships. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. Each successful read is durably audited as person.viewed. Restricted responses keep submitted details, coverage, job status and decision summaries and set evidence_restricted to true.
+    def get_person(group_id:, person_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: get_person - Read a person's report.
+      # Returns submitted details, this group's latest screening evidence and contextual decisions, and the other groups that explicitly include the same workspace person. Membership requires an explicit person or customer reference. The people scope grants this operation; groups is also accepted. Each successful read is durably audited as person.viewed. Full source records, posts and media are returned by default. Explicit evidence.read denial keeps submitted details, coverage, job status and decision summaries, hides collected evidence and free-text notes, and sets evidence_restricted to true. The API key selects the workspace and environment.
       request = Models::Operations::GetPersonRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         person_id: person_id
       )
@@ -2130,7 +2083,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::GetPersonRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}",
+        "/v1/groups/{group_id}/people/{person_id}",
         request
       )
       headers = {}
@@ -2400,9 +2353,280 @@ module NoResponse
 
     sig {
       params(
+        group_id: ::String,
+        person_id: ::String,
+        retries: T.nilable(Utils::RetryConfig),
+        timeout_ms: T.nilable(Integer),
+        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+      )
+        .returns(Models::Operations::RemoveGroupPersonResponse)
+    }
+    def remove_person(group_id:, person_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: remove_person - Remove a person from a group
+      # Removes this membership and its group review history. Keeps the workspace person, source evidence and completed investigations. Needs delete access. The API key selects the workspace and environment.
+      request = Models::Operations::RemoveGroupPersonRequest.new(
+        group_id: group_id,
+        person_id: person_id
+      )
+      url, params = @sdk_configuration.get_server_details
+      base_url = Utils.template_url(url, params)
+      url = Utils.generate_url(
+        Models::Operations::RemoveGroupPersonRequest,
+        base_url,
+        "/v1/groups/{group_id}/people/{person_id}",
+        request
+      )
+      headers = {}
+      headers = T.cast(headers, T::Hash[String, String])
+      headers["Accept"] = "application/problem+json"
+      headers["user-agent"] = @sdk_configuration.user_agent
+      retries ||= @sdk_configuration.retry_config
+      retries ||= Utils::RetryConfig.new(
+        backoff: Utils::BackoffStrategy.new(
+          exponent: 2.0,
+          initial_interval: 500,
+          max_elapsed_time: 30_000,
+          max_interval: 8000
+        ),
+        retry_connection_errors: true,
+        strategy: "backoff"
+      )
+      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options[:retry_statuses] = [408, 429, 500, 501, 502, 503, 504, 505]
+
+      security = @sdk_configuration.security_source&.call
+
+      timeout = (timeout_ms.to_f / 1000) unless timeout_ms.nil?
+      timeout ||= @sdk_configuration.timeout
+
+      connection = @sdk_configuration.client.dup
+      connection.use(Utils::RetryMiddleware, retry_options)
+
+      hook_ctx = SDKHooks::HookContext.new(
+        config: @sdk_configuration,
+        base_url: base_url,
+        oauth2_scopes: nil,
+        operation_id: "removeGroupPerson",
+        security_source: @sdk_configuration.security_source
+      )
+
+      error = T.let(nil, T.nilable(StandardError))
+      http_response = T.let(nil, T.nilable(Faraday::Response))
+
+      begin
+        http_response = T.must(connection).delete(url) do |req|
+          req.headers.merge!(headers)
+          req.options.timeout = timeout unless timeout.nil?
+          Utils.configure_request_security(req, security)
+          http_headers&.each do |key, value|
+            req.headers[key.to_s] = value
+          end
+
+          @sdk_configuration.hooks.before_request(
+            hook_ctx: SDKHooks::BeforeRequestHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            request: req
+          )
+        end
+
+      rescue StandardError => e
+        error = e
+      ensure
+        if http_response.nil? || Utils.error_status?(http_response.status)
+          http_response = @sdk_configuration.hooks.after_error(
+            error: error,
+            hook_ctx: SDKHooks::AfterErrorHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+        else
+          http_response = @sdk_configuration.hooks.after_success(
+            hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+        end
+
+        if http_response.nil?
+          raise error if !error.nil?
+          raise "no response"
+        end
+      end
+
+      content_type = http_response.headers.fetch("Content-Type", "application/octet-stream")
+      if Utils.match_status_code(http_response.status, ["204"])
+        @sdk_configuration.hooks.after_success(
+          hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+            hook_ctx: hook_ctx
+          ),
+          response: http_response
+        )
+        return Models::Operations::RemoveGroupPersonResponse.new(
+          headers: http_response.headers
+        )
+      elsif Utils.match_status_code(http_response.status, ["400"])
+        if Utils.match_content_type(content_type, "application/problem+json")
+          @sdk_configuration.hooks.after_success(
+            hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+          response_data = http_response.env.response_body
+          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::BadRequestError)
+          raise obj
+        else
+          raise(
+            ::NoResponse::Models::Errors::APIStatusError.new(
+              status_code: http_response.status,
+              body: http_response.env.response_body,
+              raw_response: http_response
+            ),
+            "Unknown content type received"
+          )
+        end
+      elsif Utils.match_status_code(http_response.status, ["401"])
+        if Utils.match_content_type(content_type, "application/problem+json")
+          @sdk_configuration.hooks.after_success(
+            hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+          response_data = http_response.env.response_body
+          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::AuthenticationError)
+          raise obj
+        else
+          raise(
+            ::NoResponse::Models::Errors::APIStatusError.new(
+              status_code: http_response.status,
+              body: http_response.env.response_body,
+              raw_response: http_response
+            ),
+            "Unknown content type received"
+          )
+        end
+      elsif Utils.match_status_code(http_response.status, ["403"])
+        if Utils.match_content_type(content_type, "application/problem+json")
+          @sdk_configuration.hooks.after_success(
+            hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+          response_data = http_response.env.response_body
+          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::PermissionDeniedError)
+          raise obj
+        else
+          raise(
+            ::NoResponse::Models::Errors::APIStatusError.new(
+              status_code: http_response.status,
+              body: http_response.env.response_body,
+              raw_response: http_response
+            ),
+            "Unknown content type received"
+          )
+        end
+      elsif Utils.match_status_code(http_response.status, ["404"])
+        if Utils.match_content_type(content_type, "application/problem+json")
+          @sdk_configuration.hooks.after_success(
+            hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+          response_data = http_response.env.response_body
+          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::NotFoundError)
+          raise obj
+        else
+          raise(
+            ::NoResponse::Models::Errors::APIStatusError.new(
+              status_code: http_response.status,
+              body: http_response.env.response_body,
+              raw_response: http_response
+            ),
+            "Unknown content type received"
+          )
+        end
+      elsif Utils.match_status_code(http_response.status, ["409"])
+        if Utils.match_content_type(content_type, "application/problem+json")
+          @sdk_configuration.hooks.after_success(
+            hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+          response_data = http_response.env.response_body
+          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ConflictError)
+          raise obj
+        else
+          raise(
+            ::NoResponse::Models::Errors::APIStatusError.new(
+              status_code: http_response.status,
+              body: http_response.env.response_body,
+              raw_response: http_response
+            ),
+            "Unknown content type received"
+          )
+        end
+      elsif Utils.match_status_code(http_response.status, ["429"])
+        if Utils.match_content_type(content_type, "application/problem+json")
+          @sdk_configuration.hooks.after_success(
+            hook_ctx: SDKHooks::AfterSuccessHookContext.new(
+              hook_ctx: hook_ctx
+            ),
+            response: http_response
+          )
+          response_data = http_response.env.response_body
+          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::RateLimitError)
+          raise obj
+        else
+          raise(
+            ::NoResponse::Models::Errors::APIStatusError.new(
+              status_code: http_response.status,
+              body: http_response.env.response_body,
+              raw_response: http_response
+            ),
+            "Unknown content type received"
+          )
+        end
+      elsif Utils.match_status_code(http_response.status, ["4XX"])
+        raise(
+          ::NoResponse::Models::Errors::APIStatusError.new(
+            status_code: http_response.status,
+            body: http_response.env.response_body,
+            raw_response: http_response
+          ),
+          "API error occurred"
+        )
+      elsif Utils.match_status_code(http_response.status, ["5XX"])
+        raise(
+          ::NoResponse::Models::Errors::APIStatusError.new(
+            status_code: http_response.status,
+            body: http_response.env.response_body,
+            raw_response: http_response
+          ),
+          "API error occurred"
+        )
+      else
+        raise(
+          ::NoResponse::Models::Errors::APIStatusError.new(
+            status_code: http_response.status,
+            body: http_response.env.response_body,
+            raw_response: http_response
+          ),
+          "Unknown status code received"
+        )
+
+      end
+    end
+
+    sig {
+      params(
         body: Models::Shared::PersonReviewRequest,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         person_id: ::String,
         timeout_ms: T.nilable(Integer),
@@ -2410,12 +2634,10 @@ module NoResponse
       )
         .returns(Models::Operations::ReviewPersonResponse)
     }
-    def review_person(body:, workspace_id:, environment:, group_id:, person_id:, timeout_ms: nil, http_headers: nil)
-      # review_person - Record a decision on a person.
-      # Marks the person cleared, watch or escalated with a note. Decisions are kept in order; the latest is the person's. The next screening refreshes everyone on watch or escalated. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def review_person(body:, group_id:, person_id:, timeout_ms: nil, http_headers: nil)
+      # Method: review_person - Record a decision on a person.
+      # Marks the person cleared, watch or escalated with a note. Decisions are kept in order; the latest is the person's. The next screening refreshes everyone on watch or escalated. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::ReviewPersonRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         person_id: person_id,
         body: body
@@ -2425,7 +2647,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ReviewPersonRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/review",
+        "/v1/groups/{group_id}/people/{person_id}/review",
         request
       )
       headers = {}
@@ -2695,8 +2917,6 @@ module NoResponse
     sig {
       params(
         body: Models::Shared::RecordVerdictRequest,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         person_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
@@ -2705,21 +2925,10 @@ module NoResponse
       )
         .returns(Models::Operations::JudgeRecordResponse)
     }
-    def judge_record(
-      body:,
-      workspace_id:,
-      environment:,
-      group_id:,
-      person_id:,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
-      # judge_record - Join one of a person's records to them, or reject it.
-      # Records a verdict on one of the records the person's latest lookups found: joined makes the record the person's whatever its likelihood, and rejected keeps it a lead. The verdict sticks for as long as a lookup finds the same record, and a later verdict on the same record replaces it. A record the person's latest lookup does not hold answers 404. Each verdict is audited as person.record_judged. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def judge_record(body:, group_id:, person_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: judge_record - Join one of a person's records to them, or reject it.
+      # Records a verdict on one of the records the person's latest lookups found: joined makes the record the person's whatever its likelihood, and rejected keeps it a lead. The verdict sticks for as long as a lookup finds the same record, and a later verdict on the same record replaces it. A record the person's latest lookup does not hold answers 404. Each verdict is audited as person.record_judged. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::JudgeRecordRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         person_id: person_id,
         body: body
@@ -2729,7 +2938,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::JudgeRecordRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/records",
+        "/v1/groups/{group_id}/people/{person_id}/records",
         request
       )
       headers = {}
@@ -3012,21 +3221,30 @@ module NoResponse
 
     sig {
       params(
-        request: Models::Operations::StartSearchRequest,
+        body: Models::Shared::SearchRequest,
+        group_id: ::String,
+        person_id: ::String,
+        idempotency_key: T.nilable(::String),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::StartSearchResponse)
     }
-    def start_search(request:, timeout_ms: nil, http_headers: nil)
-      # start_search - Search again on a value of one of a person's records.
-      # Starts a new search on the value of one field of one of the person's records: a lookup's, a profile's or one an earlier search found. Name the record and the field; the value itself is not sent. The field's kind must be email, phone, username, person_name, password, hash, ip or domain. A domain search finds the breach rows of every email address at the domain, which must be a registrable domain or a host under one; any other domain answers 400. Nothing ever searches again by itself: a search starts only when a person asks. The search runs the breach search and the account and phone lookups that take the value's kind, under the environment's source controls, and finishes seconds later. A password or hash search counts first: it stops at counted with rows, how many breach rows hold the value, and runs only when a person runs it. Name a table, as a lookup remaining entry names it, to fetch the rows an earlier search left out, up to 100. What the search finds joins the person's lookup records as leads, each match naming the search; the person report lists the searches, each with the value and the record and field it came from, and its records are scored like the rest. Without an Idempotency-Key, starting the same open search returns it. Its estimate counts against the environment's screening_daily_cap, and one the cap cannot hold answers 409 screening_cap_exceeded. A record or field the person does not hold answers 404. Each search is audited as person.search_started. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def start_search(body:, group_id:, person_id:, idempotency_key: nil, timeout_ms: nil, http_headers: nil)
+      # Method: start_search - Search again on a value of one of a person's records.
+      # Starts a new search on the value of one field of one of the person's records: a lookup's, a profile's or one an earlier search found. Name the record and the field; the value itself is not sent. The field's kind must be email, phone, username, person_name, password, hash, ip or domain. A domain search finds the breach rows of every email address at the domain, which must be a registrable domain or a host under one; any other domain answers 400. Nothing ever searches again by itself: a search starts only when a person asks. The search runs the breach search and the account and phone lookups that take the value's kind, under the environment's source controls, and finishes seconds later. A password or hash search counts first: it stops at counted with rows, how many breach rows hold the value, and runs only when a person runs it. Name a table, as a lookup remaining entry names it, to fetch the rows an earlier search left out, up to 100. What the search finds joins the person's lookup records as leads, each match naming the search; the person report lists the searches, each with the value and the record and field it came from, and its records are scored like the rest. Without an Idempotency-Key, starting the same open search returns it. Its estimate counts against the environment's screening_daily_cap, and one the cap cannot hold answers 409 screening_cap_exceeded. A record or field the person does not hold answers 404. Each search is audited as person.search_started. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+      request = Models::Operations::StartSearchRequest.new(
+        group_id: group_id,
+        person_id: person_id,
+        body: body,
+        idempotency_key: idempotency_key
+      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
         Models::Operations::StartSearchRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches",
+        "/v1/groups/{group_id}/people/{person_id}/searches",
         request
       )
       headers = Utils.get_headers(request)
@@ -3295,22 +3513,31 @@ module NoResponse
 
     sig {
       params(
-        request: Models::Operations::RunSearchRequest,
+        body: Models::Shared::ScreeningCancelRequest,
+        group_id: ::String,
+        person_id: ::String,
+        search_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::RunSearchResponse)
     }
-    def run_search(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # run_search - Run a counted password or hash search.
-      # Runs a password or hash search once a person has seen its count. A search still counting answers 409 group_conflict; one already queued, running or finished answers as it is. The body is an empty object. Its estimate counts against the environment's screening_daily_cap. Each run is audited as person.search_run. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def run_search(body:, group_id:, person_id:, search_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: run_search - Run a counted password or hash search.
+      # Runs a password or hash search once a person has seen its count. A search still counting answers 409 group_conflict; one already queued, running or finished answers as it is. The body is an empty object. Its estimate counts against the environment's screening_daily_cap. Each run is audited as person.search_run. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+      request = Models::Operations::RunSearchRequest.new(
+        group_id: group_id,
+        person_id: person_id,
+        search_id: search_id,
+        body: body
+      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
         Models::Operations::RunSearchRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches/{search_id}/run",
+        "/v1/groups/{group_id}/people/{person_id}/searches/{search_id}/run",
         request
       )
       headers = {}
@@ -3593,8 +3820,6 @@ module NoResponse
 
     sig {
       params(
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         limit: T.nilable(::Integer),
         before: T.nilable(::String),
@@ -3604,21 +3829,10 @@ module NoResponse
       )
         .returns(Models::Operations::ListScreeningsResponse)
     }
-    def list_screenings(
-      workspace_id:,
-      environment:,
-      group_id:,
-      limit: nil,
-      before: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
-      # list_screenings - List a group's screenings.
-      # Screenings, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def list_screenings(group_id:, limit: nil, before: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: list_screenings - List a group's screenings.
+      # Screenings, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::ListScreeningsRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         limit: limit,
         before: before
@@ -3628,7 +3842,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::ListScreeningsRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings",
+        "/v1/groups/{group_id}/screenings",
         request
       )
       headers = {}
@@ -3901,8 +4115,6 @@ module NoResponse
     sig {
       params(
         body: Models::Shared::ScreeningRequest,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
@@ -3911,21 +4123,10 @@ module NoResponse
       )
         .returns(Models::Operations::StartScreeningResponse)
     }
-    def start_screening(
-      body:,
-      workspace_id:,
-      environment:,
-      group_id:,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
-      # start_screening - Start a screening.
-      # Queues a screening of every person no screening has reached and everyone on watch or escalated. One screening of a group runs at a time; it finishes completed, partial (some people not covered, counted in people_failed) or failed, and fails with error_code expired after 24 hours. Idempotency-Key is required and binds the body for the screening's life. The 202 body carries estimated_spend, what the selected people would cost at the depth and platforms. A screening whose estimate exceeds the environment's screening_daily_cap, less the day's recorded spend and what open screenings may still spend, answers 409 screening_cap_exceeded and queues nothing. The test environment screens with a deterministic simulator that contacts no source. A platform that no connector serves in the environment answers 409 screening_unavailable. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def start_screening(body:, group_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: start_screening - Start a screening.
+      # Queues a screening of every person no screening has reached and everyone on watch or escalated. One screening of a group runs at a time; it finishes completed, partial (some people not covered, counted in people_failed) or failed, and fails with error_code expired after 24 hours. Idempotency-Key is required and binds the body for the screening's life. The 202 body carries estimated_spend, what the selected people would cost at the depth and platforms. A screening whose estimate exceeds the environment's screening_daily_cap, less the day's recorded spend and what open screenings may still spend, answers 409 screening_cap_exceeded and queues nothing. The test environment screens with a deterministic simulator that contacts no source. A platform that no connector serves in the environment answers 409 screening_unavailable. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::StartScreeningRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         body: body,
         idempotency_key: idempotency_key
@@ -3935,7 +4136,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::StartScreeningRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings",
+        "/v1/groups/{group_id}/screenings",
         request
       )
       headers = Utils.get_headers(request)
@@ -4218,8 +4419,6 @@ module NoResponse
 
     sig {
       params(
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         screening_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
@@ -4228,20 +4427,10 @@ module NoResponse
       )
         .returns(Models::Operations::GetScreeningResponse)
     }
-    def get_screening(
-      workspace_id:,
-      environment:,
-      group_id:,
-      screening_id:,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
-      # get_screening - Read a screening.
-      # The screening's status and progress. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def get_screening(group_id:, screening_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: get_screening - Read a screening.
+      # The screening's status and progress. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::GetScreeningRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         screening_id: screening_id
       )
@@ -4250,7 +4439,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::GetScreeningRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings/{screening_id}",
+        "/v1/groups/{group_id}/screenings/{screening_id}",
         request
       )
       headers = {}
@@ -4521,8 +4710,6 @@ module NoResponse
     sig {
       params(
         body: Models::Shared::ScreeningCancelRequest,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
         group_id: ::String,
         screening_id: ::String,
         retries: T.nilable(Utils::RetryConfig),
@@ -4531,21 +4718,10 @@ module NoResponse
       )
         .returns(Models::Operations::CancelScreeningResponse)
     }
-    def cancel_screening(
-      body:,
-      workspace_id:,
-      environment:,
-      group_id:,
-      screening_id:,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
-      # cancel_screening - Cancel a screening.
-      # Stops a queued or running screening. People it already screened keep their results. Cancelling a finished screening answers it unchanged. The body is an empty object. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+    def cancel_screening(body:, group_id:, screening_id:, retries: nil, timeout_ms: nil, http_headers: nil)
+      # Method: cancel_screening - Cancel a screening.
+      # Stops a queued or running screening. People it already screened keep their results. Cancelling a finished screening answers it unchanged. The body is an empty object. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
       request = Models::Operations::CancelScreeningRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
         group_id: group_id,
         screening_id: screening_id,
         body: body
@@ -4555,7 +4731,7 @@ module NoResponse
       url = Utils.generate_url(
         Models::Operations::CancelScreeningRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings/{screening_id}/cancel",
+        "/v1/groups/{group_id}/screenings/{screening_id}/cancel",
         request
       )
       headers = {}
@@ -4846,14 +5022,14 @@ module NoResponse
         .returns(Models::Operations::ExportPeopleResponse)
     }
     def export_people(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # export_people - Export the people in a group.
-      # Returns one page for export. Each returned person is durably audited as person.exported with the actor, group, person ID and request ID. Requires both people read access and exports. Explicit evidence restrictions also hide free-text decision notes. No raw evidence enters audit logs. Follow next_after until absent for a complete export.
+      # Method: export_people - Export the people in a group.
+      # Returns one page for export. Each returned person is durably audited as person.exported with the actor, group, person ID and request ID. Requires both people read access and exports. Explicit evidence restrictions also hide free-text decision notes. No raw evidence enters audit logs. Follow next_after until absent for a complete export. The API key selects the workspace and environment.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
         Models::Operations::ExportPeopleRequest,
         base_url,
-        "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/export",
+        "/v1/groups/{group_id}/export",
         request
       )
       headers = {}

@@ -60,12 +60,6 @@ class NoResponse::Models::Shared::Group
   def version=(str_)
   end
 
-  def purge_after
-  end
-
-  def purge_after=(str_)
-  end
-
   def created_by
   end
 

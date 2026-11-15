@@ -48,7 +48,7 @@ module NoResponse
         .returns(Models::Operations::GetSettingsResponse)
     }
     def get(workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Read an environment's settings.
+      # Method: get - Read an environment's settings.
       # Read this environment retention, source selection, daily screening cap and effective flow policies. A flow without its own thresholds inherits account_creation. Requires settings or management. Another environment answers404. Read-only and safe to retry.
       request = Models::Operations::GetSettingsRequest.new(
         workspace_id: workspace_id,
@@ -339,7 +339,7 @@ module NoResponse
         .returns(Models::Operations::UpdateSettingsResponse)
     }
     def update(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # update - Change an environment's settings.
+      # Method: update - Change an environment's settings.
       # Change named retention, screening cap, source or flow settings in one transaction. Requires settings or management; changes to active policy also require policy_publish, which legacy management includes. Use expected_policy_version to reject concurrent changes and record a change_reason. Each accepted change creates a fresh version and an atomic audit event. Retention and screening cap edits do not require policy publication authority. Flow thresholds preserve their declared ordering and bounds.
       request = Models::Operations::UpdateSettingsRequest.new(
         workspace_id: workspace_id,
@@ -653,7 +653,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # list_history - Read immutable configuration versions.
+      # Method: list_history - Read immutable configuration versions.
       # Read immutable configuration versions in one environment with settings or management. Follow before_version for older records.
       request = Models::Operations::ListPolicyHistoryRequest.new(
         workspace_id: workspace_id,
@@ -947,7 +947,7 @@ module NoResponse
         .returns(Models::Operations::RestorePolicyResponse)
     }
     def restore(body:, workspace_id:, environment:, timeout_ms: nil, http_headers: nil)
-      # restore - Restore captured settings as a new guarded version.
+      # Method: restore - Restore captured settings as a new guarded version.
       # Restore a retained configuration as a fresh version with the expected current version and a change reason. Requires settings plus policy_publish, or legacy management. Restore preserves the historical record and does not undo customer enforcement.
       request = Models::Operations::RestorePolicyRequest.new(
         workspace_id: workspace_id,
@@ -1238,7 +1238,7 @@ module NoResponse
         .returns(Models::Operations::PreviewPolicyResponse)
     }
     def preview(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # preview - Preview exact retained-score threshold transitions without side effects.
+      # Method: preview - Preview exact retained-score threshold transitions without side effects.
       # Compare proposed policy with bounded retained first answers, including baseline, coverage and uncertainty. Requires settings or management. This read starts no provider work and publishes no changes.
       request = Models::Operations::PreviewPolicyRequest.new(
         workspace_id: workspace_id,

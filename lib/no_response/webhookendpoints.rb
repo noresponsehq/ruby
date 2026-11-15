@@ -47,7 +47,7 @@ module NoResponse
         .returns(Models::Operations::ListWebhookEndpointsResponse)
     }
     def list(retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List the workspace's webhook endpoints.
+      # Method: list - List the workspace's webhook endpoints.
       # Lists your webhook endpoints in every state, ordered by endpoint_id, with the ids of their signing keys and without secrets. Requires the webhooks scope.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -326,7 +326,7 @@ module NoResponse
         .returns(Models::Operations::CreateWebhookEndpointResponse)
     }
     def create(request:, timeout_ms: nil, http_headers: nil)
-      # create - Register a webhook endpoint.
+      # Method: create - Register a webhook endpoint.
       # Registers a webhook endpoint and returns it with its first signing secret, shown only in this answer: store it where your receiver reads it. The URL is https on port 443 or 8443 with a DNS host whose every address is public; it is checked now and on every delivery. The endpoint starts unverified and receives assessment events once it echoes an endpoint.verification challenge, which sendTestEvent sends. You can hold 5 endpoints. Requires the webhooks scope, and response_mode detailed also the detailed scope. Registration is not idempotent: a retry after a lost answer registers a second endpoint, which you can list and delete.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -605,7 +605,7 @@ module NoResponse
         .returns(Models::Operations::DeleteWebhookEndpointResponse)
     }
     def delete(endpoint_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # delete - Delete a webhook endpoint.
+      # Method: delete - Delete a webhook endpoint.
       # Deletes the endpoint and its signing keys. Deliveries still queued for it are dropped. Requires the webhooks scope. An endpoint that is already gone answers 404.
       request = Models::Operations::DeleteWebhookEndpointRequest.new(
         endpoint_id: endpoint_id
@@ -876,7 +876,7 @@ module NoResponse
         .returns(Models::Operations::RotateWebhookSigningKeyResponse)
     }
     def rotate_signing_key(body:, endpoint_id:, timeout_ms: nil, http_headers: nil)
-      # rotate_signing_key - Rotate an endpoint's signing key.
+      # Method: rotate_signing_key - Rotate an endpoint's signing key.
       # Issues a new signing key for the endpoint and returns its secret once. Every delivery from now on is signed with it; the key it replaces keeps verifying for 7 days, so your receiver can hold both while it switches. Requires the webhooks scope. Rotation is not idempotent: a retry after a lost answer issues another key, which replaces the first.
       request = Models::Operations::RotateWebhookSigningKeyRequest.new(
         endpoint_id: endpoint_id,
@@ -1164,7 +1164,7 @@ module NoResponse
         .returns(Models::Operations::SendWebhookTestEventResponse)
     }
     def send_test_event(body:, endpoint_id:, timeout_ms: nil, http_headers: nil)
-      # send_test_event - Send a test event to an endpoint.
+      # Method: send_test_event - Send a test event to an endpoint.
       # endpoint.verification sends a signed challenge now and answers whether the endpoint echoed it within 5 seconds; an echo verifies the endpoint, including a disabled one. assessment.updated queues one signed event with test: true and a fixed example assessment in the endpoint's response mode, delivered and retried like any other event; the endpoint must be verified. Both use the endpoint's current signing key. Requires the webhooks scope.
       request = Models::Operations::SendWebhookTestEventRequest.new(
         endpoint_id: endpoint_id,
@@ -1454,7 +1454,7 @@ module NoResponse
         .returns(Models::Operations::ListWebhookDeliveriesResponse)
     }
     def list_deliveries(endpoint_id:, limit: nil, cursor: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_deliveries - List an endpoint's delivery attempts.
+      # Method: list_deliveries - List an endpoint's delivery attempts.
       # Every POST the endpoint received, newest first: the event id and type, which attempt it was, whether it was a replay, delivered or failed, the response code, why it failed and how long it took. Attempts are kept for 30 days, or your retention_days when that is shorter, and are deleted with the assessment they carried. Requires the webhooks scope. Read-only and safe to retry. The cursor is opaque and bound to your workspace and the endpoint; a tampered or expired cursor answers 400 invalid_cursor.
       request = Models::Operations::ListWebhookDeliveriesRequest.new(
         endpoint_id: endpoint_id,
@@ -1767,7 +1767,7 @@ module NoResponse
         .returns(Models::Operations::ReplayWebhookDeliveryResponse)
     }
     def replay_delivery(body:, endpoint_id:, event_id:, timeout_ms: nil, http_headers: nil)
-      # replay_delivery - Send one delivery again.
+      # Method: replay_delivery - Send one delivery again.
       # Queues the event for the endpoint again: the same event id and body it received, with a new NR-Webhook-Timestamp and a signature from the endpoint's current signing key, retried like any other delivery and listed with replay: true. Your receiver deduplicates on the event id. The endpoint must be verified. Requires the webhooks scope. Not idempotent: each call, a retry included, sends the event again.
       request = Models::Operations::ReplayWebhookDeliveryRequest.new(
         endpoint_id: endpoint_id,
@@ -2056,7 +2056,7 @@ module NoResponse
         .returns(Models::Operations::AggregateWebhooksResponse)
     }
     def aggregate(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # aggregate - Summarise retained webhook attempts and delivery queue
+      # Method: aggregate - Summarise retained webhook attempts and delivery queue
       # Count retained webhook delivery attempts within thirty days and report current retained queue state.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

@@ -34,7 +34,9 @@ module NoResponse
       :exports,
       :evaluations,
       :operations,
-      :groups
+      :groups,
+      :people,
+      :investigations
     )
 
     # Instantiates the SDK, configuring it with the provided parameters.
@@ -126,6 +128,8 @@ module NoResponse
       @evaluations = Evaluations.new(@sdk_configuration)
       @operations = Operations.new(@sdk_configuration)
       @groups = Groups.new(@sdk_configuration)
+      @people = People.new(@sdk_configuration)
+      @investigations = Investigations.new(@sdk_configuration)
     end
 
     sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }

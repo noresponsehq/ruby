@@ -48,7 +48,7 @@ module NoResponse
         .returns(Models::Operations::ListRequestDiagnosticsResponse)
     }
     def list(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - Search request diagnostics
+      # Method: list - Search request diagnostics
       # Search authenticated request attempts by time, route, status or request correlation id. The interval is at most seven days. Each attempt has a unique id and may include the exact served decision. Records are bounded best effort and exclude request bodies, secrets and source payloads. A repeated correlation id does not overwrite another attempt.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -357,7 +357,7 @@ module NoResponse
         .returns(Models::Operations::AggregateRequestsResponse)
     }
     def aggregate(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # aggregate - Summarise retained request attempts
+      # Method: aggregate - Summarise retained request attempts
       # Count all retained matching request attempts and latency samples within seven days. Capture is best effort.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

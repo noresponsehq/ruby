@@ -5,12 +5,10 @@ module NoResponse
   module Models
     module Shared
 
-      class MatchedOn
+      class OtherGroupMatchedOn
         include ::Crystalline::Enum
         enums do
-          EMAIL = new("email")
-          PHONE = new("phone")
-          EXTERNAL_ID = new("external_id")
+          PERSON_ID = new("person_id")
         end
 
         open!

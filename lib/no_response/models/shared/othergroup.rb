@@ -32,10 +32,10 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("person_id"), required: true}}
         )
-        # Which identifiers match, in this order. external_id appears only beside email or phone: the same external id alone is not a match, since ticket numbers may be reused across groups.
+        # The same workspace person explicitly belongs to this group. Membership requires an explicit person or customer reference.
         field(
           :matched_on,
-          Crystalline::Array.new(Models::Shared::MatchedOn),
+          Crystalline::Array.new(Models::Shared::OtherGroupMatchedOn),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("matched_on"), required: true}}
         )
         # How sure the latest screening is that it found the person's accounts. unscreened until a screening reaches the person, and after one that had no profile to check (no_profile_to_check).
@@ -99,7 +99,7 @@ module NoResponse
             group_name: ::String,
             group_starts_at: ::String,
             person_id: ::String,
-            matched_on: T::Array[Models::Shared::MatchedOn],
+            matched_on: T::Array[Models::Shared::OtherGroupMatchedOn],
             match_state: Models::Shared::MatchState,
             no_profile_to_check: T.nilable(T::Boolean),
             highest_band: T.nilable(Models::Shared::HighestBand),

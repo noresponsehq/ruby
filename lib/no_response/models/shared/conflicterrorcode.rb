@@ -38,6 +38,7 @@ module NoResponse
           GROUP_LIMIT_REACHED = new("group_limit_reached")
           SCREENING_CAP_EXCEEDED = new("screening_cap_exceeded")
           SCREENING_UNAVAILABLE = new("screening_unavailable")
+          PERSON_REFERENCE_CONFLICT = new("person_reference_conflict")
         end
 
         open!

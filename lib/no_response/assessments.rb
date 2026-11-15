@@ -49,7 +49,7 @@ module NoResponse
         .returns(Models::Operations::CreateAssessmentResponse)
     }
     def create(body:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # create - Assess identifiers for a signup or gateway decision.
+      # Method: create - Assess identifiers for a signup or gateway decision.
       # Assesses one account creation, login or purchase (flow) and answers with the account's one current risk: account.risk.decision is the decision for this flow (allow, step_up, review or block, where block means your block threshold was reached), and detail holds this assessment's own facts. depth sets how long the answer waits for sources: quick waits only for the fast ones (500 ms), full for the whole budget (3000 ms at most); it defaults to full for account_creation and purchase and quick for login. 200 carries complete or partial, 202 carries pending with Location and Retry-After. While the account's first assessment is pending, account is absent: apply your own fallback for that, 429, 503 or a timeout. NoResponse blocks nothing itself; you decide. Requires the assess scope. Idempotency-Key is optional in the SDK and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope. The answer leaves out detail.identifiers: you hold what you sent, and a key with the history scope gets them back with GET.
       request = Models::Operations::CreateAssessmentRequest.new(
         body: body,
@@ -347,7 +347,7 @@ module NoResponse
         .returns(Models::Operations::GetAssessmentResponse)
     }
     def get(assessment_id:, response_mode: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Poll the authoritative assessment of one assessment.
+      # Method: get - Poll the authoritative assessment of one assessment.
       # Returns the highest assessment_version, with the account's current risk. Requires the assess or history scope. While status is pending, or partial with a source still running, the response carries Retry-After; poll no faster than it says. Another workspace's assessment, an unknown or expired assessment and a malformed assessment_id all answer 404 not_found. response_mode=detailed needs the detailed scope. A key with the history scope also gets detail.identifiers, the identifiers the assessment was sent, exactly as received.
       request = Models::Operations::GetAssessmentRequest.new(
         assessment_id: assessment_id,
@@ -638,7 +638,7 @@ module NoResponse
         .returns(Models::Operations::DeleteAssessmentResponse)
     }
     def delete(assessment_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # delete - Delete one assessment.
+      # Method: delete - Delete one assessment.
       # Deletes one assessment in the environment of your key, with its versions, evidence and outcomes and the identity-graph marks its outcomes set, and scores its account again from what remains. Afterwards the assessment answers 404 and leaves the account's history. The answer names the account and the assessment its current risk now comes from; current_assessment_id is absent when the account has no assessment with a decision left. Requires the history scope. An unknown, expired or already deleted assessment answers 404, so a repeat answers 404; to erase a whole account idempotently, use accounts.delete.
       request = Models::Operations::DeleteAssessmentRequest.new(
         assessment_id: assessment_id
@@ -928,7 +928,7 @@ module NoResponse
         .returns(Models::Operations::RecordAssessmentOutcomeResponse)
     }
     def record_outcome(body:, assessment_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # record_outcome - Report what was later learned about an assessed account.
+      # Method: record_outcome - Report what was later learned about an assessed account.
       # Records what you later learned about an assessed account: confirmed_abuse, account_takeover and chargeback report abuse; false_positive and legitimate withdraw your earlier report; unknown is recorded only. Outcomes are append-only and the latest one wins. Requires the assess scope. Idempotency-Key is optional in the SDK and handled as on POST /v1/assessments: a retry with the same key and body answers the same record with Idempotent-Replayed: true; a different body answers 409. An unknown, expired or foreign assessment answers 404 not_found.
       request = Models::Operations::RecordAssessmentOutcomeRequest.new(
         assessment_id: assessment_id,
@@ -1231,7 +1231,7 @@ module NoResponse
         .returns(Models::Operations::QueryAccountAssessmentsResponse)
     }
     def query(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # query - Page through one account's unexpired assessments.
+      # Method: query - Page through one account's unexpired assessments.
       # History is a POST with account_id in the body so an account identifier stays out of URLs and access logs. Requires the history scope. Read-only and safe to retry. Newest first, each at its latest assessment_version. An account with no assessments answers 200 with empty items. The cursor is opaque and bound to your workspace and the account; a tampered or expired cursor answers 400 invalid_cursor. response_mode=detailed needs the detailed scope. Each item's identifiers holds the identifiers its assessment was sent, exactly as received.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -1547,7 +1547,7 @@ module NoResponse
         .returns(Models::Operations::AggregateAssessmentsResponse)
     }
     def aggregate(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # aggregate - Count assessments by time, decision and reason
+      # Method: aggregate - Count assessments by time, decision and reason
       # Count this environment's assessments created in [from,to) by UTC hour, or by day or week from local midnight in time_zone (an IANA name, UTC by default; at most 92 days in a zone other than UTC), grouped by up to two of decision, flow, recommendation, band, reason, lane, country, asn and list_match. Each assessment counts once, by its first answer; late results do not count it again and appear in late_flips. Optional metrics add a score histogram per flow, that histogram by the latest reported outcome, and late account decision changes. from and to start a bucket and cover at most 366 days (31 for hour buckets) inside the retention period. The filters are search's and describe the first answer: send them to search with revision first to list a cell's assessments. Counts hold no identifier, stay when an assessment or account is deleted, and report reasons by code and impact band. No Idempotency-Key.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -1840,7 +1840,7 @@ module NoResponse
         .returns(Models::Operations::SearchAssessmentsResponse)
     }
     def search(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # search - Search assessments across this environment
+      # Method: search - Search assessments across this environment
       # Search retained assessments created in [from,to), at most 366 days. identifier directly matches that assessment's submitted email, phone or customer-namespace username using exact, canonical or explicitly selected email mailbox matching. matched_identifier explains the original value and match basis. Legacy email keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Each item carries the original submitted identifiers and its first_decision when available. Newest-created order has an assessment-ID tie break. Results are live across pages; each page's total and items use one database snapshot. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier, identifier_expression or email filters; detailed mode also requires detailed permission. No Idempotency-Key. identifier_expression combines submitted terms with bounded AND/OR, at most 8 raw terms and 3 group levels. Each node selects exactly one of term, and, or. Groups have 2 to 8 operands. Duplicate normalized terms are idempotent and still count toward the limit. identifier_expression, identifier and email are mutually exclusive. Expression results use matched_identifiers with original submitted witnesses and zero-based depth-first term_index. All satisfied unique terms are returned in first-occurrence order. Cursors bind scope, ordered structure, original values, matching modes and all other filters; changing only page limit is allowed. Expression scope must be assessment: each returned assessment itself satisfies the complete expression. Scope account is rejected with 400 invalid_request; use account search for historical combinations.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -2135,7 +2135,7 @@ module NoResponse
         .returns(Models::Operations::GetAssessmentVersionResponse)
     }
     def retrieve_version(assessment_id:, version:, response_mode: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # retrieve_version - Retrieve an exact assessment revision
+      # Method: retrieve_version - Retrieve an exact assessment revision
       # Retrieve a retained assessment version with its original decision, policy, flow and depth. This response excludes the current account decision. Current retention and response-mode permissions still apply. detail.identifiers holds the identifiers the assessment was sent, exactly as received.
       request = Models::Operations::GetAssessmentVersionRequest.new(
         assessment_id: assessment_id,
@@ -2428,7 +2428,7 @@ module NoResponse
         .returns(Models::Operations::BindProvisionalAccountResponse)
     }
     def bind_account(body:, assessment_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # bind_account - Bind a provisional signup account
+      # Method: bind_account - Bind a provisional signup account
       # One-time association to an opaque stable customer account. The assessment is its natural idempotency key. Repeating the same binding returns its first receipt; a conflicting target is refused. No arbitrary account merging.
       request = Models::Operations::BindProvisionalAccountRequest.new(
         assessment_id: assessment_id,

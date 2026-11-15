@@ -9,13 +9,13 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # How many people of other groups match, of which items lists the 20 most recent.
+        # How many other groups include this person, of which items lists the 20 most recent.
         field(
           :total,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("total"), required: true}}
         )
-        # The 20 people of the most recent other groups, newest group first.
+        # This person's memberships in the 20 most recent other groups, newest group first.
         field(
           :items,
           Crystalline::Array.new(Models::Shared::OtherGroup),

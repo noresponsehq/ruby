@@ -51,7 +51,7 @@ module NoResponse
         .returns(Models::Operations::ListPolicyEvaluationsResponse)
     }
     def list(workspace_id:, environment:, limit: nil, before: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List retained policy evaluation jobs.
+      # Method: list - List retained policy evaluation jobs.
       # List retained policy evaluation jobs for this environment, newest first. At most five jobs are retained for their 24-hour evidence lifetime. Use next_before as before on the next page.
       request = Models::Operations::ListPolicyEvaluationsRequest.new(
         workspace_id: workspace_id,
@@ -376,7 +376,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # create - Freeze an evaluation cohort and queue a bounded job.
+      # Method: create - Freeze an evaluation cohort and queue a bounded job.
       # Create a bounded evaluation with an Idempotency-Key, expected policy version, fixed candidates, cohort, seed and cost assumptions. Evidence is frozen before evaluation and recorded by hashes. Limits are 1000 accounts, 50000 request attempts and 64 MiB. Capture completeness is currently unknown, so results are no_change and cannot be published. The evaluation fetches no new source evidence and changes no live policy.
       request = Models::Operations::CreatePolicyEvaluationRequest.new(
         workspace_id: workspace_id,
@@ -682,7 +682,7 @@ module NoResponse
         .returns(Models::Operations::GetPolicyEvaluationResponse)
     }
     def get(workspace_id:, environment:, evaluation_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Read evaluation state and provenance.
+      # Method: get - Read evaluation state and provenance.
       # Read a retained evaluation job and its capture and provenance metadata. Cancellation, source erasure, retention reduction and expiry can make a result unavailable.
       request = Models::Operations::GetPolicyEvaluationRequest.new(
         workspace_id: workspace_id,
@@ -974,7 +974,7 @@ module NoResponse
         .returns(Models::Operations::GetPolicyEvaluationResultResponse)
     }
     def get_result(workspace_id:, environment:, evaluation_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get_result - Read the bounded completed evaluator report.
+      # Method: get_result - Read the bounded completed evaluator report.
       # Read the completed evaluation report, including coverage, uncertainty and candidate results. Unknown capture completeness produces no_change. A completed result is not an automatic policy change.
       request = Models::Operations::GetPolicyEvaluationResultRequest.new(
         workspace_id: workspace_id,
@@ -1267,7 +1267,7 @@ module NoResponse
         .returns(Models::Operations::CancelPolicyEvaluationResponse)
     }
     def cancel(body:, workspace_id:, environment:, evaluation_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # cancel - Cancel processing and destroy retained evidence and report.
+      # Method: cancel - Cancel processing and destroy retained evidence and report.
       # Cancel a queued or running evaluation and invalidate its stored evidence. The operation does not change policy. Send an empty JSON object.
       request = Models::Operations::CancelPolicyEvaluationRequest.new(
         workspace_id: workspace_id,
@@ -1573,7 +1573,7 @@ module NoResponse
         .returns(Models::Operations::PublishPolicyEvaluationResponse)
     }
     def publish(body:, workspace_id:, environment:, evaluation_id:, timeout_ms: nil, http_headers: nil)
-      # publish - Publish an explicitly reviewed proposal with exact provenance.
+      # Method: publish - Publish an explicitly reviewed proposal with exact provenance.
       # Publish an explicitly reviewed candidate with its exact manifest, input and result hashes and unchanged baseline policy version. Requires settings plus policy_publish, or legacy management. Publication creates a fresh policy version and immutable provenance. no_change, expired or invalidated results are refused.
       request = Models::Operations::PublishPolicyEvaluationRequest.new(
         workspace_id: workspace_id,

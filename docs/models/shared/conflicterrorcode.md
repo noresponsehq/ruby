@@ -48,3 +48,4 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `GROUP_LIMIT_REACHED`            | group_limit_reached              |
 | `SCREENING_CAP_EXCEEDED`         | screening_cap_exceeded           |
 | `SCREENING_UNAVAILABLE`          | screening_unavailable            |
+| `PERSON_REFERENCE_CONFLICT`      | person_reference_conflict        |

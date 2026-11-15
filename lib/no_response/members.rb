@@ -47,7 +47,7 @@ module NoResponse
         .returns(Models::Operations::ListMembersResponse)
     }
     def list(workspace_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List a workspace's members.
+      # Method: list - List a workspace's members.
       # Read the workspace directory with a live key carrying members or members_manage. Member identities and grants belong to this workspace. Owner-controlled issuance limits team automation to authorised service credentials.
       request = Models::Operations::ListMembersRequest.new(
         workspace_id: workspace_id
@@ -337,7 +337,7 @@ module NoResponse
         .returns(Models::Operations::UpdateMemberResponse)
     }
     def update(body:, workspace_id:, member_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # update - Change a member's role.
+      # Method: update - Change a member's role.
       # Update a non-owner member role, environment access or sensitive permission exclusions with a live members_manage key. Owner changes, identity binding and support access remain outside this scope. The current delegation ceiling is checked within the change transaction.
       request = Models::Operations::UpdateMemberRequest.new(
         workspace_id: workspace_id,
@@ -641,7 +641,7 @@ module NoResponse
         .returns(Models::Operations::RemoveMemberResponse)
     }
     def remove(workspace_id:, member_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # remove - Remove a member.
+      # Method: remove - Remove a member.
       # Remove a non-owner member with a live members_manage key. Subsequent access is refused and personal credentials are revoked. Independently owned service credentials follow their own lifecycle.
       request = Models::Operations::RemoveMemberRequest.new(
         workspace_id: workspace_id,

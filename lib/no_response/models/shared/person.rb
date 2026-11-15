@@ -54,7 +54,13 @@ module NoResponse
           Models::Shared::ScreeningSpend,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("spend"), required: true}}
         )
-        # Your own id for the person, unique within the group. A later row with the same external id updates this person.
+        # When workspace retention removes the person and their investigation history.
+        field(
+          :expires_at,
+          ::String,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("expires_at"), required: true}}
+        )
+        # Your reference for the person in this workspace environment.
         field(
           :external_id,
           Crystalline::Nilable.new(::String),
@@ -172,6 +178,7 @@ module NoResponse
             created_at: ::String,
             updated_at: ::String,
             spend: Models::Shared::ScreeningSpend,
+            expires_at: ::String,
             external_id: T.nilable(::String),
             email: T.nilable(::String),
             phone: T.nilable(::String),
@@ -199,6 +206,7 @@ module NoResponse
           created_at:,
           updated_at:,
           spend:,
+          expires_at:,
           external_id: nil,
           email: nil,
           phone: nil,
@@ -223,6 +231,7 @@ module NoResponse
           @created_at = created_at
           @updated_at = updated_at
           @spend = spend
+          @expires_at = expires_at
           @external_id = external_id
           @email = email
           @phone = phone
@@ -251,6 +260,7 @@ module NoResponse
           return false unless @created_at == other.created_at
           return false unless @updated_at == other.updated_at
           return false unless @spend == other.spend
+          return false unless @expires_at == other.expires_at
           return false unless @external_id == other.external_id
           return false unless @email == other.email
           return false unless @phone == other.phone

@@ -54,6 +54,12 @@ class NoResponse::Models::Shared::Person
   def spend=(str_)
   end
 
+  def expires_at
+  end
+
+  def expires_at=(str_)
+  end
+
   def external_id
   end
 

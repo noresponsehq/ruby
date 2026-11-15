@@ -47,7 +47,7 @@ module NoResponse
         .returns(Models::Operations::CreateInviteResponse)
     }
     def create(body:, workspace_id:, timeout_ms: nil, http_headers: nil)
-      # create - Invite a member.
+      # Method: create - Invite a member.
       # Create a workspace-bound invite for a non-owner role with a live members_manage key. The new token is returned once. Set external_user_id to bind acceptance to an exact verified provider subject; email is contact information. Creating a token does not send an email.
       request = Models::Operations::CreateInviteRequest.new(
         workspace_id: workspace_id,
@@ -335,7 +335,7 @@ module NoResponse
         .returns(Models::Operations::ListInvitesResponse)
     }
     def list(workspace_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List pending invites.
+      # Method: list - List pending invites.
       # Read pending workspace invitations with a live members_manage key. Tokens are excluded. Expiry and token reissue timestamps describe invitation state; they do not establish email delivery.
       request = Models::Operations::ListInvitesRequest.new(
         workspace_id: workspace_id
@@ -624,7 +624,7 @@ module NoResponse
         .returns(Models::Operations::RevokeInviteResponse)
     }
     def revoke(workspace_id:, invite_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # revoke - Revoke an invite.
+      # Method: revoke - Revoke an invite.
       # Revoke a pending invitation with a live members_manage key. A revoked token cannot be accepted. Owner-role invitations remain outside machine delegation.
       request = Models::Operations::RevokeInviteRequest.new(
         workspace_id: workspace_id,
@@ -897,7 +897,7 @@ module NoResponse
         .returns(Models::Operations::ResendInviteResponse)
     }
     def resend(body:, workspace_id:, invite_id:, timeout_ms: nil, http_headers: nil)
-      # resend - Reissue an invitation for delivery.
+      # Method: resend - Reissue an invitation for delivery.
       # Reissue a pending non-owner invitation with a live members_manage key. The old token is invalidated and the new token is returned once with renewed expiry. Its role and permissions are preserved. This operation does not prove email delivery and is not automatically retried.
       request = Models::Operations::ResendInviteRequest.new(
         workspace_id: workspace_id,

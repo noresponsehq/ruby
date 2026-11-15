@@ -48,7 +48,7 @@ module NoResponse
         .returns(Models::Operations::ListAuditEventsResponse)
     }
     def list(request:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List a workspace's audit log.
+      # Method: list - List a workspace's audit log.
       # Read audit events within your current environment permissions. Filters apply before pagination.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -366,7 +366,7 @@ module NoResponse
         .returns(Models::Operations::GetAuditRetentionResponse)
     }
     def get_retention(workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get_retention - Read audit retention and available history.
+      # Method: get_retention - Read audit retention and available history.
       # Read audit retention for the environment. The default is 365 days. Oldest available is an observation; it does not establish uninterrupted capture. Workspace-wide events follow the live storage policy.
       request = Models::Operations::GetAuditRetentionRequest.new(
         workspace_id: workspace_id,
@@ -657,7 +657,7 @@ module NoResponse
         .returns(Models::Operations::UpdateAuditRetentionResponse)
     }
     def update_retention(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # update_retention - Set bounded customer audit retention.
+      # Method: update_retention - Set bounded customer audit retention.
       # Set test-environment audit retention from 1 to 365 days with audit_manage scope. Live retention also governs workspace-wide audit events and requires a dashboard member authorised in both environments. Shortening immediately hides older events and invalidates audit exports; extending cannot restore deleted events. External receivers control copies already delivered.
       request = Models::Operations::UpdateAuditRetentionRequest.new(
         workspace_id: workspace_id,
@@ -961,7 +961,7 @@ module NoResponse
         .returns(Models::Operations::ListAuditStreamsResponse)
     }
     def list_streams(workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list_streams - Read audit stream subscriptions.
+      # Method: list_streams - Read audit stream subscriptions.
       # List audit subscriptions and their endpoint state and latest delivery attempt. Streams use verified HTTPS webhook endpoints and signed audit.event bodies. Delivery is at least once and unordered; deduplicate by webhook id. An empty action filter accepts all actions within the chosen scope.
       request = Models::Operations::ListAuditStreamsRequest.new(
         workspace_id: workspace_id,
@@ -1252,7 +1252,7 @@ module NoResponse
         .returns(Models::Operations::ConfigureAuditStreamResponse)
     }
     def configure_stream(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # configure_stream - Configure an audit stream subscription.
+      # Method: configure_stream - Configure an audit stream subscription.
       # Configure the action filter for one verified webhook endpoint. Requires audit_manage. Capture starts at subscription creation; use an audit export for available earlier events. Workspace-wide scope requires an unrestricted console member and is unavailable to API keys.
       request = Models::Operations::ConfigureAuditStreamRequest.new(
         workspace_id: workspace_id,
@@ -1557,7 +1557,7 @@ module NoResponse
         .returns(Models::Operations::RemoveAuditStreamResponse)
     }
     def remove_stream(workspace_id:, environment:, endpoint_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # remove_stream - Remove an audit stream.
+      # Method: remove_stream - Remove an audit stream.
       # Remove an audit subscription and cancel queued deliveries. Requires audit_manage. An HTTP delivery already in flight cannot be recalled. The endpoint remains registered for other event types.
       request = Models::Operations::RemoveAuditStreamRequest.new(
         workspace_id: workspace_id,
@@ -1849,7 +1849,7 @@ module NoResponse
         .returns(Models::Operations::ReplayAuditStreamResponse)
     }
     def replay_stream(body:, workspace_id:, environment:, endpoint_id:, timeout_ms: nil, http_headers: nil)
-      # replay_stream - Replay an audit delivery.
+      # Method: replay_stream - Replay an audit delivery.
       # Replay a recorded delivery for the current audit subscription. Requires audit_manage. Source retention and the current action filter are checked again before sending. Expired or unsubscribed events are dropped.
       request = Models::Operations::ReplayAuditStreamRequest.new(
         workspace_id: workspace_id,

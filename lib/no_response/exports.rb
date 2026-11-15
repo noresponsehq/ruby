@@ -49,7 +49,7 @@ module NoResponse
         .returns(Models::Operations::CreateCustomerExportResponse)
     }
     def create(body:, workspace_id:, idempotency_key: nil, timeout_ms: nil, http_headers: nil)
-      # create - Request an asynchronous customer export.
+      # Method: create - Request an asynchronous customer export.
       # Request an encrypted JSON Lines snapshot of retained account or audit records. Requires exports plus history or audit scope. An account export without legacy history needs investigate with evidence or detailed, because it holds submitted identifiers; detailed account data always needs evidence or detailed. Criteria are frozen and hashed. Each environment permits four active jobs, 64 MiB per artifact, and 256 KiB per chunk. Artifacts expire after 24 hours. Send an Idempotency-Key to safely repeat a request. Every operation checks current permissions and source retention.
       request = Models::Operations::CreateCustomerExportRequest.new(
         workspace_id: workspace_id,
@@ -351,7 +351,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # list - List exports for one collection.
+      # Method: list - List exports for one collection.
       # List authorised jobs for one kind and environment. Detailed jobs require current detailed-data permission and are filtered before pagination. Keep the kind and environment unchanged when following next_cursor.
       request = Models::Operations::ListCustomerExportsRequest.new(
         workspace_id: workspace_id,
@@ -668,7 +668,7 @@ module NoResponse
         .returns(Models::Operations::GetCustomerExportResponse)
     }
     def get(workspace_id:, export_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get - Read export state and progress.
+      # Method: get - Read export state and progress.
       # Read the status of an authorised export. Records and bytes describe committed progress in the current generation. Only completed, unexpired artifacts can be downloaded. Source erasure, retention changes and workspace removal can invalidate a job.
       request = Models::Operations::GetCustomerExportRequest.new(
         workspace_id: workspace_id,
@@ -959,7 +959,7 @@ module NoResponse
         .returns(Models::Operations::CancelCustomerExportResponse)
     }
     def cancel(body:, workspace_id:, export_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # cancel - Cancel and remove an export artifact.
+      # Method: cancel - Cancel and remove an export artifact.
       # Cancel an export and remove its stored chunks. Repeating cancellation is safe. An already admitted download may finish; bytes already returned cannot be recalled. Send an empty JSON object.
       request = Models::Operations::CancelCustomerExportRequest.new(
         workspace_id: workspace_id,
@@ -1263,7 +1263,7 @@ module NoResponse
         .returns(Models::Operations::RetryCustomerExportResponse)
     }
     def retry(body:, workspace_id:, export_id:, timeout_ms: nil, http_headers: nil)
-      # retry - Retry a failed export.
+      # Method: retry - Retry a failed export.
       # Start a new generation of a failed export before its original expiry, up to ten generations. The request criteria stay fixed and the new generation takes a fresh source snapshot. Cancelled, erased and expired jobs cannot be retried. Send an empty JSON object.
       request = Models::Operations::RetryCustomerExportRequest.new(
         workspace_id: workspace_id,
@@ -1554,7 +1554,7 @@ module NoResponse
         .returns(Models::Operations::DownloadCustomerExportChunkResponse)
     }
     def download_chunk(workspace_id:, export_id:, chunk_index:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # download_chunk - Download one authorized export chunk.
+      # Method: download_chunk - Download one authorized export chunk.
       # Download one chunk of a completed, unexpired export after a fresh permission and privacy check. The response contains base64-encoded JSON Lines, a SHA-256, generation and next index. Decode and concatenate chunks in order from one generation. Audit storage failure withholds the bytes.
       request = Models::Operations::DownloadCustomerExportChunkRequest.new(
         workspace_id: workspace_id,

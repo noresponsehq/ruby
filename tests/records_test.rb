@@ -12,13 +12,13 @@ class RecordsTest < Minitest::Test
     models = NoResponse::Models::Shared
     body = File.read(File.join(__dir__, 'fixtures', 'valid', 'person-report-records.json'))
     person = JSON.parse(body)['person']
-    workspace = 'tnt_01JC8Y0A2B4C6D8E0F2G4H6J8K'
-    path = "/v1/workspaces/#{workspace}/groups/test/#{person['group_id']}/people/#{person['id']}"
+
+    path = "/v1/groups/#{person['group_id']}/people/#{person['id']}"
     stubs = Faraday::Adapter::Test::Stubs.new do |stub|
       stub.get(path) { [200, { 'Content-Type' => 'application/json' }, body] }
     end
     client = NoResponse::NoResponseClient.new(client: Faraday.new { |f| f.adapter(:test, stubs) }, api_key: 'nrk_test_records_fixture', server_url: 'https://api.example.test')
-    report = client.groups.get_person(workspace_id: workspace, environment: models::KeyEnvironment::TEST, group_id: person['group_id'], person_id: person['id']).result
+    report = client.groups.get_person(group_id: person['group_id'], person_id: person['id']).result
     stubs.verify_stubbed_calls
 
     account, row = report.lookup.records

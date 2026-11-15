@@ -51,7 +51,7 @@ module NoResponse
         .returns(Models::Operations::ListListEntriesResponse)
     }
     def list(workspace_id:, environment:, limit: nil, cursor: nil, retries: nil, timeout_ms: nil, http_headers: nil)
-      # list - List an environment's list entries.
+      # Method: list - List an environment's list entries.
       # Page through this environment allow and block entries, with canonical values, reasons and optional expiry. Requires settings or management. Follow the returned cursor until exhausted; a page is not the complete list. The cursor is bound to the environment and current filters.
       request = Models::Operations::ListListEntriesRequest.new(
         workspace_id: workspace_id,
@@ -367,7 +367,7 @@ module NoResponse
         .returns(Models::Operations::CreateListEntryResponse)
     }
     def create(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # create - Add an entry to an environment's list.
+      # Method: create - Add an entry to an environment's list.
       # Add a canonical email or email-domain override with a reason and optional expiry. Requires settings plus policy_publish, or legacy management. Block wins over allow when both match. A small single-entry change retains the documented synchronous match budget; use lists.change for larger changes, whose account propagation is durable and resumable.
       request = Models::Operations::CreateListEntryRequest.new(
         workspace_id: workspace_id,
@@ -672,7 +672,7 @@ module NoResponse
         .returns(Models::Operations::DeleteListEntryResponse)
     }
     def delete(workspace_id:, environment:, list_entry_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # delete - Remove an entry from an environment's list.
+      # Method: delete - Remove an entry from an environment's list.
       # Remove an override with settings plus policy_publish, or legacy management. The removal takes effect for new decisions and schedules resumable propagation across matching retained accounts. An unknown or already removed entry answers404. Account risk events announce changed decisions as propagation runs.
       request = Models::Operations::DeleteListEntryRequest.new(
         workspace_id: workspace_id,
@@ -947,7 +947,7 @@ module NoResponse
         .returns(Models::Operations::PreviewListResponse)
     }
     def preview(body:, workspace_id:, environment:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # preview - Preview a list override change without side effects.
+      # Method: preview - Preview a list override change without side effects.
       # Preview canonical list matches and current override effects with settings or management, plus legacy history, or investigate with evidence or detailed. The result states its bounded coverage and changes no list entries.
       request = Models::Operations::PreviewListRequest.new(
         workspace_id: workspace_id,
@@ -1261,7 +1261,7 @@ module NoResponse
       timeout_ms: nil,
       http_headers: nil
     )
-      # change - Apply an idempotent atomic bulk list change.
+      # Method: change - Apply an idempotent atomic bulk list change.
       # Atomically add and remove a bounded batch of entries with an idempotency key. Requires settings plus policy_publish, or legacy management. The receipt exposes durable account propagation beyond the synchronous single-entry budget; poll lists.getChange until completion.
       request = Models::Operations::ChangeListsRequest.new(
         workspace_id: workspace_id,
@@ -1567,7 +1567,7 @@ module NoResponse
         .returns(Models::Operations::GetListChangeResponse)
     }
     def get_change(workspace_id:, environment:, change_id:, retries: nil, timeout_ms: nil, http_headers: nil)
-      # get_change - Read a bulk list change and propagation progress.
+      # Method: get_change - Read a bulk list change and propagation progress.
       # Read retained propagation progress for a list change with settings or management.
       request = Models::Operations::GetListChangeRequest.new(
         workspace_id: workspace_id,

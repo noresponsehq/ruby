@@ -22,6 +22,8 @@ module NoResponse
   autoload :Evaluations, "no_response/evaluations"
   autoload :Operations, "no_response/operations"
   autoload :Groups, "no_response/groups"
+  autoload :People, "no_response/people"
+  autoload :Investigations, "no_response/investigations"
 
   module Models
     autoload :Shared, "no_response/models/shared"

@@ -6,16 +6,16 @@ class NoResponse::Models::Shared::PersonIdentity
 end
 
 class NoResponse::Models::Shared::PersonIdentity
-  def name
-  end
-
-  def name=(str_)
-  end
-
   def external_id
   end
 
   def external_id=(str_)
+  end
+
+  def name
+  end
+
+  def name=(str_)
   end
 
   def email
@@ -46,6 +46,12 @@ class NoResponse::Models::Shared::PersonIdentity
   end
 
   def handles=(str_)
+  end
+
+  def person_id
+  end
+
+  def person_id=(str_)
   end
 
   def role
