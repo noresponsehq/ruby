@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 30a063730910f850571d1cf324e5ceef
+  docChecksum: 9df6e166194ca4faa00341ca08ea865c
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.31
-  configChecksum: 91d2d43e043029537c838c5464309f80
+  releaseVersion: 12.0.32
+  configChecksum: 9621e8f2c7ec9996e5eece5750ee7a43
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:2ccfa859e740ee73f56e4ca938044bdde78e56b9
+    last_write_checksum: sha1:50fa112d523fe1951d3896463ce2ff07a7f63bc9
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -828,9 +828,9 @@ trackedFiles:
   docs/models/shared/groupupdate.md:
     last_write_checksum: sha1:6d3ce3c936f440c077c65c66ec667e254a411c53
   docs/models/shared/handle.md:
-    last_write_checksum: sha1:9c29c3e256a1c87ab0f3dbf40e4f3813843925fc
+    last_write_checksum: sha1:42dd04e2dc660216c130cec14a0c4bbb1abceb36
   docs/models/shared/handleplatform.md:
-    last_write_checksum: sha1:073024421b106234b7a422f2f08a7706d8ee3316
+    last_write_checksum: sha1:4af9cfc33873ddb8e7fe4dc19688062b5938f212
   docs/models/shared/highestband.md:
     last_write_checksum: sha1:44dace9cfc1382f32d75742a3e87201ba8e165e6
   docs/models/shared/hookpoint.md:
@@ -1302,13 +1302,13 @@ trackedFiles:
   docs/models/shared/screeningnotanalysedreason.md:
     last_write_checksum: sha1:a60de81d160ebf99ed89806ad69cfa95345046e5
   docs/models/shared/screeningplatformcoverage.md:
-    last_write_checksum: sha1:6d5439624ae2fe0b91b69e5578295152369e604b
+    last_write_checksum: sha1:49b3e8f79661e46ea081de4f23dec54c90270078
   docs/models/shared/screeningplatformcoveragestatus.md:
     last_write_checksum: sha1:ce6234d18d93d34cf9b94824132d629bb2e17bbf
   docs/models/shared/screeningpost.md:
     last_write_checksum: sha1:e85894f2d7e92c8cd3bc0db9e22fe80c39c7e36c
   docs/models/shared/screeningprofile.md:
-    last_write_checksum: sha1:789e77b89b70587455634f6b457105fa6efd2d25
+    last_write_checksum: sha1:bfe44070fbb69f87515940d7d72c0ac304b8459f
   docs/models/shared/screeningrequest.md:
     last_write_checksum: sha1:7e23f0181defec343b9db59b2dd8607f37d84cd3
   docs/models/shared/screeningspend.md:
@@ -3098,11 +3098,11 @@ trackedFiles:
   lib/no_response/models/shared/groupupdate.rbi:
     last_write_checksum: sha1:bd36d5d6c85cf40a51dff5cc2b926363ee9cb339
   lib/no_response/models/shared/handle.rb:
-    last_write_checksum: sha1:5849631f7560194ec30ef68e9fb59202a0343a23
+    last_write_checksum: sha1:3e1dc9ec98ca290da7e9e5c9ad84f7cceb4cf5a7
   lib/no_response/models/shared/handle.rbi:
     last_write_checksum: sha1:1642d558d9ac25c730516068fecd9ef863c10efa
   lib/no_response/models/shared/handleplatform.rb:
-    last_write_checksum: sha1:7939b9e265bef79509053f7a054ca0a0739a8e8f
+    last_write_checksum: sha1:9918f19bbf7b545966639ff43527f7117e5f4777
   lib/no_response/models/shared/handleplatform.rbi:
     last_write_checksum: sha1:27a1ab2742f8e8504e585127bc2854d2887d4d2c
   lib/no_response/models/shared/highestband.rb:
@@ -3754,7 +3754,7 @@ trackedFiles:
   lib/no_response/models/shared/recordremaining.rbi:
     last_write_checksum: sha1:12f2b9cd5f6d70754ca358d347d881ae4788cf62
   lib/no_response/models/shared/recordrole.rb:
-    last_write_checksum: sha1:a04edf1f716392bd5903931449c8fbdd317f4efe
+    last_write_checksum: sha1:dd89b34ad46074a52e0cc5831b65d02765323086
   lib/no_response/models/shared/recordrole.rbi:
     last_write_checksum: sha1:b6a4bb10ef6fd63d49bcf74d2d1c267c3b3a6b1d
   lib/no_response/models/shared/recordsource.rb:
@@ -4046,7 +4046,7 @@ trackedFiles:
   lib/no_response/models/shared/screeningnotanalysedreason.rbi:
     last_write_checksum: sha1:78473baafe66f996b2a2a0357706d910dabf86a1
   lib/no_response/models/shared/screeningplatformcoverage.rb:
-    last_write_checksum: sha1:0d4bf968cce5eeebe2a725415e5fadeda97e2d68
+    last_write_checksum: sha1:28fd5e35e53494cab6d6e17e86564516be55446f
   lib/no_response/models/shared/screeningplatformcoverage.rbi:
     last_write_checksum: sha1:364f770b5be84d32cffba061dd7dc71228293c5a
   lib/no_response/models/shared/screeningplatformcoveragestatus.rb:
@@ -4058,7 +4058,7 @@ trackedFiles:
   lib/no_response/models/shared/screeningpost.rbi:
     last_write_checksum: sha1:9732376297a81eaa352354984618e07db8db2880
   lib/no_response/models/shared/screeningprofile.rb:
-    last_write_checksum: sha1:9140864efeab28b773009bb04d9e04335db8bb03
+    last_write_checksum: sha1:52907ba1a3151814b0dfdbad3f564bff8eddf227
   lib/no_response/models/shared/screeningprofile.rbi:
     last_write_checksum: sha1:2064e62c9b35f141b0df47c7f28eb20a536a3690
   lib/no_response/models/shared/screeningrequest.rb:
@@ -4330,7 +4330,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:74748e0a1ac68bd224384a0066148637516d0f5f
+    last_write_checksum: sha1:bd9bfedb8f7704f489b1c9b6785e8b96c959bdc0
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4360,7 +4360,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:538b9010cd75e80c2d9e39f0733ba04dd29b91e8
   noresponse.gemspec:
-    last_write_checksum: sha1:ff27d005104fbeb4128ea2ff49c923aa425f04ca
+    last_write_checksum: sha1:172f3b08cb1cf8b5e094044ebfb7016aed931831
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
