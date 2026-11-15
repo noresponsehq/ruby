@@ -15,7 +15,7 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("record_id"), required: true}}
         )
-        # The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash or ip.
+        # The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash, ip or domain, and it must have a value: a field the source masked or that could not be cleaned is not searched.
         field(
           :field,
           ::String,
