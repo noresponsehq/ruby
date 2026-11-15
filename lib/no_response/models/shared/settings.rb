@@ -48,7 +48,7 @@ module NoResponse
         # The sources this environment refuses, sorted; empty, the default, refuses none. An assessment leaves a refused source out: its coverage is missing (an identifier with no other source lists coverage-unavailable as unavailable) rather than not_found, and a stored result of a refused source is not reused.
         field(
           :refused_sources,
-          Crystalline::Array.new(Models::Shared::SourceId),
+          Crystalline::Array.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("refused_sources"), required: true}}
         )
         # Who last changed the policy: the member's external user id for a change made through the console, the prefix (nrk_<environment>_<key id>) of the management key that made it, or NoResponse. Absent while the defaults apply.
@@ -77,7 +77,7 @@ module NoResponse
             retention_days: ::Integer,
             policy_version: ::Integer,
             flows: Models::Shared::SettingsFlows,
-            refused_sources: T::Array[Models::Shared::SourceId],
+            refused_sources: T::Array[::String],
             updated_by: T.nilable(::String),
             updated_at: T.nilable(::String),
             screening_daily_cap: T.nilable(::Integer)

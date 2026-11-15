@@ -707,7 +707,9 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.groups.start_screening(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: Models::Shared::KeyEnvironment::LIVE, group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::ScreeningRequest.new(
   depth: Models::Shared::ScreeningDepth::STANDARD,
-  platforms: []
+  platforms: [
+    'bluesky',
+  ]
 ), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?

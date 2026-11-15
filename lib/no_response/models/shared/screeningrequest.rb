@@ -23,11 +23,11 @@ module NoResponse
 
         field(
           :platforms,
-          Crystalline::Array.new(Models::Shared::HandlePlatform),
+          Crystalline::Array.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms"), required: true}}
         )
 
-        sig { params(depth: Models::Shared::ScreeningDepth, platforms: T::Array[Models::Shared::HandlePlatform]).void }
+        sig { params(depth: Models::Shared::ScreeningDepth, platforms: T::Array[::String]).void }
         def initialize(depth:, platforms:)
           @depth = depth
           @platforms = platforms

@@ -65,7 +65,7 @@ module NoResponse
         # Requested platforms where the person gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the person partial.
         field(
           :not_searched,
-          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::HandlePlatform)),
+          Crystalline::Nilable.new(Crystalline::Array.new(::String)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("not_searched")}}
         )
 
@@ -80,7 +80,7 @@ module NoResponse
             items_frame_only: T.nilable(::Integer),
             period_from: T.nilable(::String),
             period_to: T.nilable(::String),
-            not_searched: T.nilable(T::Array[Models::Shared::HandlePlatform])
+            not_searched: T.nilable(T::Array[::String])
           )
             .void
         }

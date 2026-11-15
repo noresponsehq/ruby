@@ -9,17 +9,11 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts; chesscom also reads the profile's stats, clubs and last two months of games, for its activity and contacts, and through a signed-in session up to 100 of the player's friends, each a contact with the date the friendship began. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network.
+        # A platform a screening can cover, such as instagram, x, bluesky, youtube, tiktok or github. The screening registry owns the set: a request that names a platform it does not cover answers 422. A new platform adds an id without changing this contract, so read a platform you do not know in a response as one you have not seen before, not as an error. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network.
         field(
           :platform,
-          Models::Shared::HandlePlatform,
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("platform"),
-              required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::HandlePlatform, false)
-            }
-          }
+          ::String,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platform"), required: true}}
         )
         # The account's handle, without a leading @.
         field(
@@ -28,7 +22,7 @@ module NoResponse
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("handle"), required: true}}
         )
 
-        sig { params(platform: Models::Shared::HandlePlatform, handle: ::String).void }
+        sig { params(platform: ::String, handle: ::String).void }
         def initialize(platform:, handle:)
           @platform = platform
           @handle = handle

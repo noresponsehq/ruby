@@ -71,7 +71,7 @@ Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-res = s.settings.update(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: Models::Shared::KeyEnvironment::TEST, body: Models::Shared::SettingsRequest.new(
+res = s.settings.update(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: Models::Shared::KeyEnvironment::LIVE, body: Models::Shared::SettingsRequest.new(
   retention_days: 30,
   expected_policy_version: 1,
   change_reason: 'Reviewed retention policy'
@@ -95,7 +95,7 @@ s = ::NoResponse::NoResponseClient.new(
 res = s.settings.update(workspace_id: 'tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM', environment: Models::Shared::KeyEnvironment::LIVE, body: Models::Shared::SettingsRequest.new(
   retention_days: 90,
   refused_sources: [
-    Models::Shared::SourceId::PHONE,
+    'phone',
   ],
   flows: Models::Shared::SettingsRequestFlows.new(
     account_creation: Models::Shared::FlowChange.new(

@@ -55,7 +55,7 @@ module NoResponse
 
         field(
           :platforms,
-          Crystalline::Array.new(Models::Shared::HandlePlatform),
+          Crystalline::Array.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms"), required: true}}
         )
 
@@ -150,7 +150,7 @@ module NoResponse
             environment: Models::Shared::AuditSettingsEnvironment,
             status: Models::Shared::ScreeningStatus,
             depth: Models::Shared::ScreeningDepth,
-            platforms: T::Array[Models::Shared::HandlePlatform],
+            platforms: T::Array[::String],
             requested_by: ::String,
             created_at: ::String,
             expires_at: ::String,

@@ -17,7 +17,7 @@ module NoResponse
         # Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute.
         field(
           :refused_sources,
-          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::SourceId)),
+          Crystalline::Nilable.new(Crystalline::Array.new(::String)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("refused_sources")}}
         )
         # Use account_creation or its deprecated alias signup, not both.
@@ -48,7 +48,7 @@ module NoResponse
         sig {
           params(
             retention_days: T.nilable(::Integer),
-            refused_sources: T.nilable(T::Array[Models::Shared::SourceId]),
+            refused_sources: T.nilable(T::Array[::String]),
             flows: T.nilable(Models::Shared::SettingsRequestFlows),
             expected_policy_version: T.nilable(::Integer),
             change_reason: T.nilable(::String),
