@@ -35,4 +35,10 @@ class NoResponse::Models::Operations::StartSearchRequest
 
   def body=(str_)
   end
+
+  def idempotency_key
+  end
+
+  def idempotency_key=(str_)
+  end
 end

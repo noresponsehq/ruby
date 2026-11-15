@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: def72ee194c92fbd6e628443ee454d8c
+  docChecksum: ba2f5168b42e294943d5e4e4129d3c91
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 13.0.1
-  configChecksum: 73be7f229093cba0b92027a27e9902f4
+  releaseVersion: 13.0.2
+  configChecksum: 7dc121fd79b407130bb079069cb301f9
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:400a135dc124933905f4dfdc247226dcffef0111
+    last_write_checksum: sha1:cd9d3a86f32c5d96f676298379faa2285c146fd0
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -108,7 +108,7 @@ trackedFiles:
   docs/models/operations/createcustomerexportresponse.md:
     last_write_checksum: sha1:bfd7be7fac6ce829ce02f95d851981cce6160fcc
   docs/models/operations/creategrouprequest.md:
-    last_write_checksum: sha1:a024983c94861d706c46d33a636fc6880a0ce78c
+    last_write_checksum: sha1:ae71d4d3197b6ed79b958550a160b6618e9113e8
   docs/models/operations/creategroupresponse.md:
     last_write_checksum: sha1:d541c36922b09fcfbd88ff3926b960a77abea442
   docs/models/operations/createintegrationresponse.md:
@@ -470,7 +470,7 @@ trackedFiles:
   docs/models/operations/startscreeningresponse.md:
     last_write_checksum: sha1:cc10aa0b8c3f19d758f82aa5275d3def720bb3aa
   docs/models/operations/startsearchrequest.md:
-    last_write_checksum: sha1:aa5d432a029478a364c3ca9f492d5d5c9132ffe6
+    last_write_checksum: sha1:17c647cc2c987918b9017266e7bec444a5d6c344
   docs/models/operations/startsearchresponse.md:
     last_write_checksum: sha1:75fe51bd63347fe723631c826edb610071920751
   docs/models/operations/summarizeworkspaceoperationsrequest.md:
@@ -1446,7 +1446,7 @@ trackedFiles:
   docs/sdks/exports/README.md:
     last_write_checksum: sha1:d39868118e044163371da6dfebee15e20ced21ed
   docs/sdks/groups/README.md:
-    last_write_checksum: sha1:c328ab0444ef0f75d1a41dcd7f779aaa9b6fbfc0
+    last_write_checksum: sha1:6b199609b0daf5b7f4c1c952654947bcc0a51ad4
   docs/sdks/integrations/README.md:
     last_write_checksum: sha1:a7a3faf22283dc478cf70336b2bd570456526892
   docs/sdks/invites/README.md:
@@ -1496,7 +1496,7 @@ trackedFiles:
   lib/no_response/exports.rb:
     last_write_checksum: sha1:69d613b14680a7bb6d4cb6e8ce0eb68b86a24719
   lib/no_response/groups.rb:
-    last_write_checksum: sha1:e1d6058f70750e8fe4fee8444a3c430330ab8f1f
+    last_write_checksum: sha1:940eeb05be2897323ab97da981c2509ce01dd25e
   lib/no_response/integrations.rb:
     last_write_checksum: sha1:bc7c388b5e9141b2ffe7d62018d209728b7dd3f5
   lib/no_response/invites.rb:
@@ -1652,9 +1652,9 @@ trackedFiles:
   lib/no_response/models/operations/createcustomerexport_response.rbi:
     last_write_checksum: sha1:2a833bd8559f034210136680fe72524699883a3e
   lib/no_response/models/operations/creategroup_request.rb:
-    last_write_checksum: sha1:094931e9287884512d77d65a76c5fc1a8984aa18
+    last_write_checksum: sha1:79427416e832734f27361c5de40ceb7bf375fec6
   lib/no_response/models/operations/creategroup_request.rbi:
-    last_write_checksum: sha1:51a40a088084c4af563df06e0e82020cc9a30aff
+    last_write_checksum: sha1:c6bf36d702542024fa549117073a37558d8ad813
   lib/no_response/models/operations/creategroup_response.rb:
     last_write_checksum: sha1:5888092314f7fc8a039357259b37b5c9314d379c
   lib/no_response/models/operations/creategroup_response.rbi:
@@ -2376,9 +2376,9 @@ trackedFiles:
   lib/no_response/models/operations/startscreening_response.rbi:
     last_write_checksum: sha1:195a2247ae6754feaf8ca17c05c8133b33e25393
   lib/no_response/models/operations/startsearch_request.rb:
-    last_write_checksum: sha1:9d237bf257844acd0d29f440344081c6fa6acb32
+    last_write_checksum: sha1:f359ed21b06d457d662638a6567b285ede01eac7
   lib/no_response/models/operations/startsearch_request.rbi:
-    last_write_checksum: sha1:27dcdc5bd8e43641828d1d84a2ebd58826a075da
+    last_write_checksum: sha1:c7f815e402548eab03dbf02e6d493977b37958b0
   lib/no_response/models/operations/startsearch_response.rb:
     last_write_checksum: sha1:8ae41a73181a55c23245f22976b7f0e3333a56cc
   lib/no_response/models/operations/startsearch_response.rbi:
@@ -4318,7 +4318,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:6c928968aa055484a39c3c3c6e28940731bdb690
+    last_write_checksum: sha1:5b500b9c2e5d51dc259ab6c967f62da44497f890
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4348,7 +4348,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:538b9010cd75e80c2d9e39f0733ba04dd29b91e8
   noresponse.gemspec:
-    last_write_checksum: sha1:906a550633f5ad9ca8a6363c30ceebf98ac4a218
+    last_write_checksum: sha1:78d46fbfc59d9cf18cb05189ebcd647ee1601a32
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -6703,6 +6703,8 @@ examples:
         path:
           workspace_id: "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
           environment: "live"
+        header:
+          Idempotency-Key: "request-01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       requestBody:
         application/json: {"name": "Annual shareholder meeting", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"]}
       responses:
@@ -6905,6 +6907,8 @@ examples:
           environment: "live"
           group_id: "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
           person_id: "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+        header:
+          Idempotency-Key: "request-01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       requestBody:
         application/json: {"record_id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "field": "username", "table": "FORUM_EXAMPLE_COM_2019"}
       responses:

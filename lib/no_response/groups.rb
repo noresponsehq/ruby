@@ -338,18 +338,20 @@ module NoResponse
         body: Models::Shared::GroupRequest,
         workspace_id: ::String,
         environment: Models::Shared::KeyEnvironment,
+        idempotency_key: T.nilable(::String),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::CreateGroupResponse)
     }
-    def create(body:, workspace_id:, environment:, timeout_ms: nil, http_headers: nil)
+    def create(body:, workspace_id:, environment:, idempotency_key: nil, timeout_ms: nil, http_headers: nil)
       # create - Create a group to screen.
-      # Create a group to screen: its name, start, venue, host, the principals it protects and the sensitive topics posts are read against. An environment holds at most 1000 groups.
+      # Create a group to screen: its name, start, venue, host, the principals it protects and the sensitive topics posts are read against. An environment holds at most 1000 groups. Send an Idempotency-Key to repeat a request safely while the group is retained. A replay returns the same group in its current state; changed input returns 409.
       request = Models::Operations::CreateGroupRequest.new(
         workspace_id: workspace_id,
         environment: environment,
-        body: body
+        body: body,
+        idempotency_key: idempotency_key
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -359,7 +361,7 @@ module NoResponse
         "/v1/workspaces/{workspace_id}/groups/{environment}",
         request
       )
-      headers = {}
+      headers = Utils.get_headers(request)
       headers = T.cast(headers, T::Hash[String, String])
       req_content_type, data, form = Utils.serialize_request_body(request, false, false, :body, :json)
       headers["content-type"] = req_content_type
@@ -3010,36 +3012,15 @@ module NoResponse
 
     sig {
       params(
-        body: Models::Shared::SearchRequest,
-        workspace_id: ::String,
-        environment: Models::Shared::KeyEnvironment,
-        group_id: ::String,
-        person_id: ::String,
-        retries: T.nilable(Utils::RetryConfig),
+        request: Models::Operations::StartSearchRequest,
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::StartSearchResponse)
     }
-    def start_search(
-      body:,
-      workspace_id:,
-      environment:,
-      group_id:,
-      person_id:,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def start_search(request:, timeout_ms: nil, http_headers: nil)
       # start_search - Search again on a value of one of a person's records.
-      # Search again on the value of one field of one of a person's records, named by the record and field. Nothing searches again by itself. A password or hash search counts its breach rows first and runs only when you run it; read the person to see each search and what it found.
-      request = Models::Operations::StartSearchRequest.new(
-        workspace_id: workspace_id,
-        environment: environment,
-        group_id: group_id,
-        person_id: person_id,
-        body: body
-      )
+      # Search again on the value of one field of one of a person's records, named by the record and field. Nothing searches again by itself. A password or hash search counts its breach rows first and runs only when you run it; read the person to see each search and what it found. Send an Idempotency-Key to return the same search after a lost answer, even after it completes. A different request with the same key returns 409. Use a new key for a deliberate new search.
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -3048,7 +3029,7 @@ module NoResponse
         "/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches",
         request
       )
-      headers = {}
+      headers = Utils.get_headers(request)
       headers = T.cast(headers, T::Hash[String, String])
       req_content_type, data, form = Utils.serialize_request_body(request, false, false, :body, :json)
       headers["content-type"] = req_content_type
@@ -3064,27 +3045,13 @@ module NoResponse
 
       headers["Accept"] = "application/json"
       headers["user-agent"] = @sdk_configuration.user_agent
-      retries ||= @sdk_configuration.retry_config
-      retries ||= Utils::RetryConfig.new(
-        backoff: Utils::BackoffStrategy.new(
-          exponent: 2.0,
-          initial_interval: 500,
-          max_elapsed_time: 30_000,
-          max_interval: 8000
-        ),
-        retry_connection_errors: true,
-        strategy: "backoff"
-      )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
-      retry_options[:retry_statuses] = [408, 429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
 
       timeout = (timeout_ms.to_f / 1000) unless timeout_ms.nil?
       timeout ||= @sdk_configuration.timeout
 
-      connection = @sdk_configuration.client.dup
-      connection.use(Utils::RetryMiddleware, retry_options)
+      connection = @sdk_configuration.client
 
       hook_ctx = SDKHooks::HookContext.new(
         config: @sdk_configuration,
