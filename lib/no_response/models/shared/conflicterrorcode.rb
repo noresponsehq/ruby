@@ -30,6 +30,7 @@ module NoResponse
           EVALUATION_CONFLICT = new("evaluation_conflict")
           EVALUATION_NO_PROPOSAL = new("evaluation_no_proposal")
           EVALUATION_LIMIT_REACHED = new("evaluation_limit_reached")
+          EVALUATION_UNAVAILABLE = new("evaluation_unavailable")
           ALREADY_MEMBER = new("already_member")
           MEMBER_LIMIT_REACHED = new("member_limit_reached")
           OWNER_INVITE_PENDING = new("owner_invite_pending")

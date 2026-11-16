@@ -40,6 +40,7 @@ custom = ConflictErrorCode.deserialize("custom_value")
 | `EVALUATION_CONFLICT`            | evaluation_conflict              |
 | `EVALUATION_NO_PROPOSAL`         | evaluation_no_proposal           |
 | `EVALUATION_LIMIT_REACHED`       | evaluation_limit_reached         |
+| `EVALUATION_UNAVAILABLE`         | evaluation_unavailable           |
 | `ALREADY_MEMBER`                 | already_member                   |
 | `MEMBER_LIMIT_REACHED`           | member_limit_reached             |
 | `OWNER_INVITE_PENDING`           | owner_invite_pending             |
