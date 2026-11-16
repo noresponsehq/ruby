@@ -18,12 +18,6 @@ class NoResponse::Models::Shared::OtherGroup
   def group_name=(str_)
   end
 
-  def group_starts_at
-  end
-
-  def group_starts_at=(str_)
-  end
-
   def person_id
   end
 
@@ -40,6 +34,12 @@ class NoResponse::Models::Shared::OtherGroup
   end
 
   def match_state=(str_)
+  end
+
+  def group_starts_at
+  end
+
+  def group_starts_at=(str_)
   end
 
   def no_profile_to_check

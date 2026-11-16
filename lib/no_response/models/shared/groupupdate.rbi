@@ -12,18 +12,6 @@ class NoResponse::Models::Shared::GroupUpdate
   def name=(str_)
   end
 
-  def starts_at
-  end
-
-  def starts_at=(str_)
-  end
-
-  def ends_at
-  end
-
-  def ends_at=(str_)
-  end
-
   def venue
   end
 
@@ -52,5 +40,17 @@ class NoResponse::Models::Shared::GroupUpdate
   end
 
   def expected_version=(str_)
+  end
+
+  def starts_at
+  end
+
+  def starts_at=(str_)
+  end
+
+  def ends_at
+  end
+
+  def ends_at=(str_)
   end
 end

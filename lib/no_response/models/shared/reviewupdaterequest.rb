@@ -52,11 +52,38 @@ module NoResponse
           )
             .void
         }
-        def initialize(expected_version:, status: nil, priority: nil, assignee: nil)
+        def initialize(
+          expected_version:,
+          status: nil,
+          priority: nil,
+          assignee: (
+            assignee_omitted = true
+            nil
+          )
+        )
           @expected_version = expected_version
           @status = status
           @priority = priority
           @assignee = assignee
+          @assignee_omitted = assignee_omitted
+        end
+
+
+        def to_dict
+          result = super
+          result["assignee"] = nil if @assignee.nil? && !@assignee_omitted
+          result
+        end
+
+        def self.from_dict(value)
+          result = super
+          result.assignee = nil if value.key?("assignee") && value["assignee"].nil?
+          result
+        end
+
+        def assignee=(value)
+          @assignee_omitted = false
+          @assignee = value
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }

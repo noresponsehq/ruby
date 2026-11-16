@@ -12,18 +12,6 @@ class NoResponse::Models::Shared::GroupRequest
   def name=(str_)
   end
 
-  def starts_at
-  end
-
-  def starts_at=(str_)
-  end
-
-  def ends_at
-  end
-
-  def ends_at=(str_)
-  end
-
   def venue
   end
 
@@ -46,5 +34,17 @@ class NoResponse::Models::Shared::GroupRequest
   end
 
   def topics=(str_)
+  end
+
+  def starts_at
+  end
+
+  def starts_at=(str_)
+  end
+
+  def ends_at
+  end
+
+  def ends_at=(str_)
   end
 end

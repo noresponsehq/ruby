@@ -20,12 +20,6 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("group_name"), required: true}}
         )
-
-        field(
-          :group_starts_at,
-          ::String,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("group_starts_at"), required: true}}
-        )
         # The person on that group's list.
         field(
           :person_id,
@@ -49,6 +43,12 @@ module NoResponse
               'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::MatchState, false)
             }
           }
+        )
+        # The other group's optional event start; null for an ongoing group.
+        field(
+          :group_starts_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("group_starts_at"), required: true}}
         )
         # true when that person's latest screening had no profile to check (see the person's no_profile_to_check). Left out otherwise.
         field(
@@ -97,10 +97,10 @@ module NoResponse
           params(
             group_id: ::String,
             group_name: ::String,
-            group_starts_at: ::String,
             person_id: ::String,
             matched_on: T::Array[Models::Shared::OtherGroupMatchedOn],
             match_state: Models::Shared::MatchState,
+            group_starts_at: T.nilable(::String),
             no_profile_to_check: T.nilable(T::Boolean),
             highest_band: T.nilable(Models::Shared::HighestBand),
             decision: T.nilable(Models::Shared::PersonDecision),
@@ -112,10 +112,10 @@ module NoResponse
         def initialize(
           group_id:,
           group_name:,
-          group_starts_at:,
           person_id:,
           matched_on:,
           match_state:,
+          group_starts_at: nil,
           no_profile_to_check: nil,
           highest_band: nil,
           decision: nil,
@@ -124,10 +124,10 @@ module NoResponse
         )
           @group_id = group_id
           @group_name = group_name
-          @group_starts_at = group_starts_at
           @person_id = person_id
           @matched_on = matched_on
           @match_state = match_state
+          @group_starts_at = group_starts_at
           @no_profile_to_check = no_profile_to_check
           @highest_band = highest_band
           @decision = decision
@@ -140,10 +140,10 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @group_id == other.group_id
           return false unless @group_name == other.group_name
-          return false unless @group_starts_at == other.group_starts_at
           return false unless @person_id == other.person_id
           return false unless @matched_on == other.matched_on
           return false unless @match_state == other.match_state
+          return false unless @group_starts_at == other.group_starts_at
           return false unless @no_profile_to_check == other.no_profile_to_check
           return false unless @highest_band == other.highest_band
           return false unless @decision == other.decision

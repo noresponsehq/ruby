@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Changes the fields it names; at least one besides expected_version.
+      # Updates a group. Dates describe an optional event and do not control person retention.
       class GroupUpdate
         extend T::Sig
         include Crystalline::MetadataFields
@@ -14,18 +14,6 @@ module NoResponse
           :name,
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("name")}}
-        )
-        # When the group starts.
-        field(
-          :starts_at,
-          Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("starts_at")}}
-        )
-        # When the group ends, at or after its start; the start when omitted.
-        field(
-          :ends_at,
-          Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("ends_at")}}
         )
         # Where the group is held.
         field(
@@ -57,51 +45,96 @@ module NoResponse
           Crystalline::Nilable.new(::Integer),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("expected_version")}}
         )
+        # Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it.
+        field(
+          :starts_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("starts_at")}}
+        )
+        # Optional event end; requires starts_at and must be at or after it. Null when no end is set. Omit to keep the current value; send null to clear it.
+        field(
+          :ends_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("ends_at")}}
+        )
 
         sig {
           params(
             name: T.nilable(::String),
-            starts_at: T.nilable(::String),
-            ends_at: T.nilable(::String),
             venue: T.nilable(::String),
             host: T.nilable(::String),
             principals: T.nilable(T::Array[Models::Shared::Principal]),
             topics: T.nilable(T::Array[::String]),
-            expected_version: T.nilable(::Integer)
+            expected_version: T.nilable(::Integer),
+            starts_at: T.nilable(::String),
+            ends_at: T.nilable(::String)
           )
             .void
         }
         def initialize(
           name: nil,
-          starts_at: nil,
-          ends_at: nil,
           venue: nil,
           host: nil,
           principals: nil,
           topics: nil,
-          expected_version: nil
+          expected_version: nil,
+          starts_at: (
+            starts_at_omitted = true
+            nil
+          ),
+          ends_at: (
+            ends_at_omitted = true
+            nil
+          )
         )
           @name = name
-          @starts_at = starts_at
-          @ends_at = ends_at
           @venue = venue
           @host = host
           @principals = principals
           @topics = topics
           @expected_version = expected_version
+          @starts_at = starts_at
+          @starts_at_omitted = starts_at_omitted
+          @ends_at = ends_at
+          @ends_at_omitted = ends_at_omitted
+        end
+
+
+        def to_dict
+          result = super
+          result["starts_at"] = nil if @starts_at.nil? && !@starts_at_omitted
+          result["ends_at"] = nil if @ends_at.nil? && !@ends_at_omitted
+          result
+        end
+
+        def self.from_dict(value)
+          result = super
+          result.starts_at = nil if value.key?("starts_at") && value["starts_at"].nil?
+          result.ends_at = nil if value.key?("ends_at") && value["ends_at"].nil?
+          result
+        end
+
+        def starts_at=(value)
+          @starts_at_omitted = false
+          @starts_at = value
+        end
+
+        def ends_at=(value)
+          @ends_at_omitted = false
+          @ends_at = value
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @name == other.name
-          return false unless @starts_at == other.starts_at
-          return false unless @ends_at == other.ends_at
           return false unless @venue == other.venue
           return false unless @host == other.host
           return false unless @principals == other.principals
           return false unless @topics == other.topics
           return false unless @expected_version == other.expected_version
+          return false unless @starts_at == other.starts_at
+          return false unless @ends_at == other.ends_at
           true
         end
       end

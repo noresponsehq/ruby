@@ -24,18 +24,6 @@ class NoResponse::Models::Shared::Group
   def name=(str_)
   end
 
-  def starts_at
-  end
-
-  def starts_at=(str_)
-  end
-
-  def ends_at
-  end
-
-  def ends_at=(str_)
-  end
-
   def principals
   end
 
@@ -76,6 +64,18 @@ class NoResponse::Models::Shared::Group
   end
 
   def updated_at=(str_)
+  end
+
+  def starts_at
+  end
+
+  def starts_at=(str_)
+  end
+
+  def ends_at
+  end
+
+  def ends_at=(str_)
   end
 
   def venue

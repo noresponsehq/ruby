@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 3f1572396209514c2c3dd0be0dc97143
+  docChecksum: a34e09158d8794d0419cd73d2b00a78e
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 14.0.1
-  configChecksum: 58235899cfd53c93a350ea0cbeb8774a
+  releaseVersion: 15.0.0
+  configChecksum: 75230f514bd8697eee2895f980e61cf6
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:9b5b95f8d2ab3d2c8f068178d8a19e2ec04b0700
+    last_write_checksum: sha1:514478b64dfcc84bc4e624eec1671cb948a361fd
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -868,13 +868,13 @@ trackedFiles:
   docs/models/shared/from.md:
     last_write_checksum: sha1:11eb24b0f6fc228d70b21f262177081b69c44e50
   docs/models/shared/group.md:
-    last_write_checksum: sha1:4c3a08727ad374bf996048a5f93cee15b41fbebe
+    last_write_checksum: sha1:b6dc0e85d54ec645d91e03e61c687a276689c37d
   docs/models/shared/grouplist.md:
     last_write_checksum: sha1:3fb4d4c3d67a0ae1d99080f1ef34a817e41c74f2
   docs/models/shared/grouprequest.md:
-    last_write_checksum: sha1:aca33a26c60b0b07abd9b5fa6d979a2af2071941
+    last_write_checksum: sha1:de6d5dc0301679dd0aa300cd4bb27faa69754d9f
   docs/models/shared/groupupdate.md:
-    last_write_checksum: sha1:6d3ce3c936f440c077c65c66ec667e254a411c53
+    last_write_checksum: sha1:f860b23dbe2578425c7563c16c42750c3deeb8b4
   docs/models/shared/handle.md:
     last_write_checksum: sha1:a4366977cd0e83a9d40ee6801f93b7716f104731
   docs/models/shared/highestband.md:
@@ -1090,7 +1090,7 @@ trackedFiles:
   docs/models/shared/origin.md:
     last_write_checksum: sha1:0f97a0536b9397f2068a9cc2ed76970af821bad4
   docs/models/shared/othergroup.md:
-    last_write_checksum: sha1:4436960a01af2abe099fbe6a5377d1e7e96a326b
+    last_write_checksum: sha1:9b8648aae433c76356ff0e2dabcf1bd52c5fbd91
   docs/models/shared/othergroupmatchedon.md:
     last_write_checksum: sha1:5790d9e3e9d67cd6f26cdc906741c447caac0d09
   docs/models/shared/othergroups.md:
@@ -3266,21 +3266,21 @@ trackedFiles:
   lib/no_response/models/shared/from.rbi:
     last_write_checksum: sha1:8fed95b67eb2eec4f3b123b1092b23c8cb1a18ff
   lib/no_response/models/shared/group.rb:
-    last_write_checksum: sha1:5d306619294e907c510654ed4cbed6eb5f771a50
+    last_write_checksum: sha1:24e4ce4bd777bfb0e3aa1f229e0a4b5fe6a8c2ca
   lib/no_response/models/shared/group.rbi:
-    last_write_checksum: sha1:6c5df693ba1d866c1ece3a995a696b5117a5cf1e
+    last_write_checksum: sha1:fe5bf8efbc740395acd9ffe1fcc5d3c4340be102
   lib/no_response/models/shared/grouplist.rb:
     last_write_checksum: sha1:5fa848327f7337d3bf18c54b57d0fc4e7281845e
   lib/no_response/models/shared/grouplist.rbi:
     last_write_checksum: sha1:8e7ea8665b35f49301c27d012f6748186be95740
   lib/no_response/models/shared/grouprequest.rb:
-    last_write_checksum: sha1:15e0cd4bafb3e5249a43627476d3fc34af5c50fc
+    last_write_checksum: sha1:2c8a03714854b4a080fb9e25dd42b308e647c01f
   lib/no_response/models/shared/grouprequest.rbi:
-    last_write_checksum: sha1:6d4617399e22719babc03fe43db9a87f816196fd
+    last_write_checksum: sha1:0996ced51ab8ab380aa780b753724c752f14af06
   lib/no_response/models/shared/groupupdate.rb:
-    last_write_checksum: sha1:fee3fab24d5174dcd02ea953ecc8bdd63c97ddfe
+    last_write_checksum: sha1:726abe7d6368f06b1ffc129cb7a6911f5f593cde
   lib/no_response/models/shared/groupupdate.rbi:
-    last_write_checksum: sha1:bd36d5d6c85cf40a51dff5cc2b926363ee9cb339
+    last_write_checksum: sha1:87d977d2d6dd0dae99f74b6611fef6f75b81a85c
   lib/no_response/models/shared/handle.rb:
     last_write_checksum: sha1:1ad5dabf2a239ef307d756ec3533526a0120bbfa
   lib/no_response/models/shared/handle.rbi:
@@ -3710,9 +3710,9 @@ trackedFiles:
   lib/no_response/models/shared/origin.rbi:
     last_write_checksum: sha1:b2dca2baf5001bb1a17fac8a5f283b9db641a5cd
   lib/no_response/models/shared/othergroup.rb:
-    last_write_checksum: sha1:b2b1129cd057f011420cb8ee9c72c16b61cf5c82
+    last_write_checksum: sha1:fbb81608d3f4fde903bd1e7d09ab5711fa74a2e0
   lib/no_response/models/shared/othergroup.rbi:
-    last_write_checksum: sha1:1e908719599d489c0ef9a2cc6f2609c5f40262d9
+    last_write_checksum: sha1:67976e9ef0a12ebabb847a1bbd078d177c9bb8b2
   lib/no_response/models/shared/othergroup_matched_on.rb:
     last_write_checksum: sha1:5f69b3ef5e4bdc84d61c56bd88aee26ab61b4da1
   lib/no_response/models/shared/othergroup_matched_on.rbi:
@@ -4110,7 +4110,7 @@ trackedFiles:
   lib/no_response/models/shared/reviewsubjectrequest.rbi:
     last_write_checksum: sha1:5df5626133493b74ca9b5f28ca1f75113c8973bb
   lib/no_response/models/shared/reviewupdaterequest.rb:
-    last_write_checksum: sha1:924b1f700fb84f884001788466866bf4410c29fa
+    last_write_checksum: sha1:3eb54e05f34f26f8fae8d62305e380bb27ab99ec
   lib/no_response/models/shared/reviewupdaterequest.rbi:
     last_write_checksum: sha1:d712b4599383910b3647d0f927311dd90bb8917b
   lib/no_response/models/shared/reviewupdaterequeststatus.rb:
@@ -4584,7 +4584,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:f26b526e9dac90e96e6a8cd02e9b171bbb61fb05
+    last_write_checksum: sha1:222aa815dc1c7254ae7ae656cc9152172630cb54
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4614,7 +4614,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:bfb44b6a118d53e72ad5b1b00cb95f84cbe657f3
   noresponse.gemspec:
-    last_write_checksum: sha1:ff711d5d3fd500ceb2d7ad3ca920d3155735dfb9
+    last_write_checksum: sha1:9bde3fc94080581e2f7e2f5ca04d0e727d2309f2
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:

@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # A group and its screening context.
+      # A workspace group for a building, organization or event. Dates are optional and do not control person retention.
       class Group
         extend T::Sig
         include Crystalline::MetadataFields
@@ -24,18 +24,6 @@ module NoResponse
         )
         # The group's name.
         field :name, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("name"), required: true}}
-        # When the group starts.
-        field(
-          :starts_at,
-          ::String,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("starts_at"), required: true}}
-        )
-        # When the group ends, at or after its start; the start when omitted.
-        field(
-          :ends_at,
-          ::String,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("ends_at"), required: true}}
-        )
         # The people the group protects.
         field(
           :principals,
@@ -78,6 +66,18 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("updated_at"), required: true}}
         )
+        # Optional event start; null for an ongoing group.
+        field(
+          :starts_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("starts_at"), required: true}}
+        )
+        # Optional event end; requires starts_at and must be at or after it. Null when no end is set.
+        field(
+          :ends_at,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("ends_at"), required: true}}
+        )
         # Where the group is held.
         field(
           :venue,
@@ -96,8 +96,6 @@ module NoResponse
             id: ::String,
             environment: Models::Shared::AuditSettingsEnvironment,
             name: ::String,
-            starts_at: ::String,
-            ends_at: ::String,
             principals: T::Array[Models::Shared::Principal],
             topics: T::Array[::String],
             people: ::Integer,
@@ -105,6 +103,8 @@ module NoResponse
             created_by: ::String,
             created_at: ::String,
             updated_at: ::String,
+            starts_at: T.nilable(::String),
+            ends_at: T.nilable(::String),
             venue: T.nilable(::String),
             host: T.nilable(::String)
           )
@@ -114,8 +114,6 @@ module NoResponse
           id:,
           environment:,
           name:,
-          starts_at:,
-          ends_at:,
           principals:,
           topics:,
           people:,
@@ -123,14 +121,14 @@ module NoResponse
           created_by:,
           created_at:,
           updated_at:,
+          starts_at: nil,
+          ends_at: nil,
           venue: nil,
           host: nil
         )
           @id = id
           @environment = environment
           @name = name
-          @starts_at = starts_at
-          @ends_at = ends_at
           @principals = principals
           @topics = topics
           @people = people
@@ -138,6 +136,8 @@ module NoResponse
           @created_by = created_by
           @created_at = created_at
           @updated_at = updated_at
+          @starts_at = starts_at
+          @ends_at = ends_at
           @venue = venue
           @host = host
         end
@@ -148,8 +148,6 @@ module NoResponse
           return false unless @id == other.id
           return false unless @environment == other.environment
           return false unless @name == other.name
-          return false unless @starts_at == other.starts_at
-          return false unless @ends_at == other.ends_at
           return false unless @principals == other.principals
           return false unless @topics == other.topics
           return false unless @people == other.people
@@ -157,6 +155,8 @@ module NoResponse
           return false unless @created_by == other.created_by
           return false unless @created_at == other.created_at
           return false unless @updated_at == other.updated_at
+          return false unless @starts_at == other.starts_at
+          return false unless @ends_at == other.ends_at
           return false unless @venue == other.venue
           return false unless @host == other.host
           true
