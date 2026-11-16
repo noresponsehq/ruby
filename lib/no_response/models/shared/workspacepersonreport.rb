@@ -112,6 +112,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::Investigation),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("evidence_investigation"), required: true}}
         )
+        # An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied.
+        field(
+          :written_profile,
+          Crystalline::Nilable.new(Models::Shared::WrittenProfile),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("written_profile"), required: true}}
+        )
 
         sig {
           params(
@@ -132,7 +138,8 @@ module NoResponse
             handles: T.nilable(T::Array[Models::Shared::Handle]),
             lookup: T.nilable(Models::Shared::ScreeningLookup),
             evidence_restricted: T.nilable(T::Boolean),
-            evidence_investigation: T.nilable(Models::Shared::Investigation)
+            evidence_investigation: T.nilable(Models::Shared::Investigation),
+            written_profile: T.nilable(Models::Shared::WrittenProfile)
           )
             .void
         }
@@ -154,7 +161,8 @@ module NoResponse
           handles: nil,
           lookup: nil,
           evidence_restricted: nil,
-          evidence_investigation: nil
+          evidence_investigation: nil,
+          written_profile: nil
         )
           @id = id
           @created_at = created_at
@@ -174,6 +182,7 @@ module NoResponse
           @lookup = lookup
           @evidence_restricted = evidence_restricted
           @evidence_investigation = evidence_investigation
+          @written_profile = written_profile
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -197,6 +206,7 @@ module NoResponse
           return false unless @lookup == other.lookup
           return false unless @evidence_restricted == other.evidence_restricted
           return false unless @evidence_investigation == other.evidence_investigation
+          return false unless @written_profile == other.written_profile
           true
         end
       end

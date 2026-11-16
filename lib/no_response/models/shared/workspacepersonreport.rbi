@@ -113,4 +113,10 @@ class NoResponse::Models::Shared::WorkspacePersonReport
 
   def evidence_investigation=(str_)
   end
+
+  def written_profile
+  end
+
+  def written_profile=(str_)
+  end
 end
