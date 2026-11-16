@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # One search a person started on a value of one of a person's records. Nothing searches again by itself.
+      # One search on a value of one of a person's records, started by a person or by enrichment.
       class Search
         extend T::Sig
         include Crystalline::MetadataFields
@@ -86,7 +86,7 @@ module NoResponse
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("spent"), required: true}}
         )
-        # Who started the search.
+        # Who started the search: the member or key, or enrichment when the engine started it on a value an earlier result showed.
         field(
           :requested_by,
           ::String,
@@ -121,6 +121,18 @@ module NoResponse
             }
           }
         )
+        # The search that found the record this value came from. Absent when the record came from the person's investigation.
+        field(
+          :parent_search_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("parent_search_id")}}
+        )
+        # How many searches lie between the person's investigation and this one, this one included: 1 for a value of a record the investigation found, 2 for a value of a record a depth-1 search found, and so on.
+        field(
+          :depth,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("depth")}}
+        )
 
         field(
           :finished_at,
@@ -146,6 +158,8 @@ module NoResponse
             table: T.nilable(::String),
             rows: T.nilable(::Integer),
             error_code: T.nilable(Models::Shared::ErrorCode),
+            parent_search_id: T.nilable(::String),
+            depth: T.nilable(::Integer),
             finished_at: T.nilable(::String)
           )
             .void
@@ -167,6 +181,8 @@ module NoResponse
           table: nil,
           rows: nil,
           error_code: nil,
+          parent_search_id: nil,
+          depth: nil,
           finished_at: nil
         )
           @search_id = search_id
@@ -185,6 +201,8 @@ module NoResponse
           @table = table
           @rows = rows
           @error_code = error_code
+          @parent_search_id = parent_search_id
+          @depth = depth
           @finished_at = finished_at
         end
 
@@ -207,6 +225,8 @@ module NoResponse
           return false unless @table == other.table
           return false unless @rows == other.rows
           return false unless @error_code == other.error_code
+          return false unless @parent_search_id == other.parent_search_id
+          return false unless @depth == other.depth
           return false unless @finished_at == other.finished_at
           true
         end

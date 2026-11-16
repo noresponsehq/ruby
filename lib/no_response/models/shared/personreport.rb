@@ -57,7 +57,7 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::ScreeningLookup),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("lookup")}}
         )
-        # The searches people started on this person's values, newest first: each names the value, and the record and field it came from. Absent when nobody searched.
+        # The searches on this person's values in this group, newest first: each names the value, the record and field it came from, and the search that found that record. Absent when nothing was searched.
         field(
           :searches,
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Search)),

@@ -102,6 +102,12 @@ class NoResponse::Models::Shared::WorkspacePersonReport
   def lookup=(str_)
   end
 
+  def searches
+  end
+
+  def searches=(str_)
+  end
+
   def evidence_restricted
   end
 

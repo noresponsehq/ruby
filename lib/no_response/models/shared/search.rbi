@@ -102,6 +102,18 @@ class NoResponse::Models::Shared::Search
   def error_code=(str_)
   end
 
+  def parent_search_id
+  end
+
+  def parent_search_id=(str_)
+  end
+
+  def depth
+  end
+
+  def depth=(str_)
+  end
+
   def finished_at
   end
 

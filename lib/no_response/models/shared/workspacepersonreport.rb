@@ -100,6 +100,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::ScreeningLookup),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("lookup")}}
         )
+        # Every search on this person's values, newest first, whether a person started it or enrichment did: each names the value, the record and field it came from, and the search that found that record. Absent when nothing was searched.
+        field(
+          :searches,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Search)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("searches")}}
+        )
         # True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, findings, posts, media, discovered values and free-text decision notes are withheld.
         field(
           :evidence_restricted,
@@ -137,6 +143,7 @@ module NoResponse
             city: T.nilable(::String),
             handles: T.nilable(T::Array[Models::Shared::Handle]),
             lookup: T.nilable(Models::Shared::ScreeningLookup),
+            searches: T.nilable(T::Array[Models::Shared::Search]),
             evidence_restricted: T.nilable(T::Boolean),
             evidence_investigation: T.nilable(Models::Shared::Investigation),
             written_profile: T.nilable(Models::Shared::WrittenProfile)
@@ -160,6 +167,7 @@ module NoResponse
           city: nil,
           handles: nil,
           lookup: nil,
+          searches: nil,
           evidence_restricted: nil,
           evidence_investigation: nil,
           written_profile: nil
@@ -180,6 +188,7 @@ module NoResponse
           @city = city
           @handles = handles
           @lookup = lookup
+          @searches = searches
           @evidence_restricted = evidence_restricted
           @evidence_investigation = evidence_investigation
           @written_profile = written_profile
@@ -204,6 +213,7 @@ module NoResponse
           return false unless @city == other.city
           return false unless @handles == other.handles
           return false unless @lookup == other.lookup
+          return false unless @searches == other.searches
           return false unless @evidence_restricted == other.evidence_restricted
           return false unless @evidence_investigation == other.evidence_investigation
           return false unless @written_profile == other.written_profile
