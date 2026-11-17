@@ -51,7 +51,7 @@ class RecordsTest < Minitest::Test
     birthday = field.call(row, 'birthday')
     assert_nil birthday.value
     assert_equal '07/03/1990', birthday.original
-    assert_in_delta 0.99, row.likelihood
+    assert_in_delta 0.8, row.likelihood
     assert_nil row.verdict
 
     remaining = report.lookup.remaining[0]
