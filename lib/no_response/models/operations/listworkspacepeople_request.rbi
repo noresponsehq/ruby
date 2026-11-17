@@ -12,6 +12,18 @@ class NoResponse::Models::Operations::ListWorkspacePeopleRequest
   def after=(str_)
   end
 
+  def email
+  end
+
+  def email=(str_)
+  end
+
+  def phone
+  end
+
+  def phone=(str_)
+  end
+
   def limit
   end
 

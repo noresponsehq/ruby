@@ -16,7 +16,7 @@ Workspace people, submitted identity, source evidence and expiry.
 
 ## list
 
-Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion.
+Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion. email and phone narrow the list to people holding that exact address or number, so a client can open the person it already has instead of adding a duplicate.
 
 ### Example Usage
 
@@ -38,10 +38,12 @@ end
 
 ### Parameters
 
-| Parameter                             | Type                                  | Required                              | Description                           |
-| ------------------------------------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
-| `limit`                               | *T.nilable(::Integer)*                | :heavy_minus_sign:                    | N/A                                   |
-| `after`                               | *T.nilable(::String)*                 | :heavy_minus_sign:                    | Pass next_cursor from the prior page. |
+| Parameter                                                                                    | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `limit`                                                                                      | *T.nilable(::Integer)*                                                                       | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `after`                                                                                      | *T.nilable(::String)*                                                                        | :heavy_minus_sign:                                                                           | Pass next_cursor from the prior page.                                                        |
+| `email`                                                                                      | *T.nilable(::String)*                                                                        | :heavy_minus_sign:                                                                           | Return only people whose email is this address, compared without case or surrounding spaces. |
+| `phone`                                                                                      | *T.nilable(::String)*                                                                        | :heavy_minus_sign:                                                                           | Return only people whose phone is this number, compared without surrounding spaces.          |
 
 ### Response
 

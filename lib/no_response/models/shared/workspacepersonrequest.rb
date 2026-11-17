@@ -45,6 +45,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("city")}}
         )
+        # A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username.
+        field(
+          :username,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("username")}}
+        )
 
         field(
           :handles,
@@ -66,6 +72,7 @@ module NoResponse
             phone: T.nilable(::String),
             company: T.nilable(::String),
             city: T.nilable(::String),
+            username: T.nilable(::String),
             handles: T.nilable(T::Array[Models::Shared::Handle]),
             person_id: T.nilable(::String)
           )
@@ -78,6 +85,7 @@ module NoResponse
           phone: nil,
           company: nil,
           city: nil,
+          username: nil,
           handles: nil,
           person_id: nil
         )
@@ -87,6 +95,7 @@ module NoResponse
           @phone = phone
           @company = company
           @city = city
+          @username = username
           @handles = handles
           @person_id = person_id
         end
@@ -100,6 +109,7 @@ module NoResponse
           return false unless @phone == other.phone
           return false unless @company == other.company
           return false unless @city == other.city
+          return false unless @username == other.username
           return false unless @handles == other.handles
           return false unless @person_id == other.person_id
           true

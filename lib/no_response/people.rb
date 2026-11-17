@@ -41,18 +41,22 @@ module NoResponse
       params(
         limit: T.nilable(::Integer),
         after: T.nilable(::String),
+        email: T.nilable(::String),
+        phone: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::ListWorkspacePeopleResponse)
     }
-    def list(limit: nil, after: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def list(limit: nil, after: nil, email: nil, phone: nil, retries: nil, timeout_ms: nil, http_headers: nil)
       # Method: list - List workspace people.
-      # Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion.
+      # Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion. email and phone narrow the list to people holding that exact address or number, so a client can open the person it already has instead of adding a duplicate.
       request = Models::Operations::ListWorkspacePeopleRequest.new(
         limit: limit,
-        after: after
+        after: after,
+        email: email,
+        phone: phone
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

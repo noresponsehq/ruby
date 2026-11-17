@@ -66,6 +66,12 @@ class NoResponse::Models::Shared::WorkspacePerson
   def city=(str_)
   end
 
+  def username
+  end
+
+  def username=(str_)
+  end
+
   def handles
   end
 

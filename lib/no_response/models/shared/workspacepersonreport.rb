@@ -94,6 +94,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("city")}}
         )
+        # A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username.
+        field(
+          :username,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("username")}}
+        )
         # Accounts the person is known to hold, at most 20.
         field(
           :handles,
@@ -148,6 +154,7 @@ module NoResponse
             phone: T.nilable(::String),
             company: T.nilable(::String),
             city: T.nilable(::String),
+            username: T.nilable(::String),
             handles: T.nilable(T::Array[Models::Shared::Handle]),
             lookup: T.nilable(Models::Shared::ScreeningLookup),
             searches: T.nilable(T::Array[Models::Shared::Search]),
@@ -173,6 +180,7 @@ module NoResponse
           phone: nil,
           company: nil,
           city: nil,
+          username: nil,
           handles: nil,
           lookup: nil,
           searches: nil,
@@ -195,6 +203,7 @@ module NoResponse
           @phone = phone
           @company = company
           @city = city
+          @username = username
           @handles = handles
           @lookup = lookup
           @searches = searches
@@ -221,6 +230,7 @@ module NoResponse
           return false unless @phone == other.phone
           return false unless @company == other.company
           return false unless @city == other.city
+          return false unless @username == other.username
           return false unless @handles == other.handles
           return false unless @lookup == other.lookup
           return false unless @searches == other.searches
