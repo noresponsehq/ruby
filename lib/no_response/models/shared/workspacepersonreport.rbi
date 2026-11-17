@@ -54,6 +54,12 @@ class NoResponse::Models::Shared::WorkspacePersonReport
   def media=(str_)
   end
 
+  def suggested_searches
+  end
+
+  def suggested_searches=(str_)
+  end
+
   def external_id
   end
 

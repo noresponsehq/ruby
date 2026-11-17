@@ -45,6 +45,12 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::PersonReview),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("reviews"), required: true}}
         )
+        # The searches enrichment would start on this person in this group, likeliest record first. Group screening follows the environment's enrichment setting, with suggest as its mode while the workspace has not set one. In off mode the list is empty. In suggest mode enrichment starts none of them by itself; in automatic mode it starts them as its limits allow. Empty when evidence.read is denied.
+        field(
+          :suggested_searches,
+          Crystalline::Array.new(Models::Shared::SuggestedSearch),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("suggested_searches"), required: true}}
+        )
         # Where else in the environment the person appears, read live from those groups: deleting one removes it here.
         field(
           :other_groups,
@@ -78,6 +84,7 @@ module NoResponse
             posts: T::Array[Models::Shared::ScreeningPost],
             media: T::Array[Models::Shared::ScreeningMedia],
             reviews: T::Array[Models::Shared::PersonReview],
+            suggested_searches: T::Array[Models::Shared::SuggestedSearch],
             other_groups: Models::Shared::OtherGroups,
             lookup: T.nilable(Models::Shared::ScreeningLookup),
             searches: T.nilable(T::Array[Models::Shared::Search]),
@@ -92,6 +99,7 @@ module NoResponse
           posts:,
           media:,
           reviews:,
+          suggested_searches:,
           other_groups:,
           lookup: nil,
           searches: nil,
@@ -103,6 +111,7 @@ module NoResponse
           @posts = posts
           @media = media
           @reviews = reviews
+          @suggested_searches = suggested_searches
           @other_groups = other_groups
           @lookup = lookup
           @searches = searches
@@ -118,6 +127,7 @@ module NoResponse
           return false unless @posts == other.posts
           return false unless @media == other.media
           return false unless @reviews == other.reviews
+          return false unless @suggested_searches == other.suggested_searches
           return false unless @other_groups == other.other_groups
           return false unless @lookup == other.lookup
           return false unless @searches == other.searches

@@ -42,6 +42,12 @@ class NoResponse::Models::Shared::PersonReport
   def reviews=(str_)
   end
 
+  def suggested_searches
+  end
+
+  def suggested_searches=(str_)
+  end
+
   def other_groups
   end
 

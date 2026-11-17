@@ -239,6 +239,8 @@ module NoResponse
       autoload :RotateWebhookSigningKeyResponse, "no_response/models/operations/rotatewebhooksigningkey_response.rb"
       autoload :RunSearchRequest, "no_response/models/operations/runsearch_request.rb"
       autoload :RunSearchResponse, "no_response/models/operations/runsearch_response.rb"
+      autoload :RunWorkspacePersonSearchRequest, "no_response/models/operations/runworkspacepersonsearch_request.rb"
+      autoload :RunWorkspacePersonSearchResponse, "no_response/models/operations/runworkspacepersonsearch_response.rb"
       autoload :SearchAccountsResponse, "no_response/models/operations/searchaccounts_response.rb"
       autoload :SearchAssessmentsResponse, "no_response/models/operations/searchassessments_response.rb"
       autoload :SendWebhookTestEventRequest, "no_response/models/operations/sendwebhooktestevent_request.rb"
@@ -247,6 +249,11 @@ module NoResponse
       autoload :StartScreeningResponse, "no_response/models/operations/startscreening_response.rb"
       autoload :StartSearchRequest, "no_response/models/operations/startsearch_request.rb"
       autoload :StartSearchResponse, "no_response/models/operations/startsearch_response.rb"
+      autoload :StartWorkspacePersonSearchRequest, "no_response/models/operations/startworkspacepersonsearch_request.rb"
+      autoload(
+        :StartWorkspacePersonSearchResponse,
+        "no_response/models/operations/startworkspacepersonsearch_response.rb"
+      )
       autoload(
         :SummarizeWorkspaceOperationsRequest,
         "no_response/models/operations/summarizeworkspaceoperations_request.rb"

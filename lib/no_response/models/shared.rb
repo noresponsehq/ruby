@@ -445,6 +445,8 @@ module NoResponse
       autoload :SigningSecret, "no_response/models/shared/signingsecret.rb"
       autoload :Source, "no_response/models/shared/source.rb"
       autoload :Status, "no_response/models/shared/status.rb"
+      autoload :SuggestedSearch, "no_response/models/shared/suggestedsearch.rb"
+      autoload :SuggestedSearchKind, "no_response/models/shared/suggestedsearchkind.rb"
       autoload :Thresholds, "no_response/models/shared/thresholds.rb"
       autoload :Topic, "no_response/models/shared/topic.rb"
       autoload :Transport, "no_response/models/shared/transport.rb"
