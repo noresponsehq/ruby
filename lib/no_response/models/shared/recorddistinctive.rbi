@@ -17,4 +17,22 @@ class NoResponse::Models::Shared::RecordDistinctive
 
   def reason=(str_)
   end
+
+  def rows
+  end
+
+  def rows=(str_)
+  end
+
+  def pwned
+  end
+
+  def pwned=(str_)
+  end
+
+  def bits
+  end
+
+  def bits=(str_)
+  end
 end
