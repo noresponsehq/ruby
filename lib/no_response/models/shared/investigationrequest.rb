@@ -22,15 +22,15 @@ module NoResponse
         )
 
         field(
-          :platforms,
-          Crystalline::Array.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms"), required: true}}
-        )
-
-        field(
           :person_id,
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("person_id"), required: true}}
+        )
+        # The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists.
+        field(
+          :platforms,
+          Crystalline::Nilable.new(Crystalline::Array.new(::String)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms")}}
         )
         # A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         field(
@@ -42,16 +42,16 @@ module NoResponse
         sig {
           params(
             depth: Models::Shared::ScreeningDepth,
-            platforms: T::Array[::String],
             person_id: ::String,
+            platforms: T.nilable(T::Array[::String]),
             enrichment: T.nilable(Models::Shared::EnrichmentChange)
           )
             .void
         }
-        def initialize(depth:, platforms:, person_id:, enrichment: nil)
+        def initialize(depth:, person_id:, platforms: nil, enrichment: nil)
           @depth = depth
-          @platforms = platforms
           @person_id = person_id
+          @platforms = platforms
           @enrichment = enrichment
         end
 
@@ -59,8 +59,8 @@ module NoResponse
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @depth == other.depth
-          return false unless @platforms == other.platforms
           return false unless @person_id == other.person_id
+          return false unless @platforms == other.platforms
           return false unless @enrichment == other.enrichment
           true
         end

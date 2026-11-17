@@ -20,15 +20,15 @@ module NoResponse
             }
           }
         )
-
+        # The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists.
         field(
           :platforms,
-          Crystalline::Array.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms"), required: true}}
+          Crystalline::Nilable.new(Crystalline::Array.new(::String)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms")}}
         )
 
-        sig { params(depth: Models::Shared::ScreeningDepth, platforms: T::Array[::String]).void }
-        def initialize(depth:, platforms:)
+        sig { params(depth: Models::Shared::ScreeningDepth, platforms: T.nilable(T::Array[::String])).void }
+        def initialize(depth:, platforms: nil)
           @depth = depth
           @platforms = platforms
         end

@@ -12,16 +12,16 @@ class NoResponse::Models::Shared::InvestigationRequest
   def depth=(str_)
   end
 
-  def platforms
-  end
-
-  def platforms=(str_)
-  end
-
   def person_id
   end
 
   def person_id=(str_)
+  end
+
+  def platforms
+  end
+
+  def platforms=(str_)
   end
 
   def enrichment
