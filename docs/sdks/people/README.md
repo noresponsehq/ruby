@@ -10,6 +10,7 @@ Workspace people, submitted identity, source evidence and expiry.
 * [create](#create) - Create or reuse a workspace person.
 * [get](#get) - Read a workspace person.
 * [delete](#delete) - Delete a workspace person.
+* [judge_record](#judge_record) - Join one of a workspace person's records to them, or reject it.
 
 ## list
 
@@ -180,6 +181,54 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::DeleteWorkspacePersonResponse)](../../models/operations/deleteworkspacepersonresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## judge_record
+
+Records a verdict on one of the records the person report holds: joined makes the record the person's whatever its likelihood, and rejected keeps it a lead that leads nowhere. The verdict belongs to the person on their own: the person report and enrichment follow it, and each group keeps its own verdicts. It sticks for as long as the person's evidence holds the same record, and a later verdict on the same record replaces it. After each verdict, enrichment reads the person again under the environment's enrichment setting: it starts no search from a rejected record or from what a search of it found, and a joined record's values lead on. A record the person report does not hold answers 404. Each verdict is audited as person.record_judged. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="judgeWorkspacePersonRecord" method="post" path="/v1/people/{person_id}/records" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.people.judge_record(person_id: 'per_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::RecordVerdictRequest.new(
+  record_id: 'rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7',
+  verdict: Models::Shared::Verdict::REJECTED
+))
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         | Example                                                                             |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `person_id`                                                                         | *::String*                                                                          | :heavy_check_mark:                                                                  | N/A                                                                                 | per_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                      |
+| `body`                                                                              | [Models::Shared::RecordVerdictRequest](../../models/shared/recordverdictrequest.md) | :heavy_check_mark:                                                                  | N/A                                                                                 |                                                                                     |
+
+### Response
+
+**[T.nilable(Models::Operations::JudgeWorkspacePersonRecordResponse)](../../models/operations/judgeworkspacepersonrecordresponse.md)**
 
 ### Errors
 

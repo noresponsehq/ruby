@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 1e48bfb8879697ad7580cffadb217361
+  docChecksum: a34fa6f03ee2cbf0860a17384cf4ab20
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 15.0.5
-  configChecksum: a6658982a84a0054d2a9f1e460d0bb51
+  releaseVersion: 15.0.6
+  configChecksum: 0202152d30fdbbe1bb4b4ba22f6019a4
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:3c642cb11a8cda9a06cb1f8e3d1338359c5669b1
+    last_write_checksum: sha1:df739b9639e08bee57140cbe5a405b41312bf5cf
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -281,6 +281,10 @@ trackedFiles:
     last_write_checksum: sha1:48f85dbdac32865d7709db9348398b345b84378f
   docs/models/operations/judgerecordresponse.md:
     last_write_checksum: sha1:33b22f59dc9b1b5d47075f70380ea774d594cec6
+  docs/models/operations/judgeworkspacepersonrecordrequest.md:
+    last_write_checksum: sha1:2685db2b2982c75211a96cd03fcda519a99d4d7c
+  docs/models/operations/judgeworkspacepersonrecordresponse.md:
+    last_write_checksum: sha1:d9ef441d3ab37b1e104be8710e8881fe119b28a0
   docs/models/operations/listaccountassessmentsrequest.md:
     last_write_checksum: sha1:f7cd1186801a22cba9cda06e0dea2e10be4efe59
   docs/models/operations/listaccountassessmentsresponse.md:
@@ -1580,7 +1584,7 @@ trackedFiles:
   docs/sdks/operations/README.md:
     last_write_checksum: sha1:20ffd47f37bc0024f498cd13cbda194fb9ee288c
   docs/sdks/people/README.md:
-    last_write_checksum: sha1:766905dd1d548e4347b3eb05d3c5875a6f0dc42e
+    last_write_checksum: sha1:00049a0b6504f0d28ec063c3233c3d7516d3069b
   docs/sdks/requests/README.md:
     last_write_checksum: sha1:0fc32fe039cefe61fa221fa60389ce40e7c062b3
   docs/sdks/reviews/README.md:
@@ -1664,7 +1668,7 @@ trackedFiles:
   lib/no_response/models/errors/ratelimiterror.rbi:
     last_write_checksum: sha1:66833328db41bcf5d46ba47d72d63c9b13ecd173
   lib/no_response/models/operations.rb:
-    last_write_checksum: sha1:43b9249d804184b98d9d71612c6b1f62cc5f9d97
+    last_write_checksum: sha1:c4442b9eece1ebe7a1f9ffaa424c31c31bb5f4b5
   lib/no_response/models/operations/addpeople_request.rb:
     last_write_checksum: sha1:393565e3483d60d37991212d8f93bbca45065f81
   lib/no_response/models/operations/addpeople_request.rbi:
@@ -2121,6 +2125,14 @@ trackedFiles:
     last_write_checksum: sha1:1663d4469b878772339fd6398af61484e84156e7
   lib/no_response/models/operations/judgerecord_response.rbi:
     last_write_checksum: sha1:72780f1d9c95c2ec42fdadbda22e6ffa8345a0d0
+  lib/no_response/models/operations/judgeworkspacepersonrecord_request.rb:
+    last_write_checksum: sha1:f47913c792c566c92ae6c3ef4b476b17a1e1dc58
+  lib/no_response/models/operations/judgeworkspacepersonrecord_request.rbi:
+    last_write_checksum: sha1:ec29f94e30fbd744a76fa214dfa100ef7429afca
+  lib/no_response/models/operations/judgeworkspacepersonrecord_response.rb:
+    last_write_checksum: sha1:3610fdecbae5c2a6f217ca070a31bad52007433a
+  lib/no_response/models/operations/judgeworkspacepersonrecord_response.rbi:
+    last_write_checksum: sha1:bf5b2ae13bae553367d8ab1cff036c7733d93cab
   lib/no_response/models/operations/listaccountassessments_request.rb:
     last_write_checksum: sha1:437b088e00702a2a83dd9ebfd355c31fe2dac77d
   lib/no_response/models/operations/listaccountassessments_request.rbi:
@@ -4664,7 +4676,7 @@ trackedFiles:
   lib/no_response/operations.rb:
     last_write_checksum: sha1:8b1d03faf812904834a0dcc4976f4a11ea75b474
   lib/no_response/people.rb:
-    last_write_checksum: sha1:9a4b6874f69ad381f896dfc5931e3707990b219e
+    last_write_checksum: sha1:b9ee79dc1915e19ec7660d7a4121f243c8dd7c03
   lib/no_response/requests.rb:
     last_write_checksum: sha1:7722f1ab9a8b0eb104f7e42fdb020290153f3dde
   lib/no_response/reviews.rb:
@@ -4674,7 +4686,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:140155c3db606439f00745f0f9335254b0f59234
+    last_write_checksum: sha1:eea94755d369615e2dca962d48d66847b6049be2
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4704,7 +4716,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:bfb44b6a118d53e72ad5b1b00cb95f84cbe657f3
   noresponse.gemspec:
-    last_write_checksum: sha1:d2e42d404be70999601449c7bd4518650314cdf7
+    last_write_checksum: sha1:8f5de6d7c021766cc8a47de617759e0c93d80cc6
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -7514,6 +7526,28 @@ examples:
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 404, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "not_found", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "409":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 409, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "too_many_integrations", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "429":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 429, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "assessment_budget_exhausted", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+  judgeWorkspacePersonRecord:
+    noresponse-default-judge-workspace-person-record:
+      parameters:
+        path:
+          person_id: "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+      requestBody:
+        application/json: {"record_id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "verdict": "rejected"}
+      responses:
+        "200":
+          application/json: {"record_id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "verdict": "rejected", "decided_by": "user_2abc", "decided_at": "2026-01-01T00:00:00Z"}
+        "400":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "webhook_url_refused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "401":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 401, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "unauthorized", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "403":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 403, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "onboarding_refused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "404":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 404, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "not_found", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "409":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 409, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "group_conflict", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "429":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 429, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "assessment_budget_exhausted", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
   listInvestigations:

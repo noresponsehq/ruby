@@ -124,6 +124,11 @@ module NoResponse
       autoload :GetWorkspacePersonResponse, "no_response/models/operations/getworkspaceperson_response.rb"
       autoload :JudgeRecordRequest, "no_response/models/operations/judgerecord_request.rb"
       autoload :JudgeRecordResponse, "no_response/models/operations/judgerecord_response.rb"
+      autoload :JudgeWorkspacePersonRecordRequest, "no_response/models/operations/judgeworkspacepersonrecord_request.rb"
+      autoload(
+        :JudgeWorkspacePersonRecordResponse,
+        "no_response/models/operations/judgeworkspacepersonrecord_response.rb"
+      )
       autoload :ListAccountAssessmentsRequest, "no_response/models/operations/listaccountassessments_request.rb"
       autoload :ListAccountAssessmentsResponse, "no_response/models/operations/listaccountassessments_response.rb"
       autoload :ListAccountCredentialsRequest, "no_response/models/operations/listaccountcredentials_request.rb"
