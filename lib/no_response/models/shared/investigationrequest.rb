@@ -32,12 +32,27 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("person_id"), required: true}}
         )
+        # A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
+        field(
+          :enrichment,
+          Crystalline::Nilable.new(Models::Shared::EnrichmentChange),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("enrichment")}}
+        )
 
-        sig { params(depth: Models::Shared::ScreeningDepth, platforms: T::Array[::String], person_id: ::String).void }
-        def initialize(depth:, platforms:, person_id:)
+        sig {
+          params(
+            depth: Models::Shared::ScreeningDepth,
+            platforms: T::Array[::String],
+            person_id: ::String,
+            enrichment: T.nilable(Models::Shared::EnrichmentChange)
+          )
+            .void
+        }
+        def initialize(depth:, platforms:, person_id:, enrichment: nil)
           @depth = depth
           @platforms = platforms
           @person_id = person_id
+          @enrichment = enrichment
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -46,6 +61,7 @@ module NoResponse
           return false unless @depth == other.depth
           return false unless @platforms == other.platforms
           return false unless @person_id == other.person_id
+          return false unless @enrichment == other.enrichment
           true
         end
       end

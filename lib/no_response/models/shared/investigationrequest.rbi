@@ -23,4 +23,10 @@ class NoResponse::Models::Shared::InvestigationRequest
 
   def person_id=(str_)
   end
+
+  def enrichment
+  end
+
+  def enrichment=(str_)
+  end
 end

@@ -1,0 +1,80 @@
+# typed: true
+# frozen_string_literal: true
+
+module NoResponse
+  module Models
+    module Shared
+      # How enrichment searches the values a standalone investigation of a workspace person finds (POST /v1/investigations); group screening only suggests. Defaults: mode automatic, min_likelihood 0.5, kinds username, max_spend null and deadline null. An investigation request may override each field for that investigation. A change applies to the next search enrichment starts, investigations already run included. Enrichment also keeps to limits of its own: each value once per person (once more if that search failed), at most 5 searches from one search's records, 20 per person and 6 searches deep.
+      class Enrichment
+        extend T::Sig
+        include Crystalline::MetadataFields
+
+        # off: enrichment starts no search. suggest: enrichment starts no search by itself. automatic: after a workspace person's own investigation, and each time a search on that person finishes, enrichment starts searches by itself.
+        field(
+          :mode,
+          Models::Shared::EnrichmentMode,
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("mode"),
+              required: true,
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::EnrichmentMode, false)
+            }
+          }
+        )
+        # Enrichment searches values only from records more likely than this to be the person's, 0 to 0.99.
+        field(
+          :min_likelihood,
+          ::Float,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("min_likelihood"), required: true}}
+        )
+        # The kinds of value enrichment searches: distinctive usernames, and email addresses and phone numbers, which belong to one person each.
+        field(
+          :kinds,
+          Crystalline::Array.new(Models::Shared::EnrichmentKind),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("kinds"), required: true}}
+        )
+        # The most enrichment may spend on a person from one investigation, in minor units of USD (cents): each search it started after that investigation started counts its estimate or what it spent, whichever is more. At the bound enrichment starts nothing more for that investigation. null: only the environment's screening_daily_cap bounds it.
+        field(
+          :max_spend,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("max_spend"), required: true}}
+        )
+        # How long enrichment may start searches after an investigation starts, 60 to 2592000 seconds. null: no deadline.
+        field(
+          :deadline,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("deadline"), required: true}}
+        )
+
+        sig {
+          params(
+            mode: Models::Shared::EnrichmentMode,
+            min_likelihood: ::Float,
+            kinds: T::Array[Models::Shared::EnrichmentKind],
+            max_spend: T.nilable(::Integer),
+            deadline: T.nilable(::Integer)
+          )
+            .void
+        }
+        def initialize(mode:, min_likelihood:, kinds:, max_spend: nil, deadline: nil)
+          @mode = mode
+          @min_likelihood = min_likelihood
+          @kinds = kinds
+          @max_spend = max_spend
+          @deadline = deadline
+        end
+
+        sig { params(other: T.untyped).returns(T::Boolean) }
+        def ==(other)
+          return false unless other.is_a?(self.class)
+          return false unless @mode == other.mode
+          return false unless @min_likelihood == other.min_likelihood
+          return false unless @kinds == other.kinds
+          return false unless @max_spend == other.max_spend
+          return false unless @deadline == other.deadline
+          true
+        end
+      end
+    end
+  end
+end

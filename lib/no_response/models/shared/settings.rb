@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, the sources it refuses, and the daily cap on screening spend. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it.
+      # One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, the sources it refuses, the daily cap on screening spend, and how enrichment searches what an investigation finds. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it.
       class Settings
         extend T::Sig
         include Crystalline::MetadataFields
@@ -51,6 +51,12 @@ module NoResponse
           Crystalline::Array.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("refused_sources"), required: true}}
         )
+        # How enrichment searches the values a standalone investigation of a workspace person finds (POST /v1/investigations); group screening only suggests. Defaults: mode automatic, min_likelihood 0.5, kinds username, max_spend null and deadline null. An investigation request may override each field for that investigation. A change applies to the next search enrichment starts, investigations already run included. Enrichment also keeps to limits of its own: each value once per person (once more if that search failed), at most 5 searches from one search's records, 20 per person and 6 searches deep.
+        field(
+          :enrichment,
+          Models::Shared::Enrichment,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("enrichment"), required: true}}
+        )
         # Who last changed the policy: the member's external user id for a change made through the console, the prefix (nrk_<environment>_<key id>) of the management key that made it, or NoResponse. Absent while the defaults apply.
         field(
           :updated_by,
@@ -78,6 +84,7 @@ module NoResponse
             policy_version: ::Integer,
             flows: Models::Shared::SettingsFlows,
             refused_sources: T::Array[::String],
+            enrichment: Models::Shared::Enrichment,
             updated_by: T.nilable(::String),
             updated_at: T.nilable(::String),
             screening_daily_cap: T.nilable(::Integer)
@@ -91,6 +98,7 @@ module NoResponse
           policy_version:,
           flows:,
           refused_sources:,
+          enrichment:,
           updated_by: nil,
           updated_at: nil,
           screening_daily_cap: nil
@@ -101,6 +109,7 @@ module NoResponse
           @policy_version = policy_version
           @flows = flows
           @refused_sources = refused_sources
+          @enrichment = enrichment
           @updated_by = updated_by
           @updated_at = updated_at
           @screening_daily_cap = screening_daily_cap
@@ -115,6 +124,7 @@ module NoResponse
           return false unless @policy_version == other.policy_version
           return false unless @flows == other.flows
           return false unless @refused_sources == other.refused_sources
+          return false unless @enrichment == other.enrichment
           return false unless @updated_by == other.updated_by
           return false unless @updated_at == other.updated_at
           return false unless @screening_daily_cap == other.screening_daily_cap

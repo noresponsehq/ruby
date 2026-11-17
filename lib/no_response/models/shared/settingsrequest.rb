@@ -20,6 +20,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(::String)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("refused_sources")}}
         )
+        # A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
+        field(
+          :enrichment,
+          Crystalline::Nilable.new(Models::Shared::EnrichmentChange),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("enrichment")}}
+        )
         # Use account_creation or its deprecated alias signup, not both.
         field(
           :flows,
@@ -49,6 +55,7 @@ module NoResponse
           params(
             retention_days: T.nilable(::Integer),
             refused_sources: T.nilable(T::Array[::String]),
+            enrichment: T.nilable(Models::Shared::EnrichmentChange),
             flows: T.nilable(Models::Shared::SettingsRequestFlows),
             expected_policy_version: T.nilable(::Integer),
             change_reason: T.nilable(::String),
@@ -59,6 +66,7 @@ module NoResponse
         def initialize(
           retention_days: nil,
           refused_sources: nil,
+          enrichment: nil,
           flows: nil,
           expected_policy_version: nil,
           change_reason: nil,
@@ -66,6 +74,7 @@ module NoResponse
         )
           @retention_days = retention_days
           @refused_sources = refused_sources
+          @enrichment = enrichment
           @flows = flows
           @expected_policy_version = expected_policy_version
           @change_reason = change_reason
@@ -77,6 +86,7 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @retention_days == other.retention_days
           return false unless @refused_sources == other.refused_sources
+          return false unless @enrichment == other.enrichment
           return false unless @flows == other.flows
           return false unless @expected_policy_version == other.expected_policy_version
           return false unless @change_reason == other.change_reason

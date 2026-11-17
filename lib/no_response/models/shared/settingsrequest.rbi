@@ -18,6 +18,12 @@ class NoResponse::Models::Shared::SettingsRequest
   def refused_sources=(str_)
   end
 
+  def enrichment
+  end
+
+  def enrichment=(str_)
+  end
+
   def flows
   end
 

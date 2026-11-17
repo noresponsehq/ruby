@@ -42,6 +42,12 @@ class NoResponse::Models::Shared::Settings
   def refused_sources=(str_)
   end
 
+  def enrichment
+  end
+
+  def enrichment=(str_)
+  end
+
   def updated_by
   end
 
