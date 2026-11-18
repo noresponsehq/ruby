@@ -61,6 +61,12 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::RecordDistinctive),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("distinctive")}}
         )
+        # True when the value tells an investigator nothing on its own: a setting flag, a zero count, a bare number or a value with no letter or digit, in a field with no role. A field with a role is not noise. Investigation views hide noise by default; the field is still returned in full.
+        field(
+          :noise,
+          Crystalline::Nilable.new(Crystalline::Boolean.new),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("noise")}}
+        )
 
         sig {
           params(
@@ -70,11 +76,12 @@ module NoResponse
             role: T.nilable(Models::Shared::RecordRole),
             value: T.nilable(::String),
             detail: T.nilable(::String),
-            distinctive: T.nilable(Models::Shared::RecordDistinctive)
+            distinctive: T.nilable(Models::Shared::RecordDistinctive),
+            noise: T.nilable(T::Boolean)
           )
             .void
         }
-        def initialize(field:, original:, kind: nil, role: nil, value: nil, detail: nil, distinctive: nil)
+        def initialize(field:, original:, kind: nil, role: nil, value: nil, detail: nil, distinctive: nil, noise: nil)
           @field = field
           @original = original
           @kind = kind
@@ -82,6 +89,7 @@ module NoResponse
           @value = value
           @detail = detail
           @distinctive = distinctive
+          @noise = noise
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -94,6 +102,7 @@ module NoResponse
           return false unless @value == other.value
           return false unless @detail == other.detail
           return false unless @distinctive == other.distinctive
+          return false unless @noise == other.noise
           true
         end
       end

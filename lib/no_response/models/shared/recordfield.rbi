@@ -47,4 +47,10 @@ class NoResponse::Models::Shared::RecordField
 
   def distinctive=(str_)
   end
+
+  def noise
+  end
+
+  def noise=(str_)
+  end
 end
