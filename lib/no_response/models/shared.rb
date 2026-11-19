@@ -344,6 +344,8 @@ module NoResponse
       autoload :Recommendation, "no_response/models/shared/recommendation.rb"
       autoload :Record, "no_response/models/shared/record.rb"
       autoload :RecordDistinctive, "no_response/models/shared/recorddistinctive.rb"
+      autoload :RecordEvidence, "no_response/models/shared/recordevidence.rb"
+      autoload :RecordEvidenceSignal, "no_response/models/shared/recordevidencesignal.rb"
       autoload :RecordField, "no_response/models/shared/recordfield.rb"
       autoload :RecordKind, "no_response/models/shared/recordkind.rb"
       autoload :RecordMatch, "no_response/models/shared/recordmatch.rb"

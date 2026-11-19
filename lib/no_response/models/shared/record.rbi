@@ -65,4 +65,16 @@ class NoResponse::Models::Shared::Record
 
   def verdict=(str_)
   end
+
+  def evidence
+  end
+
+  def evidence=(str_)
+  end
+
+  def path
+  end
+
+  def path=(str_)
+  end
 end

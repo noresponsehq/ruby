@@ -70,6 +70,18 @@ module NoResponse
             }
           }
         )
+        # Why the record has its likelihood, as the items that make it up: what found it and each value it agrees or clashes with, each with its weight in bits. The bits add up to the likelihood before rounding: likelihood = 1 / (1 + 2^-sum). Only the strongest agreement of each kind counts, and a place counts once however many of its city, region, country and address agree. Present on a person's lookup records that have any such item.
+        field(
+          :evidence,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RecordEvidence)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("evidence")}}
+        )
+        # How the record connects to what the investigator gave: given first, then the ids of the joined records it reached the person through, nearest last. Each step follows what found the record before the strongest agreement. A record with no link to the person has no path.
+        field(
+          :path,
+          Crystalline::Nilable.new(Crystalline::Array.new(::String)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("path")}}
+        )
 
         sig {
           params(
@@ -82,7 +94,9 @@ module NoResponse
             agreed: T.nilable(T::Array[::String]),
             clashed: T.nilable(T::Array[::String]),
             joined: T.nilable(T::Boolean),
-            verdict: T.nilable(Models::Shared::Verdict)
+            verdict: T.nilable(Models::Shared::Verdict),
+            evidence: T.nilable(T::Array[Models::Shared::RecordEvidence]),
+            path: T.nilable(T::Array[::String])
           )
             .void
         }
@@ -96,7 +110,9 @@ module NoResponse
           agreed: nil,
           clashed: nil,
           joined: nil,
-          verdict: nil
+          verdict: nil,
+          evidence: nil,
+          path: nil
         )
           @id = id
           @source = source
@@ -108,6 +124,8 @@ module NoResponse
           @clashed = clashed
           @joined = joined
           @verdict = verdict
+          @evidence = evidence
+          @path = path
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -123,6 +141,8 @@ module NoResponse
           return false unless @clashed == other.clashed
           return false unless @joined == other.joined
           return false unless @verdict == other.verdict
+          return false unless @evidence == other.evidence
+          return false unless @path == other.path
           true
         end
       end
