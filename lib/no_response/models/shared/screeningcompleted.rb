@@ -33,7 +33,7 @@ module NoResponse
             }
           }
         )
-        # Every person the screening set out to reach: those no screening had reached and those on watch or escalated.
+        # Every person the screening set out to reach: those no screening had reached.
         field(
           :people_total,
           ::Integer,

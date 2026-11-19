@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # Screens the group's people no screening has reached and everyone on watch or escalated.
+      # Screens the group's people no screening has reached.
       class ScreeningRequest
         extend T::Sig
         include Crystalline::MetadataFields

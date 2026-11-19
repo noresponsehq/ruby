@@ -923,7 +923,7 @@ module NoResponse
     }
     def review(body:, investigation_id:, timeout_ms: nil, http_headers: nil)
       # Method: review - Record an investigation decision.
-      # Record an investigation decision. The API key determines the workspace and environment.
+      # Record an investigation decision. Deprecated: decisions are leaving people and groups. The console no longer records them and no screening reads them. This route is removed in the next contract release; stop calling it. The API key determines the workspace and environment.
       request = Models::Operations::ReviewInvestigationRequest.new(
         investigation_id: investigation_id,
         body: body
