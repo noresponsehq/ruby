@@ -65,4 +65,16 @@ class NoResponse::Models::Shared::ScreeningCoverage
 
   def not_searched=(str_)
   end
+
+  def sources
+  end
+
+  def sources=(str_)
+  end
+
+  def timing
+  end
+
+  def timing=(str_)
+  end
 end

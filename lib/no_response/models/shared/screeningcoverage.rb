@@ -68,6 +68,18 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(::String)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("not_searched")}}
         )
+        # How many sources this search asked and how many answered, across the lookup stage (sources asked whether an account exists for an identifier) and the platform stage (profiles read on each platform). A source that answered may have found nothing; one that did not answer failed or ran out of time.
+        field(
+          :sources,
+          Crystalline::Nilable.new(Models::Shared::ScreeningCoverageSources),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("sources")}}
+        )
+        # How long this search's latest attempt took, stage by stage. started_at minus the investigation's creation is the time spent queued or retrying.
+        field(
+          :timing,
+          Crystalline::Nilable.new(Models::Shared::ScreeningCoverageTiming),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("timing")}}
+        )
 
         sig {
           params(
@@ -80,7 +92,9 @@ module NoResponse
             items_frame_only: T.nilable(::Integer),
             period_from: T.nilable(::String),
             period_to: T.nilable(::String),
-            not_searched: T.nilable(T::Array[::String])
+            not_searched: T.nilable(T::Array[::String]),
+            sources: T.nilable(Models::Shared::ScreeningCoverageSources),
+            timing: T.nilable(Models::Shared::ScreeningCoverageTiming)
           )
             .void
         }
@@ -94,7 +108,9 @@ module NoResponse
           items_frame_only: nil,
           period_from: nil,
           period_to: nil,
-          not_searched: nil
+          not_searched: nil,
+          sources: nil,
+          timing: nil
         )
           @accounts_found = accounts_found
           @accounts_accessible = accounts_accessible
@@ -106,6 +122,8 @@ module NoResponse
           @period_from = period_from
           @period_to = period_to
           @not_searched = not_searched
+          @sources = sources
+          @timing = timing
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -121,6 +139,8 @@ module NoResponse
           return false unless @period_from == other.period_from
           return false unless @period_to == other.period_to
           return false unless @not_searched == other.not_searched
+          return false unless @sources == other.sources
+          return false unless @timing == other.timing
           true
         end
       end
