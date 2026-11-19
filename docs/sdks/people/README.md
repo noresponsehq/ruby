@@ -13,6 +13,7 @@ Workspace people, submitted identity, source evidence and expiry.
 * [judge_record](#judge_record) - Join one of a workspace person's records to them, or reject it.
 * [start_search](#start_search) - Search again on a value of one of a workspace person's records.
 * [run_search](#run_search) - Run a counted password or hash search on a workspace person.
+* [review_change](#review_change) - Mark a change on a workspace person reviewed.
 
 ## list
 
@@ -329,6 +330,52 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::RunWorkspacePersonSearchResponse)](../../models/operations/runworkspacepersonsearchresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## review_change
+
+Marks one change between a person's investigations reviewed, so it sorts below the unreviewed ones. Reviewing again keeps the first reviewer and time. Reviewing a change is not a decision on the person. The body is an empty object. Each review is audited as person.change_reviewed. The decisions scope grants this operation. Explicit evidence.read restrictions withhold before and after. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="reviewWorkspacePersonChange" method="post" path="/v1/people/{person_id}/changes/{change_id}/review" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.people.review_change(person_id: 'per_01JA2Z8K6Q4V7W9XBCDEFGHJKM', change_id: 'chg_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::ScreeningCancelRequest.new)
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             | Example                                                                                 |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `person_id`                                                                             | *::String*                                                                              | :heavy_check_mark:                                                                      | N/A                                                                                     | per_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                          |
+| `change_id`                                                                             | *::String*                                                                              | :heavy_check_mark:                                                                      | N/A                                                                                     | chg_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                          |
+| `body`                                                                                  | [Models::Shared::ScreeningCancelRequest](../../models/shared/screeningcancelrequest.md) | :heavy_check_mark:                                                                      | N/A                                                                                     |                                                                                         |
+
+### Response
+
+**[T.nilable(Models::Operations::ReviewWorkspacePersonChangeResponse)](../../models/operations/reviewworkspacepersonchangeresponse.md)**
 
 ### Errors
 

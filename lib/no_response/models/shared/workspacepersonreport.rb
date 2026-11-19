@@ -58,6 +58,12 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::SuggestedSearch),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("suggested_searches"), required: true}}
         )
+        # What changed between each settled investigation of this person and the one before it, unreviewed first, then most significant, then newest. The first investigation records no changes. When evidence.read is denied, before and after are withheld.
+        field(
+          :changes,
+          Crystalline::Array.new(Models::Shared::PersonChange),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("changes"), required: true}}
+        )
         # Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person.
         field(
           :external_id,
@@ -148,6 +154,7 @@ module NoResponse
             posts: T::Array[Models::Shared::ScreeningPost],
             media: T::Array[Models::Shared::ScreeningMedia],
             suggested_searches: T::Array[Models::Shared::SuggestedSearch],
+            changes: T::Array[Models::Shared::PersonChange],
             external_id: T.nilable(::String),
             name: T.nilable(::String),
             email: T.nilable(::String),
@@ -174,6 +181,7 @@ module NoResponse
           posts:,
           media:,
           suggested_searches:,
+          changes:,
           external_id: nil,
           name: nil,
           email: nil,
@@ -197,6 +205,7 @@ module NoResponse
           @posts = posts
           @media = media
           @suggested_searches = suggested_searches
+          @changes = changes
           @external_id = external_id
           @name = name
           @email = email
@@ -224,6 +233,7 @@ module NoResponse
           return false unless @posts == other.posts
           return false unless @media == other.media
           return false unless @suggested_searches == other.suggested_searches
+          return false unless @changes == other.changes
           return false unless @external_id == other.external_id
           return false unless @name == other.name
           return false unless @email == other.email

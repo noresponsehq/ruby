@@ -60,6 +60,12 @@ class NoResponse::Models::Shared::WorkspacePersonReport
   def suggested_searches=(str_)
   end
 
+  def changes
+  end
+
+  def changes=(str_)
+  end
+
   def external_id
   end
 

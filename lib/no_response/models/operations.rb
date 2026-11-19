@@ -228,6 +228,14 @@ module NoResponse
       autoload :ReviewInvestigationResponse, "no_response/models/operations/reviewinvestigation_response.rb"
       autoload :ReviewPersonRequest, "no_response/models/operations/reviewperson_request.rb"
       autoload :ReviewPersonResponse, "no_response/models/operations/reviewperson_response.rb"
+      autoload(
+        :ReviewWorkspacePersonChangeRequest,
+        "no_response/models/operations/reviewworkspacepersonchange_request.rb"
+      )
+      autoload(
+        :ReviewWorkspacePersonChangeResponse,
+        "no_response/models/operations/reviewworkspacepersonchange_response.rb"
+      )
       autoload :RevokeInviteRequest, "no_response/models/operations/revokeinvite_request.rb"
       autoload :RevokeInviteResponse, "no_response/models/operations/revokeinvite_response.rb"
       autoload :RevokeKeyRequest, "no_response/models/operations/revokekey_request.rb"
