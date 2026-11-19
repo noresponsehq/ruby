@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 7a76f0da6f94acbf2d5b801800afbbe6
+  docChecksum: afecbe3b77aa9807e59b79618eb7728f
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 18.0.0
-  configChecksum: aa0e55211d954926874ee9558af264e2
+  releaseVersion: 18.0.1
+  configChecksum: 75b1094202fcb27e9cbb1bd8dabdea75
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:054a55c2c95158a19e65a1ee73dfdd330b481bee
+    last_write_checksum: sha1:eee4947d0e14141a52845718c3450a052b6ab763
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -1576,7 +1576,7 @@ trackedFiles:
   docs/sdks/exports/README.md:
     last_write_checksum: sha1:d39868118e044163371da6dfebee15e20ced21ed
   docs/sdks/groups/README.md:
-    last_write_checksum: sha1:26ea3e5425afc576bc97f67aaafad841838239ed
+    last_write_checksum: sha1:62202e6f908e22ef25a9a44aca3143a4dc5b8d89
   docs/sdks/integrations/README.md:
     last_write_checksum: sha1:a7a3faf22283dc478cf70336b2bd570456526892
   docs/sdks/investigations/README.md:
@@ -1630,7 +1630,7 @@ trackedFiles:
   lib/no_response/exports.rb:
     last_write_checksum: sha1:302419a7ba7c7395a2a65a9bc5ff609b0afcc4a2
   lib/no_response/groups.rb:
-    last_write_checksum: sha1:e8d8cfe5cff1c618705076c065a51e2d7e301fc1
+    last_write_checksum: sha1:42f64fe31c9df49a9ae053714dd677601aec0da5
   lib/no_response/integrations.rb:
     last_write_checksum: sha1:54c86714662890102e5855bcf94c4d5fc4a184cc
   lib/no_response/investigations.rb:
@@ -4716,7 +4716,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:6fbfd47298b89b70f3572e61c75d0022c9f350de
+    last_write_checksum: sha1:5a6f0255d32b927bd40a236ed3da0cf4ef5fdadc
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4746,7 +4746,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:bfb44b6a118d53e72ad5b1b00cb95f84cbe657f3
   noresponse.gemspec:
-    last_write_checksum: sha1:1d3ec3aa2be1fb44ba1a89df32cf3b7b237ccc2a
+    last_write_checksum: sha1:ab60abe1fa7346d71052a8b304d3fd3172aa6d90
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
