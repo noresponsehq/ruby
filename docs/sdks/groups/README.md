@@ -284,7 +284,7 @@ end
 
 ## list_people
 
-The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+The roster in upload order, with each person's role, match state and decision. Filter by decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
 ### Example Usage
 
@@ -296,11 +296,7 @@ Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-
-req = Models::Operations::ListPeopleRequest.new(
-  group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM'
-)
-res = s.groups.list_people(request: req)
+res = s.groups.list_people(group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM', limit: 100)
 
 unless res.nil?
   # handle response
@@ -310,9 +306,13 @@ end
 
 ### Parameters
 
-| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `request`                                                                             | [Models::Operations::ListPeopleRequest](../../models/operations/listpeoplerequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                | Example                                                                                    |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `group_id`                                                                                 | *::String*                                                                                 | :heavy_check_mark:                                                                         | N/A                                                                                        | grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                             |
+| `limit`                                                                                    | *T.nilable(::Integer)*                                                                     | :heavy_minus_sign:                                                                         | At most this many people.                                                                  |                                                                                            |
+| `after`                                                                                    | *T.nilable(::String)*                                                                      | :heavy_minus_sign:                                                                         | Read people after this one.                                                                |                                                                                            |
+| `decision`                                                                                 | [T.nilable(Models::Shared::ListPeopleDecision)](../../models/shared/listpeopledecision.md) | :heavy_minus_sign:                                                                         | Only people with this decision; undecided for none yet.                                    |                                                                                            |
+| `role`                                                                                     | [T.nilable(Models::Shared::ListPeopleRole)](../../models/shared/listpeoplerole.md)         | :heavy_minus_sign:                                                                         | Only people with this role; unstated for people whose role was not given.                  |                                                                                            |
 
 ### Response
 
@@ -332,7 +332,7 @@ end
 
 ## add_people
 
-Adds 1 to 500 workspace people to this group, at most 512 KiB. An explicit person_id or external_id reuses the named workspace person. A reference-only row keeps submitted details; an identity supplied with that reference replaces those details. A shared email or phone only suggests matches and does not merge people. Each person's match, band and coverage in the group come from their latest investigation; a changed identity sets aside investigations started before the change, and prior investigation history remains available. Identities are encrypted under the workspace key. Idempotency-Key is required: the same key and body return the original import result with Idempotent-Replayed: true while its people remain retained. An expired or deleted imported person answers 404; expired or deleted match suggestions are omitted. A different body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation; groups is also accepted. Suggested matches require people-read access. The API key selects the workspace and environment.
+Adds 1 to 500 workspace people to this group, at most 512 KiB. An explicit person_id or external_id reuses the named workspace person. A reference-only row keeps submitted details; an identity supplied with that reference replaces those details. A shared email or phone only suggests matches and does not merge people. Each person's match and coverage in the group come from their latest investigation; a changed identity sets aside investigations started before the change, and prior investigation history remains available. Identities are encrypted under the workspace key. Idempotency-Key is required: the same key and body return the original import result with Idempotent-Replayed: true while its people remain retained. An expired or deleted imported person answers 404; expired or deleted match suggestions are omitted. A different body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation; groups is also accepted. Suggested matches require people-read access. The API key selects the workspace and environment.
 
 ### Example Usage
 
@@ -863,11 +863,7 @@ Models = ::NoResponse::Models
 s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
-
-req = Models::Operations::ExportPeopleRequest.new(
-  group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM'
-)
-res = s.groups.export_people(request: req)
+res = s.groups.export_people(group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM', limit: 100)
 
 unless res.nil?
   # handle response
@@ -877,9 +873,13 @@ end
 
 ### Parameters
 
-| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `request`                                                                                 | [Models::Operations::ExportPeopleRequest](../../models/operations/exportpeoplerequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                | Example                                                                                    |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `group_id`                                                                                 | *::String*                                                                                 | :heavy_check_mark:                                                                         | N/A                                                                                        | grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                             |
+| `limit`                                                                                    | *T.nilable(::Integer)*                                                                     | :heavy_minus_sign:                                                                         | At most this many people.                                                                  |                                                                                            |
+| `after`                                                                                    | *T.nilable(::String)*                                                                      | :heavy_minus_sign:                                                                         | Read people after this one.                                                                |                                                                                            |
+| `decision`                                                                                 | [T.nilable(Models::Shared::ListPeopleDecision)](../../models/shared/listpeopledecision.md) | :heavy_minus_sign:                                                                         | Only people with this decision; undecided for none yet.                                    |                                                                                            |
+| `role`                                                                                     | [T.nilable(Models::Shared::ListPeopleRole)](../../models/shared/listpeoplerole.md)         | :heavy_minus_sign:                                                                         | Only people with this role; unstated for people whose role was not given.                  |                                                                                            |
 
 ### Response
 

@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-
+      # Stage - ai_typing and analysis appear only on searches recorded before the engine stopped analysing results.
       class Stage
         include ::Crystalline::Enum
         enums do

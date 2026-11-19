@@ -27,7 +27,6 @@ class WebhookVectorTest < Minitest::Test
     'audit.event' => Shared::AuditEventEvent,
     'screening.completed' => Shared::ScreeningCompletedEvent,
     'investigation.completed' => Shared::InvestigationCompletedEvent,
-    'person.flagged' => Shared::PersonFlaggedEvent,
     'person.decided' => Shared::PersonDecidedEvent
   }.freeze
 

@@ -66,12 +66,6 @@ class NoResponse::Models::Shared::Investigation
   def deadline_at=(str_)
   end
 
-  def highest_band
-  end
-
-  def highest_band=(str_)
-  end
-
   def decision
   end
 

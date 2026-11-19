@@ -60,12 +60,6 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("cover_of")}}
         )
-        # true on a video the analyser read from its cover frame (the image whose cover_of names it) and its caption alone. Left out otherwise.
-        field(
-          :frame_only,
-          Crystalline::Nilable.new(Crystalline::Boolean.new),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("frame_only")}}
-        )
         # The caption or alt text.
         field(
           :text,
@@ -96,7 +90,6 @@ module NoResponse
             kind: ::String,
             post_id: T.nilable(::String),
             cover_of: T.nilable(::String),
-            frame_only: T.nilable(T::Boolean),
             text: T.nilable(::String),
             screenshot_sha256: T.nilable(::String),
             captured_at: T.nilable(::String)
@@ -113,7 +106,6 @@ module NoResponse
           kind: "media",
           post_id: nil,
           cover_of: nil,
-          frame_only: nil,
           text: nil,
           screenshot_sha256: nil,
           captured_at: nil
@@ -131,7 +123,6 @@ module NoResponse
           @kind = "media"
           @post_id = post_id
           @cover_of = cover_of
-          @frame_only = frame_only
           @text = text
           @screenshot_sha256 = screenshot_sha256
           @captured_at = captured_at
@@ -149,7 +140,6 @@ module NoResponse
           return false unless @kind == other.kind
           return false unless @post_id == other.post_id
           return false unless @cover_of == other.cover_of
-          return false unless @frame_only == other.frame_only
           return false unless @text == other.text
           return false unless @screenshot_sha256 == other.screenshot_sha256
           return false unless @captured_at == other.captured_at

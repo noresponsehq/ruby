@@ -16,12 +16,6 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'query_param': {'field_name': "after", 'style': "form", 'explode': true}}
         )
-        # Only people whose highest finding has this band; none for people with no finding.
-        field(
-          :band,
-          Crystalline::Nilable.new(Models::Shared::ListPeopleBand),
-          {'query_param': {'field_name': "band", 'style': "form", 'explode': true}}
-        )
         # Only people with this decision; undecided for none yet.
         field(
           :decision,
@@ -45,17 +39,15 @@ module NoResponse
           params(
             group_id: ::String,
             after: T.nilable(::String),
-            band: T.nilable(Models::Shared::ListPeopleBand),
             decision: T.nilable(Models::Shared::ListPeopleDecision),
             role: T.nilable(Models::Shared::ListPeopleRole),
             limit: T.nilable(::Integer)
           )
             .void
         }
-        def initialize(group_id:, after: nil, band: nil, decision: nil, role: nil, limit: 100)
+        def initialize(group_id:, after: nil, decision: nil, role: nil, limit: 100)
           @group_id = group_id
           @after = after
-          @band = band
           @decision = decision
           @role = role
           @limit = limit
@@ -66,7 +58,6 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @group_id == other.group_id
           return false unless @after == other.after
-          return false unless @band == other.band
           return false unless @decision == other.decision
           return false unless @role == other.role
           return false unless @limit == other.limit

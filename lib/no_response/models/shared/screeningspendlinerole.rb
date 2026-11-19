@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-
+      # ScreeningSpendLineRole - What the implementation did. analyser appears only on spend recorded before the engine stopped analysing posts.
       class ScreeningSpendLineRole
         include ::Crystalline::Enum
         enums do

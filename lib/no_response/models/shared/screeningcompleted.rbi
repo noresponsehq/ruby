@@ -36,18 +36,6 @@ class NoResponse::Models::Shared::ScreeningCompleted
   def people_screened=(str_)
   end
 
-  def people_flagged
-  end
-
-  def people_flagged=(str_)
-  end
-
-  def by_band
-  end
-
-  def by_band=(str_)
-  end
-
   def no_footprint
   end
 

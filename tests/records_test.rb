@@ -72,7 +72,7 @@ class RecordsTest < Minitest::Test
     group = models::Group.from_dict(JSON.parse('{"id":"grp_example","environment":"test","name":"Harbour building","starts_at":null,"ends_at":null,"principals":[],"topics":[],"people":0,"version":1,"created_by":"test","created_at":"2026-11-15T10:00:00Z","updated_at":"2026-11-15T10:00:00Z"}'))
     assert_nil group.starts_at
     assert_nil group.ends_at
-    other = models::OtherGroup.from_dict(JSON.parse('{"group_id":"grp_building","group_name":"Harbour building","group_starts_at":null,"person_id":"per_example","matched_on":["person_id"],"match_state":"unscreened","highest_band":null,"decision":null}'))
+    other = models::OtherGroup.from_dict(JSON.parse('{"group_id":"grp_building","group_name":"Harbour building","group_starts_at":null,"person_id":"per_example","matched_on":["person_id"],"match_state":"unscreened","decision":null}'))
     assert_nil other.group_starts_at
   end
 end

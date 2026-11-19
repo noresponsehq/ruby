@@ -77,18 +77,6 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("deadline_at"), required: true}}
         )
-        # The most severe finding's band, or null when nothing was flagged.
-        field(
-          :highest_band,
-          Crystalline::Nilable.new(Models::Shared::HighestBand),
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("highest_band"),
-              required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::HighestBand, false)
-            }
-          }
-        )
         # The latest reviewer decision, or null before any.
         field(
           :decision,
@@ -168,7 +156,6 @@ module NoResponse
             created_at: ::String,
             expires_at: ::String,
             deadline_at: ::String,
-            highest_band: T.nilable(Models::Shared::HighestBand),
             decision: T.nilable(Models::Shared::PersonDecision),
             decision_note: T.nilable(::String),
             decided_by: T.nilable(::String),
@@ -192,7 +179,6 @@ module NoResponse
           created_at:,
           expires_at:,
           deadline_at:,
-          highest_band: nil,
           decision: nil,
           decision_note: nil,
           decided_by: nil,
@@ -213,7 +199,6 @@ module NoResponse
           @created_at = created_at
           @expires_at = expires_at
           @deadline_at = deadline_at
-          @highest_band = highest_band
           @decision = decision
           @decision_note = decision_note
           @decided_by = decided_by
@@ -238,7 +223,6 @@ module NoResponse
           return false unless @created_at == other.created_at
           return false unless @expires_at == other.expires_at
           return false unless @deadline_at == other.deadline_at
-          return false unless @highest_band == other.highest_band
           return false unless @decision == other.decision
           return false unless @decision_note == other.decision_note
           return false unless @decided_by == other.decided_by

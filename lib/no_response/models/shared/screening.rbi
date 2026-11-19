@@ -72,12 +72,6 @@ class NoResponse::Models::Shared::Screening
   def people_done=(str_)
   end
 
-  def people_flagged
-  end
-
-  def people_flagged=(str_)
-  end
-
   def people_failed
   end
 

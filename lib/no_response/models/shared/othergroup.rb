@@ -56,18 +56,6 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Boolean.new),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("no_profile_to_check")}}
         )
-        # That person's most severe band in that group, or null.
-        field(
-          :highest_band,
-          Crystalline::Nilable.new(Models::Shared::HighestBand),
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("highest_band"),
-              required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::HighestBand, false)
-            }
-          }
-        )
         # The latest reviewer decision in that group, or null before any.
         field(
           :decision,
@@ -102,7 +90,6 @@ module NoResponse
             match_state: Models::Shared::MatchState,
             group_starts_at: T.nilable(::String),
             no_profile_to_check: T.nilable(T::Boolean),
-            highest_band: T.nilable(Models::Shared::HighestBand),
             decision: T.nilable(Models::Shared::PersonDecision),
             decided_by: T.nilable(::String),
             decided_at: T.nilable(::String)
@@ -117,7 +104,6 @@ module NoResponse
           match_state:,
           group_starts_at: nil,
           no_profile_to_check: nil,
-          highest_band: nil,
           decision: nil,
           decided_by: nil,
           decided_at: nil
@@ -129,7 +115,6 @@ module NoResponse
           @match_state = match_state
           @group_starts_at = group_starts_at
           @no_profile_to_check = no_profile_to_check
-          @highest_band = highest_band
           @decision = decision
           @decided_by = decided_by
           @decided_at = decided_at
@@ -145,7 +130,6 @@ module NoResponse
           return false unless @match_state == other.match_state
           return false unless @group_starts_at == other.group_starts_at
           return false unless @no_profile_to_check == other.no_profile_to_check
-          return false unless @highest_band == other.highest_band
           return false unless @decision == other.decision
           return false unless @decided_by == other.decided_by
           return false unless @decided_at == other.decided_at

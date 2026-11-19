@@ -30,24 +30,6 @@ class NoResponse::Models::Shared::ScreeningCoverage
   def platforms=(str_)
   end
 
-  def items_not_analysed
-  end
-
-  def items_not_analysed=(str_)
-  end
-
-  def not_analysed_by_reason
-  end
-
-  def not_analysed_by_reason=(str_)
-  end
-
-  def items_frame_only
-  end
-
-  def items_frame_only=(str_)
-  end
-
   def period_from
   end
 

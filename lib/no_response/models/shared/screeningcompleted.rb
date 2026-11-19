@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # A screening of a group finished. It counts only the people this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people, filtered by band, to act on them. people_screened + partial_coverage = people_total, people_flagged is the sum of by_band, no_footprint counts screened people with no flag whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event.
+      # A screening of a group finished. It counts only the people this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people to act on them. people_screened + partial_coverage = people_total, no_footprint counts screened people whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event.
       class ScreeningCompleted
         extend T::Sig
         include Crystalline::MetadataFields
@@ -39,25 +39,13 @@ module NoResponse
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_total"), required: true}}
         )
-        # People the screening covered, flagged or not.
+        # People the screening covered.
         field(
           :people_screened,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_screened"), required: true}}
         )
-        # Screened people with a finding: the sum of by_band.
-        field(
-          :people_flagged,
-          ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_flagged"), required: true}}
-        )
-        # Screened people by the band of their most severe finding.
-        field(
-          :by_band,
-          Models::Shared::ScreeningCompletedByBand,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("by_band"), required: true}}
-        )
-        # Screened people with no finding whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read.
+        # Screened people whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read.
         field(
           :no_footprint,
           ::Integer,
@@ -95,8 +83,6 @@ module NoResponse
             status: Models::Shared::ScreeningCompletedStatus,
             people_total: ::Integer,
             people_screened: ::Integer,
-            people_flagged: ::Integer,
-            by_band: Models::Shared::ScreeningCompletedByBand,
             no_footprint: ::Integer,
             partial_coverage: ::Integer,
             finished_at: ::String,
@@ -111,8 +97,6 @@ module NoResponse
           status:,
           people_total:,
           people_screened:,
-          people_flagged:,
-          by_band:,
           no_footprint:,
           partial_coverage:,
           finished_at:,
@@ -124,8 +108,6 @@ module NoResponse
           @status = status
           @people_total = people_total
           @people_screened = people_screened
-          @people_flagged = people_flagged
-          @by_band = by_band
           @no_footprint = no_footprint
           @partial_coverage = partial_coverage
           @finished_at = finished_at
@@ -141,8 +123,6 @@ module NoResponse
           return false unless @status == other.status
           return false unless @people_total == other.people_total
           return false unless @people_screened == other.people_screened
-          return false unless @people_flagged == other.people_flagged
-          return false unless @by_band == other.by_band
           return false unless @no_footprint == other.no_footprint
           return false unless @partial_coverage == other.partial_coverage
           return false unless @finished_at == other.finished_at

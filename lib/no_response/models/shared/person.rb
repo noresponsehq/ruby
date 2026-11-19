@@ -113,18 +113,6 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Boolean.new),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("no_profile_to_check")}}
         )
-        # The most severe finding's band, or null when nothing was flagged.
-        field(
-          :highest_band,
-          Crystalline::Nilable.new(Models::Shared::HighestBand),
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("highest_band"),
-              required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::HighestBand, false)
-            }
-          }
-        )
         # The latest reviewer decision, or null before any.
         field(
           :decision,
@@ -187,7 +175,6 @@ module NoResponse
             handles: T.nilable(T::Array[Models::Shared::Handle]),
             role: T.nilable(Models::Shared::PersonRole),
             no_profile_to_check: T.nilable(T::Boolean),
-            highest_band: T.nilable(Models::Shared::HighestBand),
             decision: T.nilable(Models::Shared::PersonDecision),
             decision_note: T.nilable(::String),
             decided_by: T.nilable(::String),
@@ -215,7 +202,6 @@ module NoResponse
           handles: nil,
           role: nil,
           no_profile_to_check: nil,
-          highest_band: nil,
           decision: nil,
           decision_note: nil,
           decided_by: nil,
@@ -240,7 +226,6 @@ module NoResponse
           @handles = handles
           @role = role
           @no_profile_to_check = no_profile_to_check
-          @highest_band = highest_band
           @decision = decision
           @decision_note = decision_note
           @decided_by = decided_by
@@ -269,7 +254,6 @@ module NoResponse
           return false unless @handles == other.handles
           return false unless @role == other.role
           return false unless @no_profile_to_check == other.no_profile_to_check
-          return false unless @highest_band == other.highest_band
           return false unless @decision == other.decision
           return false unless @decision_note == other.decision_note
           return false unless @decided_by == other.decided_by

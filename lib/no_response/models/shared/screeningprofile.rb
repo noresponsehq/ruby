@@ -42,7 +42,7 @@ module NoResponse
           Models::Shared::ScreeningMatch,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("match"), required: true}}
         )
-        # The resolver, collector or analyser that produced a record, by its catalogue name.
+        # The resolver or collector that produced a record, by its catalogue name.
         field(
           :collector,
           ::String,

@@ -90,12 +90,6 @@ module NoResponse
         )
 
         field(
-          :people_flagged,
-          ::Integer,
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_flagged"), required: true}}
-        )
-
-        field(
           :people_failed,
           ::Integer,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("people_failed"), required: true}}
@@ -156,7 +150,6 @@ module NoResponse
             expires_at: ::String,
             people_total: ::Integer,
             people_done: ::Integer,
-            people_flagged: ::Integer,
             people_failed: ::Integer,
             people_partial: ::Integer,
             estimated_spend: ::Integer,
@@ -180,7 +173,6 @@ module NoResponse
           expires_at:,
           people_total:,
           people_done:,
-          people_flagged:,
           people_failed:,
           people_partial:,
           estimated_spend:,
@@ -201,7 +193,6 @@ module NoResponse
           @expires_at = expires_at
           @people_total = people_total
           @people_done = people_done
-          @people_flagged = people_flagged
           @people_failed = people_failed
           @people_partial = people_partial
           @estimated_spend = estimated_spend
@@ -226,7 +217,6 @@ module NoResponse
           return false unless @expires_at == other.expires_at
           return false unless @people_total == other.people_total
           return false unless @people_done == other.people_done
-          return false unless @people_flagged == other.people_flagged
           return false unless @people_failed == other.people_failed
           return false unless @people_partial == other.people_partial
           return false unless @estimated_spend == other.estimated_spend

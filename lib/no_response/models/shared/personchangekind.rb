@@ -4,7 +4,7 @@
 module NoResponse
   module Models
     module Shared
-      # PersonChangeKind - account_added and account_removed: an account or profile appeared or disappeared. breach_added and breach_removed: a breach record appeared or disappeared. identifier_added and identifier_removed: an email, phone, username, name or account id on an account the person already held. field_changed: another field on such an account. finding_added: a new finding. posts_added: new posts, counted in count.
+      # PersonChangeKind - account_added and account_removed: an account or profile appeared or disappeared. breach_added and breach_removed: a breach record appeared or disappeared. identifier_added and identifier_removed: an email, phone, username, name or account id on an account the person already held. field_changed: another field on such an account. posts_added: new posts, counted in count.
       class PersonChangeKind
         include ::Crystalline::Enum
         enums do
@@ -15,7 +15,6 @@ module NoResponse
           IDENTIFIER_ADDED = new("identifier_added")
           IDENTIFIER_REMOVED = new("identifier_removed")
           FIELD_CHANGED = new("field_changed")
-          FINDING_ADDED = new("finding_added")
           POSTS_ADDED = new("posts_added")
         end
 

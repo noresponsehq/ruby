@@ -13,10 +13,10 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v17.0.3"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v18.0.0"
 ```
 
-Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 17.0.3"`.
+Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 18.0.0"`.
 
 ## Investigate a person
 
@@ -257,9 +257,7 @@ when NoResponse::Models::Shared::WorkspaceDeletedEvent
 when NoResponse::Models::Shared::WebhookEndpointDisabledEvent
   # event.data.endpoint_id failed for 72 hours and is disabled: fix it and verify it again
 when NoResponse::Models::Shared::ScreeningCompletedEvent
-  # a screening of a group finished: counts by band, no footprint and partial coverage; it names no person
-when NoResponse::Models::Shared::PersonFlaggedEvent
-  # a screening flagged event.data.person_id: its highest band and match state, never what was posted
+  # a screening of a group finished: counts of people screened, no footprint and partial coverage; it names no person
 when NoResponse::Models::Shared::PersonDecidedEvent
   # a reviewer marked the person cleared, watch or escalated; keep the latest decided_at per person
 when NoResponse::Models::Shared::AccountRiskChangedEvent

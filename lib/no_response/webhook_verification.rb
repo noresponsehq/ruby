@@ -47,7 +47,6 @@ module NoResponse
         "account.risk_changed" => Models::Shared::AccountRiskChangedEvent,
         "audit.event" => Models::Shared::AuditEventEvent,
         "screening.completed" => Models::Shared::ScreeningCompletedEvent,
-        "person.flagged" => Models::Shared::PersonFlaggedEvent,
         "person.decided" => Models::Shared::PersonDecidedEvent,
         "investigation.completed" => Models::Shared::InvestigationCompletedEvent
       }
@@ -82,7 +81,6 @@ module NoResponse
               Models::Shared::AccountRiskChangedEvent,
               Models::Shared::AuditEventEvent,
               Models::Shared::ScreeningCompletedEvent,
-              Models::Shared::PersonFlaggedEvent,
               Models::Shared::PersonDecidedEvent,
               Models::Shared::InvestigationCompletedEvent
             )

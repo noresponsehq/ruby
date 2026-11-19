@@ -12,12 +12,6 @@ class NoResponse::Models::Shared::InvestigationReport
   def profiles=(str_)
   end
 
-  def findings
-  end
-
-  def findings=(str_)
-  end
-
   def posts
   end
 

@@ -18,12 +18,6 @@ class NoResponse::Models::Shared::PersonReport
   def profiles=(str_)
   end
 
-  def findings
-  end
-
-  def findings=(str_)
-  end
-
   def posts
   end
 

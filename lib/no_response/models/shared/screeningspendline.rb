@@ -9,13 +9,13 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
-        # The resolver, collector or analyser that produced a record, by its catalogue name.
+        # The resolver or collector that produced a record, by its catalogue name.
         field(
           :implementation,
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("implementation"), required: true}}
         )
-
+        # What the implementation did. analyser appears only on spend recorded before the engine stopped analysing posts.
         field(
           :role,
           Models::Shared::ScreeningSpendLineRole,

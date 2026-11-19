@@ -18,12 +18,6 @@ class NoResponse::Models::Operations::ListPeopleRequest
   def after=(str_)
   end
 
-  def band
-  end
-
-  def band=(str_)
-  end
-
   def decision
   end
 

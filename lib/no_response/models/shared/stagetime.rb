@@ -9,6 +9,7 @@ module NoResponse
         extend T::Sig
         include Crystalline::MetadataFields
 
+        # ai_typing and analysis appear only on searches recorded before the engine stopped analysing results.
         field(
           :stage,
           Models::Shared::Stage,

@@ -1471,16 +1471,36 @@ module NoResponse
 
     sig {
       params(
-        request: Models::Operations::ListPeopleRequest,
+        group_id: ::String,
+        limit: T.nilable(::Integer),
+        after: T.nilable(::String),
+        decision: T.nilable(Models::Shared::ListPeopleDecision),
+        role: T.nilable(Models::Shared::ListPeopleRole),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::ListPeopleResponse)
     }
-    def list_people(request:, retries: nil, timeout_ms: nil, http_headers: nil)
+    def list_people(
+      group_id:,
+      limit: nil,
+      after: nil,
+      decision: nil,
+      role: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # Method: list_people - List a group's people.
-      # The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+      # The roster in upload order, with each person's role, match state and decision. Filter by decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+      request = Models::Operations::ListPeopleRequest.new(
+        group_id: group_id,
+        limit: limit,
+        after: after,
+        decision: decision,
+        role: role
+      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1769,7 +1789,7 @@ module NoResponse
     }
     def add_people(body:, group_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
       # Method: add_people - Add or update a batch of people.
-      # Adds 1 to 500 workspace people to this group, at most 512 KiB. An explicit person_id or external_id reuses the named workspace person. A reference-only row keeps submitted details; an identity supplied with that reference replaces those details. A shared email or phone only suggests matches and does not merge people. Each person's match, band and coverage in the group come from their latest investigation; a changed identity sets aside investigations started before the change, and prior investigation history remains available. Identities are encrypted under the workspace key. Idempotency-Key is required: the same key and body return the original import result with Idempotent-Replayed: true while its people remain retained. An expired or deleted imported person answers 404; expired or deleted match suggestions are omitted. A different body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation; groups is also accepted. Suggested matches require people-read access. The API key selects the workspace and environment.
+      # Adds 1 to 500 workspace people to this group, at most 512 KiB. An explicit person_id or external_id reuses the named workspace person. A reference-only row keeps submitted details; an identity supplied with that reference replaces those details. A shared email or phone only suggests matches and does not merge people. Each person's match and coverage in the group come from their latest investigation; a changed identity sets aside investigations started before the change, and prior investigation history remains available. Identities are encrypted under the workspace key. Idempotency-Key is required: the same key and body return the original import result with Idempotent-Replayed: true while its people remain retained. An expired or deleted imported person answers 404; expired or deleted match suggestions are omitted. A different body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation; groups is also accepted. Suggested matches require people-read access. The API key selects the workspace and environment.
       request = Models::Operations::AddPeopleRequest.new(
         group_id: group_id,
         body: body,
@@ -5014,16 +5034,36 @@ module NoResponse
 
     sig {
       params(
-        request: Models::Operations::ExportPeopleRequest,
+        group_id: ::String,
+        limit: T.nilable(::Integer),
+        after: T.nilable(::String),
+        decision: T.nilable(Models::Shared::ListPeopleDecision),
+        role: T.nilable(Models::Shared::ListPeopleRole),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
         http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
       )
         .returns(Models::Operations::ExportPeopleResponse)
     }
-    def export_people(request:, retries: nil, timeout_ms: nil, http_headers: nil)
+    def export_people(
+      group_id:,
+      limit: nil,
+      after: nil,
+      decision: nil,
+      role: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # Method: export_people - Export the people in a group.
       # Returns one page for export. Each returned person is durably audited as person.exported with the actor, group, person ID and request ID. Requires both people read access and exports. Explicit evidence restrictions also hide free-text decision notes. No raw evidence enters audit logs. Follow next_after until absent for a complete export. The API key selects the workspace and environment.
+      request = Models::Operations::ExportPeopleRequest.new(
+        group_id: group_id,
+        limit: limit,
+        after: after,
+        decision: decision,
+        role: role
+      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

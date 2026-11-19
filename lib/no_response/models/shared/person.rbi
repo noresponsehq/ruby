@@ -108,12 +108,6 @@ class NoResponse::Models::Shared::Person
   def no_profile_to_check=(str_)
   end
 
-  def highest_band
-  end
-
-  def highest_band=(str_)
-  end
-
   def decision
   end
 

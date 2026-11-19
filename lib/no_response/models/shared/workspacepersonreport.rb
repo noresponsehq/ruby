@@ -40,19 +40,13 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::ScreeningProfile),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("profiles"), required: true}}
         )
-        # What this result flagged, most severe first, each citing its evidence.
-        field(
-          :findings,
-          Crystalline::Array.new(Models::Shared::ScreeningFinding),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("findings"), required: true}}
-        )
-        # All posts retained for this result, including posts that no finding cites.
+        # All posts retained for this result.
         field(
           :posts,
           Crystalline::Array.new(Models::Shared::ScreeningPost),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("posts"), required: true}}
         )
-        # All images and videos retained for this result, including media that no finding cites.
+        # All images and videos retained for this result.
         field(
           :media,
           Crystalline::Array.new(Models::Shared::ScreeningMedia),
@@ -124,7 +118,7 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Handle)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("handles")}}
         )
-        # What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state.
+        # What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Nothing here sets a match state.
         field(
           :lookup,
           Crystalline::Nilable.new(Models::Shared::ScreeningLookup),
@@ -136,7 +130,7 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::Search)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("searches")}}
         )
-        # True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, findings, posts, media, discovered values and free-text decision notes are withheld.
+        # True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, posts, media, discovered values and free-text decision notes are withheld.
         field(
           :evidence_restricted,
           Crystalline::Nilable.new(Crystalline::Boolean.new),
@@ -148,12 +142,6 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::Investigation),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("evidence_investigation"), required: true}}
         )
-        # An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied.
-        field(
-          :written_profile,
-          Crystalline::Nilable.new(Models::Shared::WrittenProfile),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("written_profile"), required: true}}
-        )
 
         sig {
           params(
@@ -163,7 +151,6 @@ module NoResponse
             expires_at: ::String,
             groups: T::Array[Models::Shared::PersonGroup],
             profiles: T::Array[Models::Shared::ScreeningProfile],
-            findings: T::Array[Models::Shared::ScreeningFinding],
             posts: T::Array[Models::Shared::ScreeningPost],
             media: T::Array[Models::Shared::ScreeningMedia],
             suggested_searches: T::Array[Models::Shared::SuggestedSearch],
@@ -180,8 +167,7 @@ module NoResponse
             lookup: T.nilable(Models::Shared::ScreeningLookup),
             searches: T.nilable(T::Array[Models::Shared::Search]),
             evidence_restricted: T.nilable(T::Boolean),
-            evidence_investigation: T.nilable(Models::Shared::Investigation),
-            written_profile: T.nilable(Models::Shared::WrittenProfile)
+            evidence_investigation: T.nilable(Models::Shared::Investigation)
           )
             .void
         }
@@ -192,7 +178,6 @@ module NoResponse
           expires_at:,
           groups:,
           profiles:,
-          findings:,
           posts:,
           media:,
           suggested_searches:,
@@ -209,8 +194,7 @@ module NoResponse
           lookup: nil,
           searches: nil,
           evidence_restricted: nil,
-          evidence_investigation: nil,
-          written_profile: nil
+          evidence_investigation: nil
         )
           @id = id
           @created_at = created_at
@@ -218,7 +202,6 @@ module NoResponse
           @expires_at = expires_at
           @groups = groups
           @profiles = profiles
-          @findings = findings
           @posts = posts
           @media = media
           @suggested_searches = suggested_searches
@@ -236,7 +219,6 @@ module NoResponse
           @searches = searches
           @evidence_restricted = evidence_restricted
           @evidence_investigation = evidence_investigation
-          @written_profile = written_profile
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -248,7 +230,6 @@ module NoResponse
           return false unless @expires_at == other.expires_at
           return false unless @groups == other.groups
           return false unless @profiles == other.profiles
-          return false unless @findings == other.findings
           return false unless @posts == other.posts
           return false unless @media == other.media
           return false unless @suggested_searches == other.suggested_searches
@@ -266,7 +247,6 @@ module NoResponse
           return false unless @searches == other.searches
           return false unless @evidence_restricted == other.evidence_restricted
           return false unless @evidence_investigation == other.evidence_investigation
-          return false unless @written_profile == other.written_profile
           true
         end
       end
