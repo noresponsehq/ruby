@@ -21,6 +21,12 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("looked_at"), required: true}}
         )
+        # Each source asked, with what it answered and when. answered_at is absent while the source has not answered.
+        field(
+          :answers,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::ScreeningLookupAnswer)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("answers")}}
+        )
         # A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer.
         field(
           :summary,
@@ -50,6 +56,7 @@ module NoResponse
           params(
             checks: T::Array[Models::Shared::ScreeningLookupCheck],
             looked_at: ::String,
+            answers: T.nilable(T::Array[Models::Shared::ScreeningLookupAnswer]),
             summary: T.nilable(Models::Shared::RiskSummary),
             details: T.nilable(Models::Shared::RiskDetails),
             records: T.nilable(T::Array[Models::Shared::Record]),
@@ -57,9 +64,10 @@ module NoResponse
           )
             .void
         }
-        def initialize(checks:, looked_at:, summary: nil, details: nil, records: nil, remaining: nil)
+        def initialize(checks:, looked_at:, answers: nil, summary: nil, details: nil, records: nil, remaining: nil)
           @checks = checks
           @looked_at = looked_at
+          @answers = answers
           @summary = summary
           @details = details
           @records = records
@@ -71,6 +79,7 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @checks == other.checks
           return false unless @looked_at == other.looked_at
+          return false unless @answers == other.answers
           return false unless @summary == other.summary
           return false unless @details == other.details
           return false unless @records == other.records

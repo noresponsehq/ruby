@@ -18,6 +18,12 @@ class NoResponse::Models::Shared::ScreeningLookup
   def looked_at=(str_)
   end
 
+  def answers
+  end
+
+  def answers=(str_)
+  end
+
   def summary
   end
 

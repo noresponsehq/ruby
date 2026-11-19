@@ -20,12 +20,12 @@ module NoResponse
 
         field(
           :identifier,
-          Models::Shared::Identifier,
+          Models::Shared::RiskDetailsEventIdentifier,
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("identifier"),
               required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Identifier, false)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::RiskDetailsEventIdentifier, false)
             }
           }
         )
@@ -98,7 +98,7 @@ module NoResponse
           params(
             name: ::String,
             domain: ::String,
-            identifier: Models::Shared::Identifier,
+            identifier: Models::Shared::RiskDetailsEventIdentifier,
             outcome: Models::Shared::SignalOutcome,
             reason: T.nilable(Models::Shared::FailureReason),
             sign_in: T.nilable(T::Array[Models::Shared::SignIn]),

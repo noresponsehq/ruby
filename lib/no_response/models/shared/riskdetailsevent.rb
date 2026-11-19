@@ -45,12 +45,12 @@ module NoResponse
 
         field(
           :identifier,
-          Models::Shared::Identifier,
+          Models::Shared::RiskDetailsEventIdentifier,
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("identifier"),
               required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Identifier, false)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::RiskDetailsEventIdentifier, false)
             }
           }
         )
@@ -68,7 +68,7 @@ module NoResponse
             site: ::String,
             category: ::String,
             family: Models::Shared::FootprintFamily,
-            identifier: Models::Shared::Identifier,
+            identifier: Models::Shared::RiskDetailsEventIdentifier,
             month: T.nilable(::Integer)
           )
             .void
