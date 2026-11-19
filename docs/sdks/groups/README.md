@@ -725,10 +725,7 @@ s = ::NoResponse::NoResponseClient.new(
   api_key: ENV.fetch('NORESPONSE_API_KEY', '')
 )
 res = s.groups.start_screening(group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::ScreeningRequest.new(
-  depth: Models::Shared::ScreeningDepth::STANDARD,
-  platforms: [
-    'bluesky',
-  ]
+  depth: Models::Shared::ScreeningDepth::STANDARD
 ), idempotency_key: 'account-acct_7f3a9c')
 
 unless res.nil?

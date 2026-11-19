@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: e1cb4444cfcc4c24f99aeb3054bb8dfb
+  docChecksum: a93233d2bc5934c3a90dde13b85eb72b
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 16.0.6
-  configChecksum: b0fe041cfcaebedc819d7c6ad2a62cb7
+  releaseVersion: 16.0.7
+  configChecksum: b22bda60535951bade9e9c4d0eecd190
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:2fbff1efc6ce70222de60b95dc42bd7b2bd4c019
+    last_write_checksum: sha1:e4aed81e271aead1471db77d34e564c061ea1cdc
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -964,7 +964,7 @@ trackedFiles:
   docs/models/shared/investigationreport.md:
     last_write_checksum: sha1:b97da87d77b95a91591954e976e0640ce1fd1038
   docs/models/shared/investigationrequest.md:
-    last_write_checksum: sha1:3546eac487906a6d92be9a76709e81ce1a3cbc3a
+    last_write_checksum: sha1:2f4269507ec450249d7018ef3854946e2f1111f5
   docs/models/shared/investigationslist.md:
     last_write_checksum: sha1:bff84b6455ec40628160c945873c442de66cf7e9
   docs/models/shared/investigationstatus.md:
@@ -1434,7 +1434,7 @@ trackedFiles:
   docs/models/shared/screeningprofile.md:
     last_write_checksum: sha1:b0edce7a9a9428ef8f08bbaf374157d5df34c0a1
   docs/models/shared/screeningrequest.md:
-    last_write_checksum: sha1:824c35b5df884b8f72a8323193d794929f4de501
+    last_write_checksum: sha1:6dbb52af72840d4f2503ce611f1fe52cba4572ef
   docs/models/shared/screeningspend.md:
     last_write_checksum: sha1:203ef71ed8a3af6c3e144d6701060cff7e9f647b
   docs/models/shared/screeningspendline.md:
@@ -1602,11 +1602,11 @@ trackedFiles:
   docs/sdks/exports/README.md:
     last_write_checksum: sha1:d39868118e044163371da6dfebee15e20ced21ed
   docs/sdks/groups/README.md:
-    last_write_checksum: sha1:94b48089a111a0435362664a9fd781eb99c12183
+    last_write_checksum: sha1:693b507bcf7530d4d73e1b26c0210f89cf506295
   docs/sdks/integrations/README.md:
     last_write_checksum: sha1:a7a3faf22283dc478cf70336b2bd570456526892
   docs/sdks/investigations/README.md:
-    last_write_checksum: sha1:ebd96f7621a3a2ccace00cca2eebac81ab7f02d6
+    last_write_checksum: sha1:91af37787f5c8b0134ea784457aebbf55c7f3751
   docs/sdks/invites/README.md:
     last_write_checksum: sha1:aadfc93bca5bb693ac9eb20725233bc045fbe526
   docs/sdks/keys/README.md:
@@ -3528,7 +3528,7 @@ trackedFiles:
   lib/no_response/models/shared/investigationreport.rbi:
     last_write_checksum: sha1:1474818169eb1d5ee3df64b8994cee51784d4aa3
   lib/no_response/models/shared/investigationrequest.rb:
-    last_write_checksum: sha1:897c23463ef37c00c0fe9c88b51d1882d677afa2
+    last_write_checksum: sha1:6fa4b31c1e342553625168d42bfb434e784bfcca
   lib/no_response/models/shared/investigationrequest.rbi:
     last_write_checksum: sha1:ac665c8f1df56f76044f7d0101932a7eb4806b90
   lib/no_response/models/shared/investigationslist.rb:
@@ -4468,7 +4468,7 @@ trackedFiles:
   lib/no_response/models/shared/screeningprofile.rbi:
     last_write_checksum: sha1:2064e62c9b35f141b0df47c7f28eb20a536a3690
   lib/no_response/models/shared/screeningrequest.rb:
-    last_write_checksum: sha1:cc13c31598e3347deaf0aa99bf52ec55c9aba5c8
+    last_write_checksum: sha1:2fde8626684d3069532803a6123c206ceb1623d0
   lib/no_response/models/shared/screeningrequest.rbi:
     last_write_checksum: sha1:93f287f09d2ab0205c0baaa91e4923bbf1b60718
   lib/no_response/models/shared/screeningspend.rb:
@@ -4794,7 +4794,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:c81ce08621bfdd50064dcbcc1f87689942006280
+    last_write_checksum: sha1:b336b0fcbe9862c4e0fa54b038f6f5d50d1d810a
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4824,7 +4824,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:bfb44b6a118d53e72ad5b1b00cb95f84cbe657f3
   noresponse.gemspec:
-    last_write_checksum: sha1:c776b3472608e11e0aea87b240ee9e6927fe024c
+    last_write_checksum: sha1:65e4b7fa1433c90bb36c967661d31016a9f53901
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -7474,7 +7474,7 @@ examples:
         header:
           Idempotency-Key: "account-acct_7f3a9c"
       requestBody:
-        application/json: {"depth": "standard", "platforms": ["bluesky"]}
+        application/json: {"depth": "standard"}
       responses:
         "202":
           application/json: {"id": "scn_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "group_id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "status": "running", "depth": "standard", "platforms": ["bluesky"], "requested_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "started_at": "2026-01-01T00:00:00Z", "finished_at": "2026-01-02T00:00:00Z", "expires_at": "2026-01-02T00:00:00Z", "people_total": 592267, "people_done": 173751, "people_flagged": 250584, "people_failed": 772063, "people_partial": 825999, "estimated_spend": 343791, "spent": 379997, "spend": {"total_minor": 816908, "by_implementation": [{"implementation": "synthetic", "role": "collector", "spend_minor": 861627}]}, "error_code": "user_cancelled"}
@@ -7754,7 +7754,7 @@ examples:
         header:
           Idempotency-Key: "investigation-case-1042-first"
       requestBody:
-        application/json: {"depth": "standard", "platforms": ["x"], "person_id": "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
+        application/json: {"depth": "standard", "person_id": "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
       responses:
         "202":
           application/json: {"highest_band": null, "coverage": {"accounts_found": 353004, "accounts_accessible": 190010, "items_read": 392044, "period_from": "2026-01-01T00:00:00Z", "period_to": "2026-01-02T00:00:00Z", "platforms": [{"platform": "bluesky", "status": "inaccessible", "accounts_found": 63025, "items_read": 718618}], "not_searched": ["instagram"], "timing": {"started_at": "2026-01-01T00:00:00Z", "total_ms": 335147, "stages": [{"stage": "late_lookup", "ms": 496778}]}}, "spend": {"total_minor": 810936, "by_implementation": []}, "decision": "cleared", "decision_note": "Source records reviewed.", "decided_by": "user_investigator", "decided_at": "2026-01-01T00:00:00Z", "id": "inv_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "person_id": "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "group_id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "status": "partial", "depth": "standard", "platforms": ["x"], "match_state": "confirmed", "error_code": "expired", "created_at": "2026-01-01T00:00:00Z", "started_at": "2026-01-01T00:00:00Z", "finished_at": "2026-01-01T00:00:00Z", "expires_at": "2026-02-01T00:00:00Z", "deadline_at": "2026-01-01T00:00:00Z"}

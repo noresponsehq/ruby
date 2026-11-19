@@ -20,7 +20,9 @@ module NoResponse
             }
           }
         )
-        # The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists.
+        # Deprecated: leave it out. Without it the screening is a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists, each searched only with the identifiers its connector takes. A list sent here still limits the screening until a later contract release removes the field.
+        #
+        # @deprecated true: This will be removed in a future release, please migrate away from it as soon as possible.
         field(
           :platforms,
           Crystalline::Nilable.new(Crystalline::Array.new(::String)),

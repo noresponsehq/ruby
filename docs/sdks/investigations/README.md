@@ -74,9 +74,6 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.investigations.create(body: Models::Shared::InvestigationRequest.new(
   depth: Models::Shared::ScreeningDepth::STANDARD,
-  platforms: [
-    'x',
-  ],
   person_id: 'per_01JA2Z8K6Q4V7W9XBCDEFGHJKM'
 ), idempotency_key: 'investigation-case-1042-first')
 
