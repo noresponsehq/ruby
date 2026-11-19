@@ -82,6 +82,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(::String)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("path")}}
         )
+        # For a record that is not the person's, the other person it belongs with: records that share this number share strong values, such as an email or a full name with a phone, and score as one person against each other. Absent on the person's own records and on a record that matches nobody else. A value that more than 20 strangers hold groups nobody.
+        field(
+          :other_person,
+          Crystalline::Nilable.new(::Integer),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("other_person")}}
+        )
 
         sig {
           params(
@@ -96,7 +102,8 @@ module NoResponse
             joined: T.nilable(T::Boolean),
             verdict: T.nilable(Models::Shared::Verdict),
             evidence: T.nilable(T::Array[Models::Shared::RecordEvidence]),
-            path: T.nilable(T::Array[::String])
+            path: T.nilable(T::Array[::String]),
+            other_person: T.nilable(::Integer)
           )
             .void
         }
@@ -112,7 +119,8 @@ module NoResponse
           joined: nil,
           verdict: nil,
           evidence: nil,
-          path: nil
+          path: nil,
+          other_person: nil
         )
           @id = id
           @source = source
@@ -126,6 +134,7 @@ module NoResponse
           @verdict = verdict
           @evidence = evidence
           @path = path
+          @other_person = other_person
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -143,6 +152,7 @@ module NoResponse
           return false unless @verdict == other.verdict
           return false unless @evidence == other.evidence
           return false unless @path == other.path
+          return false unless @other_person == other.other_person
           true
         end
       end

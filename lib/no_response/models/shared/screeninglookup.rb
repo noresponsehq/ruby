@@ -39,6 +39,12 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RecordRemaining)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("remaining")}}
         )
+        # Identifiers you gave that lead to different people. Absent when they agree.
+        field(
+          :conflicts,
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::RecordConflict)),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("conflicts")}}
+        )
 
         sig {
           params(
@@ -46,16 +52,18 @@ module NoResponse
             looked_at: ::String,
             answers: T.nilable(T::Array[Models::Shared::ScreeningLookupAnswer]),
             records: T.nilable(T::Array[Models::Shared::Record]),
-            remaining: T.nilable(T::Array[Models::Shared::RecordRemaining])
+            remaining: T.nilable(T::Array[Models::Shared::RecordRemaining]),
+            conflicts: T.nilable(T::Array[Models::Shared::RecordConflict])
           )
             .void
         }
-        def initialize(checks:, looked_at:, answers: nil, records: nil, remaining: nil)
+        def initialize(checks:, looked_at:, answers: nil, records: nil, remaining: nil, conflicts: nil)
           @checks = checks
           @looked_at = looked_at
           @answers = answers
           @records = records
           @remaining = remaining
+          @conflicts = conflicts
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -66,6 +74,7 @@ module NoResponse
           return false unless @answers == other.answers
           return false unless @records == other.records
           return false unless @remaining == other.remaining
+          return false unless @conflicts == other.conflicts
           true
         end
       end

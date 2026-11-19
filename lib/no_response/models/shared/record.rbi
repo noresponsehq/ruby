@@ -77,4 +77,10 @@ class NoResponse::Models::Shared::Record
 
   def path=(str_)
   end
+
+  def other_person
+  end
+
+  def other_person=(str_)
+  end
 end

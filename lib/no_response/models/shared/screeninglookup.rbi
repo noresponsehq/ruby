@@ -35,4 +35,10 @@ class NoResponse::Models::Shared::ScreeningLookup
 
   def remaining=(str_)
   end
+
+  def conflicts
+  end
+
+  def conflicts=(str_)
+  end
 end
