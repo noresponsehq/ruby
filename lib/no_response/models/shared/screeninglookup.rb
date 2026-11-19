@@ -27,18 +27,6 @@ module NoResponse
           Crystalline::Nilable.new(Crystalline::Array.new(Models::Shared::ScreeningLookupAnswer)),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("answers")}}
         )
-        # A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer.
-        field(
-          :summary,
-          Crystalline::Nilable.new(Models::Shared::RiskSummary),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("summary")}}
-        )
-        # Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score.
-        field(
-          :details,
-          Crystalline::Nilable.new(Models::Shared::RiskDetails),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("details")}}
-        )
         # What each source answered, whole, each answer once: every field of each account a connector found, and every column of each breach row the person's email or usernames matched, under the source's own names, and what each search a person started found, each match naming its search. Anyone who may read the person reads them: no extra permission applies, breach passwords and hashes included.
         field(
           :records,
@@ -57,19 +45,15 @@ module NoResponse
             checks: T::Array[Models::Shared::ScreeningLookupCheck],
             looked_at: ::String,
             answers: T.nilable(T::Array[Models::Shared::ScreeningLookupAnswer]),
-            summary: T.nilable(Models::Shared::RiskSummary),
-            details: T.nilable(Models::Shared::RiskDetails),
             records: T.nilable(T::Array[Models::Shared::Record]),
             remaining: T.nilable(T::Array[Models::Shared::RecordRemaining])
           )
             .void
         }
-        def initialize(checks:, looked_at:, answers: nil, summary: nil, details: nil, records: nil, remaining: nil)
+        def initialize(checks:, looked_at:, answers: nil, records: nil, remaining: nil)
           @checks = checks
           @looked_at = looked_at
           @answers = answers
-          @summary = summary
-          @details = details
           @records = records
           @remaining = remaining
         end
@@ -80,8 +64,6 @@ module NoResponse
           return false unless @checks == other.checks
           return false unless @looked_at == other.looked_at
           return false unless @answers == other.answers
-          return false unless @summary == other.summary
-          return false unless @details == other.details
           return false unless @records == other.records
           return false unless @remaining == other.remaining
           true

@@ -24,18 +24,6 @@ class NoResponse::Models::Shared::ScreeningLookup
   def answers=(str_)
   end
 
-  def summary
-  end
-
-  def summary=(str_)
-  end
-
-  def details
-  end
-
-  def details=(str_)
-  end
-
   def records
   end
 
