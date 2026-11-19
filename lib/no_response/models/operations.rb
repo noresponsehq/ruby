@@ -249,6 +249,8 @@ module NoResponse
       autoload :RunSearchResponse, "no_response/models/operations/runsearch_response.rb"
       autoload :RunWorkspacePersonSearchRequest, "no_response/models/operations/runworkspacepersonsearch_request.rb"
       autoload :RunWorkspacePersonSearchResponse, "no_response/models/operations/runworkspacepersonsearch_response.rb"
+      autoload :ScheduleWorkspacePersonRequest, "no_response/models/operations/scheduleworkspaceperson_request.rb"
+      autoload :ScheduleWorkspacePersonResponse, "no_response/models/operations/scheduleworkspaceperson_response.rb"
       autoload :SearchAccountsResponse, "no_response/models/operations/searchaccounts_response.rb"
       autoload :SearchAssessmentsResponse, "no_response/models/operations/searchassessments_response.rb"
       autoload :SendWebhookTestEventRequest, "no_response/models/operations/sendwebhooktestevent_request.rb"

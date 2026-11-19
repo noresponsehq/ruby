@@ -70,6 +70,12 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::PersonChange),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("changes"), required: true}}
         )
+        # The person's rerun schedule. Each due run starts a full investigation of the person, as POST /v1/investigations with no platforms does, and its changes are stored as changes. The schedule lives in the database and the worker runs it, so it survives restarts and releases; each due run starts exactly one investigation.
+        field(
+          :schedule,
+          Models::Shared::PersonSchedule,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("schedule"), required: true}}
+        )
         # Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person.
         field(
           :external_id,
@@ -162,6 +168,7 @@ module NoResponse
             media: T::Array[Models::Shared::ScreeningMedia],
             suggested_searches: T::Array[Models::Shared::SuggestedSearch],
             changes: T::Array[Models::Shared::PersonChange],
+            schedule: Models::Shared::PersonSchedule,
             external_id: T.nilable(::String),
             name: T.nilable(::String),
             email: T.nilable(::String),
@@ -190,6 +197,7 @@ module NoResponse
           media:,
           suggested_searches:,
           changes:,
+          schedule:,
           external_id: nil,
           name: nil,
           email: nil,
@@ -215,6 +223,7 @@ module NoResponse
           @media = media
           @suggested_searches = suggested_searches
           @changes = changes
+          @schedule = schedule
           @external_id = external_id
           @name = name
           @email = email
@@ -244,6 +253,7 @@ module NoResponse
           return false unless @media == other.media
           return false unless @suggested_searches == other.suggested_searches
           return false unless @changes == other.changes
+          return false unless @schedule == other.schedule
           return false unless @external_id == other.external_id
           return false unless @name == other.name
           return false unless @email == other.email

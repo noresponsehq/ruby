@@ -72,6 +72,12 @@ class NoResponse::Models::Shared::WorkspacePersonReport
   def changes=(str_)
   end
 
+  def schedule
+  end
+
+  def schedule=(str_)
+  end
+
   def external_id
   end
 

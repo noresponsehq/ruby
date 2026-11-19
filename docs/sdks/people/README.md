@@ -14,6 +14,7 @@ Workspace people, submitted identity, source evidence and expiry.
 * [start_search](#start_search) - Search again on a value of one of a workspace person's records.
 * [run_search](#run_search) - Run a counted password or hash search on a workspace person.
 * [review_change](#review_change) - Mark a change on a workspace person reviewed.
+* [schedule](#schedule) - Schedule a workspace person's reruns.
 
 ## list
 
@@ -376,6 +377,53 @@ end
 ### Response
 
 **[T.nilable(Models::Operations::ReviewWorkspacePersonChangeResponse)](../../models/operations/reviewworkspacepersonchangeresponse.md)**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Models::Errors::BadRequestError       | 400                                   | application/problem+json              |
+| Models::Errors::AuthenticationError   | 401                                   | application/problem+json              |
+| Models::Errors::PermissionDeniedError | 403                                   | application/problem+json              |
+| Models::Errors::NotFoundError         | 404                                   | application/problem+json              |
+| Models::Errors::ConflictError         | 409                                   | application/problem+json              |
+| Models::Errors::RateLimitError        | 429                                   | application/problem+json              |
+| Errors::APIStatusError                | 4XX, 5XX                              | \*/\*                                 |
+
+## schedule
+
+Sets how often the person is investigated again: daily, weekly or monthly, counted from now, or off. Each due run starts one full investigation of the person, which the person's investigations list and whose changes the person report stores. Setting the period the schedule already has keeps its next run. The schedule lives in the database and the worker runs it, so a restart or a release neither skips nor repeats a run. Each change is audited as person.schedule_changed. The investigations scope grants this operation. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
+
+### Example Usage
+
+<!-- UsageSnippet language="ruby" operationID="scheduleWorkspacePerson" method="post" path="/v1/people/{person_id}/schedule" -->
+```ruby
+require 'noresponse'
+
+Models = ::NoResponse::Models
+s = ::NoResponse::NoResponseClient.new(
+  api_key: ENV.fetch('NORESPONSE_API_KEY', '')
+)
+res = s.people.schedule(person_id: 'per_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::PersonScheduleRequest.new(
+  period: Models::Shared::SchedulePeriod::WEEKLY
+))
+
+unless res.nil?
+  # handle response
+end
+
+```
+
+### Parameters
+
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           | Example                                                                               |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `person_id`                                                                           | *::String*                                                                            | :heavy_check_mark:                                                                    | N/A                                                                                   | per_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                        |
+| `body`                                                                                | [Models::Shared::PersonScheduleRequest](../../models/shared/personschedulerequest.md) | :heavy_check_mark:                                                                    | N/A                                                                                   |                                                                                       |
+
+### Response
+
+**[T.nilable(Models::Operations::ScheduleWorkspacePersonResponse)](../../models/operations/scheduleworkspacepersonresponse.md)**
 
 ### Errors
 
