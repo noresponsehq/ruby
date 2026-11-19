@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 10c233aa3491053fe15917d355c92cc9
+  docChecksum: 7d0d77b2bb75c0591bf797f2f17b376f
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 15.0.19
-  configChecksum: 9c3e642064b5e0ac1103ddfa3b118d01
+  releaseVersion: 16.0.0
+  configChecksum: 831edb025e9dbb192c3fc6431c81bbe9
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:c87ad752fbab9c842023cfc76f2467a992ca6b64
+    last_write_checksum: sha1:69f91b44f300281c87ac35d3e6c0dbb6f3e661c5
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -854,7 +854,7 @@ trackedFiles:
   docs/models/shared/erasurereceipttarget.md:
     last_write_checksum: sha1:25636f0628fa831a29254ae2b8ba6020f932f8ad
   docs/models/shared/erasurereceipttargetname.md:
-    last_write_checksum: sha1:923348d1447bf0fe791859485cf78d26618631b7
+    last_write_checksum: sha1:ff8314cc18d66f490c942952ac50ee5276c2cbb5
   docs/models/shared/erasurereceipttargetstatus.md:
     last_write_checksum: sha1:b5d80dde07070c9cb02faeb4726871f738736e8c
   docs/models/shared/errorcode.md:
@@ -3284,7 +3284,7 @@ trackedFiles:
   lib/no_response/models/shared/erasurereceipttarget.rbi:
     last_write_checksum: sha1:857f1433bf9a290ffa66ca25f4855c5b1df00044
   lib/no_response/models/shared/erasurereceipttargetname.rb:
-    last_write_checksum: sha1:1de04d539020c8bbcc3c2999b1e409602089cb19
+    last_write_checksum: sha1:390d2cfe4df3e1b8b2001d641fe499b6b514268e
   lib/no_response/models/shared/erasurereceipttargetname.rbi:
     last_write_checksum: sha1:ca45127be463ac513ee441cd4b5493266493d231
   lib/no_response/models/shared/erasurereceipttargetstatus.rb:
@@ -4722,7 +4722,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:bd19f8ff11910ce8918a3b1264a6967876e7bbf4
+    last_write_checksum: sha1:7224dbdc4b9a505e10d978e0933452198bf18268
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4752,7 +4752,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:bfb44b6a118d53e72ad5b1b00cb95f84cbe657f3
   noresponse.gemspec:
-    last_write_checksum: sha1:ef277afd040f930cdbcfb72cd625b7a053465eec
+    last_write_checksum: sha1:203bb30699e04bde0fee2a400733c53cea4241a3
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -6815,7 +6815,7 @@ examples:
           erasure_id: "<id>"
       responses:
         "200":
-          application/json: {"id": "0123456789abcdef0123456789abcdef", "kind": "account", "status": "propagating", "assessments_deleted": 2, "requested_at": "2026-10-14T09:00:00.412Z", "targets": [{"name": "serving", "status": "completed", "completed_at": "2026-10-14T09:00:00.412Z"}, {"name": "outbox", "status": "completed", "completed_at": "2026-10-14T09:00:00.412Z"}, {"name": "cache", "status": "pending"}, {"name": "downstream_projection", "status": "pending"}], "backup_policy": "Backup and point-in-time recovery copies expire under the configured backup retention policy. Serving-system completion does not certify deletion from backups."}
+          application/json: {"id": "0123456789abcdef0123456789abcdef", "kind": "account", "status": "completed", "assessments_deleted": 2, "requested_at": "2026-10-14T09:00:00.412Z", "completed_at": "2026-10-14T09:00:00.412Z", "targets": [{"name": "serving", "status": "completed", "completed_at": "2026-10-14T09:00:00.412Z"}, {"name": "outbox", "status": "completed", "completed_at": "2026-10-14T09:00:00.412Z"}], "backup_policy": "Backup and point-in-time recovery copies expire under the configured backup retention policy. Serving-system completion does not certify deletion from backups."}
   createCustomerExport:
     noresponse-default-create-customer-export:
       parameters:

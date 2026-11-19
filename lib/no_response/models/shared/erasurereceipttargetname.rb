@@ -10,8 +10,6 @@ module NoResponse
         enums do
           SERVING = new("serving")
           OUTBOX = new("outbox")
-          CACHE = new("cache")
-          DOWNSTREAM_PROJECTION = new("downstream_projection")
         end
 
         open!
