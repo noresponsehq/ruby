@@ -13,10 +13,10 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v18.0.1"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v19.0.0"
 ```
 
-Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 18.0.1"`.
+Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 19.0.0"`.
 
 ## Investigate a person
 
@@ -30,7 +30,7 @@ created = client.people.create(
   idempotency_key: "case-1042-person-create"
 ).result
 job = client.investigations.create(
-  body: Models::Shared::InvestigationRequest.new(person_id: created.person.id, depth: Models::Shared::ScreeningDepth::STANDARD, platforms: ["x"]),
+  body: Models::Shared::InvestigationRequest.new(person_id: created.person.id, depth: Models::Shared::ScreeningDepth::STANDARD),
   idempotency_key: "case-1042-investigation-1"
 ).result
 puts job.id

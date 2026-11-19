@@ -11,10 +11,4 @@ class NoResponse::Models::Shared::ScreeningRequest
 
   def depth=(str_)
   end
-
-  def platforms
-  end
-
-  def platforms=(str_)
-  end
 end

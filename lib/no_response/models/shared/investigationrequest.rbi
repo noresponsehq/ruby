@@ -18,12 +18,6 @@ class NoResponse::Models::Shared::InvestigationRequest
   def person_id=(str_)
   end
 
-  def platforms
-  end
-
-  def platforms=(str_)
-  end
-
   def enrichment
   end
 

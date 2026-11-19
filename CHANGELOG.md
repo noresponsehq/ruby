@@ -1,5 +1,12 @@
 # Changelog
 
+## 19.0.0
+
+* `sdk.groups.start_screening()`: 
+  *  `request.body.platforms` **Removed** (Breaking ⚠️)
+* `sdk.investigations.create()`: 
+  *  `request.body.platforms` **Removed** (Breaking ⚠️)
+
 ## 18.0.1
 
 No changes detected.

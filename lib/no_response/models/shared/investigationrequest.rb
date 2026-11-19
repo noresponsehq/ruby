@@ -26,14 +26,6 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("person_id"), required: true}}
         )
-        # Deprecated: leave it out. Without it the investigation is a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists, each searched only with the identifiers its connector takes. A list sent here still limits the investigation until a later contract release removes the field.
-        #
-        # @deprecated true: This will be removed in a future release, please migrate away from it as soon as possible.
-        field(
-          :platforms,
-          Crystalline::Nilable.new(Crystalline::Array.new(::String)),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("platforms")}}
-        )
         # A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         field(
           :enrichment,
@@ -45,15 +37,13 @@ module NoResponse
           params(
             depth: Models::Shared::ScreeningDepth,
             person_id: ::String,
-            platforms: T.nilable(T::Array[::String]),
             enrichment: T.nilable(Models::Shared::EnrichmentChange)
           )
             .void
         }
-        def initialize(depth:, person_id:, platforms: nil, enrichment: nil)
+        def initialize(depth:, person_id:, enrichment: nil)
           @depth = depth
           @person_id = person_id
-          @platforms = platforms
           @enrichment = enrichment
         end
 
@@ -62,7 +52,6 @@ module NoResponse
           return false unless other.is_a?(self.class)
           return false unless @depth == other.depth
           return false unless @person_id == other.person_id
-          return false unless @platforms == other.platforms
           return false unless @enrichment == other.enrichment
           true
         end
