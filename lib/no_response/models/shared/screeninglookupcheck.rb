@@ -11,12 +11,12 @@ module NoResponse
 
         field(
           :identifier,
-          Models::Shared::IdentifierSearchKind,
+          Models::Shared::Identifier,
           {
             'format_json': {
               'letter_case': ::NoResponse::Utils.field_name("identifier"),
               required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::IdentifierSearchKind, false)
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::Identifier, false)
             }
           }
         )
@@ -82,7 +82,7 @@ module NoResponse
 
         sig {
           params(
-            identifier: Models::Shared::IdentifierSearchKind,
+            identifier: Models::Shared::Identifier,
             lane: Models::Shared::Lane,
             status: Models::Shared::ScreeningLookupCheckStatus,
             sources: ::Integer,

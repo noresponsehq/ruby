@@ -27,7 +27,7 @@ module NoResponse
           ::Float,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("min_likelihood"), required: true}}
         )
-        # The kinds of value enrichment searches: distinctive usernames, and email addresses and phone numbers, which belong to one person each.
+        # The kinds of value enrichment searches: distinctive usernames, email addresses and phone numbers, which belong to one person each, and distinctive person names, searched in the breach data.
         field(
           :kinds,
           Crystalline::Array.new(Models::Shared::EnrichmentKind),

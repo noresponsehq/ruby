@@ -10,6 +10,7 @@ module NoResponse
           USERNAME = new("username")
           EMAIL = new("email")
           PHONE = new("phone")
+          PERSON_NAME = new("person_name")
         end
       end
     end
