@@ -30,6 +30,12 @@ class NoResponse::Models::Shared::WorkspacePersonReport
   def expires_at=(str_)
   end
 
+  def groups
+  end
+
+  def groups=(str_)
+  end
+
   def profiles
   end
 

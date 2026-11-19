@@ -289,6 +289,7 @@ module NoResponse
       autoload :PersonFlagged, "no_response/models/shared/personflagged.rb"
       autoload :PersonFlaggedEvent, "no_response/models/shared/personflaggedevent.rb"
       autoload :PersonFlaggedMatchState, "no_response/models/shared/personflaggedmatchstate.rb"
+      autoload :PersonGroup, "no_response/models/shared/persongroup.rb"
       autoload :PersonIdentity, "no_response/models/shared/personidentity.rb"
       autoload :PersonList, "no_response/models/shared/personlist.rb"
       autoload :PersonMatch, "no_response/models/shared/personmatch.rb"

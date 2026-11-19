@@ -28,6 +28,12 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("expires_at"), required: true}}
         )
+        # Every group this person belongs to in this environment, most recently added first, with their role in each. A person can belong to any number of groups; removing them from a group or deleting the group removes it here.
+        field(
+          :groups,
+          Crystalline::Array.new(Models::Shared::PersonGroup),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("groups"), required: true}}
+        )
         # The accounts this result matched, with how each was matched.
         field(
           :profiles,
@@ -149,6 +155,7 @@ module NoResponse
             created_at: ::String,
             updated_at: ::String,
             expires_at: ::String,
+            groups: T::Array[Models::Shared::PersonGroup],
             profiles: T::Array[Models::Shared::ScreeningProfile],
             findings: T::Array[Models::Shared::ScreeningFinding],
             posts: T::Array[Models::Shared::ScreeningPost],
@@ -176,6 +183,7 @@ module NoResponse
           created_at:,
           updated_at:,
           expires_at:,
+          groups:,
           profiles:,
           findings:,
           posts:,
@@ -200,6 +208,7 @@ module NoResponse
           @created_at = created_at
           @updated_at = updated_at
           @expires_at = expires_at
+          @groups = groups
           @profiles = profiles
           @findings = findings
           @posts = posts
@@ -228,6 +237,7 @@ module NoResponse
           return false unless @created_at == other.created_at
           return false unless @updated_at == other.updated_at
           return false unless @expires_at == other.expires_at
+          return false unless @groups == other.groups
           return false unless @profiles == other.profiles
           return false unless @findings == other.findings
           return false unless @posts == other.posts
