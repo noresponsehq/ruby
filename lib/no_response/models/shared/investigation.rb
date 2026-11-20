@@ -77,36 +77,6 @@ module NoResponse
           ::String,
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("deadline_at"), required: true}}
         )
-        # The latest reviewer decision, or null before any.
-        field(
-          :decision,
-          Crystalline::Nilable.new(Models::Shared::PersonDecision),
-          {
-            'format_json': {
-              'letter_case': ::NoResponse::Utils.field_name("decision"),
-              required: true,
-              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::PersonDecision, false)
-            }
-          }
-        )
-
-        field(
-          :decision_note,
-          Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("decision_note")}}
-        )
-
-        field(
-          :decided_by,
-          Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("decided_by")}}
-        )
-
-        field(
-          :decided_at,
-          Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("decided_at")}}
-        )
 
         field(
           :group_id,
@@ -156,10 +126,6 @@ module NoResponse
             created_at: ::String,
             expires_at: ::String,
             deadline_at: ::String,
-            decision: T.nilable(Models::Shared::PersonDecision),
-            decision_note: T.nilable(::String),
-            decided_by: T.nilable(::String),
-            decided_at: T.nilable(::String),
             group_id: T.nilable(::String),
             match_state: T.nilable(Models::Shared::MatchState),
             error_code: T.nilable(::String),
@@ -179,10 +145,6 @@ module NoResponse
           created_at:,
           expires_at:,
           deadline_at:,
-          decision: nil,
-          decision_note: nil,
-          decided_by: nil,
-          decided_at: nil,
           group_id: nil,
           match_state: nil,
           error_code: nil,
@@ -199,10 +161,6 @@ module NoResponse
           @created_at = created_at
           @expires_at = expires_at
           @deadline_at = deadline_at
-          @decision = decision
-          @decision_note = decision_note
-          @decided_by = decided_by
-          @decided_at = decided_at
           @group_id = group_id
           @match_state = match_state
           @error_code = error_code
@@ -223,10 +181,6 @@ module NoResponse
           return false unless @created_at == other.created_at
           return false unless @expires_at == other.expires_at
           return false unless @deadline_at == other.deadline_at
-          return false unless @decision == other.decision
-          return false unless @decision_note == other.decision_note
-          return false unless @decided_by == other.decided_by
-          return false unless @decided_at == other.decided_at
           return false unless @group_id == other.group_id
           return false unless @match_state == other.match_state
           return false unless @error_code == other.error_code

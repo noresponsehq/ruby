@@ -27,12 +27,6 @@ module NoResponse
           Crystalline::Array.new(Models::Shared::ScreeningMedia),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("media"), required: true}}
         )
-        # Every recorded decision, oldest first.
-        field(
-          :reviews,
-          Crystalline::Array.new(Models::Shared::PersonReview),
-          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("reviews"), required: true}}
-        )
 
         field(
           :person,
@@ -51,7 +45,7 @@ module NoResponse
           Crystalline::Nilable.new(Models::Shared::ScreeningLookup),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("lookup")}}
         )
-        # True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, posts, media, discovered values and free-text decision notes are withheld.
+        # True when evidence.read is explicitly denied. Submitted details, coverage and job status remain available. Collected records, profiles, posts, media and discovered values are withheld.
         field(
           :evidence_restricted,
           Crystalline::Nilable.new(Crystalline::Boolean.new),
@@ -63,7 +57,6 @@ module NoResponse
             profiles: T::Array[Models::Shared::ScreeningProfile],
             posts: T::Array[Models::Shared::ScreeningPost],
             media: T::Array[Models::Shared::ScreeningMedia],
-            reviews: T::Array[Models::Shared::PersonReview],
             person: Models::Shared::WorkspacePerson,
             investigation: Models::Shared::Investigation,
             lookup: T.nilable(Models::Shared::ScreeningLookup),
@@ -71,20 +64,10 @@ module NoResponse
           )
             .void
         }
-        def initialize(
-          profiles:,
-          posts:,
-          media:,
-          reviews:,
-          person:,
-          investigation:,
-          lookup: nil,
-          evidence_restricted: nil
-        )
+        def initialize(profiles:, posts:, media:, person:, investigation:, lookup: nil, evidence_restricted: nil)
           @profiles = profiles
           @posts = posts
           @media = media
-          @reviews = reviews
           @person = person
           @investigation = investigation
           @lookup = lookup
@@ -97,7 +80,6 @@ module NoResponse
           return false unless @profiles == other.profiles
           return false unless @posts == other.posts
           return false unless @media == other.media
-          return false unless @reviews == other.reviews
           return false unless @person == other.person
           return false unless @investigation == other.investigation
           return false unless @lookup == other.lookup

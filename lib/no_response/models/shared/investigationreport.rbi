@@ -24,12 +24,6 @@ class NoResponse::Models::Shared::InvestigationReport
   def media=(str_)
   end
 
-  def reviews
-  end
-
-  def reviews=(str_)
-  end
-
   def person
   end
 

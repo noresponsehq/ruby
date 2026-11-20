@@ -66,30 +66,6 @@ class NoResponse::Models::Shared::Investigation
   def deadline_at=(str_)
   end
 
-  def decision
-  end
-
-  def decision=(str_)
-  end
-
-  def decision_note
-  end
-
-  def decision_note=(str_)
-  end
-
-  def decided_by
-  end
-
-  def decided_by=(str_)
-  end
-
-  def decided_at
-  end
-
-  def decided_at=(str_)
-  end
-
   def group_id
   end
 

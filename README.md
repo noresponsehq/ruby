@@ -13,10 +13,10 @@ Ruby 3.2+ · Bundler.
 The gem is named `noresponse`. RubyGems publishing is pending, so until it lands install from the GitHub tag. In your `Gemfile`:
 
 ```ruby
-gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v19.0.6"
+gem "noresponse", git: "https://github.com/noresponsehq/ruby.git", tag: "v20.0.0"
 ```
 
-Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 19.0.6"`.
+Use the latest tag from https://github.com/noresponsehq/ruby/tags. Once the gem is on RubyGems, the line is `gem "noresponse", "~> 20.0.0"`.
 
 ## Investigate a person
 
@@ -40,7 +40,7 @@ After `investigation.completed`, use `client.investigations.get(investigation_id
 
 The API key selects the workspace and environment. This flow needs `people_write` to create a person, `investigations` to start work, and `people` to read the report. Save the investigation id and key: retry the same work with the same key; use a new key for a deliberate new investigation. A person can belong to several groups or none. Their `expires_at` comes from workspace retention.
 
-Evidence is included by default for pre-verified customers. An explicit evidence restriction keeps submitted details, status, coverage and decision summaries, and withholds collected records, profiles, posts, media and discovered identifiers. Each investigation and group keeps its own review context.
+Evidence is included by default for pre-verified customers. An explicit evidence restriction keeps submitted details, status and coverage, and withholds collected records, profiles, posts, media and discovered identifiers.
 
 ## Assess a signup
 

@@ -224,8 +224,6 @@ module NoResponse
       autoload :RetireAccountCredentialResponse, "no_response/models/operations/retireaccountcredential_response.rb"
       autoload :RetryCustomerExportRequest, "no_response/models/operations/retrycustomerexport_request.rb"
       autoload :RetryCustomerExportResponse, "no_response/models/operations/retrycustomerexport_response.rb"
-      autoload :ReviewInvestigationRequest, "no_response/models/operations/reviewinvestigation_request.rb"
-      autoload :ReviewInvestigationResponse, "no_response/models/operations/reviewinvestigation_response.rb"
       autoload :ReviewPersonRequest, "no_response/models/operations/reviewperson_request.rb"
       autoload :ReviewPersonResponse, "no_response/models/operations/reviewperson_response.rb"
       autoload(
