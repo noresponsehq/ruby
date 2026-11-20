@@ -12,6 +12,12 @@ class NoResponse::Models::Shared::GroupUpdate
   def name=(str_)
   end
 
+  def attribute
+  end
+
+  def attribute=(str_)
+  end
+
   def venue
   end
 

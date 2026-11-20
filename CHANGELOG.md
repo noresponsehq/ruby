@@ -1,5 +1,16 @@
 # Changelog
 
+## 19.0.4
+
+* `sdk.groups.list()`:  `response.items[]` **Changed**
+* `sdk.groups.create()`: 
+  *  `request.body` **Changed**
+  *  `response` **Changed**
+* `sdk.groups.get()`:  `response` **Changed**
+* `sdk.groups.update()`: 
+  *  `request.body.attribute` **Added**
+  *  `response` **Changed**
+
 ## 19.0.3
 
 No changes detected.

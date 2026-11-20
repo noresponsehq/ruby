@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 24900d9a-58ab-4fcc-8f1d-5b89dd2829e3
 management:
-  docChecksum: 636990131811adff08962dbd8ffea6aa
+  docChecksum: cf741fa08e1f000f732284efbccf4f71
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 19.0.3
-  configChecksum: 108a2cdcd501a37945e4962fd6ad16c7
+  releaseVersion: 19.0.4
+  configChecksum: d77d394f0eab09af2cff1c0fc2f35352
 features:
   ruby:
     constsAndDefaults: 0.1.4
@@ -36,7 +36,7 @@ trackedFiles:
   Gemfile:
     last_write_checksum: sha1:8c1b6fa9505f61abd0fb6741f8094e9655a55495
   Gemfile.lock:
-    last_write_checksum: sha1:0a4cf8dd25f8a3cea3748fd58f92ced88f3f6819
+    last_write_checksum: sha1:b82ba8bdf76fe215e333853de8d0eb25ef4ac1d5
   Rakefile:
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
   USAGE.md:
@@ -896,13 +896,15 @@ trackedFiles:
   docs/models/shared/from.md:
     last_write_checksum: sha1:11eb24b0f6fc228d70b21f262177081b69c44e50
   docs/models/shared/group.md:
-    last_write_checksum: sha1:b6dc0e85d54ec645d91e03e61c687a276689c37d
+    last_write_checksum: sha1:ed57c08bc9c344b384e7da813c3a35da134da129
   docs/models/shared/grouplist.md:
     last_write_checksum: sha1:3fb4d4c3d67a0ae1d99080f1ef34a817e41c74f2
   docs/models/shared/grouprequest.md:
-    last_write_checksum: sha1:de6d5dc0301679dd0aa300cd4bb27faa69754d9f
+    last_write_checksum: sha1:117f21f5ae0fb4099366e0e0a7c0a3561206edf8
+  docs/models/shared/grouptype.md:
+    last_write_checksum: sha1:97c3440db13481cdebca484de998393888488a0d
   docs/models/shared/groupupdate.md:
-    last_write_checksum: sha1:f860b23dbe2578425c7563c16c42750c3deeb8b4
+    last_write_checksum: sha1:8f723d915aa6bfbfc73987714a640dae79259f7b
   docs/models/shared/handle.md:
     last_write_checksum: sha1:a4366977cd0e83a9d40ee6801f93b7716f104731
   docs/models/shared/hookpoint.md:
@@ -1582,7 +1584,7 @@ trackedFiles:
   docs/sdks/exports/README.md:
     last_write_checksum: sha1:d39868118e044163371da6dfebee15e20ced21ed
   docs/sdks/groups/README.md:
-    last_write_checksum: sha1:04ebf1686642461266b607af992e1623b1056ffd
+    last_write_checksum: sha1:f7faf5db9d4e70c601e4867a117ea526f7c06df7
   docs/sdks/integrations/README.md:
     last_write_checksum: sha1:a7a3faf22283dc478cf70336b2bd570456526892
   docs/sdks/investigations/README.md:
@@ -2718,7 +2720,7 @@ trackedFiles:
   lib/no_response/models/operations/updatesettings_response.rbi:
     last_write_checksum: sha1:0834c9903587b61cbe3cd8bee544792b89c08362
   lib/no_response/models/shared.rb:
-    last_write_checksum: sha1:a51dc335bd40c1389a3f3f8da3495bd6b730a243
+    last_write_checksum: sha1:2e82e1e57ed96ba3672159709ad24fcf25caaa33
   lib/no_response/models/shared/access.rb:
     last_write_checksum: sha1:da8cdfb41547b10b13592a7560d48fe6e5ca2b37
   lib/no_response/models/shared/access.rbi:
@@ -3372,21 +3374,25 @@ trackedFiles:
   lib/no_response/models/shared/from.rbi:
     last_write_checksum: sha1:8fed95b67eb2eec4f3b123b1092b23c8cb1a18ff
   lib/no_response/models/shared/group.rb:
-    last_write_checksum: sha1:24e4ce4bd777bfb0e3aa1f229e0a4b5fe6a8c2ca
+    last_write_checksum: sha1:20d1179bdca83481dddfdedd9de156350a10bc52
   lib/no_response/models/shared/group.rbi:
-    last_write_checksum: sha1:fe5bf8efbc740395acd9ffe1fcc5d3c4340be102
+    last_write_checksum: sha1:15dfca1e05946cdfe942178ed095c9854a997043
   lib/no_response/models/shared/grouplist.rb:
     last_write_checksum: sha1:5fa848327f7337d3bf18c54b57d0fc4e7281845e
   lib/no_response/models/shared/grouplist.rbi:
     last_write_checksum: sha1:8e7ea8665b35f49301c27d012f6748186be95740
   lib/no_response/models/shared/grouprequest.rb:
-    last_write_checksum: sha1:2c8a03714854b4a080fb9e25dd42b308e647c01f
+    last_write_checksum: sha1:cd8ead8b2c8a3214c6bfffa871cccf6a84c298ed
   lib/no_response/models/shared/grouprequest.rbi:
-    last_write_checksum: sha1:0996ced51ab8ab380aa780b753724c752f14af06
+    last_write_checksum: sha1:c0398c0e01f24dfad71a87d60dbc078d0e541b33
+  lib/no_response/models/shared/grouptype.rb:
+    last_write_checksum: sha1:14d9d42b1acb5c1b3a937d5b22eb3448bb119b9d
+  lib/no_response/models/shared/grouptype.rbi:
+    last_write_checksum: sha1:af67e5d41ec42312dc6139bd2409a9dda9ceea95
   lib/no_response/models/shared/groupupdate.rb:
-    last_write_checksum: sha1:726abe7d6368f06b1ffc129cb7a6911f5f593cde
+    last_write_checksum: sha1:ac4ef60b2bcc511ee1602cc4e37e8d5b091c5806
   lib/no_response/models/shared/groupupdate.rbi:
-    last_write_checksum: sha1:87d977d2d6dd0dae99f74b6611fef6f75b81a85c
+    last_write_checksum: sha1:9e1bccbbc46c7efc5d6fdbbe5d144b9d79dd286b
   lib/no_response/models/shared/handle.rb:
     last_write_checksum: sha1:1ad5dabf2a239ef307d756ec3533526a0120bbfa
   lib/no_response/models/shared/handle.rbi:
@@ -4734,7 +4740,7 @@ trackedFiles:
   lib/no_response/sdk_hooks/types.rb:
     last_write_checksum: sha1:b00cbe426c757077c36574cb25fca9eb0d0b6dc8
   lib/no_response/sdkconfiguration.rb:
-    last_write_checksum: sha1:4ea3c4257630bcfe4e4cd65bdcabb2b797310be2
+    last_write_checksum: sha1:754a0048b95901234698546061f277634a56863c
   lib/no_response/sdkconfiguration.rbi:
     last_write_checksum: sha1:f85db87fbea555f3493f507f6c7b03cc21b0f824
   lib/no_response/settings.rb:
@@ -4764,7 +4770,7 @@ trackedFiles:
   lib/noresponse.rb:
     last_write_checksum: sha1:bfb44b6a118d53e72ad5b1b00cb95f84cbe657f3
   noresponse.gemspec:
-    last_write_checksum: sha1:ca3cd858ded240e3ea71c42888fc7a8f2c4d43a4
+    last_write_checksum: sha1:c3db6801ca5ecce2ebdf70f544bbc117ff4448ce
   sorbet/config:
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
   sorbet/rbi/annotations/.gitattributes:
@@ -7120,7 +7126,7 @@ examples:
           limit: 20
       responses:
         "200":
-          application/json: {"items": [{"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "name": "Annual shareholder meeting", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 82281, "version": 851091, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}], "next_before": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
+          application/json: {"items": [{"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "name": "Annual shareholder meeting", "type": "organisation", "attribute": "Example Fund", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 82281, "version": 851091, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}], "next_before": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_request", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -7139,10 +7145,10 @@ examples:
         header:
           Idempotency-Key: "request-01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       requestBody:
-        application/json: {"name": "Annual shareholder meeting", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"]}
+        application/json: {"name": "Annual shareholder meeting", "type": "organisation", "attribute": "Example Fund", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"]}
       responses:
         "201":
-          application/json: {"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "name": "Annual shareholder meeting", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 683531, "version": 926347, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}
+          application/json: {"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "name": "Annual shareholder meeting", "type": "organisation", "attribute": "Example Fund", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 683531, "version": 926347, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -7162,7 +7168,7 @@ examples:
           group_id: "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       responses:
         "200":
-          application/json: {"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "name": "Annual shareholder meeting", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 701812, "version": 550731, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}
+          application/json: {"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "name": "Annual shareholder meeting", "type": "organisation", "attribute": "Example Fund", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 701812, "version": 550731, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
@@ -7181,10 +7187,10 @@ examples:
         path:
           group_id: "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       requestBody:
-        application/json: {"name": "Annual shareholder meeting", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"]}
+        application/json: {"name": "Annual shareholder meeting", "attribute": "Example Fund", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"]}
       responses:
         "200":
-          application/json: {"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "name": "Annual shareholder meeting", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 633815, "version": 179429, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}
+          application/json: {"id": "grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "test", "name": "Annual shareholder meeting", "type": "organisation", "attribute": "Example Fund", "starts_at": "2026-01-01T00:00:00Z", "ends_at": "2026-01-02T00:00:00Z", "venue": "Example Convention Centre", "host": "Example Holdings", "principals": [{"name": "Alex Principal", "aliases": ["Alex P"]}], "topics": ["executive pay"], "people": 633815, "version": 179429, "created_by": "user_2abc", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z"}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":

@@ -11,6 +11,23 @@ module NoResponse
 
         # The group's name.
         field :name, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("name"), required: true}}
+        # What the group's people share: an event, an organisation, a place or another attribute.
+        field(
+          :type,
+          Crystalline::Nilable.new(Models::Shared::GroupType),
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("type"),
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::GroupType, true)
+            }
+          }
+        )
+        # The attribute its people share, such as the employer's or the place's name.
+        field(
+          :attribute,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attribute")}}
+        )
         # Where the group is held.
         field(
           :venue,
@@ -51,6 +68,8 @@ module NoResponse
         sig {
           params(
             name: ::String,
+            type: T.nilable(Models::Shared::GroupType),
+            attribute: T.nilable(::String),
             venue: T.nilable(::String),
             host: T.nilable(::String),
             principals: T.nilable(T::Array[Models::Shared::Principal]),
@@ -62,6 +81,8 @@ module NoResponse
         }
         def initialize(
           name:,
+          type: nil,
+          attribute: nil,
           venue: nil,
           host: nil,
           principals: nil,
@@ -76,6 +97,8 @@ module NoResponse
           )
         )
           @name = name
+          @type = type
+          @attribute = attribute
           @venue = venue
           @host = host
           @principals = principals
@@ -115,6 +138,8 @@ module NoResponse
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @name == other.name
+          return false unless @type == other.type
+          return false unless @attribute == other.attribute
           return false unless @venue == other.venue
           return false unless @host == other.host
           return false unless @principals == other.principals

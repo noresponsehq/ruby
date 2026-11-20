@@ -24,6 +24,24 @@ module NoResponse
         )
         # The group's name.
         field :name, ::String, {'format_json': {'letter_case': ::NoResponse::Utils.field_name("name"), required: true}}
+        # What the group's people share: an event, an organisation, a place or another attribute.
+        field(
+          :type,
+          Models::Shared::GroupType,
+          {
+            'format_json': {
+              'letter_case': ::NoResponse::Utils.field_name("type"),
+              required: true,
+              'decoder': ::NoResponse::Utils.open_enum_from_string(Models::Shared::GroupType, false)
+            }
+          }
+        )
+        # The attribute its people share. Empty when none was given.
+        field(
+          :attribute,
+          ::String,
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attribute"), required: true}}
+        )
         # The people the group protects.
         field(
           :principals,
@@ -96,6 +114,8 @@ module NoResponse
             id: ::String,
             environment: Models::Shared::AuditSettingsEnvironment,
             name: ::String,
+            type: Models::Shared::GroupType,
+            attribute: ::String,
             principals: T::Array[Models::Shared::Principal],
             topics: T::Array[::String],
             people: ::Integer,
@@ -114,6 +134,8 @@ module NoResponse
           id:,
           environment:,
           name:,
+          type:,
+          attribute:,
           principals:,
           topics:,
           people:,
@@ -129,6 +151,8 @@ module NoResponse
           @id = id
           @environment = environment
           @name = name
+          @type = type
+          @attribute = attribute
           @principals = principals
           @topics = topics
           @people = people
@@ -148,6 +172,8 @@ module NoResponse
           return false unless @id == other.id
           return false unless @environment == other.environment
           return false unless @name == other.name
+          return false unless @type == other.type
+          return false unless @attribute == other.attribute
           return false unless @principals == other.principals
           return false unless @topics == other.topics
           return false unless @people == other.people

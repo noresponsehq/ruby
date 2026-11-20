@@ -86,6 +86,8 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.groups.create(body: Models::Shared::GroupRequest.new(
   name: 'Annual shareholder meeting',
+  type: Models::Shared::GroupType::ORGANISATION,
+  attribute: 'Example Fund',
   starts_at: '2026-01-01T00:00:00Z',
   ends_at: '2026-01-02T00:00:00Z',
   venue: 'Example Convention Centre',
@@ -192,6 +194,7 @@ s = ::NoResponse::NoResponseClient.new(
 )
 res = s.groups.update(group_id: 'grp_01JA2Z8K6Q4V7W9XBCDEFGHJKM', body: Models::Shared::GroupUpdate.new(
   name: 'Annual shareholder meeting',
+  attribute: 'Example Fund',
   starts_at: '2026-01-01T00:00:00Z',
   ends_at: '2026-01-02T00:00:00Z',
   venue: 'Example Convention Centre',

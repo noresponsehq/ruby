@@ -15,6 +15,12 @@ module NoResponse
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::NoResponse::Utils.field_name("name")}}
         )
+        # The attribute its people share. Omit to keep the current value.
+        field(
+          :attribute,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::NoResponse::Utils.field_name("attribute")}}
+        )
         # Where the group is held.
         field(
           :venue,
@@ -61,6 +67,7 @@ module NoResponse
         sig {
           params(
             name: T.nilable(::String),
+            attribute: T.nilable(::String),
             venue: T.nilable(::String),
             host: T.nilable(::String),
             principals: T.nilable(T::Array[Models::Shared::Principal]),
@@ -73,6 +80,7 @@ module NoResponse
         }
         def initialize(
           name: nil,
+          attribute: nil,
           venue: nil,
           host: nil,
           principals: nil,
@@ -88,6 +96,7 @@ module NoResponse
           )
         )
           @name = name
+          @attribute = attribute
           @venue = venue
           @host = host
           @principals = principals
@@ -128,6 +137,7 @@ module NoResponse
         def ==(other)
           return false unless other.is_a?(self.class)
           return false unless @name == other.name
+          return false unless @attribute == other.attribute
           return false unless @venue == other.venue
           return false unless @host == other.host
           return false unless @principals == other.principals

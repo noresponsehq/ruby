@@ -12,6 +12,18 @@ class NoResponse::Models::Shared::GroupRequest
   def name=(str_)
   end
 
+  def type
+  end
+
+  def type=(str_)
+  end
+
+  def attribute
+  end
+
+  def attribute=(str_)
+  end
+
   def venue
   end
 

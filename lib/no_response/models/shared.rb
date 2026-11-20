@@ -163,6 +163,7 @@ module NoResponse
       autoload :Group, "no_response/models/shared/group.rb"
       autoload :GroupList, "no_response/models/shared/grouplist.rb"
       autoload :GroupRequest, "no_response/models/shared/grouprequest.rb"
+      autoload :GroupType, "no_response/models/shared/grouptype.rb"
       autoload :GroupUpdate, "no_response/models/shared/groupupdate.rb"
       autoload :Handle, "no_response/models/shared/handle.rb"
       autoload :HookPoint, "no_response/models/shared/hookpoint.rb"
